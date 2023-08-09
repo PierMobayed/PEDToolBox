@@ -3,7 +3,7 @@
 if not "%1"=="max" start /MAX cmd /c %0 max & exit/b
 
 :: Set version
-set "versionn=PED-ToolBox-1.252.230804"
+set "versionn=PED-ToolBox-1.254.230809"
 
 :::::::::::::::::::::::::::::::::::::::::::
 :: Automatically check & get admin rights V2
@@ -210,7 +210,7 @@ call :r3a.x11.3.downLoadF-3.Scripts
 call :r3a.x11.3.1.downLoadF-3.1.WingetScript
 call :r3a.x12.downLoadF-files
 call :r3a.x12.0.downLoadF-bootTimer
-call :r3a.x12.1.downLoadF-debload_file
+call :r3a.x12.1.downLoadF-deleteCmdBloatware
 call :r3a.x12.2.downLoadF-taskCommand
 
 goto %menu%
@@ -622,8 +622,8 @@ if not exist "%destination%\." mkdir "%destination%"
 exit /b
 ::=======================================
 
-:r3a.x12.1.downLoadF-debload_file
-set "nameFolder=debload_file"
+:r3a.x12.1.downLoadF-deleteCmdBloatware
+set "nameFolder=debloatBloatware"
 set "createFolder=files\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
 
@@ -1110,7 +1110,7 @@ if %ERRORLEVEL% == 1 goto %menu%
 Get-ExecutionPolicy -List
 "Set-ExecutionPolicy Unrestricted -Force && Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force"
 Powershell.exe Set-ExecutionPolicy Bypass -Scope Process -Force;
-start /min powershell Unblock-File -Path .\PED-Opti.bat
+start /min powershell Unblock-File -Path $PWD\PED-Opti.bat
 
 :m1a.x02.3.UserAccountControl
 set menu=m1a.x02.3.UserAccountControl
@@ -2070,7 +2070,9 @@ set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Revo Uninstaller Portable"
 set mm= %mm% "[ p ] 2.OOappBuster"
 set mm= %mm% ""
-set mm= %mm% "[+] PED:Debloat Delete unwanted:"
+set mm= %mm% "[+] PED:Debloat -Delete unwanted Bloatware:"
+set mm= %mm% ""
+set mm= %mm% "[ ] GridView | Remove-AppxPackage"
 
 cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 (
@@ -2092,6 +2094,8 @@ if %ERRORLEVEL% == 7 goto r4a.x3.2.OOappBuster
 if %ERRORLEVEL% == 8 goto %menu%
 
 if %ERRORLEVEL% == 9 goto m1a.x3.2.1.debloat
+if %ERRORLEVEL% == 10 goto %menu%
+if %ERRORLEVEL% == 11 %psP% "Get-AppxPackage | Select Name, InstallLocation | Out-GridView -PassThru | Remove-AppxPackage"
 
 goto %menu%
 
@@ -2649,11 +2653,13 @@ set mm= %mm% "[ ] Social: WhatsApp.WhatsApp"
 set mm= %mm% "[ ] Storage: Google.Drive"
 set mm= %mm% "[ ] Storage: Microsoft.OneDrive"
 set mm= %mm% "[ ] Node: Notepad++.Notepad++"
+set mm= %mm% "[ ] Node: Apache.OpenOffice"
 set mm= %mm% "[ ] Test: PrimateLabs.Geekbench.5"
 set mm= %mm% "[ ] Downloader: qBittorrent.qBittorrent"
 set mm= %mm% "[ ] Video: VideoLAN.VLC"
 set mm= %mm% "[ ] Uninstaller: RevoUninstaller.RevoUninstallerPro"
 set mm= %mm% "[ ] Cleaner: Glarysoft.GlaryUtilities"
+
 
 cmdMenuSel f870 "-|NEXT|- 1. Install -programs:" "-|BACK|- 1. Install -programs:" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
 if %ERRORLEVEL% == 1 goto m1a.x3.1.install
@@ -2678,11 +2684,13 @@ if %ERRORLEVEL% == 18 set "appIns=WhatsApp.WhatsApp"
 if %ERRORLEVEL% == 19 set "appIns=Google.Drive"
 if %ERRORLEVEL% == 20 set "appIns=Microsoft.OneDrive"
 if %ERRORLEVEL% == 21 set "appIns=Notepad++.Notepad++"
-if %ERRORLEVEL% == 22 set "appIns=PrimateLabs.Geekbench.5"
-if %ERRORLEVEL% == 23 set "appIns=qBittorrent.qBittorrent"
-if %ERRORLEVEL% == 24 set "appIns=VideoLAN.VLC"
-if %ERRORLEVEL% == 25 set "appIns=RevoUninstaller.RevoUninstallerPro"
-if %ERRORLEVEL% == 26 set "appIns=Glarysoft.GlaryUtilities"
+if %ERRORLEVEL% == 22 set "appIns=Apache.OpenOffice"
+if %ERRORLEVEL% == 23 set "appIns=PrimateLabs.Geekbench.5"
+if %ERRORLEVEL% == 24 set "appIns=qBittorrent.qBittorrent"
+if %ERRORLEVEL% == 25 set "appIns=VideoLAN.VLC"
+if %ERRORLEVEL% == 26 set "appIns=RevoUninstaller.RevoUninstallerPro"
+if %ERRORLEVEL% == 27 set "appIns=Glarysoft.GlaryUtilities"
+
 
 :m1a.x3.1.1.1.appInstaller
 cls
@@ -2701,7 +2709,7 @@ goto %menu%
 set menu=m1a.x3.2.1.debloat
 
 set "menuA= 2. Uninstall app/program:"
-set "menuB= PED:Debloat Delete unwanted:"
+set "menuB= PED:Debloat Delete unwanted Bloatware:"
 call :mStyle
 
 set mm=
@@ -2710,12 +2718,15 @@ set mm= %mm% "-|BACK|- 2.Uninstaller"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
-set mm= %mm% "----------Win App----------"
-set mm= %mm% "[ p ] 1.Open files for corrections"
+set mm= %mm% "---------- NEW Bloatware app ----------"
+set mm= %mm% "[ p ] PED-Delete_Bloatware app"
+set mm= %mm% ""
+set mm= %mm% "---------- cmd Delete by Location folder (old)----------"
+set mm= %mm% "[ ] 1.Open files for corrections"
 set mm= %mm% "[ ] 2.Delete"
 set mm= %mm% ""
-set mm= %mm% "----------User folder----------"
-set mm= %mm% "[ p ] 3.User folder - delete unwanted/empty folders"
+set mm= %mm% "---------- User folder ----------"
+set mm= %mm% "[ p ] User folder - delete unwanted/empty folders"
 
 cmdMenuSel f870 %mm%        
 
@@ -2735,18 +2746,39 @@ if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
 if %ERRORLEVEL% == 6 goto %menu%
-if %ERRORLEVEL% == 7 goto m1a.x3.2.1.1.openDebloat
-if %ERRORLEVEL% == 8 goto m1a.x3.2.1.2.debloatDel
+if %ERRORLEVEL% == 7 goto m1a.x3.2.1.0.delete_Bloatware
+if %ERRORLEVEL% == 8 goto %menu%
+
 if %ERRORLEVEL% == 9 goto %menu%
-if %ERRORLEVEL% == 10 goto %menu%
-if %ERRORLEVEL% == 11 goto m1a.x3.2.1.3.UserFolderDeleteUnwantedFolders
+if %ERRORLEVEL% == 10 goto m1a.x3.2.1.1.openDebloat
+if %ERRORLEVEL% == 11 goto m1a.x3.2.1.2.debloatDel
+if %ERRORLEVEL% == 12 goto %menu%
+if %ERRORLEVEL% == 13 goto %menu%
+if %ERRORLEVEL% == 14 goto m1a.x3.2.1.3.UserFolderDeleteUnwantedFolders
+goto %menu%
+
+:m1a.x3.2.1.0.delete_Bloatware
+cls
+set "downloadFiles=:r5a.x1.4.2.Create-Delete_Bloatware"
+set "directoryFiles=files\debloatBloatware"
+set "nameFiles=deleteBloatware.ps1"
+
+
+::Function
+set startFiles=%destinationPD%\%directoryFiles%\%nameFiles%
+if not exist %startFiles% (
+	call %downloadFiles%
+)
+
+%psP% %startFiles%
+
 goto %menu%
 
 :m1a.x3.2.1.1.openDebloat
 cls
-set "downloadFiles=:r5a.x1.4.Create-debload_file"
-set "directoryFiles=files\debload_file"
-set "nameFiles=debload_file.txt"
+set "downloadFiles=:r5a.x1.4.Create-deleteCmdBloatware"
+set "directoryFiles=files\debloatBloatware"
+set "nameFiles=debloatBloatware.txt"
 
 
 ::Function
@@ -2760,9 +2792,9 @@ goto %menu%
 
 :m1a.x3.2.1.2.debloatDel
 
-set "directoryFiles=files\debload_file"
-set "nameFiles=debload_file.txt"
-set "commandFiles=debload_file1.bat"
+set "directoryFiles=files\debloatBloatware"
+set "nameFiles=debloatBloatware.txt"
+set "commandFiles=debloatBloatware1.bat"
 
 
 ::Function
@@ -5237,11 +5269,11 @@ SCHTASKS /Change /TN "\Microsoft\Windows\Work Folders\Work Folders Maintenance W
 REM # EndExtractD3
 ::================================
 ::================================
-:r5a.x1.4.Create-debload_file
-call :r3a.x12.1.downLoadF-debload_file
+:r5a.x1.4.Create-deleteCmdBloatware
+call :r3a.x12.1.downLoadF-deleteCmdBloatware
 
-set "directoryFiles=files\debload_file"
-set "nameFiles=debload_file.txt"
+set "directoryFiles=files\debloatBloatware"
+set "nameFiles=debloatBloatware.txt"
 
 ::Function
 set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
@@ -5424,6 +5456,692 @@ REM Your code starts here
  pause 
  exit
 REM # EndExtractD4
+::================================
+::================================
+:r5a.x1.4.2.Create-Delete_Bloatware
+call :r3a.x12.1.downLoadF-deleteCmdBloatware
+
+set "directoryFiles=files\debloatBloatware"
+set "nameFiles=deleteBloatware.ps1"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+
+REM Set the filename for the extracted code
+set "output_file=%startFiles%"
+
+REM Find the line number where the code block starts
+for /f "delims=:" %%i in ('findstr /n /c:"# StartExtractF42" "%~f0"') do set "start_line=%%i"
+
+REM Find the line number where the code block ends
+for /f "delims=:" %%i in ('findstr /n /c:"# EndExtractF42" "%~f0"') do set "end_line=%%i"
+
+REM Use the starting and ending lines to extract the desired code
+setlocal enabledelayedexpansion
+(for /f "tokens=1,* delims=:" %%a in ('findstr /n "^" "%~f0"') do (
+    set "line=%%b"
+    if %%a geq %start_line% (
+        echo(!line!
+    )
+    if %%a equ %end_line% (
+        exit /b
+    )
+)) > "%output_file%"
+
+REM Display a message indicating successful extraction
+echo The code has been extracted to "%output_file%"
+exit /b
+
+REM Your code starts here
+# StartExtractF42
+#ver:1.2
+if (Test-Path -Path $PWD\debloatBloatware) {
+    cd debloatBloatware
+}
+Add-Type -AssemblyName System.Windows.Forms
+
+# Check if appsBloatwareList.txt exists
+if (-not (Test-Path -Path "$PWD\appsBloatwareList.txt")) {
+    Write-Host "appsBloatwareList.txt does not exist."
+
+    # Set the filename for the extracted code
+$output_file = "$PWD\appsBloatwareList.txt"
+
+# Find the line number where the code block starts
+$start_line = Select-String -Pattern "[startDeleteApps]" -Path $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty LineNumber
+
+# Find the line number where the code block ends
+$end_line = Select-String -Pattern "[endDeleteApps]" -Path $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty LineNumber
+
+# Use the starting and ending lines to extract the desired code
+$codeExtracted = Get-Content -Path $MyInvocation.MyCommand.Path | ForEach-Object -Begin {
+    $extracting = $false
+} -Process {
+    if ($_.Trim() -eq "[startDeleteApps]") {
+        $extracting = $true
+    }
+    if ($extracting) {
+        $_
+    }
+    if ($_.Trim() -eq "[endDeleteApps]") {
+        $extracting = $false
+    }
+}
+
+$codeExtracted | Set-Content -Path $output_file
+}
+
+$appsToDelete = @(Get-Content -Path "$PWD\appsBloatwareList.txt" )
+
+# Check if appsWhiteList.txt exists
+if (-not (Test-Path -Path "$PWD\appsWhiteList.txt")) {
+    Write-Host "appsWhiteList.txt does not exist."
+
+    # Set the filename for the extracted code
+$output_file = "$PWD\appsWhiteList.txt"
+
+# Find the line number where the code block starts
+$start_line = Select-String -Pattern "[startWhiteList]" -Path $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty LineNumber
+
+# Find the line number where the code block ends
+$end_line = Select-String -Pattern "[endWhiteList]" -Path $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty LineNumber
+
+# Use the starting and ending lines to extract the desired code
+$codeExtracted = Get-Content -Path $MyInvocation.MyCommand.Path | ForEach-Object -Begin {
+    $extracting = $false
+} -Process {
+    if ($_.Trim() -eq "[startWhiteList]") {
+        $extracting = $true
+    }
+    if ($extracting) {
+        $_
+    }
+    if ($_.Trim() -eq "[endWhiteList]") {
+        $extracting = $false
+    }
+}
+
+$codeExtracted | Set-Content -Path $output_file
+}
+
+$appsWhiteListAdvanced = @(Get-Content -Path "$PWD\appsWhiteList.txt")
+
+#exclusion list
+$appNamesToExclude = $appsToDelete + $appsWhiteListAdvanced
+
+
+# Get the list of all installed apps excluding the ones from the exclusion list
+$appsRemainingListA = Get-AppxPackage | Where-Object { $appNamesToExclude -notcontains $_.Name }
+
+$appsRemainingList = $appsRemainingListA.Name
+
+#$appsRemainingList | Select Name, InstallLocation | Out-GridView
+
+#main(
+# Function to create a Windows Forms checkbox
+function New-CheckBox($text, $x, $y, $width, $height) {
+    $checkBox = New-Object Windows.Forms.CheckBox
+    $checkBox.Text = $text
+    $checkBox.Location = New-Object Drawing.Point($x, $y)
+    $checkBox.Width = $width
+    $checkBox.Height = $height
+    $checkBox.Checked = $false
+    return $checkBox
+}
+#main)
+
+#advanced(
+function New-CheckBoxAdvanced($text, $x, $y, $width, $height) {
+    $checkBoxAdvanced = New-Object Windows.Forms.CheckBox
+    $checkBoxAdvanced.Text = $text
+    $checkBoxAdvanced.Location = New-Object Drawing.Point($x, $y)
+    $checkBoxAdvanced.Width = $width
+    $checkBoxAdvanced.Height = $height
+    $checkBoxAdvanced.Checked = $false
+    return $checkBoxAdvanced
+}
+#advanced)
+
+#Remaining(
+function New-CheckBoxRemaining($text, $x, $y, $width, $height) {
+    $checkBoxRemaining = New-Object Windows.Forms.CheckBox
+    $checkBoxRemaining.Text = $text
+    $checkBoxRemaining.Location = New-Object Drawing.Point($x, $y)
+    $checkBoxRemaining.Width = $width
+    $checkBoxRemaining.Height = $height
+    $checkBoxRemaining.Checked = $false
+    return $checkBoxRemaining
+}
+#Remaining)
+
+
+# Create the Windows Forms GUI
+$form = New-Object Windows.Forms.Form
+$form.Text = "      PED Tool Box Debloat Bloatware      "
+$form.Width = 1200
+$form.Height = 750
+
+# Create a TabControl
+$tabControl = New-Object Windows.Forms.TabControl
+$tabControl.Dock = [System.Windows.Forms.DockStyle]::Fill
+
+# Tab 1 - Main tab
+$tabMain = New-Object Windows.Forms.TabPage
+$tabMain.Text = "      Delete Bloatware      "
+$tabMain.Size = New-Object Drawing.Size(700, 400)
+$tabControl.TabPages.Add($tabMain)
+
+
+# Tab 2 - Advanced tab
+$tabAdvanced = New-Object Windows.Forms.TabPage
+$tabAdvanced.Text = "      White List (Do not delete)      "
+$tabMain.Size = New-Object Drawing.Size(600, 400)
+$tabControl.TabPages.Add($tabAdvanced)
+
+# Tab 3 - Custom tab
+$tabRemaining = New-Object Windows.Forms.TabPage
+$tabRemaining.Text = "      Remaining Apps (Advanced)      "
+$tabMain.Size = New-Object Drawing.Size(600, 400)
+$tabControl.TabPages.Add($tabRemaining)
+
+# Tab 4 - Settings tab
+#$tabSettings = New-Object Windows.Forms.TabPage
+#$tabSettings.Text = "Settings"
+#$tabControl.TabPages.Add($tabSettings)
+
+
+
+#main(
+# Create a FlowLayoutPanel for buttons and separator
+$buttonsPanel = New-Object Windows.Forms.FlowLayoutPanel
+$buttonsPanel.FlowDirection = [System.Windows.Forms.FlowDirection]::LeftToRight
+$buttonsPanel.Dock = [System.Windows.Forms.DockStyle]::Top
+$buttonsPanel.WrapContents = $false
+#main)
+
+#advanced(
+# Create a FlowLayoutPanelAdvanced for buttons and separator
+$buttonsPanelAdvanced = New-Object Windows.Forms.FlowLayoutPanel
+$buttonsPanelAdvanced.FlowDirection = [System.Windows.Forms.FlowDirection]::LeftToRight
+$buttonsPanelAdvanced.Dock = [System.Windows.Forms.DockStyle]::Top
+$buttonsPanelAdvanced.WrapContents = $false
+#advanced)
+
+#Remaining(
+# Create a FlowLayoutPanelRemaining for buttons and separator
+$buttonsPanelRemaining = New-Object Windows.Forms.FlowLayoutPanel
+$buttonsPanelRemaining.FlowDirection = [System.Windows.Forms.FlowDirection]::LeftToRight
+$buttonsPanelRemaining.Dock = [System.Windows.Forms.DockStyle]::Top
+$buttonsPanelRemaining.WrapContents = $false
+#Remaining)
+
+#main(
+# Create a separator line
+$line = New-Object Windows.Forms.Label
+$line.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSingle
+$line.Height = 2
+#main)
+
+#advanced(
+# Create a separator lineAdvanced
+$lineAdvanced = New-Object Windows.Forms.Label
+$lineAdvanced.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSingle
+$lineAdvanced.Height = 2
+#advanced)
+
+#Remaining(
+# Create a separator lineRemaining
+$lineRemaining = New-Object Windows.Forms.Label
+$lineRemaining.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSingle
+$lineRemaining.Height = 2
+#Remaining)
+
+#main(
+# Create a FlowLayoutPanel for the button panel (Select All, Clear, Delete)
+$buttonsFlowPanel = New-Object Windows.Forms.FlowLayoutPanel
+$buttonsFlowPanel.FlowDirection = [System.Windows.Forms.FlowDirection]::LeftToRight
+$buttonsFlowPanel.Dock = [System.Windows.Forms.DockStyle]::Top
+$buttonsFlowPanel.WrapContents = $false
+#main)
+
+#advanced(
+# Create a FlowLayoutPanelAdvanced for the button panel (Select All, Clear, Delete)
+$buttonsFlowPanelAdvanced = New-Object Windows.Forms.FlowLayoutPanel
+$buttonsFlowPanelAdvanced.FlowDirection = [System.Windows.Forms.FlowDirection]::LeftToRight
+$buttonsFlowPanelAdvanced.Dock = [System.Windows.Forms.DockStyle]::Top
+$buttonsFlowPanelAdvanced.WrapContents = $false
+#advanced)
+
+#Remaining(
+# Create a FlowLayoutPanel for the button panel (Select All, Clear, Delete)
+$buttonsFlowPanelRemaining = New-Object Windows.Forms.FlowLayoutPanel
+$buttonsFlowPanelRemaining.FlowDirection = [System.Windows.Forms.FlowDirection]::LeftToRight
+$buttonsFlowPanelRemaining.Dock = [System.Windows.Forms.DockStyle]::Top
+$buttonsFlowPanelRemaining.WrapContents = $false
+#Remaining)
+
+#main(
+# Create the buttons
+$btnSelectAll = New-Object Windows.Forms.Button
+$btnSelectAll.Text = "Select All"
+$btnSelectAll.Width = 200
+
+$btnClear = New-Object Windows.Forms.Button
+$btnClear.Text = "Clear"
+$btnClear.Width = 100
+
+$btnDelete = New-Object Windows.Forms.Button
+$btnDelete.Text = "Delete"
+$btnDelete.Width = 100
+#main)
+
+#advanced(
+# Create the buttons
+$btnSelectAllAdvanced = New-Object Windows.Forms.Button
+$btnSelectAllAdvanced.Text = "Select All"
+$btnSelectAllAdvanced.Width = 100
+
+$btnClearAdvanced = New-Object Windows.Forms.Button
+$btnClearAdvanced.Text = "Clear"
+$btnClearAdvanced.Width = 100
+
+$btnDeleteAdvanced = New-Object Windows.Forms.Button
+$btnDeleteAdvanced.Text = "Delete"
+$btnDeleteAdvanced.Width = 100
+#advanced)
+
+#Remaining(
+# Create the buttons
+$btnSelectAllRemaining = New-Object Windows.Forms.Button
+$btnSelectAllRemaining.Text = "Select All"
+$btnSelectAllRemaining.Width = 100
+
+$btnClearRemaining = New-Object Windows.Forms.Button
+$btnClearRemaining.Text = "Clear"
+$btnClearRemaining.Width = 100
+
+$btnDeleteRemaining = New-Object Windows.Forms.Button
+$btnDeleteRemaining.Text = "Delete"
+$btnDeleteRemaining.Width = 100
+#Remaining)
+
+#main(
+# Add buttons to the buttonsFlowPanel
+$buttonsFlowPanel.Controls.Add($btnSelectAll)
+$buttonsFlowPanel.Controls.Add($btnClear)
+$buttonsFlowPanel.Controls.Add($btnDelete)
+#main)
+
+#advanced(
+# Add buttons to the buttonsFlowPaneAdvanced
+$buttonsFlowPanelAdvanced.Controls.Add($btnSelectAllAdvanced)
+$buttonsFlowPanelAdvanced.Controls.Add($btnClearAdvanced)
+$buttonsFlowPanelAdvanced.Controls.Add($btnDeleteAdvanced)
+#advanced)
+
+#Remaining(
+# Add buttons to the buttonsFlowPaneRemaining
+$buttonsFlowPanelRemaining.Controls.Add($btnSelectAllRemaining)
+$buttonsFlowPanelRemaining.Controls.Add($btnClearRemaining)
+$buttonsFlowPanelRemaining.Controls.Add($btnDeleteRemaining)
+#Remaining)
+
+#main(
+# Create a FlowLayoutPanel for the scrollable panel
+$scrollablePanel = New-Object Windows.Forms.FlowLayoutPanel
+$scrollablePanel.FlowDirection = [System.Windows.Forms.FlowDirection]::TopDown
+$scrollablePanel.Dock = [System.Windows.Forms.DockStyle]::Fill
+$scrollablePanel.AutoScroll = $true
+#main)
+
+#advanced(
+# Create a FlowLayoutPanel for the scrollable panel
+$scrollablePanelAdvanced = New-Object Windows.Forms.FlowLayoutPanel
+$scrollablePanelAdvanced.FlowDirection = [System.Windows.Forms.FlowDirection]::TopDown
+$scrollablePanelAdvanced.Dock = [System.Windows.Forms.DockStyle]::Fill
+$scrollablePanelAdvanced.AutoScroll = $true
+#advanced)
+
+#Remaining(
+# Create a FlowLayoutPanel for the scrollable panel
+$scrollablePanelRemaining = New-Object Windows.Forms.FlowLayoutPanel
+$scrollablePanelRemaining.FlowDirection = [System.Windows.Forms.FlowDirection]::TopDown
+$scrollablePanelRemaining.Dock = [System.Windows.Forms.DockStyle]::Fill
+$scrollablePanelRemaining.AutoScroll = $true
+#Remaining)
+
+#System.Windows.Forms.FlowLayoutPanel, BorderStyle: System.Windows.Forms.BorderStyle.None
+#main(
+$checkBoxes = @()
+$yPos = 10
+
+# Create checkboxes for each app in the list if found
+foreach ($appNameM in $appsToDelete) {
+    $app = Get-AppxPackage | Where-Object { $_.Name -eq $appNameM }
+    if ($app) {
+        $checkBox = New-CheckBox $appNameM 10 $yPos 300 20
+        $checkBoxes += $checkBox
+        $scrollablePanel.Controls.Add($checkBox)
+        $yPos += 30
+    }
+}
+
+#main)
+
+#Advanced(
+$checkBoxesAdvanced = @()
+$yPosAdvanced = 10
+
+# Create checkBoxesAdvanced for each app in the list if found
+foreach ($appNameA in $appsWhiteListAdvanced) {
+	
+    $app = Get-AppxPackage | Where-Object { $_.Name -eq $appNameA }
+	
+    if ($app) {
+        $checkBoxAdvanced = New-checkBox $appNameA 10 $yPosAdvanced 300 20
+        $checkBoxesAdvanced += $checkBoxAdvanced
+        $scrollablePanelAdvanced.Controls.Add($checkBoxAdvanced)
+        $yPosAdvanced += 30
+    }
+}
+#Advanced)
+
+#Remaining(
+$checkBoxesRemaining = @()
+$yPosRemaining = 10
+
+# Create checkBoxesRemaining for each app in the list if found
+foreach ($appNameR in $appsRemainingList) {
+    $app = Get-AppxPackage | Where-Object { $_.Name -eq $appNameR }
+    if ($app) {
+		$checkBoxRemaining = New-checkBox $appNameR 10 $yPosRemaining 300 20
+        $checkBoxesRemaining += $checkBoxRemaining
+        $scrollablePanelRemaining.Controls.Add($checkBoxRemaining)
+		$yPosRemaining += 30
+    }
+}
+#Remaining)
+
+#main(
+# Add controls to the main tab
+$tabMain.Controls.Add($buttonsFlowPanel)
+$tabMain.Controls.Add($line)
+$tabMain.Controls.Add($scrollablePanel)
+#main)
+
+#advanced(
+# Add controls to the Advanced tab
+$tabAdvanced.Controls.Add($buttonsFlowPanelAdvanced)
+$tabAdvanced.Controls.Add($lineAdvanced)
+$tabAdvanced.Controls.Add($scrollablePanelAdvanced)
+#advanced)
+
+#Remaining(
+# Add controls to the Remaining tab
+$tabRemaining.Controls.Add($buttonsFlowPanelRemaining)
+$tabRemaining.Controls.Add($lineRemaining)
+$tabRemaining.Controls.Add($scrollablePanelRemaining)
+#Remaining)
+
+#main(
+# Event handler for Select All button
+$btnSelectAll.Add_Click({
+    foreach ($checkBox in $checkBoxes) {
+        $checkBox.Checked = $true
+    }
+})
+
+# Event handler for Clear button
+$btnClear.Add_Click({
+    foreach ($checkBox in $checkBoxes) {
+        $checkBox.Checked = $false
+    }
+})
+
+# Event handler for Delete button
+$btnDelete.Add_Click({
+    foreach ($checkBox in $checkBoxes) {
+        if ($checkBox.Checked) {
+            $appName = $checkBox.Text
+            $app = Get-AppxPackage | Where-Object { $_.Name -eq $appName }
+            if ($app) {
+                Write-Host "Deleting $($app.Name)..."
+                Remove-AppxPackage -Package $app.PackageFullName
+                Write-Host "Successfully deleted $($app.Name)."
+            } else {
+                Write-Host "App with the name '$appName' was not found."
+            }
+        }
+    }
+    $form.Close()
+})
+#main)
+
+#Advanced(
+# Event handler for Select All button
+$btnSelectAllAdvanced.Add_Click({
+    foreach ($checkBoxAdvanced in $checkBoxesAdvanced) {
+        $checkBoxAdvanced.Checked = $true
+    }
+})
+
+# Event handler for Clear button
+$btnClearAdvanced.Add_Click({
+    foreach ($checkBoxAdvanced in $checkBoxesAdvanced) {
+        $checkBoxAdvanced.Checked = $false
+    }
+})
+
+# Event handler for Delete button
+$btnDeleteAdvanced.Add_Click({
+    foreach ($checkBoxAdvanced in $checkBoxesAdvanced) {
+        if ($checkBoxAdvanced.Checked) {
+            $appName = $checkBoxAdvanced.Text
+            $app = Get-AppxPackage | Where-Object { $_.Name -eq $appName }
+            if ($app) {
+                Write-Host "Deleting $($app.Name)..."
+                Remove-AppxPackage -Package $app.PackageFullName
+                Write-Host "Successfully deleted $($app.Name)."
+            } else {
+                Write-Host "App with the name '$appName' was not found."
+            }
+        }
+    }
+    $form.Close()
+})
+#Advanced)
+
+#Remaining(
+# Event handler for Select All button
+$btnSelectAllRemaining.Add_Click({
+    foreach ($checkBoxRemaining in $checkBoxesRemaining) {
+        $checkBoxRemaining.Checked = $true
+    }
+})
+
+# Event handler for Clear button
+$btnClearRemaining.Add_Click({
+    foreach ($checkBoxRemaining in $checkBoxesRemaining) {
+        $checkBoxRemaining.Checked = $false
+    }
+})
+
+# Event handler for Delete button
+$btnDeleteRemaining.Add_Click({
+    foreach ($checkBoxRemaining in $checkBoxesRemaining) {
+        if ($checkBoxRemaining.Checked) {
+            $appName = $checkBoxRemaining.Text
+            $app = Get-AppxPackage | Where-Object { $_.Name -eq $appName }
+            if ($app) {
+                Write-Host "Deleting $($app.Name)..."
+                Remove-AppxPackage -Package $app.PackageFullName
+                Write-Host "Successfully deleted $($app.Name)."
+            } else {
+                Write-Host "App with the name '$appName' was not found."
+            }
+        }
+    }
+    $form.Close()
+})
+#Remaining)
+
+#(
+# If no checkboxes were added, show a message
+if ($checkBoxes.Count -eq 0) {
+	Write-Host "No apps to delete."
+}
+
+$form.Controls.Add($tabControl)
+$form.Add_Shown({ $form.Activate() })
+    
+# Show the form
+$result = $form.ShowDialog()
+
+if ($result -eq [Windows.Forms.DialogResult]::OK) {
+	# OK button was clicked
+	Write-Host "Deletion process completed."
+} else {
+        # The form was closed or canceled
+        Write-Host "Deletion was canceled."
+}
+$pp=timeout /t 2;
+
+#)
+
+
+exit
+
+
+
+[startDeleteApps]
+Microsoft.MixedReality.Portal
+Microsoft.Office.OneNote
+Microsoft.People
+Microsoft.SkypeApp
+Microsoft.Wallet
+Microsoft.WebMediaExtensions
+Microsoft.WindowsFeedbackHub
+Microsoft.WindowsMaps
+Microsoft.Xbox.TCUI
+Microsoft.XboxApp
+Microsoft.XboxGameOverlay
+Microsoft.XboxGamingOverlay
+Microsoft.XboxIdentityProvider
+Microsoft.XboxSpeechToTextOverlay
+Microsoft.GetHelp
+Microsoft.Getstarted
+Microsoft.Microsoft3DViewer
+Microsoft.MicrosoftOfficeHub
+Microsoft.MicrosoftSolitaireCollection
+Windows.CBSPreview
+Microsoft.XboxGameCallableUI
+Microsoft.Advertising.Xaml
+microsoft.microsoftedge
+Microsoft.MicrosoftEdgeDevToolsClient
+[endDeleteApps]
+
+[startWhiteList]
+Microsoft.BingWeather
+Microsoft.DesktopAppInstaller
+Microsoft.MicrosoftStickyNotes
+Microsoft.MSPaint
+Microsoft.ScreenSketch
+Microsoft.Windows.Photos
+Microsoft.WindowsAlarms
+Microsoft.WindowsCalculator
+Microsoft.WindowsCamera
+Microsoft.WindowsSoundRecorder
+Microsoft.WindowsStore
+Microsoft.YourPhone
+Microsoft.ZuneMusic
+Microsoft.ZuneVideo
+Microsoft.Winget.Source
+Microsoft.NET.Native.Framework.1.7
+Microsoft.NET.Native.Runtime.1.7
+microsoft.windowscommunicationsapps
+Microsoft.HEIFImageExtension
+AmazonMobileLLC.AmazonMusic
+Microsoft.Office.Word
+Microsoft.Office.Excel
+Microsoft.WebMediaExtensions
+Microsoft.LanguageExperiencePacken-GB
+
+DolbyLaboratories.DolbyAccess
+windows.immersivecontrolpanel
+Windows.PrintDialog
+Microsoft.Windows.CloudExperienceHost
+Microsoft.BioEnrollment
+Microsoft.Windows.OOBENetworkConnectionFlow
+Microsoft.AAD.BrokerPlugin
+MicrosoftWindows.UndockedDevKit
+Microsoft.Windows.OOBENetworkCaptivePortal
+Microsoft.Windows.StartMenuExperienceHost
+Microsoft.Windows.ContentDeliveryManager
+Windows.CBSPreview
+NcsiUwpApp
+Microsoft.Windows.XGpuEjectDialog
+Microsoft.Windows.PinningConfirmationDialog
+Microsoft.Windows.PeopleExperienceHost
+Microsoft.Windows.ParentalControls
+Microsoft.Windows.NarratorQuickStart
+Microsoft.Windows.CapturePicker
+Microsoft.Windows.CallingShellApp
+Microsoft.Windows.Apprep.ChxApp
+Microsoft.Win32WebViewHost
+Microsoft.LockApp
+Microsoft.ECApp
+Microsoft.CredDialogHost
+Microsoft.AsyncTextService
+Microsoft.AccountsControl
+F46D4000-FD22-4DB4-AC8E-4E1DDDE828FE
+E2A4F912-2574-4A75-9BB0-0D023378592B
+1527c705-839a-4832-9118-54d4Bd6a0c89
+Microsoft.NET.Native.Runtime.2.2
+Microsoft.NET.Native.Runtime.2.2
+Microsoft.Services.Store.Engagement
+Microsoft.Services.Store.Engagement
+Microsoft.NET.Native.Framework.2.2
+Microsoft.NET.Native.Framework.2.2
+Microsoft.VCLibs.140.00
+Microsoft.UI.Xaml.2.4
+Microsoft.UI.Xaml.2.4
+Microsoft.VCLibs.140.00
+Microsoft.UI.Xaml.2.0
+Microsoft.StorePurchaseApp
+Microsoft.UI.Xaml.2.7
+Microsoft.Windows.ShellExperienceHost
+Microsoft.Windows.SecHealthUI
+c5e2524a-ea46-4f67-841f-6a9465d9d515
+Microsoft.PPIProjection
+Microsoft.UI.Xaml.2.7
+Microsoft.UI.Xaml.2.7
+Microsoft.NET.CoreRuntime.2.2
+Microsoft.NET.CoreFramework.Debug.2.2
+Microsoft.VCLibs.140.00.Debug
+Microsoft.VCLibs.120.00.Debug.Universal
+Microsoft.VCLibs.120.00.Universal
+f7fa72ea-82e5-4c39-a599-61b99a44fa42
+Microsoft.Windows.Search
+MicrosoftWindows.Client.CBS
+Microsoft.VCLibs.140.00
+Microsoft.VCLibs.140.00
+Microsoft.VCLibs.140.00.UWPDesktop
+Microsoft.VCLibs.140.00.UWPDesktop
+Microsoft.UI.Xaml.2.8
+Microsoft.UI.Xaml.2.8
+[endWhiteList]
+
+
+====
+more:
+C:\ProgramData\Microsoft\EdgeUpdate
+C:\Program Files\Internet Explorer
+%userprofile%\AppData\Local\Microsoft\
+%userprofile%\AppData\Local\Microsoft\Edge
+%userprofile%\AppData\Local\Microsoft\ EdgeUpdater
+%userprofile%\AppData\Local\Microsoft\Internet Explorer
+
+# EndExtractF42
 ::================================
 ::================================
 :r5a.x1.5.Create-PEDcpuRamV12
@@ -5832,3 +6550,7 @@ REM Create 15-11-2021 13:52:45
 
 rem PED Folder
 rem https://drive.google.com/drive/folders/1gOiYbhFK026D9MHRrErm_BhWvAHsRM2z
+
+rem DigiCertUtil
+rem https://digicert.com/StaticFiles/DigiCertUtil.zip
+
