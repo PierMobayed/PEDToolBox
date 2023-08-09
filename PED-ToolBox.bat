@@ -3,7 +3,7 @@
 if not "%1"=="max" start /MAX cmd /c %0 max & exit/b
 
 :: Set version
-set "versionn=PED-ToolBox-1.254.230809"
+set "versionn=PED-ToolBox-1.255.230809"
 
 :::::::::::::::::::::::::::::::::::::::::::
 :: Automatically check & get admin rights V2
@@ -208,6 +208,7 @@ call :r3a.x11.2.4.downLoadF-2.4.RevoUninstaller_Portable
 call :r3a.x11.2.5.downLoadF-2.5.WRCFree_10.8.3.704
 call :r3a.x11.3.downLoadF-3.Scripts
 call :r3a.x11.3.1.downLoadF-3.1.WingetScript
+call :r3a.x11.3.2.downLoadF-3.2.speedTest
 call :r3a.x12.downLoadF-files
 call :r3a.x12.0.downLoadF-bootTimer
 call :r3a.x12.1.downLoadF-deleteCmdBloatware
@@ -602,6 +603,21 @@ if %ERRORLEVEL% equ 1 (
 ) else (
     echo Winget is already installed.
 )
+exit /b
+::=======================================
+
+:r3a.x11.3.2.downLoadF-3.2.speedTest
+set "nameFolder=speedTest"
+set "createFolder=Data\3.Scripts\%nameFolder%"
+set "destination=%destinationPD%\%createFolder%"
+
+if not exist "%destination%\." mkdir "%destination%"
+
+set "fileLocation=ookla-speedtest-1.2.0-win64.zip"
+set "fileLinkID=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-win64.zip"
+set isItZip=y
+
+call :r3a.x01.0.downloadFunction
 exit /b
 ::=======================================
 
@@ -1218,7 +1234,17 @@ call :mStyle
 set menuD1= 
 set menuD2= 
 
-cmdMenuSel f870 "-|NEXT|- Add Account" "-|BACK|- Accounts and Users" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ ] Activete" "[ d ] DeActivete " "[ ] Change administrator Password"
+set mm=
+set mm= %mm% "-|NEXT|- Add Account"
+set mm= %mm% "-|BACK|- Accounts and Users"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ ] Activete"
+set mm= %mm% "[ d ] DeActivete "
+set mm= %mm% "[ ] Change administrator Password"
+
+cmdMenuSel f870        
 if %ERRORLEVEL% == 1 goto m1a.x02.4.3.addAccount
 if %ERRORLEVEL% == 2 goto m1a.x02.4.AccountsUsers
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -1244,7 +1270,18 @@ set menuD1=
 echo Account type :(%add1%)
 echo.
 set "add2==set "add1=""
-cmdMenuSel f870 "-|NEXT|- Local Users and Groups(Local) " "-|BACK|- Accounts and Users" "-|MAIN MENU|- " "========== Select an option ==========" "" "user" "administrator" "Write account name again"
+
+set mm=
+set mm= %mm% "-|NEXT|- Local Users and Groups(Local) "
+set mm= %mm% "-|BACK|- Accounts and Users"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "user"
+set mm= %mm% "administrator"
+set mm= %mm% "Write account name again"
+
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 %add2% && goto m1a.x02.4.4.LocalUsersAndGroups
 if %ERRORLEVEL% == 2 %add2% && goto m1a.x02.4.AccountsUsers
 if %ERRORLEVEL% == 3 %add2% && goto mainMenu
@@ -1265,7 +1302,17 @@ set "menuA= Accounts and Users:"
 set "menuB= 4. Local Users and Groups(Local) :"
 call :mStyle
 
-cmdMenuSel f870 "-|NEXT|- Step 1 : System Check -Update/Repair/Scan" "-|BACK|- Accounts and Users" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] lusrmgr.msc" "[ p ] Control panel/User accounts" "[ p ] User accounts panel 2"
+set mm=
+set mm= %mm% "-|NEXT|- Step 1 : System Check -Update/Repair/Scan"
+set mm= %mm% "-|BACK|- Accounts and Users"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ ] lusrmgr.msc"
+set mm= %mm% "[ ] Control panel/User accounts"
+set mm= %mm% "[ p ] User accounts panel 2"
+
+cmdMenuSel f870       
 if %ERRORLEVEL% == 1 set menuBackName=Local Users and Groups(Local) && set menuBackGoto=m1a.x02.4.4.LocalUsersAndGroups && goto m1a.x1.systemCheck
 if %ERRORLEVEL% == 2 goto m1a.x02.4.AccountsUsers
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -1399,8 +1446,8 @@ set menu=m1a.x02.6.speedTest
 set "menuA= Step 0 : Test and Diagnostic:"
 set "menuB= [-] Test internet speed:"
 call :mStyle
-set "speedTestFile=%destinationMain%\Data\3.Scripts\speedTest\speedtest.exe"
 
+set "speedTestFile=%destinationPD%\Data\3.Scripts\speedTest\speedtest.exe"
 
 set mm=
 set mm= %mm% "-|NEXT|- Step 0 : Test and Diagnostic:"
@@ -1408,7 +1455,6 @@ set mm= %mm% "-|BACK|- Step 0 : Test and Diagnostic:"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
-set mm= %mm% "[ p ] 0. Install Speed Test"
 set mm= %mm% "[ p ] Test Internet Speed"
 
 cmdMenuSel f870 %mm%
@@ -1418,46 +1464,8 @@ if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
-if %ERRORLEVEL% == 6 goto m1a.x02.6.1.speedTestDownload
-if %ERRORLEVEL% == 7 (
-	IF NOT EXIST "%speedTestFile%" (
-		goto m1a.x02.6.1.speedTestDownload
-	) else (
-		start cmd /c "%destinationMain%\Data\3.Scripts\speedTest\speedtest.exe && pause"
-	)
-)
+if %ERRORLEVEL% == 6 goto r4a.x0.6.speedTest
 
-goto %menu%
-
-:m1a.x02.6.1.speedTestDownload
-set menu=m1a.x02.6.1.speedTestDownload
-
-cls
-
-set "fileName=ookla-speedtest-1.2.0-win64.zip"
-set "fileLinkD=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-win64.zip"
-set "locTargetFolder=%destinationMain%\Data\3.Scripts\speedTest"
-set discriptionD="Please wait to download file..."
-
-set "locTargetFile=%locTargetFolder%\%fileName%"
-
-IF NOT EXIST "%locTargetFolder%" (
-	mkdir "%locTargetFolder%"
-) ELSE (
-	if not exist "%locTargetFile%" (
-		echo.
-		echo %discriptionD%
-		echo.
-		curl -O %fileLinkD%
-		move %fileName% %locTargetFolder%
-	) else (
-		if not exist "%locTargetFolder%\speedtest.exe" (
-			powershell -command "Expand-Archive -Path '%locTargetFile%' -DestinationPath '%locTargetFolder%'"
-		)
-		
-		goto m1a.x02.6.speedTest
-	)
-)
 goto %menu%
 
 :m1a.x02.6.2.speedTestCheckInternetConnection
@@ -1747,6 +1755,22 @@ goto %menu%
 ::================================
 call :r3a.x11.0.3.2.downLoadF-0.3.2.wumt
 start %destinationPD%\Data\0.Drivers\0.3.update\wumt_x64.exe
+goto %menu%
+
+:r4a.x0.6.speedTest
+::================================
+cls
+set "downloadFiles=:r3a.x11.3.2.downLoadF-3.2.speedTest"
+set "directoryFiles=Data\3.Scripts\speedTest"
+set "nameFiles=speedtest.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+	call %downloadFiles%
+)
+start cmd /c "%startFiles% -A && pause"
+
 goto %menu%
 
 :r4a.x1.Optimizer
@@ -2210,7 +2234,8 @@ set "menuA= Step 1 : System Check -Update/Repair/Scan:"
 set "menuB= 1. Create a restore point:"
 call :mStyle
 
-set mm= "-|NEXT|- 2. Check For Updates:" 
+set mm=
+set mm= %mm% "-|NEXT|- 2. Check For Updates:" 
 set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan"
 set mm= %mm% "-|MAIN MENU|- " "========== Select an option ==========" ""
 set mm= %mm% "---------- Create a restore point ----------"
@@ -2291,7 +2316,12 @@ set "menuA= Step 1 : System Check -Update/Repair/Scan:"
 set "menuB= 2. Check For Updates:"
 call :mStyle
 
-set mm=                  
+set mm=
+set mm= %mm% "-|NEXT|- 3. Check Drivers:"
+set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""       
 set mm= %mm% "[ p ] 0. Start Update Services"
 set mm= %mm% ""
 set mm= %mm% "---------- Windows update app ----------"
@@ -2312,7 +2342,7 @@ set mm= %mm% "[ ] (WAUM) Windows Automatic Updates Manager "
 set mm= %mm% ""
 set mm= %mm% "[ ] Restart PC"
 
-cmdmenusel f870 "-|NEXT|- 3. Check Drivers:" "-|BACK|- Step 1 : System Check -Update/Repair/Scan:" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdmenusel f870 %mm%
 
 cls
 echo Please wait...
@@ -2388,7 +2418,17 @@ set menu=m1a.x1.3.drivers
 set "menuA= Step 1 : System Check -Update/Repair/Scan:"
 set "menuB= 3. Check Drivers:"
 call :mStyle
-cmdMenuSel f870 "-|NEXT|- 4. Check Security And Maintenance:" "-|BACK|- Step 1 : System Check -Update/Repair/Scan:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.BackUp/Restore Drivers" "[ p ] 2.SDI drivers" 
+
+set mm=
+set mm= %mm% "-|NEXT|- 4. Check Security And Maintenance:"
+set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.BackUp/Restore Drivers"
+set mm= %mm% "[ p ] 2.SDI drivers"
+
+cmdMenuSel f870 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x1.4.checkSecurityAndMaintenance
 if %ERRORLEVEL% == 2 set menuBackName=Main Menu && set menuBackGoto=mainMenu && goto m1a.x1.systemCheck
@@ -2407,7 +2447,19 @@ set menu=m1a.x1.4.checkSecurityAndMaintenance
 set "menuA= Step 1 : System Check -Update/Repair/Scan:"
 set "menuB= 4. Check Security And Maintenance:"
 call :mStyle
-cmdMenuSel f870 "-|NEXT|- 5. Check Windows Defender:" "-|BACK|- Step 1 : System Check -Update/Repair/Scan:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.Open Security And Maintenance" "[ ] 2.Start Maintenance" "[ ] 3.Stop Maintenance" "[ ] 4.Restart PC"
+
+set mm=
+set mm= %mm% "-|NEXT|- 5. Check Windows Defender:"
+set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.Open Security And Maintenance"
+set mm= %mm% "[ ] 2.Start Maintenance"
+set mm= %mm% "[ ] 3.Stop Maintenance"
+set mm= %mm% "[ ] 4.Restart PC"
+
+cmdMenuSel f870 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x1.5.checkWindowsDefender
 if %ERRORLEVEL% == 2 set menuBackName=Main Menu && set menuBackGoto=mainMenu && goto m1a.x1.systemCheck
@@ -2428,7 +2480,22 @@ set menu=m1a.x1.5.checkWindowsDefender
 set "menuA= Step 1 : System Check -Update/Repair/Scan:"
 set "menuB= 5. Check Windows Defender:"
 call :mStyle
-cmdMenuSel f870 "-|NEXT|- 6. Check Windows System folder for corrupt files:" "-|BACK|- Step 1 : System Check -Update/Repair/Scan:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.Open Microsoft Defender" "[ p ] 2.Check for updates on Defender" "---------" "[ p ] 1.quick virus scan" "[ ] 2.full virus scan" "[ ] 3.offline virus scan" "[ ] 4.boot sector malware scan"
+
+set mm=
+set mm= %mm% "-|NEXT|- 6. Check Windows System folder for corrupt files:"
+set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.Open Microsoft Defender"
+set mm= %mm% "[ p ] 2.Check for updates on Defender"
+set mm= %mm% "---------"
+set mm= %mm% "[ p ] 1.quick virus scan"
+set mm= %mm% "[ ] 2.full virus scan"
+set mm= %mm% "[ ] 3.offline virus scan"
+set mm= %mm% "[ ] 4.boot sector malware scan"
+
+cmdMenuSel f870 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x1.6.checkCorruptFiles
 if %ERRORLEVEL% == 2 set menuBackName=Main Menu && set menuBackGoto=mainMenu && goto m1a.x1.systemCheck
@@ -2455,7 +2522,19 @@ set menu=m1a.x1.6.checkCorruptFiles
 set "menuA= Step 1 : System Check -Update/Repair/Scan:"
 set "menuB= 6. Check Windows System folder for corrupt files:"
 call :mStyle
-cmdMenuSel f870 "-|NEXT|- Step 2 : Privacy Settings:" "-|BACK|- Step 1 : System Check -Update/Repair/Scan:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.Run a SFC /Scan now" "[ p ] 2.Run a DISM command" "" "[ ] Auto Scan - SFC-DISM-SFC"
+
+set mm=
+set mm= %mm% "-|NEXT|- Step 2 : Privacy Settings:"
+set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.Run a SFC /Scan now"
+set mm= %mm% "[ p ] 2.Run a DISM command"
+set mm= %mm% ""
+set mm= %mm% "[ ] Auto Scan - SFC-DISM-SFC"
+
+cmdMenuSel f870 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x2.settings 
 if %ERRORLEVEL% == 2 set menuBackName=Main Menu && set menuBackGoto=mainMenu && goto m1a.x1.systemCheck
@@ -2477,7 +2556,14 @@ set menu=m1a.x2.settings
 set "menuA=Main Menu:"
 set "menuB=Step 2 : Privacy Settings:"
 call :mStyle
-set mm="[ p ] Create a restore point"
+
+set mm=
+set mm= %mm% "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update"
+set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] Create a restore point"
 set mm= %mm% "[ p ] Startup Apps"
 set mm= %mm% "[ p ] Add or remove programs"
 set mm= %mm% "--[ p ] Windows Features"
@@ -2495,7 +2581,7 @@ set mm= %mm% "[ ] Reset this pc"
 set mm= %mm% ""
 set mm= %mm% "[+] More: Page 2:"
           
-cmdMenuSel f870 "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update" "-|BACK|- Step 1 : System Check -Update/Repair/Scan" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 2 set menuBackName=Main Menu && set menuBackGoto=mainMenu && goto m1a.x1.systemCheck
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2531,9 +2617,27 @@ set "menuA=Step 2 : Privacy Settings:"
 set "menuB=More: Page 2:"
 call :mStyle
 
+set mm=
+set mm= %mm% "-|NEXT|- Step 2 : Privacy Settings:"
+set mm= %mm% "-|BACK|- Step 2 : Privacy Settings:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ ] Security and Maintenance"
+set mm= %mm% "[ ] Windows Security (Defender)"
+set mm= %mm% "[ ] Adjust the appearance and performance of Windows"
+set mm= %mm% "[ ] Show transparency in Windows"
+set mm= %mm% "[ ] Graphics settings"
+set mm= %mm% "[ ] Indexing Options"
+set mm= %mm% "[ ] Time -Region"
+set mm= %mm% "[ ] Set up Sticky Keys"
+set mm= %mm% "[ ] Taskbar settings"
+set mm= %mm% ""
+set mm= %mm% "[ ] About - System properties"
+set mm= %mm% "[ ] About - Control panel"
+set mm= %mm% "[ ] About - Windows"
 
-set mm="[ ] Security and Maintenance" "[ ] Windows Security (Defender)" "[ ] Adjust the appearance and performance of Windows" "[ ] Show transparency in Windows" "[ ] Graphics settings" "[ ] Indexing Options" "[ ] Time -Region" "" "[ ] About - System properties" "[ ] About - Control panel" "[ ] About - Windows"
-cmdMenuSel f870 "-|NEXT|- Step 2 : Privacy Settings:" "-|BACK|- Step 2 : Privacy Settings:" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x2.settings
 if %ERRORLEVEL% == 2 goto m1a.x2.settings
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2547,10 +2651,13 @@ if %ERRORLEVEL% == 9 start ms-settings:colors
 if %ERRORLEVEL% == 10 start ms-settings:display-advancedgraphics
 if %ERRORLEVEL% == 11 start control /name Microsoft.IndexingOptions
 if %ERRORLEVEL% == 12 start control intl.cpl
-if %ERRORLEVEL% == 13 goto %menu%
-if %ERRORLEVEL% == 14 start ms-settings:about
-if %ERRORLEVEL% == 15 start explorer "shell:::{BB06C0E4-D293-4f75-8A90-CB05B6477EEE}"
-if %ERRORLEVEL% == 16 start winver.exe
+if %ERRORLEVEL% == 13 start explorer "shell:::{D555645E-D4F8-4c29-A827-D93C859C4F2A}\pageStickyKeysSettings"
+if %ERRORLEVEL% == 14 start ms-settings:taskbar
+
+if %ERRORLEVEL% == 15 goto %menu%
+if %ERRORLEVEL% == 16 start ms-settings:about
+if %ERRORLEVEL% == 17 start explorer "shell:::{BB06C0E4-D293-4f75-8A90-CB05B6477EEE}"
+if %ERRORLEVEL% == 18 start winver.exe
 
 goto %menu%
 
@@ -2566,6 +2673,11 @@ set "menuA= Main Menu:"
 set "menuB= Step 3 : Programs -Install/Uninstall/Update:"
 call :mStyle
 set mm=
+set mm= %mm% "-|NEXT|- Step 4 : Clean Up -StartUp/StartMenu/Explorer"
+set mm= %mm% "-|BACK|- Step 2 : Privacy Settings"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
 set mm= %mm% "[+] 1.Install app/program:"
 set mm= %mm% "[+] 2.Uninstall app/program:"
 set mm= %mm% "[+] 3.Update all app/program:"
@@ -2573,7 +2685,7 @@ set mm= %mm% ""
 set mm= %mm% "[+] More: Github Scripts:
 
 
-cmdMenuSel f870 "-|NEXT|- Step 4 : Clean Up -StartUp/StartMenu/Explorer" "-|BACK|- Step 2 : Privacy Settings" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm% 
+cmdMenuSel f870 %mm% 
 if %ERRORLEVEL% == 1 goto m1a.x4.cleanUp
 if %ERRORLEVEL% == 2 goto m1a.x2.settings
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2581,7 +2693,16 @@ if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
 if %ERRORLEVEL% == 6 goto m1a.x3.1.install
-if %ERRORLEVEL% == 7 set menu1=r4a.x3.Uninstaller && set menuA=Step 3 : Programs -Install/Uninstall/Update: && set menuB=2.Uninstaller && set menuNextName=Step 3 : Programs -Install/Uninstall/Update: && set menuNextGoto=m1a.x3.installUninstallUpdate && set menuBackName=Step 3 : Programs -Install/Uninstall/Update: && set menuBackGoto=m1a.x3.installUninstallUpdate && goto r4a.x3.Uninstaller
+if %ERRORLEVEL% == 7 (
+	set menu1=r4a.x3.Uninstaller
+	set menuA=Step 3 : Programs -Install/Uninstall/Update:
+	set menuB=2.Uninstaller
+	set menuNextName=Step 3 : Programs -Install/Uninstall/Update:
+	set menuNextGoto=m1a.x3.installUninstallUpdate
+	set menuBackName=Step 3 : Programs -Install/Uninstall/Update:
+	set menuBackGoto=m1a.x3.installUninstallUpdate
+	goto r4a.x3.Uninstaller
+)
 if %ERRORLEVEL% == 8 goto m1a.x3.3.updateApps
 
 if %ERRORLEVEL% == 9 goto %menu%
@@ -2597,17 +2718,22 @@ set menu=m1a.x3.1.install
 set "menuA= Step 3 : Programs -Install/Uninstall/Update:"
 set "menuB= 1. Install -programs:"
 call :mStyle
-set mm="[ ] Script: Winget GUI Installer"
+
+set mm=
+set mm= %mm% "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update:"
+set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ ] Script: Winget GUI Installer"
 set mm= %mm% ""
 set mm= %mm% "[+] PED: App installer links"
 set mm= %mm% ""
 set mm= %mm% "[ ] Web: winstall.app"
 set mm= %mm% "[ ] Web: Ninite.com"
 set mm= %mm% "[ ] Web: Portableapps.com"
-::set mm= %mm% ""
 
-
-cmdMenuSel f870 "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update:" "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2634,10 +2760,15 @@ goto %menu%
 ::================================
 set menu=m1a.x3.1.1.pedAppInstallerLinks
 set "menuA= 1. Install -programs:"
-set "menuB= PED: App Installer links"
+set "menuB= PED: App Installer links (winget)"
 call :mStyle
 
-set mm=""
+set mm=
+set mm= %mm% "-|NEXT|- 1. Install -programs:"
+set mm= %mm% "-|BACK|- 1. Install -programs:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
 set mm= %mm% "[ ] Browsers: Google.Chrome"
 set mm= %mm% "[ ] Archiver: 7zip.7zip"
 set mm= %mm% "[ ] Archiver: RARLab.WinRAR"
@@ -2652,16 +2783,19 @@ set mm= %mm% "[ ] Social: Facebook.Messenger"
 set mm= %mm% "[ ] Social: WhatsApp.WhatsApp"
 set mm= %mm% "[ ] Storage: Google.Drive"
 set mm= %mm% "[ ] Storage: Microsoft.OneDrive"
-set mm= %mm% "[ ] Node: Notepad++.Notepad++"
-set mm= %mm% "[ ] Node: Apache.OpenOffice"
+set mm= %mm% "[ ] Note: Notepad++.Notepad++"
+set mm= %mm% "[ ] Note: Apache.OpenOffice"
 set mm= %mm% "[ ] Test: PrimateLabs.Geekbench.5"
 set mm= %mm% "[ ] Downloader: qBittorrent.qBittorrent"
 set mm= %mm% "[ ] Video: VideoLAN.VLC"
 set mm= %mm% "[ ] Uninstaller: RevoUninstaller.RevoUninstallerPro"
 set mm= %mm% "[ ] Cleaner: Glarysoft.GlaryUtilities"
+set mm= %mm% ""
+set mm= %mm% "--- MS Store: ---"
+set mm= %mm% "[ ] Note: Free Office Mobile"
 
 
-cmdMenuSel f870 "-|NEXT|- 1. Install -programs:" "-|BACK|- 1. Install -programs:" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x3.1.install
 if %ERRORLEVEL% == 2 goto m1a.x3.1.install
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2691,6 +2825,13 @@ if %ERRORLEVEL% == 25 set "appIns=VideoLAN.VLC"
 if %ERRORLEVEL% == 26 set "appIns=RevoUninstaller.RevoUninstallerPro"
 if %ERRORLEVEL% == 27 set "appIns=Glarysoft.GlaryUtilities"
 
+if %ERRORLEVEL% == 28 goto %menu%
+if %ERRORLEVEL% == 29 goto %menu%
+if %ERRORLEVEL% == 30 (
+	start https://www.microsoft.com/store/productid/9WZDNCRFJB9S?ocid=pdpshare
+	start https://www.microsoft.com/store/productid/9WZDNCRFJBH3?ocid=pdpshare
+	goto %menu%
+)
 
 :m1a.x3.1.1.1.appInstaller
 cls
@@ -2848,7 +2989,18 @@ set menu=m1a.x3.3.updateApps
 set "menuA= Step 3 : Programs -Install/Uninstall/Update:"
 set "menuB= 3.Update all app/program:"
 call :mStyle
-cmdMenuSel f870 "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update:" "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] List with updates all apps/programs:" "[ p ] Updates ALL:" "[ ] Updates Manual:"
+
+set mm=
+set mm= %mm% "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update:"
+set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] List with updates all apps/programs:"
+set mm= %mm% "[ p ] Updates ALL:"
+set mm= %mm% "[ ] Updates Manual:"
+
+cmdMenuSel f870 %mm%
 cls
 if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
@@ -2856,19 +3008,33 @@ if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
-if %ERRORLEVEL% == 6 winget upgrade && %color1% && echo. && cmdMenuSel f870 "Press ENTER to continue..."
-if %ERRORLEVEL% == 7 start cmd /c "winget upgrade -h --all && echo. && cmdMenuSel f870 "Press ENTER to continue...""
-if %ERRORLEVEL% == 8 goto m1a.x3.3.1.updateAppsManual
+if %ERRORLEVEL% == 6 goto m1a.x3.3.1.updateAppsList
+if %ERRORLEVEL% == 7 goto m1a.x3.3.2.updateAppsAll
+if %ERRORLEVEL% == 8 goto m1a.x3.3.3.updateAppsManual
+
+goto %menu%
+
+:m1a.x3.3.1.updateAppsList
+::================================
+winget upgrade
+%color1%
+echo.
+cmdMenuSel f870 "Press ENTER to continue..."
+
+goto %menu%
+::winget upgrade -h --id APP-ID
+
+:m1a.x3.3.2.updateAppsAll
+::================================
+start cmd /c "winget upgrade -h --all && echo. && cmdMenuSel f870 "Press ENTER to continue...""
 
 %color1%
 
 goto %menu%
 
-::winget upgrade -h --id APP-ID
-
-:m1a.x3.3.1.updateAppsManual
+:m1a.x3.3.3.updateAppsManual
 ::================================
-set menu=m1a.x3.3.1.updateAppsManual
+set menu=m1a.x3.3.3.updateAppsManual
 
 winget upgrade 
 %color1% 
@@ -2882,7 +3048,8 @@ if %ERRORLEVEL% == 1 start cmd /c "winget upgrade -h --id %winG1% && pause"
 set "winG1="
 if %ERRORLEVEL% == 2 goto %menu%
 
-%color1% && goto m1a.x3.3.updateApps
+%color1%
+goto m1a.x3.3.updateApps
 
 :m1a.x3.4.GithubScripts
 ::================================
@@ -2910,7 +3077,18 @@ set menu=m1a.x4.cleanUp
 set "menuA= Main Menu:"
 set "menuB= Step 4 : Clean Up -StartUp/StartMenu/Explorer:"
 call :mStyle
-cmdMenuSel f870 "-|NEXT|- 1.StartUp" "-|BACK|- Step 3 : Programs -Install/Uninstall/Update" "-|MAIN MENU|- " "========== Select an option ==========" "" "[+] 1.StartUp" "[+] 2.StartMenu" "[+] 3.Windows Explorer"
+
+set mm=
+set mm= %mm% "-|NEXT|- 1.StartUp"
+set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[+] 1.StartUp"
+set mm= %mm% "[+] 2.StartMenu"
+set mm= %mm% "[+] 3.Windows Explorer"
+
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x4.1.startUp
 if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2931,7 +3109,22 @@ set menu=m1a.x4.1.startUp
 set "menuA= Step 4 : Clean Up -StartUp/StartMenu/Explorer:"
 set "menuB= 1. Clean StartUp apps:"
 call :mStyle
-cmdMenuSel f870 "-|NEXT|- 2.Clean Start Menu" "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.Startup -Apps settings" "[+] 2.Startup -Tasks" "[ p ] 3.Startup -Task Manager" "[ p ] 4.Startup -Folders " "[+] 5.Startup -Registry editor"  "" "[ ] 6.Startup manager (GlaryUtility)"
+
+set mm=
+set mm= %mm% "-|NEXT|- 2.Clean Start Menu"
+set mm= %mm% "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.Startup -Apps settings"
+set mm= %mm% "[+] 2.Startup -Tasks"
+set mm= %mm% "[ p ] 3.Startup -Task Manager"
+set mm= %mm% "[ p ] 4.Startup -Folders "
+set mm= %mm% "[+] 5.Startup -Registry editor"
+set mm= %mm% ""
+set mm= %mm% "[ ] 6.Startup manager (GlaryUtility)"
+
+cmdMenuSel f870 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x4.2.startMenu
 if %ERRORLEVEL% == 2 goto m1a.x4.cleanUp
@@ -2963,9 +3156,19 @@ if %ERRORLEVEL% == 1 goto %menu%
 set menu=m1a.x4.1.2.startupTasks
 
 set "menuA= 1. Clean StartUp apps:"
-set "menuB= 2. StartUp Tasks: -Grip"
+set "menuB= 2. StartUp Tasks: -GridView"
 call :mStyle
-cmdMenuSel f870 "-|NEXT|- 1.Clean StartUp apps:" "-|BACK|- 1.Clean StartUp apps:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.Disable startup Tasks" "[ ] 2.Enable startup Tasks"
+
+set mm=
+set mm= %mm% "-|NEXT|- 1.Clean StartUp apps:"
+set mm= %mm% "-|BACK|- 1.Clean StartUp apps:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.Disable startup Tasks"
+set mm= %mm% "[ ] 2.Enable startup Tasks"
+
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x4.1.startUp
 if %ERRORLEVEL% == 2 goto m1a.x4.1.startUp
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2998,7 +3201,9 @@ if %ERRORLEVEL% == 1 goto %menu%
 ::if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x4.1.4.StartupFolders
-start %windir%\explorer.exe shell:startup && start %windir%\explorer.exe "shell:common startup"
+
+start %windir%\explorer.exe shell:startup
+start %windir%\explorer.exe "shell:common startup"
 cls
 echo.
 echo Instructions:
@@ -3014,7 +3219,19 @@ set menu=m1a.x4.1.5.RegistryEditor
 set "menuA= 1. Clean StartUp apps:"
 set "menuB= 3. Registry Editor:"
 call :mStyle
-cmdMenuSel f870 "-|NEXT|- 1.Clean StartUp apps:" "-|BACK|- 1.Clean StartUp apps:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.CURRENT_USER\\Run" "[ p ] 2.CURRENT_USER\\RunOnce" "[ p ] 3.LOCAL_MACHINE\\Run" "[ p ] 4.LOCAL_MACHINE\\RunOnce"
+
+set mm=
+set mm= %mm% "-|NEXT|- 1.Clean StartUp apps:"
+set mm= %mm% "-|BACK|- 1.Clean StartUp apps:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.CURRENT_USER\\Run"
+set mm= %mm% "[ p ] 2.CURRENT_USER\\RunOnce"
+set mm= %mm% "[ p ] 3.LOCAL_MACHINE\\Run"
+set mm= %mm% "[ p ] 4.LOCAL_MACHINE\\RunOnce"
+
+cmdMenuSel f870 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x4.1.startUp
 if %ERRORLEVEL% == 2 goto m1a.x4.1.startUp
@@ -3037,7 +3254,18 @@ set menu=m1a.x4.2.startMenu
 set "menuA= Step 4 : Clean Up -StartUp/StartMenu/Explorer:"
 set "menuB= 2. Clean Start Menu:"
 call :mStyle
-cmdMenuSel f870 "-|NEXT|- 3.Clean Windows Explorer" "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.Start Menu:" "[ p ] 2.Apps:" "[ p ] 3.Folders appear to start menu"
+
+set mm=
+set mm= %mm% "-|NEXT|- 3.Clean Windows Explorer"
+set mm= %mm% "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.Start Menu:"
+set mm= %mm% "[ p ] 2.Apps:"
+set mm= %mm% "[ p ] 3.Folders appear to start menu"
+
+cmdMenuSel f870 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x4.3.winExplorer
 if %ERRORLEVEL% == 2 goto m1a.x4.cleanUp
@@ -3059,7 +3287,25 @@ set "menuA= Step 4 : Clean Up -StartUp/StartMenu/Explorer:"
 set "menuB= 3.Clean Windows Explorer:"
 call :mStyle
 
-cmdMenuSel f870 "-|NEXT|- Step 5 : Optimizing Programs" "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.Desktop icon settings" "[+] 2. Taskbar" "" "[+] 3.File Options" "" "[ ] Set up Sticky Keys" "[ ] Recent folders" "[ ] Recent Items Instance Folder" "" "[ ] Restart explorer"
+set mm=
+set mm= %mm% "-|NEXT|- Step 5 : Optimizing Programs"
+set mm= %mm% "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.Desktop icon settings"
+set mm= %mm% "[ p ] 2.Icons - Notification Area and System Tray-Icons"
+set mm= %mm% ""
+set mm= %mm% "[+] 3.File Options"
+set mm= %mm% ""
+set mm= %mm% "[ ] TEMP folder"
+set mm= %mm% "[ ] Prefetch folder"
+set mm= %mm% "[ ] Recent folder"
+set mm= %mm% "[ ] Recent Items Instance Folder"
+set mm= %mm% ""
+set mm= %mm% "[ ] Restart explorer"
+
+cmdMenuSel f870 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x5.optimizingPrograms
 if %ERRORLEVEL% == 2 goto m1a.x4.cleanUp
@@ -3068,40 +3314,23 @@ if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
 if %ERRORLEVEL% == 6 start rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,0
-if %ERRORLEVEL% == 7 goto m1a.x4.3.1.Taskbar
+if %ERRORLEVEL% == 7 (
+	start explorer shell:::{05d7b0f4-2121-4eff-bf6b-ed3f69b894d9} \SystemIcons,,0
+	start explorer shell:::{05d7b0f4-2121-4eff-bf6b-ed3f69b894d9}
+)
 if %ERRORLEVEL% == 8 goto %menu%
 if %ERRORLEVEL% == 9 goto m1a.x4.3.3.winExplorerThisPC
 if %ERRORLEVEL% == 10 goto %menu%
-if %ERRORLEVEL% == 11 start explorer "shell:::{D555645E-D4F8-4c29-A827-D93C859C4F2A}\pageStickyKeysSettings"
+
+if %ERRORLEVEL% == 13 start %TEMP%
+if %ERRORLEVEL% == 13 start %SystemRoot%\explorer.exe C:\Windows\prefetch\
 if %ERRORLEVEL% == 12 start explorer "shell:::{22877a6d-37a1-461a-91b0-dbda5aaebc99}"
 if %ERRORLEVEL% == 13 start explorer "shell:::{4564b25e-30cd-4787-82ba-39e73a750b14}"
+
 if %ERRORLEVEL% == 14 goto %menu%
 if %ERRORLEVEL% == 15 goto m1a.x4.3.4.winExplorerRestart
 
 goto %menu%
-
-:m1a.x4.3.1.Taskbar
-::================================
-set menu=m1a.x4.3.1.Taskbar
-
-set "menuA= 3.Clean Windows Explorer:"
-set "menuB= 2. Taskbar:"
-call :mStyle
-
-cmdMenuSel f870 "-|NEXT|- 3.Clean Windows Explorer:" "-|BACK|- 3.Clean Windows Explorer:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ ] 1.Taskbar settings" "" "[ p ] 2.Icons - Notification Area and System Tray-Icons" 
-if %ERRORLEVEL% == 1 goto m1a.x4.3.winExplorer
-if %ERRORLEVEL% == 2 goto m1a.x4.3.winExplorer
-if %ERRORLEVEL% == 3 goto mainMenu
-if %ERRORLEVEL% == 4 goto %menu%
-if %ERRORLEVEL% == 5 goto %menu%
-
-if %ERRORLEVEL% == 6 start ms-settings:taskbar
-if %ERRORLEVEL% == 7 goto %menu%
-if %ERRORLEVEL% == 8 start explorer shell:::{05d7b0f4-2121-4eff-bf6b-ed3f69b894d9} \SystemIcons,,0 && start explorer shell:::{05d7b0f4-2121-4eff-bf6b-ed3f69b894d9}
-
-goto %menu%
-
-
 
 :m1a.x4.3.3.winExplorerThisPC
 ::================================
@@ -3111,7 +3340,19 @@ set "menuA= 3.Clean Windows Explorer:"
 set "menuB= 4.File options - This PC -Launch to"
 call :mStyle
 
-cmdMenuSel f870 "-|NEXT|- 3.Clean Windows Explorer:" "-|BACK|- 3.Clean Windows Explorer:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ ] File Options" "" "---------- Open file explorer to: ----------" "[ p ] This PC" "[ d ] Quick access"
+set mm=
+set mm= %mm% "-|NEXT|- 3.Clean Windows Explorer:"
+set mm= %mm% "-|BACK|- 3.Clean Windows Explorer:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ ] File Options"
+set mm= %mm% ""
+set mm= %mm% "---------- Open file explorer to: ----------"
+set mm= %mm% "[ p ] This PC"
+set mm= %mm% "[ d ] Quick access"
+
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x4.3.winExplorer
 if %ERRORLEVEL% == 2 goto m1a.x4.3.winExplorer
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3122,11 +3363,11 @@ if %ERRORLEVEL% == 6 start control folders
 if %ERRORLEVEL% == 7 goto %menu%
 if %ERRORLEVEL% == 8 goto %menu%
 if %ERRORLEVEL% == 9 (
-	set thisPc=1
+	set "thisPc=1"
 	call :m1a.x4.3.3.1.winExplorerThisPC
 )
 if %ERRORLEVEL% == 10 (
-	set thisPc=2
+	set "thisPc=2"
 	call :m1a.x4.3.3.1.winExplorerThisPC
 )
 echo.
@@ -3135,13 +3376,8 @@ if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x4.3.3.1.winExplorerThisPC
 ::================================
-
-if %thisPc% == 1 (
-	reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "LaunchTo" /t "REG_DWORD" /d "1" /f
-)
-if %thisPc% == 2 (
-	reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "LaunchTo" /t "REG_DWORD" /d "2" /f
-)
+reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "LaunchTo" /t "REG_DWORD" /d "%thisPc%" /f
+set "thisPc="
 exit /b
 
 :m1a.x4.3.4.winExplorerRestart
@@ -3169,6 +3405,11 @@ call :mStyle
 set "menuD2= "
 
 set mm=
+set mm= %mm% "-|NEXT|- Step 6 : Clean Up Junk files  "
+set mm= %mm% "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
 set mm= %mm% "------- Optimize Services/Settings -------"
 set mm= %mm% "[ p ] 1.Turbo mode \ Safe configurations"
 set mm= %mm% "[ d ] 1.Default configurations"
@@ -3186,7 +3427,7 @@ set mm= %mm% "------- More Options -------"
 set mm= %mm% "[ p ] Administrative Tools"
 
 
-cmdMenuSel f870 "-|NEXT|- Step 6 : Clean Up Junk files  " "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x6.cleanUpJunkfiles  
 if %ERRORLEVEL% == 2 goto m1a.x4.cleanUp
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3277,13 +3518,18 @@ call :mStyle
   
 
 set mm=
+set mm= %mm% "-|NEXT|- Step 5 : Optimizing Programs"
+set mm= %mm% "-|BACK|- Step 5 : Optimizing Programs"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
 set mm= %mm% "[ p ] Open - Task Scheduler settings"
 set mm= %mm% ""
 set mm= %mm% "------- GridView -------"
 set mm= %mm% "[ ] Disable-ScheduledTask"
 set mm= %mm% "[ ] Stop-ScheduledTask"
 
-cmdMenuSel f870 "-|NEXT|- Step 5 : Optimizing Programs" "-|BACK|- Step 5 : Optimizing Programs" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x5.optimizingPrograms
 if %ERRORLEVEL% == 2 goto m1a.x5.optimizingPrograms
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3352,7 +3598,18 @@ set "menuD2= echo ========== - Stop or disable services"
 set "menuA= Step 5 : Optimizing Programs:"
 set "menuB= Services with GridView:"
 call :mStyle
-cmdMenuSel f870 "-|NEXT|- Step 5 : Optimizing Programs" "-|BACK|- Step 5 : Optimizing Programs" "-|MAIN MENU|- " "========== Select an option ==========" ""  "[ ] Stop" "[ ] StartupType Disabled" "[ ] Restart-service" 
+
+set mm=
+set mm= %mm% "-|NEXT|- Step 5 : Optimizing Programs"
+set mm= %mm% "-|BACK|- Step 5 : Optimizing Programs"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ ] Stop"
+set mm= %mm% "[ ] StartupType Disabled"
+set mm= %mm% "[ ] Restart-service" 
+
+cmdMenuSel f870 %mm%
  
 if %ERRORLEVEL% == 1 goto m1a.x5.optimizingPrograms
 if %ERRORLEVEL% == 2 goto m1a.x5.optimizingPrograms
@@ -3394,6 +3651,11 @@ set "menuA= Main Menu:"
 set "menuB= Step 7 : Turn on\off apps:"
 call :mStyle
 set mm= 
+set mm= %mm% "-|NEXT|- 1. Windows Updates:"
+set mm= %mm% "-|BACK|- %menuBackName%"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
 set mm= %mm% "[+] 1. Windows Updates:"       
 set mm= %mm% "[+] 2. Security and Maintenance:"
 set mm= %mm% "[+] 3. Microsoft Defender Application:"
@@ -3402,7 +3664,7 @@ set mm= %mm% "[+] 5. Ram Reducer:"
 set mm= %mm% "[+] 6. Indexing:"
 set mm= %mm% "[+] 7. Hibernate:"
 
-cmdMenuSel f870 "-|NEXT|- 1. Windows Updates:" "-|BACK|- %menuBackName%" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.1.WindowsUpdate
 if %ERRORLEVEL% == 2 goto %menuBackGoto%
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3432,15 +3694,20 @@ call :mStyle
       
 
 set mm=
+set mm= %mm% "-|NEXT|- 1. WU Configuration:"
+set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
 set mm= %mm% "[+] 1. WU Configuration:"
 set mm= %mm% "[+] 2. WU Tasks:"
 set mm= %mm% "[+] 3. WU Services:"
-set mm= %mm% "[+] 4. WU Security updates only:"
+set mm= %mm% "[+] 4. WU Security updates only(oneClick):"
 set mm= %mm% "[+] 5. WU Pause next update till:"
 set mm= %mm% ""
 set mm= %mm% "[ d ] default Settings"
 
-cmdMenuSel f870 "-|NEXT|- 1. WU Configuration:" "-|BACK|- Step 7 : Turn on\off apps" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.1.1.winUpdateMod
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3462,7 +3729,19 @@ set menu=m1a.x7.1.1.winUpdateMod
 set "menuA= 1. Windows Updates:"
 set "menuB= 1. WU Configuration:"
 call :mStyle
-cmdMenuSel f870 "-|NEXT|-  2. WU Tasks:" "-|BACK|- Windows Update Main:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ ] 1.Disable - AutoUpdate" "[ p ] 1.Enable - Ask for download and install" "[ ] 1.Enable - ask for reboot" "[ d ] 1.Enable - Automatic Update"
+
+set mm=
+set mm= %mm% "-|NEXT|-  2. WU Tasks:"
+set mm= %mm% "-|BACK|- Windows Update Main:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ ] 1.Disable - AutoUpdate"
+set mm= %mm% "[ p ] 1.Enable - Ask for download and install"
+set mm= %mm% "[ ] 1.Enable - ask for reboot"
+set mm= %mm% "[ d ] 1.Enable - Automatic Update"
+
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.1.2.winUpdateModTasks
 if %ERRORLEVEL% == 2 goto m1a.x7.1.WindowsUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3505,7 +3784,16 @@ set "menuA= 1. Windows Updates:"
 set "menuB= 2. WU Tasks:"
 call :mStyle
 
-cmdMenuSel f870 "-|NEXT|- 3. WU Services:" "-|BACK|- Windows Update Main:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.Disable" "[ d ] 1.Enable"
+set mm= 
+set mm= %mm% "-|NEXT|- 3. WU Services:"
+set mm= %mm% "-|BACK|- Windows Update Main:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.Disable"
+set mm= %mm% "[ d ] 1.Enable"
+
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.1.3.winUpdateModServices
 if %ERRORLEVEL% == 2 goto m1a.x7.1.WindowsUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3514,6 +3802,7 @@ if %ERRORLEVEL% == 5 goto %menu%
 
 if %ERRORLEVEL% == 6 SET autoUpdateP=DISABLE
 if %ERRORLEVEL% == 7 SET autoUpdateP=ENABLE
+
 ::SCHTASKS /Change /TN "" /DISABLE
 SCHTASKS /Change /TN "\Microsoft\Windows\WindowsUpdate\Automatic App Update" /%autoUpdateP%
 SCHTASKS /Change /TN "\Microsoft\Windows\InstallService\ScanForUpdates" /%autoUpdateP%
@@ -3548,7 +3837,16 @@ set "menuA= 1. Windows Updates:"
 set "menuB= 3. WU Services:"
 call :mStyle
 
-cmdMenuSel f870 "-|NEXT|- 4. WU Security updates only:" "-|BACK|- Windows Update Main:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.Manual" "[ ] 1.Disable" "[ d ] 1.Enable" 
+set mm= 
+set mm= %mm% "-|NEXT|- 4. WU Security updates only(oneClick):"
+set mm= %mm% "-|BACK|- Windows Update Main:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.Manual" "[ ] 1.Disable"
+set mm= %mm% "[ d ] 1.Enable" 
+
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.1.4.winUpdateSecurity
 if %ERRORLEVEL% == 2 goto m1a.x7.1.WindowsUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3577,60 +3875,82 @@ if %ERRORLEVEL% == 1 goto m1a.x7.1.4.winUpdateSecurity
 set menu=m1a.x7.1.4.winUpdateSecurity
 
 set "menuA= 1. Windows Updates:"
-set "menuB= 4. WU Security updates only:"
+set "menuB= 4. WU Security updates only(oneClick):"
+set "menuD2="
+set "menuD2=%menuD2% && echo.
+set "menuD2=%menuD2% && echo Updates Pause till: 2030-10-10"
+set "menuD2=%menuD2% && echo QualityUpdates 30 days
+set "menuD2=%menuD2% && echo FeatureUpdates 180 days
+set "menuD2=%menuD2% && echo.
+
 call :mStyle
-cmdMenuSel f870 "-|NEXT|- 5. WU Pause next update till:" "-|BACK|- Windows Update Main:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.Apply -Security updates only" "[ d ] 1.Reverse changes"
+
+set mm=
+set mm= %mm% "-|NEXT|- 5. WU Pause next update till:"
+set mm= %mm% "-|BACK|- Windows Update Main:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.Apply -Security updates only"
+set mm= %mm% ""
+set mm= %mm% "[ ] Modify Driver Updates"
+
+cmdMenuSel f870 %mm% 
 if %ERRORLEVEL% == 1 goto m1a.x7.1.5.WinUpdadePause
 if %ERRORLEVEL% == 2 goto m1a.x7.1.WindowsUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
-if %ERRORLEVEL% == 6 goto m1a.x7.1.4.1.winUpdateSecurityApply
-if %ERRORLEVEL% == 7 goto m1a.x7.1.4.2.winUpdateSecurityReverse
+if %ERRORLEVEL% == 6 (
+set startOneClick=1
+call :m1a.x7.1.5.1.WinUpdadePause
+set startOneClick=0
+)
+if %ERRORLEVEL% == 7 goto m1a.x7.1.5.4.WinUpdadeDriversUpdates
 goto %menu%
 
-:m1a.x7.1.4.1.winUpdateSecurityApply
-cd %systemroot%\system32
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "ActiveHoursEnd" /t REG_DWORD /d "2" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "ActiveHoursStart" /t REG_DWORD /d "8" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "AllowAutoWindowsUpdateDownloadOverMeteredNetwork" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "ExcludeWUDriversInQualityUpdate" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "FlightCommitted" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "IsExpedited" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "LastToastAction" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "UxOption" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "InsiderProgramEnabled" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "SmartActiveHoursSuggestionState" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "BranchReadinessLevel" /t REG_DWORD /d "20" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings\ModelState" /v "SignalRegistered" /t REG_SZ /d "::2F08BEBA97" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "SmartActiveHoursTimestamp" /t REG_QWORD /d "33fb120ebfa5d601" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "LastToastAction" /t REG_DWORD /d "70" /f
-
-goto m1a.x7.1.4.3.winUpdateSecurityNext
-
-:m1a.x7.1.4.2.winUpdateSecurityReverse
-cd %systemroot%\system32
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "ActiveHoursEnd" /t REG_DWORD /d "2" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "ActiveHoursStart" /t REG_DWORD /d "8" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "AllowAutoWindowsUpdateDownloadOverMeteredNetwork" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "ExcludeWUDriversInQualityUpdate" /t REG_DWORD /d "1" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "FlightCommitted" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "IsExpedited" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "LastToastAction" /t REG_DWORD /d "70" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "UxOption" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "InsiderProgramEnabled" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "SmartActiveHoursSuggestionState" /t REG_DWORD /d "0" /f
-Reg.exe delete "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "BranchReadinessLevel" /t REG_DWORD /d "20" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings\ModelState" /v "SignalRegistered" /t REG_SZ /d "::2F0E3B2CBC" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "SmartActiveHoursTimestamp" /t REG_QWORD /d "1d7a241f86e9738" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "LastToastAction" /t REG_DWORD /d "70" /f
-
-goto m1a.x7.1.4.3.winUpdateSecurityNext
-
-:m1a.x7.1.4.3.winUpdateSecurityNext
-cmdMenuSel f870 "Press ENTER to continue..." 
-if %ERRORLEVEL% == 1 goto m1a.x7.1.5.WinUpdadePause
+:::m1a.x7.1.4.1.winUpdateSecurityApply
+::cd %systemroot%\system32
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "ActiveHoursEnd" /t REG_DWORD /d "2" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "ActiveHoursStart" /t REG_DWORD /d "8" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "AllowAutoWindowsUpdateDownloadOverMeteredNetwork" /t REG_DWORD /d "0" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "ExcludeWUDriversInQualityUpdate" /t REG_DWORD /d "0" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "FlightCommitted" /t REG_DWORD /d "0" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "IsExpedited" /t REG_DWORD /d "0" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "LastToastAction" /t REG_DWORD /d "0" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "UxOption" /t REG_DWORD /d "0" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "InsiderProgramEnabled" /t REG_DWORD /d "0" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "SmartActiveHoursSuggestionState" /t REG_DWORD /d "0" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "BranchReadinessLevel" /t REG_DWORD /d "20" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings\ModelState" /v "SignalRegistered" /t REG_SZ /d "::2F08BEBA97" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "SmartActiveHoursTimestamp" /t REG_QWORD /d "33fb120ebfa5d601" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "LastToastAction" /t REG_DWORD /d "70" /f
+::
+::goto m1a.x7.1.4.3.winUpdateSecurityNext
+::
+:::m1a.x7.1.4.2.winUpdateSecurityReverse
+::cd %systemroot%\system32
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "ActiveHoursEnd" /t REG_DWORD /d "2" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "ActiveHoursStart" /t REG_DWORD /d "8" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "AllowAutoWindowsUpdateDownloadOverMeteredNetwork" /t REG_DWORD /d "0" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "ExcludeWUDriversInQualityUpdate" /t REG_DWORD /d "1" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "FlightCommitted" /t REG_DWORD /d "0" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "IsExpedited" /t REG_DWORD /d "0" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "LastToastAction" /t REG_DWORD /d "70" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "UxOption" /t REG_DWORD /d "0" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "InsiderProgramEnabled" /t REG_DWORD /d "0" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "SmartActiveHoursSuggestionState" /t REG_DWORD /d "0" /f
+::Reg.exe delete "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "BranchReadinessLevel" /t REG_DWORD /d "20" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings\ModelState" /v "SignalRegistered" /t REG_SZ /d "::2F0E3B2CBC" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "SmartActiveHoursTimestamp" /t REG_QWORD /d "1d7a241f86e9738" /f
+::Reg.exe add "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" /v "LastToastAction" /t REG_DWORD /d "70" /f
+::
+::goto m1a.x7.1.4.3.winUpdateSecurityNext
+::
+:::m1a.x7.1.4.3.winUpdateSecurityNext
+::cmdMenuSel f870 "Press ENTER to continue..." 
+::if %ERRORLEVEL% == 1 goto m1a.x7.1.5.WinUpdadePause
 
 :m1a.x7.1.5.WinUpdadePause
 set menu=m1a.x7.1.5.WinUpdadePause
@@ -3639,7 +3959,15 @@ set "menuA= 1. Windows Updates:"
 set "menuB= 5. WU Pause next update till:"
 call :mStyle
 
-cmdMenuSel f870 "-|NEXT|- 2. Security and Maintenance:" "-|BACK|- Windows Update Main:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] SET -Next update date"
+set mm=
+set mm= %mm% "-|NEXT|- 2. Security and Maintenance:"
+set mm= %mm% "-|BACK|- Windows Update Main:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] SET manually -Next update date"
+
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.2.securityMaintenance
 if %ERRORLEVEL% == 2 goto m1a.x7.1.WindowsUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3798,6 +4126,11 @@ set "menuB= 2. Security and Maintenance:"
 call :mStyle
  
 set mm=
+set mm= %mm% "-|NEXT|- 3. Microsoft Defender Application:"
+set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
 set mm= %mm% "------- Application -------"
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Disable"
@@ -3813,7 +4146,7 @@ set mm= %mm% ""
 set mm= %mm% "[ ] 2.Disable"
 set mm= %mm% "[ ] 2.Enable"
 
-cmdMenuSel f870 "-|NEXT|- 3. Microsoft Defender Application:" "-|BACK|- Step 7 : Turn on\off apps" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdMenuSel f870 %mm%
 CLS
 if %ERRORLEVEL% == 1 goto m1a.x7.3.wDefender
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
@@ -3890,6 +4223,11 @@ set "menuB= 3. Microsoft Defender Application:"
 call :mStyle
 
 set mm=
+set mm= %mm% "-|NEXT|- 4. Power Plan -Ultimate Performance:"
+set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
 set mm= %mm% "------- Tasks -------"
 set mm= %mm% ""
 set mm= %mm% "[ p ] Disable tasks"
@@ -3900,7 +4238,7 @@ set mm= %mm% ""
 set mm= %mm% "[ ] Disable app"
 set mm= %mm% "[ d ] Enable app"
 
-cmdMenuSel f870 "-|NEXT|- 4. Power Plan -Ultimate Performance:" "-|BACK|- Step 7 : Turn on\off apps" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.4.UltimatePerformance
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3961,7 +4299,16 @@ set "menuA= Step 7 : Turn on\off apps:"
 set "menuB= 4. Power Plan -Ultimate Performance:"
 call :mStyle
 
-cmdMenuSel f870 "-|NEXT|- 5. Ram Reducer:" "-|BACK|- Step 7 : Turn on\off apps" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] Add now" "[ p ] Open Power Plan settings"
+set mm= 
+set mm= %mm% "-|NEXT|- 5. Ram Reducer:"
+set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] Add now"
+set mm= %mm% "[ p ] Open Power Plan settings"
+
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.5.ramReducer
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -4046,7 +4393,15 @@ set "menuA= Step 7 : Turn on\off apps:"
 set "menuB= 5. Ram Reducer:"
 call :mStyle
 
-cmdMenuSel f870 "-|NEXT|- 6. Indexing:" "-|BACK|- Step 7 : Turn on\off apps" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] Reduce now" 
+set mm=
+set mm= %mm% "-|NEXT|- 6. Indexing:"
+set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] Reduce now"
+
+cmdMenuSel f870 %mm%
  
 if %ERRORLEVEL% == 1 goto m1a.x7.6.indexing 
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
@@ -4185,7 +4540,16 @@ set "menuB= 6. Indexing:"
 call :mStyle
 set menuD2=
 
-cmdMenuSel f870 "-|NEXT|- 7. Hibernate:" "-|BACK|- Step 7 : Turn on\off apps" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] Disable service" "[ d ] Enable service" 
+set mm=
+set mm= %mm% "-|NEXT|- 7. Hibernate:"
+set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] Disable service"
+set mm= %mm% "[ d ] Enable service" 
+
+cmdMenuSel f870 %mm% 
  
 if %ERRORLEVEL% == 1 goto m1a.x7.7.hibernate
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
@@ -4206,7 +4570,16 @@ set "menuA= Step 7 : Turn on\off apps:"
 set "menuB= 7. Hibernate:"
 call :mStyle
 
-cmdMenuSel f870 "-|NEXT|- END " "-|BACK|- Step 7 : Turn on\off apps" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] Disable" "[ d ] Enable" 
+set mm=
+set mm= %mm% "-|NEXT|- END "
+set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] Disable"
+set mm= %mm% "[ d ] Enable" 
+
+cmdMenuSel f870 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x7.0.endProg
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
@@ -4261,9 +4634,13 @@ if %optimizeP% == 1 (set optimizePStatus=Optimize
 )
 
 set mm=
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "================= Select an option ================="
+set mm= %mm% ""
+
 if not %optimizePStatus% == SelectAuto (
 	set mm= %mm% "  [[  Action  ]]  Status: %optimizePStatus%"
-	) else (set mm= %mm% "  Status: %optimizePStatus%")
+) else (set mm= %mm% "  Status: %optimizePStatus%")
 set mm= %mm% ""
 set mm= %mm% "================= Select Auto ================="
 set mm= %mm% "[ p ] LITE - Optimize and clean "
@@ -4299,7 +4676,7 @@ if %durMM% == 1 (set mm= %mm% "[X] Deep / Update / Repair"
 ) else (set mm= %mm% "[ ] Deep / Update / Repair")
 
 :m2a.x12.OneClick-Menu2
-cmdMenuSel f870 "-|MAIN MENU|- " "================= Select an option =================" "" %mm%
+cmdMenuSel f870 %mm%
 
 if %ERRORLEVEL% == 1 goto mainMenu
 if %ERRORLEVEL% == 2 goto %menu%
@@ -4645,6 +5022,9 @@ set "menuB= Power Menu:"
 call :mStyle
 
 set mm=
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
 set mm= %mm% "[ ] Restart"
 set mm= %mm% "[ ] Restart with Boot Options Menu"
 set mm= %mm% "[ ] Sleep"
@@ -4653,7 +5033,7 @@ set mm= %mm% "[ ] Switch User"
 set mm= %mm% "[ ] Log Off"
 set mm= %mm% "[ ] Lock"
 
-cmdMenuSel f870 "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdMenuSel f870 %mm%
 if %ERRORLEVEL% == 1 goto mainMenu
 if %ERRORLEVEL% == 2 goto %menu%
 if %ERRORLEVEL% == 3 goto %menu%
