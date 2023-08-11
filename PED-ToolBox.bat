@@ -1,18 +1,33 @@
 @echo off
 
 :: Set version
-set "versionn=PED-ToolBox-1.257.230811.1"
+set "versionn=PED-ToolBox-1.257.230811.4-portable"
+
+:: Portable type: 1
+:: Installing type: 0 (or any different than 1)
+set "portableSwitch=0"
 
 ::Check if the source file is the same as the destination file
 setlocal
 
 rem Define source and destination paths
-set "sourceFile=%~f0"
-set "destinationDir=C:\ProgramData\PEDToolBox"
-set "destinationFile=%destinationDir%\%~nx0"
+set "destinationDir=C:\ProgramData\PEDToolBox\"
 
 rem Function:
+if %portableSwitch% == 1 (
+	set "destinationDir=%~dp0"	
+)
+
+set "sourceFile=%~f0"
+set "destinationFile=%destinationDir%%~nx0"
+
 if /I "%sourceFile%" NEQ "%destinationFile%" (
+	echo Welcome to PED Tool Box 
+	echo Please wait to loading....
+	echo.
+	echo Please use shortcut on Desktop next time.
+	echo Thank you
+	timeout 15 
     rem Check if the destination directory exists
     if not exist "%destinationDir%" (
         echo Destination directory does not exist. Creating directory...
@@ -24,7 +39,8 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
         echo Old file exists. Deleting old file...
         del "%destinationFile%"
     )
-
+	echo.
+	echo ...[10%]...
     rem Copy the script to the destination
     echo Copying itself to destination...
     copy "%sourceFile%" "%destinationFile%"
@@ -53,7 +69,6 @@ endlocal
 :::::::::::::::::::::::::::::::::::::::::::
 :: Automatically check & get admin rights V2
 ::::::::::::::::::::::::::::::::::::::::::::
-@echo off
 CLS
 ECHO.
 ECHO =============================
@@ -66,6 +81,8 @@ if %errorlevel% == 0 goto gotPrivileges
 
 :init
 set "vbsGetPrivileges=%temp%\OEgetPriv.vbs"
+echo.
+echo ...[70%]...
 
 :getPrivileges
 echo Set UAC = CreateObject^("Shell.Application"^) > "%vbsGetPrivileges%"
@@ -77,7 +94,8 @@ exit
 :gotPrivileges
 setlocal & pushd .
 cd /d %~dp0
-
+echo.
+echo ...[80%]...
 ::Max screen
 if not "%1"=="max" start /MAX cmd /c %0 max & exit
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -91,9 +109,10 @@ if not "%1"=="max" start /MAX cmd /c %0 max & exit
 set "shortcutToLocation=0"
 
 :m0a.x1.variableMain
-cls
 
 if %shortcutToLocation% == desktop (
+	echo.
+	echo ...[20%]...
 	set "destinationMain=C:\ProgramData\PEDToolBox"
 ) else (
 	set "destinationMain=%cd%"
@@ -110,7 +129,8 @@ set "destinationPD=%destinationMain%\%destinationPD%"
 
 call :r3a.x12.downLoadF-files
 if %shortcutToLocation% == desktop (
-	echo Please wait...
+	echo.
+	echo ...[30%]...
 ) else (
 	cd files
 )
@@ -122,15 +142,19 @@ set "psC=powershell.exe -ExecutionPolicy Bypass -Command"
 set "timeoutA=timeout 2 /nobreak>nul"
 
 if %shortcutToLocation% == desktop (
+	echo.
+	echo ...[35%]...
 	exit /b
 )
 
 if exist "c1.txt" (goto m2a.x5.Oneclick5)
-
+echo.
+echo ...[99%]...
 ::=======================================
 ::=======================================
 ::=======================================
 :m0a.x1.firstMenu
+cls
 set menu=m0a.x1.firstMenu
 
 ::Logon Trusted Installer
@@ -190,6 +214,7 @@ set "discriptionD1=%fileLocation%"
 set "fileLocation=%destination%\%fileLocation%"
 
 if not exist "%fileLocation%" (
+
 	if %startOneClick% == 0 (
 		echo.
 		echo 	App: %discriptionD1% NOT EXIST
@@ -206,7 +231,16 @@ if not exist "%fileLocation%" (
 		start /w /min cmd /c powershell.exe -ExecutionPolicy Bypass -Command ^
 		"(New-Object System.Net.WebClient).DownloadFile('%fileLinkID%', '%fileLocation%');" ^
 	)
+
+) else (
+
+	if not exist "%startFiles%" (
+		echo 	Please wait to Extract %discriptionD1%...
+		start /w /min cmd /c powershell.exe -ExecutionPolicy Bypass -Command ^
+		"tar -xf '%fileLocation%' -C '%destination%'" 
+	)
 )
+
 exit /b
 
 ::=======================================
@@ -996,7 +1030,6 @@ set "menuA= Step 0 : Test and Diagnostic:"
 set "menuB= 3. Test boot time :"
 call :mStyle
 
-
 set mm=
 set mm= %mm% "-|NEXT|- Step 0 : Test and Diagnostic:"
 set mm= %mm% "-|BACK|- Step 0 : Test and Diagnostic:"
@@ -1115,18 +1148,23 @@ setlocal
 
 ::Variables
 if %shortcutToLocation% == desktop (
+		echo.
+		echo ...[40%]...
 		set "LinkName=PED-ToolBox"
 		set "destination=%destinationMain%"
-		set "startBoot=PED-ToolBox.bat"
+		set "startBoot=%~n0.bat"
+		set shortcutStyle=7
 ) else (
 	if %startOneClick% == 1 (
 		set "LinkName=OneClickDeep"
 		set "destination=%destinationMain%"
-		set "startBoot=PED-ToolBox.bat"
+		set "startBoot=%~n0.bat"
+		set shortcutStyle=7
 	) else (
 		set "LinkName=PED-bootTimer"
 		set "destination=%destinationPD%\files\bootTimer"
 		set "startBoot=%startBoot%"
+		set shortcutStyle=1
 	)
 )
 
@@ -1153,16 +1191,20 @@ IF EXIST "%shortcut%" (
 )
 :: Check if icon exist
 if not exist "%destinationPD%\files\%iconN%" (
+	echo.
+	echo ...[50%]...
 	call :r3a.x12.002.downLoadF-filesIcons
 )
 
 ::Create Shortcut Function
-%psP% "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut('%shortcut%'); $s.TargetPath = '%TARGET%'; $s.WorkingDirectory = '%wd%'; $s.IconLocation = '%destinationPD%\files\%iconN%'; $s.Save()"
+%psP% "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut('%shortcut%'); $s.TargetPath = '%TARGET%'; $s.WorkingDirectory = '%wd%'; $s.IconLocation = '%destinationPD%\files\%iconN%'; $s.WindowStyle = %shortcutStyle%; $s.Save()"
 
 
 if %startOneClick% == 1 (endlocal && exit /b)
 
 if %shortcutToLocation% == desktop (
+	echo.
+	echo ...[60%]...
 	set "shortcutToLocation=0"
 ) else (
 	start %windir%\explorer.exe "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
@@ -1184,6 +1226,23 @@ if %shortcutToLocation% == desktop (endlocal && exit /b)
 echo.
 cmdMenuSel f870 "Press ENTER to back "
 goto %menu%
+
+REM Numeric values for the WindowStyle property in batch scripts
+REM ---------------------------------------------------------
+
+REM 0: Hides the window and activates another window.
+REM 1: Activates and displays a window in its most recent size and position.
+REM 2: Activates the window and displays it as a minimized window.
+REM 3: Activates the window and displays it as a maximized window.
+REM 4: Displays a window in its most recent size and position. The active window remains active.
+REM 5: Activates the window and displays it in its current size and position.
+REM 6: Minimizes the specified window and activates the next top-level window in the Z order.
+REM 7: Displays the window as a minimized window. The active window remains active.
+REM 8: Displays the window in its current state. The active window remains active.
+REM 9: Activates and displays the window. If the window is minimized or maximized, Windows restores it to its original size and position.
+REM 10: Sets the show-state based on the state of the program that started the application.
+
+REM ---------------------------------------------------------
 
 ::set shortcut=C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\%LinkName%.lnk
 ::41 ,43,
@@ -7201,6 +7260,7 @@ rem https://digicert.com/StaticFiles/DigiCertUtil.zip
 :: PED-ToolBox.bat
 :: 
 :: imeto na file bez okonchanieto
+:: %~n0
 :: %%~nk
 :: PED-ToolBox
 
