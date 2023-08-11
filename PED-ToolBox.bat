@@ -1,7 +1,7 @@
 @echo off
 
 :: Set version
-set "versionn=PED-ToolBox-1.257.230811"
+set "versionn=PED-ToolBox-1.257.230811.1"
 
 ::Check if the source file is the same as the destination file
 setlocal
@@ -27,7 +27,7 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
 
     rem Copy the script to the destination
     echo Copying itself to destination...
-    copy /Y "%sourceFile%" "%destinationFile%"
+    copy "%sourceFile%" "%destinationFile%"
 	
 	if not exist "%destinationFile%" (
 		copy "%sourceFile%" "%destinationFile%"
@@ -2098,6 +2098,7 @@ set menu=%menu1%
 
 set "menuA= %menuA%:"
 set "menuB= %menuB%:"
+
 call :mStyle
 
 set mm=
@@ -6851,10 +6852,10 @@ REM # StartExtractD6
 @echo off
 cls
 mode con: cols=52 lines=27
-set "ver=PED toolbox - BootTimer V1.30.230608"
-
+set "ver=PED ToolBox - BootTimer V1.30.230608.3"
+cd C:\ProgramData\PEDToolBox\pedDownload\files\bootTimer
 title	%ver%
-echo 	[%ver%](2)
+echo 	[%ver%]
 echo.
 echo.
 echo.
@@ -6979,7 +6980,7 @@ REM # StartExtractD7
 cls
 if not "%1"=="min" start /min cmd /c %0 min & exit/b
 set "ver=PED-Toolbox-BootTimer-V1.31.230802"
-
+cd C:\ProgramData\PEDToolBox\pedDownload\files\bootTimer
 title	%ver%
 echo 	[%ver%]
 echo.
