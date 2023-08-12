@@ -15,6 +15,7 @@ set "versionTool=PED-ToolBox-1.258.230812"
 :: Portable type: 1
 :: Installing type: 0 (or any different than 1)
 set "portableSwitch=0"
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :m0a.x01.DirectoryPED
 ::================================
@@ -33,7 +34,7 @@ set "sourceFile=%~f0"
 set "destinationFile=%destinationDir%%~nx0"
 
 if /I "%sourceFile%" NEQ "%destinationFile%" (
-	echo Welcome to PED Tool Box 
+	
 	echo Please wait to loading....
 	echo.
 	echo Please use shortcut on Desktop next time.
@@ -556,13 +557,13 @@ set "fileLocation=oosu10-default.cfg.file"
 set isItZip=n
 set "fileLinkID=https://bit.ly/44TKg73"
 call :r3a.x01.0.downloadFunction
-ren "oosu10-default.cfg.file" "oosu10-default.cfg"
+ren "%destination%\oosu10-default.cfg.file" "oosu10-default.cfg"
 
 set "fileLocation=oosu10-Safe-2205.cfg.file"
 set isItZip=n
 set "fileLinkID=https://bit.ly/3qiaNvH"
 call :r3a.x01.0.downloadFunction
-ren "oosu10-Safe-2205.cfg.file" "oosu10-Safe-2205.cfg"
+ren "%destination%\oosu10-Safe-2205.cfg.file" "oosu10-Safe-2205.cfg"
 
 exit /b
 ::=================
@@ -589,7 +590,7 @@ set isItZip=n
 set "fileLinkID=https://bit.ly/3QqTsLH"
 call :r3a.x01.0.downloadFunction
 if exist "%destination%\%fileLocation%" (del "%destination%\%fileLocation%")
-ren "TaskSchedulerView.cfg.file" "TaskSchedulerView.cfg"
+ren "%destination%\TaskSchedulerView.cfg.file" "TaskSchedulerView.cfg"
 
 exit /b
 ::=================
