@@ -14,7 +14,7 @@ set "versionTool=PED-ToolBox-1.258.230812"
 
 :: Portable type: 1
 :: Installing type: 0 (or any different than 1)
-set "portableSwitch=1"
+set "portableSwitch=0"
 
 :m0a.x01.DirectoryPED
 ::================================
