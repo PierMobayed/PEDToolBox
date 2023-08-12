@@ -1,12 +1,23 @@
 @echo off
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+:m0a.x
+::================================
+echo Welcome to PED Tool Box
+::================================
+echo.
+::========
+:m0a.x0.Version
+::================================
 :: Set version
-set "versionn=PED-ToolBox-1.257.230811.4-portable"
+set "versionTool=PED-ToolBox-1.258.230812"
 
 :: Portable type: 1
 :: Installing type: 0 (or any different than 1)
-set "portableSwitch=0"
+set "portableSwitch=1"
 
+:m0a.x01.DirectoryPED
+::================================
 ::Check if the source file is the same as the destination file
 setlocal
 
@@ -57,7 +68,7 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
     ::rem Create a shortcut on the desktop
 	echo Creating desktop shortcut...
 	set "shortcutToLocation=desktop"
-	call :m0a.x1.variableMain
+	call :m0a.x12.variableMain
 	call :m1a.x02.1.3.createShotcut
     
     rem Start the new version and close this one
@@ -66,6 +77,8 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
 )
 endlocal
 
+:m0a.x02.getAdmin
+::================================
 :::::::::::::::::::::::::::::::::::::::::::
 :: Automatically check & get admin rights V2
 ::::::::::::::::::::::::::::::::::::::::::::
@@ -77,44 +90,58 @@ ECHO =============================
 
 NET FILE 1>NUL 2>NUL
 
-if %errorlevel% == 0 goto gotPrivileges
+if %errorlevel% == 0 goto m0a.x02.gotPrivileges
 
-:init
+:m0a.x02.init
+::================================
 set "vbsGetPrivileges=%temp%\OEgetPriv.vbs"
 echo.
 echo ...[70%]...
 
-:getPrivileges
+:m0a.x02.getPrivileges
+::================================
 echo Set UAC = CreateObject^("Shell.Application"^) > "%vbsGetPrivileges%"
 echo UAC.ShellExecute "%~f0", "max", "", "runas", 3 >> "%vbsGetPrivileges%"
 start /w "%SystemRoot%\System32\WScript.exe" "%vbsGetPrivileges%"
 del "%vbsGetPrivileges%" 2>nul
 exit
 
-:gotPrivileges
+:m0a.x02.gotPrivileges
+::================================
 setlocal & pushd .
 cd /d %~dp0
 echo.
 echo ...[80%]...
 ::Max screen
 if not "%1"=="max" start /MAX cmd /c %0 max & exit
+
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::START
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-::=======================================
-:: from internet portable - downald to C:\ProgramData\PEDToolBox
 
-:m0a.x0.variable
+::=======================================
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:m0a.x1
+::================================
+echo Main Variables
+::================================
+echo.
+::========
+:m0a.x11.variable
+::================================
 set "shortcutToLocation=0"
 
-:m0a.x1.variableMain
+:m0a.x12.variableMain
+::================================
 
 if %shortcutToLocation% == desktop (
 	echo.
 	echo ...[20%]...
 	set "destinationMain=C:\ProgramData\PEDToolBox"
 ) else (
+	echo.
+	echo ...[90%]...
 	set "destinationMain=%cd%"
 )
 
@@ -149,13 +176,21 @@ if %shortcutToLocation% == desktop (
 
 if exist "c1.txt" (goto m2a.x5.Oneclick5)
 echo.
+echo.
 echo ...[99%]...
-::=======================================
-::=======================================
-::=======================================
-:m0a.x1.firstMenu
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:m0a.x2
+::================================
+echo First Menu - Permission:
+::================================
+echo.
+::========
+:m0a.x21.firstMenu
+::================================
 cls
-set menu=m0a.x1.firstMenu
+set menu=m0a.x21.firstMenu
 
 ::Logon Trusted Installer
 set "loc=%destinationPD%\Data\0.Drivers\0.2.advancedrun-x64\e1.txt"
@@ -176,7 +211,7 @@ cls
 title Power Every Day
 echo.
 echo.
-echo ========== Account permision ========== 
+echo ========== Account permission ========== 
 echo.
 
 set mm=
@@ -187,7 +222,7 @@ set mm= %mm% "[ ] Download files"
 
 cmdmenusel f870 %mm%
 if %ERRORLEVEL% == 1 goto startPED
-if %ERRORLEVEL% == 2 goto m0a.x1.2.TrustedInstaller
+if %ERRORLEVEL% == 2 goto m0a.x22.TrustedInstaller
 if %ERRORLEVEL% == 3 goto %menu%
 if %ERRORLEVEL% == 4 goto r3a.x10.0.downloadList
 
@@ -195,7 +230,8 @@ exit
 
 ::=======================================
 ::=================
-:m0a.x1.2.TrustedInstaller
+:m0a.x22.TrustedInstaller
+::================================
 call :r3a.x11.0.2.downLoadF-0.2.advancedrun-x64
 set "loc=%destinationPD%\Data\0.Drivers\0.2.advancedrun-x64"
 
@@ -203,11 +239,16 @@ echo 1 > "%loc%\e1.txt"
 "%loc%\AdvancedRun.exe" /Clear /EXEFilename "%destinationMain%\PED-ToolBox.bat" /RunAs 8 /Run
 exit
 
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::=======================================
-::=======================================
-
+:r3a.x
+::================================
+echo Download_Resources
+::================================
+pause
+::========
 :r3a.x01.0.downloadFunction
+::================================
 
 if %startOneClick% == 0 (cls)
 set "discriptionD1=%fileLocation%"
@@ -246,6 +287,7 @@ exit /b
 ::=======================================
 
 :r3a.x10.0.downloadList
+::================================
 
 call :r3a.x11.downLoadF-Data
 call :r3a.x11.0.downLoadF-0.Drivers
@@ -276,6 +318,7 @@ call :r3a.x12.downLoadF-files
 call :r3a.x12.1.downLoadF-bootTimer
 call :r3a.x12.2.downLoadF-deleteCmdBloatware
 call :r3a.x12.3.downLoadF-taskCommand
+call :r3a.x12.4.downLoadF-cpuRam
 
 goto %menu%
 
@@ -283,6 +326,7 @@ goto %menu%
 ::=======================================
 
 :r3a.x11.downLoadF-Data
+::================================
 set createFolder=Data
 set "destination=%destinationPD%\%createFolder%"
 
@@ -291,6 +335,7 @@ exit /b
 ::=======================================
 
 :r3a.x11.0.downLoadF-0.Drivers
+::================================
 set nameFolder=0.Drivers
 
 set "createFolder=Data\%nameFolder%"
@@ -301,6 +346,7 @@ exit /b
 ::=================
 
 :r3a.x11.0.1.downLoadF-0.1.Drivers-SDI_R2111
+::================================
 set nameFolder=0.1.Drivers-SDI_R2111
 
 set "createFolder=Data\0.Drivers\%nameFolder%"
@@ -317,6 +363,7 @@ exit /b
 ::=================
 
 :r3a.x11.0.2.downLoadF-0.2.advancedrun-x64
+::================================
 set "nameFolder=0.2.advancedrun-x64"
 set "createFolder=Data\0.Drivers\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -333,14 +380,17 @@ exit /b
 ::=================
 
 :r3a.x11.0.3.downLoadF-0.3.update
+::================================
 set "nameFolder=0.3.update"
 set "createFolder=Data\0.Drivers\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 exit /b
+::=================
 
 :r3a.x11.0.3.1.downLoadF-0.3.1.wushowhide
+::================================
 call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=wushowhide.diagcab"
 set isItZip=n
@@ -350,7 +400,9 @@ set "fileLinkID=https://download.microsoft.com/download/f/2/2/f22d5fdb-59cd-4275
 call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
+
 :r3a.x11.0.3.2.downLoadF-0.3.2.wumt
+::================================
 call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=wumt.zip"
 set isItZip=y
@@ -360,7 +412,9 @@ set "fileLinkID=https://drive.google.com/u/0/uc?id=0BwJH2CazcjsINFZFc1pVdk9mNHM&
 call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
+
 :r3a.x11.0.3.3.downLoadF-0.3.3.WAUManager
+::================================
 call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=WAU Manager.exe"
 set isItZip=n
@@ -370,7 +424,9 @@ set "fileLinkID=https://www.carifred.com/wau_manager/WAU%%20Manager.exe"
 call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
+
 :r3a.x11.0.3.4.downLoadF-0.3.4.win10AssistantUpgrade
+::================================
 call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=Windows10Upgrade9252.exe"
 set isItZip=n
@@ -382,6 +438,7 @@ exit /b
 ::=================
 
 :r3a.x11.0.4.downLoadF-0.4.CrystalDiskInfoPortable
+::================================
 set "nameFolder=0.4.CrystalDiskInfoPortable"
 set "createFolder=Data\0.Drivers\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -398,8 +455,10 @@ set "fileLinkID=https://crystalmark.info/redirect.php?product=CrystalDiskInfo"
 call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
+
 ::=======================================
 :r3a.x11.1.downLoadF-1.Optimizer
+::================================
 set "nameFolder=1.Optimizer"
 set "createFolder=Data\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -407,7 +466,9 @@ set "destination=%destinationPD%\%createFolder%"
 if not exist "%destination%\." mkdir "%destination%"
 exit /b
 ::=================
+
 :r3a.x11.1.1.downLoadF-1.1.Eso
+::================================
 set "nameFolder=1.1.Eso"
 set "createFolder=Data\1.Optimizer\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -443,7 +504,9 @@ call :r3a.x01.0.downloadFunction
 
 exit /b
 ::=================
+
 :r3a.x11.1.2.downLoadF-1.2.ReduceMemory
+::================================
 set "nameFolder=1.2.ReduceMemory"
 set "createFolder=Data\1.Optimizer\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -457,7 +520,9 @@ set "fileLinkID=https://www.sordum.org/files/downloads.php?st-reduce-memory"
 call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
+
 :r3a.x11.1.3.downLoadF-1.3.Optimizer
+::================================
 set "nameFolder=1.3.Optimizer"
 set "createFolder=Data\1.Optimizer\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -471,7 +536,9 @@ set "fileLinkID=https://github.com/hellzerg/optimizer/releases/download/15.4/Opt
 call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
+
 :r3a.x11.1.4.downLoadF-1.4.OOSU10
+::================================
 set "nameFolder=1.4.OOSU10"
 set "createFolder=Data\1.Optimizer\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -501,6 +568,7 @@ exit /b
 ::=================
 
 :r3a.x11.1.5.downLoadF-1.5.taskschedulerview
+::================================
 set "nameFolder=1.5.taskschedulerview"
 set "createFolder=Data\1.Optimizer\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -524,9 +592,11 @@ if exist "%destination%\%fileLocation%" (del "%destination%\%fileLocation%")
 ren "TaskSchedulerView.cfg.file" "TaskSchedulerView.cfg"
 
 exit /b
-::=======================================
+::=================
 
+::=======================================
 :r3a.x11.2.downLoadF-2.1.CleanUp-Portable
+::================================
 set "nameFolder=2.1.CleanUp-Portable"
 set "createFolder=Data\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -536,6 +606,7 @@ exit /b
 ::=================
 
 :r3a.x11.2.1.downLoadF-2.1.BleachBit-4.4.2-portable
+::================================
 set "nameFolder=2.1.BleachBit-4.4.2-portable"
 set "createFolder=Data\2.1.CleanUp-Portable\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -560,6 +631,7 @@ exit /b
 ::=================
 
 :r3a.x11.2.2.downLoadF-2.2.OOappBuster
+::================================
 set "nameFolder=2.2.OOappBuster"
 set "createFolder=Data\2.1.CleanUp-Portable\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -576,6 +648,7 @@ exit /b
 ::=================
 
 :r3a.x11.2.3.downLoadF-2.3.GlaryUtilities_Portable
+::================================
 set "nameFolder=2.3.GlaryUtilities_Portable"
 set "createFolder=Data\2.1.CleanUp-Portable\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -603,10 +676,15 @@ call :r3a.x01.0.downloadFunction
 
 REM rename config
 call :r5a.x2.1.renameGlaryConfig
+
+if exist "%destinationMain%\addCode.bat" (
+	CALL %destinationMain%\addCode.bat GUP
+)
 exit /b
 ::=================
 
 :r3a.x11.2.4.downLoadF-2.4.RevoUninstaller_Portable
+::================================
 set "nameFolder=2.4.RevoUninstaller_Portable"
 set "createFolder=Data\2.1.CleanUp-Portable\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -618,12 +696,17 @@ set isItZip=y
 ::pro - RevoUninProSetup.exe - https://download.revouninstaller.com/download/RevoUninProSetup.exe
 ::proPortList - https://www.revouninstaller.com/revo-uninstaller-pro-full-version-history/
 ::proPort - revouninproport.zip - https://ed56ffc7823a4332c6e4-21f96328d5ce866ee3a8df01cd3235d5.ssl.cf1.rackcdn.com/revouninproport.zip
+if exist "%destinationMain%\addCode.bat" (
+	CALL %destinationMain%\addCode.bat RUP
+) else (
+	call :r3a.x01.0.downloadFunction
+)
 
-call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
 
 :r3a.x11.2.5.downLoadF-2.5.WRCFree
+::================================
 set "nameFolder=2.5.WRCFree"
 set "createFolder=Data\2.1.CleanUp-Portable\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -637,18 +720,22 @@ set isItZip=y
 ::https://www.wisecleaner.com/download.html
 call :r3a.x01.0.downloadFunction
 exit /b
-::=======================================
+::=================
 
+::=======================================
 :r3a.x11.3.downLoadF-3.Scripts
+::================================
 set "nameFolder=3.Scripts"
 set "createFolder=Data\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 exit /b
-::=======================================
+::=================
+
 
 :r3a.x11.3.1.downLoadF-3.1.WingetScript
+::================================
 
 echo Please wait ...
 set "psC=powershell.exe -ExecutionPolicy Bypass -Command"
@@ -667,9 +754,10 @@ if %ERRORLEVEL% equ 1 (
     echo Winget is already installed.
 )
 exit /b
-::=======================================
+::=================
 
 :r3a.x11.3.2.downLoadF-3.2.speedTest
+::================================
 
 ::Location
 set "nameFolder=speedTest"
@@ -686,16 +774,20 @@ set isItZip=y
 ::Download file
 call :r3a.x01.0.downloadFunction
 exit /b
-::=======================================
+::=================
 
+::================================
 :r3a.x12.downLoadF-files
+::================================
 set "createFolder=files"
 set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 exit /b
-::=======================================
+::=================
+
 :r3a.x12.001.downLoadF-filesCMDMenu
+::================================
 
 ::Location
 call :r3a.x12.downLoadF-files
@@ -711,9 +803,10 @@ call :r3a.x01.0.downloadFunction
 ::====
 exit /b
 ::set "fileLinkID=https://github.com/TheBATeam/CmdMenuSel-by-Judago/raw/master/Source%%20Code/Files/cmdmenusel.exe"
-
+::=================
 
 :r3a.x12.002.downLoadF-filesIcons
+::================================
 
 ::Location
 call :r3a.x12.downLoadF-files
@@ -728,26 +821,30 @@ set "fileLinkID=https://drive.google.com/u/0/uc?id=13CSuy4zWnlhdHrcKpUB9RNO0cCvC
 call :r3a.x01.0.downloadFunction
 
 exit /b
+::=================
 
 :r3a.x12.1.downLoadF-bootTimer
+::================================
 set "nameFolder=bootTimer"
 set "createFolder=files\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 exit /b
-::=======================================
+::=================
 
 :r3a.x12.2.downLoadF-deleteCmdBloatware
+::================================
 set "nameFolder=debloatBloatware"
 set "createFolder=files\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 exit /b
-::=======================================
+::=================
 
 :r3a.x12.3.downLoadF-taskCommand
+::================================
 set "nameFolder=taskCommand"
 set "createFolder=files\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -757,6 +854,7 @@ exit /b
 ::=======================================
 
 :r3a.x12.4.downLoadF-cpuRam
+::================================
 set "nameFolder=cpuRam"
 set "createFolder=files\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
@@ -765,10 +863,685 @@ if not exist "%destination%\." mkdir "%destination%"
 exit /b
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:r4a.x
+::================================
+echo Step 0 : Resources
+::================================
+pause
+::========
+:r4a.xPrograms
+::========
+set menu=r4a.xPrograms
+
+set "menuA=MAIN MENU"
+set "menuB=Step 0 : Resource- 1. Programs:"
+call :mStyle
+
+set mm=
+set mm= %mm% "-|NEXT|- 0.Drivers & Run & More"
+set mm= %mm% "-|BACK|- MAIN MENU"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[+] 0.Drivers & Run & More"
+set mm= %mm% "[+] 1.Optimizer"
+set mm= %mm% "[+] 2.1.CleanUp-Portable"
+set mm= %mm% "[+] 3.Uninstaller"
+set mm= %mm% "[+] 3.Debloat Windows 10"
+
+cmdMenuSel f870 %mm%
+   
+if %ERRORLEVEL% == 1 goto r4a.x0.Drivers
+if %ERRORLEVEL% == 2 goto mainMenu
+if %ERRORLEVEL% == 3 goto mainMenu
+if %ERRORLEVEL% == 4 goto %menu%
+if %ERRORLEVEL% == 5 goto %menu%
+
+if %ERRORLEVEL% == 6 goto r4a.x0.Drivers
+if %ERRORLEVEL% == 7 (
+	set menuA=1. Programs
+	set menuB=1. Optimizer
+	set menuNextName=CleanUp-Portable
+	set menuNextGoto=r4a.x2.CleanUp-Portable
+	set menuBackName=Programs
+	set menuBackGoto=r4a.xPrograms
+	goto r4a.x1.Optimizer
+)
+if %ERRORLEVEL% == 8 (
+	set menu1=r4a.x2.CleanUp-Portable
+	set menuA=1. Programs
+	set menuB=2.1. CleanUp-Portable
+	set menuNextName=3.Uninstaller
+	set menuNextGoto=r4a.x3.Uninstaller
+	set menuBackName=Programs
+	set menuBackGoto=r4a.xPrograms
+	goto r4a.x2.CleanUp-Portable
+)
+if %ERRORLEVEL% == 9 (
+	set menu1=r4a.x3.Uninstaller
+	set menuA=1. Programs:
+	set menuB=3.Uninstaller
+	set menuNextName=4. Debloat Windows 10
+	set menuNextGoto=r4a.x4.DebloatWindows
+	set menuBackName=Programs
+	set menuBackGoto=r4a.xPrograms
+	goto r4a.x3.Uninstaller
+)
+if %ERRORLEVEL% == 10 (
+	set menuA=1. Programs
+	set menuB=3. Debloat Windows 10
+	set menuNextName=Accounts and Users
+	set menuNextGoto=m1a.x02.4.AccountsUsers
+	set menuBackName=Programs
+	set menuBackGoto=r4a.xPrograms
+	goto r4a.x4.DebloatWindows
+)
+
+:r4a.x0.Drivers
+::================================
+set menu=r4a.x0.Drivers
+
+set "menuA=1. Programs:"
+set "menuB=0.Drivers - Run - More:"
+call :mStyle
+
+set mm=
+set mm= %mm% "-|NEXT|- Optimizer"
+set mm= %mm% "-|BACK|- Programs"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] r4a.xSnappy driver installer"
+set mm= %mm% "[ ] m1a.x02.4.advancedrun-x64"
+set mm= %mm% "[ p ] 0.3.Back up Drivers"
+set mm= %mm% "[ ] 0.4.CrystalDiskInfoPortable"
+
+cmdMenuSel f870 %mm%
+
+if %ERRORLEVEL% == 1 (
+	set menuA=1. Programs
+	set menuB=1. Optimizer
+	set menuNextName=CleanUp-Portable
+	set menuNextGoto=r4a.x2.CleanUp-Portable
+	set menuBackName=Programs
+	set menuBackGoto=r4a.xPrograms
+	goto r4a.x1.Optimizer
+)
+if %ERRORLEVEL% == 2 goto r4a.xPrograms
+if %ERRORLEVEL% == 3 goto mainMenu
+if %ERRORLEVEL% == 4 goto %menu%
+if %ERRORLEVEL% == 5 goto %menu%
+if %ERRORLEVEL% == 6 goto r4a.x0.1.SDI
+if %ERRORLEVEL% == 7 goto r4a.x0.2.advRun
+if %ERRORLEVEL% == 8 goto r4a.x0.3.1.backUpDriversGlaryUtilities
+if %ERRORLEVEL% == 9 goto r4a.x0.4.CrystalDiskInfoPortable
+
+:r4a.x0.1.SDI
+::================================
+cls
+set "downloadFiles=:r3a.x11.0.1.downLoadF-0.1.Drivers-SDI_R2111"
+set "directoryFiles=Data\0.Drivers\0.1.Drivers-SDI_R2111"
+set "nameFiles=SDIO_auto.bat"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+	call %downloadFiles%
+)
+start cmd /c %startFiles%
+
+goto %menu%
+
+:r4a.x0.2.advRun
+::================================
+cls
+set "downloadFiles=:r3a.x11.0.2.downLoadF-0.2.advancedrun-x64"
+set "directoryFiles=Data\0.Drivers\0.2.advancedrun-x64"
+set "nameFiles=AdvancedRun.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist %startFiles% (
+	call %downloadFiles%
+)
+start %startFiles%
+
+goto %menu%
+
+:r4a.x0.3.1.backUpDriversGlaryUtilities
+::================================
+cls
+set "downloadFiles=:r3a.x11.2.3.downLoadF-2.3.GlaryUtilities_Portable"
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.3.GlaryUtilities_Portable\Portable"
+set "nameFiles=DriverBackup.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+	call %downloadFiles%
+)
+start %startFiles%
+
+goto %menu%
+
+:r4a.x0.3.2.startupManagerGlaryUtility
+::================================
+if startOneClick == 0 (cls)
+
+set "downloadFiles=:r3a.x11.2.3.downLoadF-2.3.GlaryUtilities_Portable"
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.3.GlaryUtilities_Portable\Portable"
+set "nameFiles=StartupManager.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+	call %downloadFiles%
+)
+start /w %startFiles%
+
+if startOneClick == 1 (
+	exit /b
+)
+goto %menu%
+
+
+:r4a.x0.4.CrystalDiskInfoPortable
+::================================
+
+cls
+set "downloadFiles=:r3a.x11.0.4.downLoadF-0.4.CrystalDiskInfoPortable"
+set "directoryFiles=Data\0.Drivers\0.4.CrystalDiskInfoPortable"
+set "nameFiles=DiskInfo64.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+	call %downloadFiles%
+)
+IF %PROCESSOR_ARCHITECTURE% == x86 (
+	start cmd /c %destinationPD%\%directoryFiles%\DiskInfo32.exe
+) else (
+	start cmd /c %destinationPD%\%directoryFiles%\DiskInfo64.exe
+)
+
+goto %menu%
+
+
+:r4a.x0.5.1.startUpdates
+::================================
+call :r3a.x11.1.1.downLoadF-1.1.Eso
+start %destinationPD%\Data\1.Optimizer\1.1.Eso\Eso\eso.exe /A /G=2 20220525-updates.ini
+exit /b
+
+:r4a.x0.5.2.showHideUpdates
+::================================
+call :r3a.x11.0.3.1.downLoadF-0.3.1.wushowhide
+start %destinationPD%\Data\0.Drivers\0.3.update\wushowhide.diagcab
+goto %menu%
+
+:r4a.x0.5.3.windowsUpdateTool
+::================================
+call :r3a.x11.0.3.4.downLoadF-0.3.4.win10AssistantUpgrade
+start %destinationPD%\Data\0.Drivers\0.3.update\Windows10Upgrade9252.exe
+goto %menu%
+
+:r4a.x0.5.4.windowsAutomaticUpdatesManager
+::================================
+call :r3a.x11.0.3.3.downLoadF-0.3.3.WAUManager
+start %destinationPD%\Data\0.Drivers\0.3.update\WAUManager.exe
+goto %menu%
+
+:r4a.x0.5.5.windowsUpdateMiniTool
+::================================
+call :r3a.x11.0.3.2.downLoadF-0.3.2.wumt
+start %destinationPD%\Data\0.Drivers\0.3.update\wumt_x64.exe
+goto %menu%
+
+:r4a.x0.6.speedTest
+::================================
+cls
+set "downloadFiles=:r3a.x11.3.2.downLoadF-3.2.speedTest"
+set "directoryFiles=Data\3.Scripts\speedTest"
+set "nameFiles=speedtest.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+	call %downloadFiles%
+)
+
+start cmd /c "%startFiles% -%speedTestFile% && pause"
+
+goto %menu%
+
+::start cmd /c "%startFiles% -b && pause"
+::start cmd /c "%startFiles% -B && pause"
+::start cmd /c "%startFiles% -a && pause"
+::start cmd /c "%startFiles% -A && pause"
+
+:r4a.x1.Optimizer
+::================================
+set menu=r4a.x1.Optimizer
+
+call :mStyle
+
+set mm=
+set mm= %mm% "------- Config Optimize programs -------"
+set mm= %mm% "[ p ] 1.Easy Services Optimizer"
+set mm= %mm% "[ p ] 2.O&O Shutup - Privacy Blocker "
+set mm= %mm% "[ p ] 3.Reduce Memory"
+set mm= %mm% ""
+set mm= %mm% "------- More: -------"
+set mm= %mm% "[ p ] Optimizer.exe"
+set mm= %mm% "[ p ] TaskSchedulerView.exe"
+
+cmdMenuSel f870 "-|NEXT|- %menuNextName%" "-|BACK|- %menuBackName%" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+
+if %ERRORLEVEL% == 1 (
+	if %menuBackGoto% == r4a.xPrograms (
+		set menu1=r4a.x2.CleanUp-Portable
+		set menuA=1. Programs
+		set menuB=2.1. CleanUp-Portable
+		set menuNextName=3.Uninstaller
+		set menuNextGoto=r4a.x3.Uninstaller
+		set menuBackName=Programs
+		set menuBackGoto=r4a.xPrograms
+	)
+	goto %menuNextGoto%
+)
+if %ERRORLEVEL% == 2 goto %menuBackGoto%
+if %ERRORLEVEL% == 3 goto mainMenu
+if %ERRORLEVEL% == 4 goto %menu%
+if %ERRORLEVEL% == 5 goto %menu%
+
+if %ERRORLEVEL% == 6 goto %menu%
+if %ERRORLEVEL% == 7 goto r4a.x1.1.eso
+if %ERRORLEVEL% == 8 goto r4a.x1.4.OOSU10
+if %ERRORLEVEL% == 9 goto r4a.x1.2.reduceMemory
+if %ERRORLEVEL% == 10 goto %menu%
+if %ERRORLEVEL% == 11 goto %menu%
+if %ERRORLEVEL% == 12 goto r4a.x1.3.Optimizer
+if %ERRORLEVEL% == 13 goto r4a.x1.5.taskschedulerview
+
+goto %menu%
+:r4a.x1.1.eso
+::================================
+if %startOneClick% == 0 (cls)
+
+set "downloadFiles=:r3a.x11.1.1.downLoadF-1.1.Eso"
+set "directoryFiles=Data\1.Optimizer\1.1.Eso\Eso"
+set "nameFiles=eso.exe"
+
+::Function
+set startFiles=%destinationPD%\%directoryFiles%\%nameFiles%
+if not exist %startFiles% (
+	call %downloadFiles%
+)
+
+if %startOneClick% == 1 (
+	if %optimizeP% == 1 (
+		%startFiles% /A /G=2 20220525.ini
+	) else (
+		%startFiles% /A /G=1 20220525.ini
+	)
+	exit /b
+) else (
+	start %startFiles%
+)
+
+goto %menu%
+
+:r4a.x1.2.reduceMemory
+::================================
+if %startOneClick% == 0 (cls)
+set "downloadFiles=:r3a.x11.1.2.downLoadF-1.2.ReduceMemory"
+set "directoryFiles=Data\1.Optimizer\1.2.ReduceMemory\ReduceMemory"
+set "nameFiles=reduceMemory_x64.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+	call %downloadFiles%
+)
+
+set "startFiles=%destinationPD%\%directoryFiles%"
+if %startOneClick% == 1 (
+	IF %PROCESSOR_ARCHITECTURE% == x86 (
+		%startFiles%\reduceMemory.exe /O
+	) else (
+		%startFiles%\reduceMemory_x64.exe /O
+	)
+	exit /b
+) else (
+	IF %PROCESSOR_ARCHITECTURE% == x86 (
+		start %startFiles%\ReduceMemory.exe
+	) else (
+		start %startFiles%\ReduceMemory_x64.exe
+	)
+)
+
+goto %menu%
+
+:r4a.x1.3.Optimizer
+::================================
+cls
+set "downloadFiles=:r3a.x11.1.3.downLoadF-1.3.Optimizer"
+set "directoryFiles=Data\1.Optimizer\1.3.Optimizer"
+set "nameFiles=Optimizer-15.4.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+	call %downloadFiles%
+)
+start cmd /c %startFiles%
+
+goto %menu%
+
+:r4a.x1.4.OOSU10
+::================================
+if %startOneClick% == 0 (cls)
+set "downloadFiles=:r3a.x11.1.4.downLoadF-1.4.OOSU10"
+set "directoryFiles=Data\1.Optimizer\1.4.OOSU10"
+set "nameFiles=OOSU10.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+	call %downloadFiles%
+)
+
+if %startOneClick% == 1 (
+	
+	if %optimizeP% == 1 (
+		echo cd %destinationPD%\%directoryFiles% > %destinationPD%\%directoryFiles%\OOSU10S.bat
+		echo OOSU10.exe oosu10-Safe-2205.cfg /quiet >> %destinationPD%\%directoryFiles%\OOSU10S.bat
+		start /w /min cmd /c "%destinationPD%\%directoryFiles%\OOSU10S.bat"
+	) else (
+		echo cd %destinationPD%\%directoryFiles% > %destinationPD%\%directoryFiles%\OOSU10D.bat
+		echo OOSU10.exe oosu10-default.cfg /quiet >> %destinationPD%\%directoryFiles%\OOSU10D.bat
+		start /w /min cmd /c "%destinationPD%\%directoryFiles%\OOSU10D.bat"
+	)
+
+	exit /b
+) else (
+	start cmd /c %startFiles%
+)
+
+goto %menu%
+
+:r4a.x1.5.taskschedulerview
+::================================
+cls
+set "downloadFiles=:r3a.x11.1.5.downLoadF-1.5.taskschedulerview"
+set "directoryFiles=Data\1.Optimizer\1.5.taskschedulerview"
+set "nameFiles=TaskSchedulerView.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+call %downloadFiles%
+)
+start cmd /c %startFiles%
+
+goto %menu%
+
+:r4a.x2.CleanUp-Portable
+::================================
+set menu=%menu1%
+
+set "menuA= %menuA%:"
+set "menuB= %menuB%:"
+
+call :mStyle
+
+set mm=
+set mm= %mm% "-|NEXT|- %menuNextName%"
+set mm= %mm% "-|BACK|- %menuBackName%"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 2.1.Bleachbit"
+set mm= %mm% "[ p ] 2.2.Disk Cleanup"
+set mm= %mm% "[ p ] 2.3.GlaryUtilities_Portable"
+set mm= %mm% "[ p ] 2.4.wiseRegCleaner"
+
+cmdMenuSel f870 %mm%
+
+if %ERRORLEVEL% == 1 (
+	if %menu% == m1a.x6.cleanUpJunkfiles (
+		goto %menuNextGoto%
+	) else (
+	set menu1=r4a.x3.Uninstaller
+	set menuA=1. Programs:
+	set menuB=3.Uninstaller:
+	set menuNextName=4. Debloat Windows 10
+	set menuNextGoto=r4a.x4.DebloatWindows
+	set menuBackName=Programs
+	set menuBackGoto=r4a.xPrograms
+	goto r4a.x3.Uninstaller
+	)
+)
+if %ERRORLEVEL% == 2 goto %menuBackGoto%
+if %ERRORLEVEL% == 3 goto mainMenu
+if %ERRORLEVEL% == 4 goto %menu%
+if %ERRORLEVEL% == 5 goto %menu%
+
+if %ERRORLEVEL% == 6 goto r4a.x2.1.Bleachbit
+if %ERRORLEVEL% == 7 goto r4a.x2.2.DiskCleanup
+if %ERRORLEVEL% == 8 goto r4a.x2.3.GlaryUtilitiesPortable
+if %ERRORLEVEL% == 9 goto r4a.x2.4.wiseRegCleaner
+
+goto %menu%
+
+:r4a.x2.1.Bleachbit
+::================================
+if %startOneClick% == 0 (cls)
+set "downloadFiles=:r3a.x11.2.1.downLoadF-2.1.BleachBit-4.4.2-portable"
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.1.BleachBit-4.4.2-portable\BleachBit-Portable"
+set "nameFiles=bleachbit.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+	call %downloadFiles%
+)
+
+if %startOneClick% == 1 (
+	call :r4a.x2.1.1.BleachbitOneClick
+	exit /b
+) else (
+	echo Please wait bleachbit will start after 20 seconds ...
+	start %startFiles%
+	%timeoutA%
+)
+
+goto %menu%
+
+:r4a.x2.1.1.BleachbitOneClick
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.1.BleachBit-4.4.2-portable\BleachBit-Portable"
+set "configFile=BleachBit.ini"
+set "consoleFile=bleachbit_console.exe"
+
+::Function
+set "startConfigFile=%destinationPD%\%directoryFiles%\%configFile%"
+for /f "delims=:" %%A in ('findstr /n "tree" %startConfigFile%') do set "lineNo=%%A"
+
+set "startConsoleFile=%destinationPD%\%directoryFiles%\%consoleFile%"
+start /w /min cmd /c "echo off && for /f "usebackq skip=%lineNo% tokens=1,2 delims== " %%G IN ("%startConfigFile%") DO (if "%%H"=="True" (Echo.%%G | findstr /C:".">nul && (if not errorlevel 1 (%startConsoleFile% -c %%G))))"
+
+::start /w /min cmd /c "echo off && FOR /F "usebackq skip=%lineNo% tokens=1 delims= " %%G IN ("%startConfigFile%") DO (Echo.%%G | findstr /C:".">nul && (%startConsoleFile% -c %%G))"
+exit /b
+
+:r4a.x2.2.DiskCleanup
+::================================
+cls
+echo.
+start cleanmgr.exe 
+cmdMenuSel f870 "Clean - all -fast " "BACK" 
+if %ERRORLEVEL% == 1 cmd /c cleanmgr.exe /d C: /VERYLOWDISK
+goto %menu%
+
+:r4a.x2.3.GlaryUtilitiesPortable
+::================================
+if %startOneClick% == 0 (cls)
+set "downloadFiles=:r3a.x11.2.3.downLoadF-2.3.GlaryUtilities_Portable"
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.3.GlaryUtilities_Portable"
+set "nameFiles=Integrator_Portable.exe"
+set "nameComand=OneClickMaintenance.exe /schedulestart"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+	call %downloadFiles%
+)
+
+set "startComand=%destinationPD%\%directoryFiles%\Portable\%nameComand%"
+if %startOneClick% == 1 (
+	start /w %startComand%
+	exit /b
+) else (
+	start cmd /c %startFiles%
+)
+
+goto %menu%
+
+:r4a.x2.4.wiseRegCleaner
+::================================
+if %startOneClick% == 0 (cls)
+set "downloadFiles=:r3a.x11.2.5.downLoadF-2.5.WRCFree"
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.5.WRCFree\WRCFree_11.0.2.712"
+set "nameFiles=WiseRegCleaner.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+	call %downloadFiles%
+)
+
+if %startOneClick% == 1 (
+	start /w %startFiles% -a
+	exit /b
+) else (
+	start %startFiles%
+)
+
+goto %menu%
+
+:r4a.x3.Uninstaller
+::================================
+set menu=%menu1%
+
+call :mStyle
+
+set mm=
+set mm= %mm% "-|NEXT|- %menuNextName%"
+set mm= %mm% "-|BACK|- %menuBackName%"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.Revo Uninstaller Portable"
+set mm= %mm% "[ p ] 2.OOappBuster"
+set mm= %mm% ""
+set mm= %mm% "[+] PED:Debloat -Delete unwanted Bloatware:"
+set mm= %mm% ""
+set mm= %mm% "[ ] GridView | Remove-AppxPackage"
+
+cmdMenuSel f870 %mm%
+if %ERRORLEVEL% == 1 (
+	set menuA=1. Programs
+	set menuB=3. Debloat Windows 10
+	set menuNextName=Accounts and Users
+	set menuNextGoto=m1a.x02.4.AccountsUsers
+	set menuBackName=Programs
+	set menuBackGoto=r4a.xPrograms
+	goto %menuNextGoto%
+)
+if %ERRORLEVEL% == 2 goto %menuBackGoto%
+if %ERRORLEVEL% == 3 goto mainMenu
+if %ERRORLEVEL% == 4 goto %menu%
+if %ERRORLEVEL% == 5 goto %menu%
+
+if %ERRORLEVEL% == 6 goto r4a.x3.1.RevoUninstallerPortable
+if %ERRORLEVEL% == 7 goto r4a.x3.2.OOappBuster
+if %ERRORLEVEL% == 8 goto %menu%
+
+if %ERRORLEVEL% == 9 goto m1a.x3.2.1.debloat
+if %ERRORLEVEL% == 10 goto %menu%
+if %ERRORLEVEL% == 11 %psP% "Get-AppxPackage | Select Name, InstallLocation | Out-GridView -PassThru | Remove-AppxPackage"
+
+goto %menu%
+
+:r4a.x3.1.RevoUninstallerPortable
+::================================
+cls
+set "downloadFiles=:r3a.x11.2.4.downLoadF-2.4.RevoUninstaller_Portable"
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.4.RevoUninstaller_Portable\RevoUninstaller_Portable"
+set "nameFiles=RevoUPort.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+call %downloadFiles%
+)
+start %startFiles%
+
+goto %menu%
+
+:r4a.x3.2.OOappBuster
+::================================
+cls
+set "downloadFiles=:r3a.x11.2.2.downLoadF-2.2.OOappBuster"
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.2.OOappBuster"
+set "nameFiles=OOAPB.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+call %downloadFiles%
+)
+start cmd /c %startFiles%
+
+goto %menu%
+
+:r4a.x4.DebloatWindows
+::================================
+set menu=r4a.x4.DebloatWindows
+
+call :mStyle
+
+set mm=
+set mm= %mm% "-|NEXT|- %menuNextName%"
+set mm= %mm% "-|BACK|- %menuBackName%"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[+] 3.1.Win10Debloater-master"
+set mm= %mm% "[+] 3.2.ChrisTitusTech Win10script"
+
+cmdMenuSel f870 %mm%
+
+if %ERRORLEVEL% == 1 goto %menuNextGoto%
+if %ERRORLEVEL% == 2 goto %menuBackGoto%
+if %ERRORLEVEL% == 3 goto mainMenu
+if %ERRORLEVEL% == 4 goto %menu%
+if %ERRORLEVEL% == 5 goto %menu%
+if %ERRORLEVEL% == 6 powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://git.io/debloat'))""
+if %ERRORLEVEL% == 7 powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://christitus.com/win'))""
+
+goto %menu%
+
+::"[+] 3.1.Win10Debloater-master" "[+] 3.2.ChrisTitusTech Win10script" "[ ] 3.3.FULL Win10 Debloat" "[ ] 3.4.Sophia.Script.Win10.v5.12.5" "[ ] 3.5.beta- for check - Windows-10-batch-optimizer-master" "[ ] 3.6.Windows10DebloaterV18" "[ ] 3.7.Windows10NetworkandOptimizerV11" "[ ] 3.8.Reg & ,Bat"
+
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+
 :startPED
+::================================
 set menu=startPED
 
 set "destination=C:\ProgramData\PEDToolBox"
@@ -801,10 +1574,12 @@ exit /b
 ::::::::::::::::::::::::::::
 
 :SetTitle
+::================================
 set title=title Power Every Day - ToolBox
 %title%
 
 :SetColor
+::================================
 cls
 set color1=COLOR 0A
 %color1%
@@ -822,7 +1597,7 @@ echo Account: %username%
 echo.
 echo ========== Power Every Day - ToolBox
 echo.
-echo version: %versionn%
+echo version: %versionTool%
 
 set menuC=onlyB
 call :mStyle
@@ -1728,675 +2503,6 @@ goto %menu%
 
 ::----------------------------------------------------------------------------
 ::---------------------------------------------------------------------------
-::================================
-::Step 0 : Resources
-::================================
-
-::========
- Resources
-:r4a.xPrograms
-::========
-set menu=r4a.xPrograms
-
-set "menuA=MAIN MENU"
-set "menuB=Step 0 : Resource- 1. Programs:"
-call :mStyle
-
-set mm=
-set mm= %mm% "-|NEXT|- 0.Drivers & Run & More"
-set mm= %mm% "-|BACK|- MAIN MENU"
-set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
-set mm= %mm% ""
-set mm= %mm% "[+] 0.Drivers & Run & More"
-set mm= %mm% "[+] 1.Optimizer"
-set mm= %mm% "[+] 2.1.CleanUp-Portable"
-set mm= %mm% "[+] 3.Uninstaller"
-set mm= %mm% "[+] 3.Debloat Windows 10"
-
-cmdMenuSel f870 %mm%
-   
-if %ERRORLEVEL% == 1 goto r4a.x0.Drivers
-if %ERRORLEVEL% == 2 goto mainMenu
-if %ERRORLEVEL% == 3 goto mainMenu
-if %ERRORLEVEL% == 4 goto %menu%
-if %ERRORLEVEL% == 5 goto %menu%
-
-if %ERRORLEVEL% == 6 goto r4a.x0.Drivers
-if %ERRORLEVEL% == 7 (
-	set menuA=1. Programs
-	set menuB=1. Optimizer
-	set menuNextName=CleanUp-Portable
-	set menuNextGoto=r4a.x2.CleanUp-Portable
-	set menuBackName=Programs
-	set menuBackGoto=r4a.xPrograms
-	goto r4a.x1.Optimizer
-)
-if %ERRORLEVEL% == 8 (
-	set menu1=r4a.x2.CleanUp-Portable
-	set menuA=1. Programs
-	set menuB=2.1. CleanUp-Portable
-	set menuNextName=3.Uninstaller
-	set menuNextGoto=r4a.x3.Uninstaller
-	set menuBackName=Programs
-	set menuBackGoto=r4a.xPrograms
-	goto r4a.x2.CleanUp-Portable
-)
-if %ERRORLEVEL% == 9 (
-	set menu1=r4a.x3.Uninstaller
-	set menuA=1. Programs:
-	set menuB=3.Uninstaller
-	set menuNextName=4. Debloat Windows 10
-	set menuNextGoto=r4a.x4.DebloatWindows
-	set menuBackName=Programs
-	set menuBackGoto=r4a.xPrograms
-	goto r4a.x3.Uninstaller
-)
-if %ERRORLEVEL% == 10 (
-	set menuA=1. Programs
-	set menuB=3. Debloat Windows 10
-	set menuNextName=Accounts and Users
-	set menuNextGoto=m1a.x02.4.AccountsUsers
-	set menuBackName=Programs
-	set menuBackGoto=r4a.xPrograms
-	goto r4a.x4.DebloatWindows
-)
-
-:r4a.x0.Drivers
-::================================
-set menu=r4a.x0.Drivers
-
-set "menuA=1. Programs:"
-set "menuB=0.Drivers - Run - More:"
-call :mStyle
-
-set mm=
-set mm= %mm% "-|NEXT|- Optimizer"
-set mm= %mm% "-|BACK|- Programs"
-set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
-set mm= %mm% ""
-set mm= %mm% "[ p ] r4a.xSnappy driver installer"
-set mm= %mm% "[ ] m1a.x02.4.advancedrun-x64"
-set mm= %mm% "[ p ] 0.3.Back up Drivers"
-set mm= %mm% "[ ] 0.4.CrystalDiskInfoPortable"
-
-cmdMenuSel f870 %mm%
-
-if %ERRORLEVEL% == 1 (
-	set menuA=1. Programs
-	set menuB=1. Optimizer
-	set menuNextName=CleanUp-Portable
-	set menuNextGoto=r4a.x2.CleanUp-Portable
-	set menuBackName=Programs
-	set menuBackGoto=r4a.xPrograms
-	goto r4a.x1.Optimizer
-)
-if %ERRORLEVEL% == 2 goto r4a.xPrograms
-if %ERRORLEVEL% == 3 goto mainMenu
-if %ERRORLEVEL% == 4 goto %menu%
-if %ERRORLEVEL% == 5 goto %menu%
-if %ERRORLEVEL% == 6 goto r4a.x0.1.SDI
-if %ERRORLEVEL% == 7 goto r4a.x0.2.advRun
-if %ERRORLEVEL% == 8 goto r4a.x0.3.1.backUpDriversGlaryUtilities
-if %ERRORLEVEL% == 9 goto r4a.x0.4.CrystalDiskInfoPortable
-
-:r4a.x0.1.SDI
-::================================
-cls
-set "downloadFiles=:r3a.x11.0.1.downLoadF-0.1.Drivers-SDI_R2111"
-set "directoryFiles=Data\0.Drivers\0.1.Drivers-SDI_R2111"
-set "nameFiles=SDIO_auto.bat"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-	call %downloadFiles%
-)
-start cmd /c %startFiles%
-
-goto %menu%
-
-:r4a.x0.2.advRun
-::================================
-cls
-set "downloadFiles=:r3a.x11.0.2.downLoadF-0.2.advancedrun-x64"
-set "directoryFiles=Data\0.Drivers\0.2.advancedrun-x64"
-set "nameFiles=AdvancedRun.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist %startFiles% (
-	call %downloadFiles%
-)
-start %startFiles%
-
-goto %menu%
-
-:r4a.x0.3.1.backUpDriversGlaryUtilities
-::================================
-cls
-set "downloadFiles=:r3a.x11.2.3.downLoadF-2.3.GlaryUtilities_Portable"
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.3.GlaryUtilities_Portable\Portable"
-set "nameFiles=DriverBackup.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-	call %downloadFiles%
-)
-start %startFiles%
-
-goto %menu%
-
-:r4a.x0.3.2.startupManagerGlaryUtility
-::================================
-if startOneClick == 0 (cls)
-
-set "downloadFiles=:r3a.x11.2.3.downLoadF-2.3.GlaryUtilities_Portable"
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.3.GlaryUtilities_Portable\Portable"
-set "nameFiles=StartupManager.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-	call %downloadFiles%
-)
-start /w %startFiles%
-
-if startOneClick == 1 (
-	exit /b
-)
-goto %menu%
-
-
-:r4a.x0.4.CrystalDiskInfoPortable
-::================================
-
-cls
-set "downloadFiles=:r3a.x11.0.4.downLoadF-0.4.CrystalDiskInfoPortable"
-set "directoryFiles=Data\0.Drivers\0.4.CrystalDiskInfoPortable"
-set "nameFiles=DiskInfo64.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-	call %downloadFiles%
-)
-IF %PROCESSOR_ARCHITECTURE% == x86 (
-	start cmd /c %destinationPD%\%directoryFiles%\DiskInfo32.exe
-) else (
-	start cmd /c %destinationPD%\%directoryFiles%\DiskInfo64.exe
-)
-
-goto %menu%
-
-
-:r4a.x0.5.1.startUpdates
-::================================
-call :r3a.x11.1.1.downLoadF-1.1.Eso
-start %destinationPD%\Data\1.Optimizer\1.1.Eso\Eso\eso.exe /A /G=2 20220525-updates.ini
-exit /b
-
-:r4a.x0.5.2.showHideUpdates
-::================================
-call :r3a.x11.0.3.1.downLoadF-0.3.1.wushowhide
-start %destinationPD%\Data\0.Drivers\0.3.update\wushowhide.diagcab
-goto %menu%
-
-:r4a.x0.5.3.windowsUpdateTool
-::================================
-call :r3a.x11.0.3.4.downLoadF-0.3.4.win10AssistantUpgrade
-start %destinationPD%\Data\0.Drivers\0.3.update\Windows10Upgrade9252.exe
-goto %menu%
-
-:r4a.x0.5.4.windowsAutomaticUpdatesManager
-::================================
-call :r3a.x11.0.3.3.downLoadF-0.3.3.WAUManager
-start %destinationPD%\Data\0.Drivers\0.3.update\WAUManager.exe
-goto %menu%
-
-:r4a.x0.5.5.windowsUpdateMiniTool
-::================================
-call :r3a.x11.0.3.2.downLoadF-0.3.2.wumt
-start %destinationPD%\Data\0.Drivers\0.3.update\wumt_x64.exe
-goto %menu%
-
-:r4a.x0.6.speedTest
-::================================
-cls
-set "downloadFiles=:r3a.x11.3.2.downLoadF-3.2.speedTest"
-set "directoryFiles=Data\3.Scripts\speedTest"
-set "nameFiles=speedtest.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-	call %downloadFiles%
-)
-
-start cmd /c "%startFiles% -%speedTestFile% && pause"
-
-goto %menu%
-
-::start cmd /c "%startFiles% -b && pause"
-::start cmd /c "%startFiles% -B && pause"
-::start cmd /c "%startFiles% -a && pause"
-::start cmd /c "%startFiles% -A && pause"
-
-:r4a.x1.Optimizer
-::================================
-set menu=r4a.x1.Optimizer
-
-call :mStyle
-
-set mm=
-set mm= %mm% "------- Config Optimize programs -------"
-set mm= %mm% "[ p ] 1.Easy Services Optimizer"
-set mm= %mm% "[ p ] 2.O&O Shutup - Privacy Blocker "
-set mm= %mm% "[ p ] 3.Reduce Memory"
-set mm= %mm% ""
-set mm= %mm% "------- More: -------"
-set mm= %mm% "[ p ] Optimizer.exe"
-set mm= %mm% "[ p ] TaskSchedulerView.exe"
-
-cmdMenuSel f870 "-|NEXT|- %menuNextName%" "-|BACK|- %menuBackName%" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
-
-if %ERRORLEVEL% == 1 (
-	if %menuBackGoto% == r4a.xPrograms (
-		set menu1=r4a.x2.CleanUp-Portable
-		set menuA=1. Programs
-		set menuB=2.1. CleanUp-Portable
-		set menuNextName=3.Uninstaller
-		set menuNextGoto=r4a.x3.Uninstaller
-		set menuBackName=Programs
-		set menuBackGoto=r4a.xPrograms
-	)
-	goto %menuNextGoto%
-)
-if %ERRORLEVEL% == 2 goto %menuBackGoto%
-if %ERRORLEVEL% == 3 goto mainMenu
-if %ERRORLEVEL% == 4 goto %menu%
-if %ERRORLEVEL% == 5 goto %menu%
-
-if %ERRORLEVEL% == 6 goto %menu%
-if %ERRORLEVEL% == 7 goto r4a.x1.1.eso
-if %ERRORLEVEL% == 8 goto r4a.x1.4.OOSU10
-if %ERRORLEVEL% == 9 goto r4a.x1.2.reduceMemory
-if %ERRORLEVEL% == 10 goto %menu%
-if %ERRORLEVEL% == 11 goto %menu%
-if %ERRORLEVEL% == 12 goto r4a.x1.3.Optimizer
-if %ERRORLEVEL% == 13 goto r4a.x1.5.taskschedulerview
-
-goto %menu%
-:r4a.x1.1.eso
-::================================
-if %startOneClick% == 0 (cls)
-
-set "downloadFiles=:r3a.x11.1.1.downLoadF-1.1.Eso"
-set "directoryFiles=Data\1.Optimizer\1.1.Eso\Eso"
-set "nameFiles=eso.exe"
-
-::Function
-set startFiles=%destinationPD%\%directoryFiles%\%nameFiles%
-if not exist %startFiles% (
-	call %downloadFiles%
-)
-
-if %startOneClick% == 1 (
-	if %optimizeP% == 1 (
-		%startFiles% /A /G=2 20220525.ini
-	) else (
-		%startFiles% /A /G=1 20220525.ini
-	)
-	exit /b
-) else (
-	start %startFiles%
-)
-
-goto %menu%
-
-:r4a.x1.2.reduceMemory
-::================================
-if %startOneClick% == 0 (cls)
-set "downloadFiles=:r3a.x11.1.2.downLoadF-1.2.ReduceMemory"
-set "directoryFiles=Data\1.Optimizer\1.2.ReduceMemory\ReduceMemory"
-set "nameFiles=reduceMemory_x64.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-	call %downloadFiles%
-)
-
-set "startFiles=%destinationPD%\%directoryFiles%"
-if %startOneClick% == 1 (
-	IF %PROCESSOR_ARCHITECTURE% == x86 (
-		%startFiles%\reduceMemory.exe /O
-	) else (
-		%startFiles%\reduceMemory_x64.exe /O
-	)
-	exit /b
-) else (
-	IF %PROCESSOR_ARCHITECTURE% == x86 (
-		start %startFiles%\ReduceMemory.exe
-	) else (
-		start %startFiles%\ReduceMemory_x64.exe
-	)
-)
-
-goto %menu%
-
-:r4a.x1.3.Optimizer
-::================================
-cls
-set "downloadFiles=:r3a.x11.1.3.downLoadF-1.3.Optimizer"
-set "directoryFiles=Data\1.Optimizer\1.3.Optimizer"
-set "nameFiles=Optimizer-15.4.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-	call %downloadFiles%
-)
-start cmd /c %startFiles%
-
-goto %menu%
-
-:r4a.x1.4.OOSU10
-::================================
-if %startOneClick% == 0 (cls)
-set "downloadFiles=:r3a.x11.1.4.downLoadF-1.4.OOSU10"
-set "directoryFiles=Data\1.Optimizer\1.4.OOSU10"
-set "nameFiles=OOSU10.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-	call %downloadFiles%
-)
-
-if %startOneClick% == 1 (
-	
-	if %optimizeP% == 1 (
-		echo cd %destinationPD%\%directoryFiles% > %destinationPD%\%directoryFiles%\OOSU10S.bat
-		echo OOSU10.exe oosu10-Safe-2205.cfg /quiet >> %destinationPD%\%directoryFiles%\OOSU10S.bat
-		start /w /min cmd /c "%destinationPD%\%directoryFiles%\OOSU10S.bat"
-	) else (
-		echo cd %destinationPD%\%directoryFiles% > %destinationPD%\%directoryFiles%\OOSU10D.bat
-		echo OOSU10.exe oosu10-default.cfg /quiet >> %destinationPD%\%directoryFiles%\OOSU10D.bat
-		start /w /min cmd /c "%destinationPD%\%directoryFiles%\OOSU10D.bat"
-	)
-
-	exit /b
-) else (
-	start cmd /c %startFiles%
-)
-
-goto %menu%
-
-:r4a.x1.5.taskschedulerview
-::================================
-cls
-set "downloadFiles=:r3a.x11.1.5.downLoadF-1.5.taskschedulerview"
-set "directoryFiles=Data\1.Optimizer\1.5.taskschedulerview"
-set "nameFiles=TaskSchedulerView.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-call %downloadFiles%
-)
-start cmd /c %startFiles%
-
-goto %menu%
-
-:r4a.x2.CleanUp-Portable
-::================================
-set menu=%menu1%
-
-set "menuA= %menuA%:"
-set "menuB= %menuB%:"
-
-call :mStyle
-
-set mm=
-set mm= %mm% "-|NEXT|- %menuNextName%"
-set mm= %mm% "-|BACK|- %menuBackName%"
-set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
-set mm= %mm% ""
-set mm= %mm% "[ p ] 2.1.Bleachbit"
-set mm= %mm% "[ p ] 2.2.Disk Cleanup"
-set mm= %mm% "[ p ] 2.3.GlaryUtilities_Portable"
-set mm= %mm% "[ p ] 2.4.wiseRegCleaner"
-
-cmdMenuSel f870 %mm%
-
-if %ERRORLEVEL% == 1 (
-	if %menu% == m1a.x6.cleanUpJunkfiles (
-		goto %menuNextGoto%
-	) else (
-	set menu1=r4a.x3.Uninstaller
-	set menuA=1. Programs:
-	set menuB=3.Uninstaller:
-	set menuNextName=4. Debloat Windows 10
-	set menuNextGoto=r4a.x4.DebloatWindows
-	set menuBackName=Programs
-	set menuBackGoto=r4a.xPrograms
-	goto r4a.x3.Uninstaller
-	)
-)
-if %ERRORLEVEL% == 2 goto %menuBackGoto%
-if %ERRORLEVEL% == 3 goto mainMenu
-if %ERRORLEVEL% == 4 goto %menu%
-if %ERRORLEVEL% == 5 goto %menu%
-
-if %ERRORLEVEL% == 6 goto r4a.x2.1.Bleachbit
-if %ERRORLEVEL% == 7 goto r4a.x2.2.DiskCleanup
-if %ERRORLEVEL% == 8 goto r4a.x2.3.GlaryUtilitiesPortable
-if %ERRORLEVEL% == 9 goto r4a.x2.4.wiseRegCleaner
-
-goto %menu%
-
-:r4a.x2.1.Bleachbit
-::================================
-if %startOneClick% == 0 (cls)
-set "downloadFiles=:r3a.x11.2.1.downLoadF-2.1.BleachBit-4.4.2-portable"
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.1.BleachBit-4.4.2-portable\BleachBit-Portable"
-set "nameFiles=bleachbit.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-	call %downloadFiles%
-)
-
-if %startOneClick% == 1 (
-	call :r4a.x2.1.1.BleachbitOneClick
-	exit /b
-) else (
-	echo Please wait bleachbit will start after 20 seconds ...
-	start %startFiles%
-	%timeoutA%
-)
-
-goto %menu%
-
-:r4a.x2.1.1.BleachbitOneClick
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.1.BleachBit-4.4.2-portable\BleachBit-Portable"
-set "configFile=BleachBit.ini"
-set "consoleFile=bleachbit_console.exe"
-
-::Function
-set "startConfigFile=%destinationPD%\%directoryFiles%\%configFile%"
-for /f "delims=:" %%A in ('findstr /n "tree" %startConfigFile%') do set "lineNo=%%A"
-
-set "startConsoleFile=%destinationPD%\%directoryFiles%\%consoleFile%"
-start /w /min cmd /c "echo off && for /f "usebackq skip=%lineNo% tokens=1,2 delims== " %%G IN ("%startConfigFile%") DO (if "%%H"=="True" (Echo.%%G | findstr /C:".">nul && (if not errorlevel 1 (%startConsoleFile% -c %%G))))"
-
-::start /w /min cmd /c "echo off && FOR /F "usebackq skip=%lineNo% tokens=1 delims= " %%G IN ("%startConfigFile%") DO (Echo.%%G | findstr /C:".">nul && (%startConsoleFile% -c %%G))"
-exit /b
-
-:r4a.x2.2.DiskCleanup
-::================================
-cls
-echo.
-start cleanmgr.exe 
-cmdMenuSel f870 "Clean - all -fast " "BACK" 
-if %ERRORLEVEL% == 1 cmd /c cleanmgr.exe /d C: /VERYLOWDISK
-goto %menu%
-
-:r4a.x2.3.GlaryUtilitiesPortable
-::================================
-if %startOneClick% == 0 (cls)
-set "downloadFiles=:r3a.x11.2.3.downLoadF-2.3.GlaryUtilities_Portable"
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.3.GlaryUtilities_Portable"
-set "nameFiles=Integrator_Portable.exe"
-set "nameComand=OneClickMaintenance.exe /schedulestart"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-	call %downloadFiles%
-)
-
-set "startComand=%destinationPD%\%directoryFiles%\Portable\%nameComand%"
-if %startOneClick% == 1 (
-	start /w %startComand%
-	exit /b
-) else (
-	start cmd /c %startFiles%
-)
-
-goto %menu%
-
-:r4a.x2.4.wiseRegCleaner
-::================================
-if %startOneClick% == 0 (cls)
-set "downloadFiles=:r3a.x11.2.5.downLoadF-2.5.WRCFree"
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.5.WRCFree\WRCFree_11.0.2.712"
-set "nameFiles=WiseRegCleaner.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-	call %downloadFiles%
-)
-
-if %startOneClick% == 1 (
-	start /w %startFiles% -a
-	exit /b
-) else (
-	start %startFiles%
-)
-
-goto %menu%
-
-:r4a.x3.Uninstaller
-::================================
-set menu=%menu1%
-
-call :mStyle
-
-set mm=
-set mm= %mm% "-|NEXT|- %menuNextName%"
-set mm= %mm% "-|BACK|- %menuBackName%"
-set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
-set mm= %mm% ""
-set mm= %mm% "[ p ] 1.Revo Uninstaller Portable"
-set mm= %mm% "[ p ] 2.OOappBuster"
-set mm= %mm% ""
-set mm= %mm% "[+] PED:Debloat -Delete unwanted Bloatware:"
-set mm= %mm% ""
-set mm= %mm% "[ ] GridView | Remove-AppxPackage"
-
-cmdMenuSel f870 %mm%
-if %ERRORLEVEL% == 1 (
-	set menuA=1. Programs
-	set menuB=3. Debloat Windows 10
-	set menuNextName=Accounts and Users
-	set menuNextGoto=m1a.x02.4.AccountsUsers
-	set menuBackName=Programs
-	set menuBackGoto=r4a.xPrograms
-	goto %menuNextGoto%
-)
-if %ERRORLEVEL% == 2 goto %menuBackGoto%
-if %ERRORLEVEL% == 3 goto mainMenu
-if %ERRORLEVEL% == 4 goto %menu%
-if %ERRORLEVEL% == 5 goto %menu%
-
-if %ERRORLEVEL% == 6 goto r4a.x3.1.RevoUninstallerPortable
-if %ERRORLEVEL% == 7 goto r4a.x3.2.OOappBuster
-if %ERRORLEVEL% == 8 goto %menu%
-
-if %ERRORLEVEL% == 9 goto m1a.x3.2.1.debloat
-if %ERRORLEVEL% == 10 goto %menu%
-if %ERRORLEVEL% == 11 %psP% "Get-AppxPackage | Select Name, InstallLocation | Out-GridView -PassThru | Remove-AppxPackage"
-
-goto %menu%
-
-:r4a.x3.1.RevoUninstallerPortable
-::================================
-cls
-set "downloadFiles=:r3a.x11.2.4.downLoadF-2.4.RevoUninstaller_Portable"
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.4.RevoUninstaller_Portable\RevoUninstaller_Portable"
-set "nameFiles=RevoUPort.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-call %downloadFiles%
-)
-start cmd /c %startFiles%
-
-goto %menu%
-
-:r4a.x3.2.OOappBuster
-::================================
-cls
-set "downloadFiles=:r3a.x11.2.2.downLoadF-2.2.OOappBuster"
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.2.OOappBuster"
-set "nameFiles=OOAPB.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-call %downloadFiles%
-)
-start cmd /c %startFiles%
-
-goto %menu%
-
-:r4a.x4.DebloatWindows
-::================================
-set menu=r4a.x4.DebloatWindows
-
-call :mStyle
-
-set mm=
-set mm= %mm% "-|NEXT|- %menuNextName%"
-set mm= %mm% "-|BACK|- %menuBackName%"
-set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
-set mm= %mm% ""
-set mm= %mm% "[+] 3.1.Win10Debloater-master"
-set mm= %mm% "[+] 3.2.ChrisTitusTech Win10script"
-
-cmdMenuSel f870 %mm%
-
-if %ERRORLEVEL% == 1 goto %menuNextGoto%
-if %ERRORLEVEL% == 2 goto %menuBackGoto%
-if %ERRORLEVEL% == 3 goto mainMenu
-if %ERRORLEVEL% == 4 goto %menu%
-if %ERRORLEVEL% == 5 goto %menu%
-if %ERRORLEVEL% == 6 powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://git.io/debloat'))""
-if %ERRORLEVEL% == 7 powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://christitus.com/win'))""
-
-goto %menu%
-
-::"[+] 3.1.Win10Debloater-master" "[+] 3.2.ChrisTitusTech Win10script" "[ ] 3.3.FULL Win10 Debloat" "[ ] 3.4.Sophia.Script.Win10.v5.12.5" "[ ] 3.5.beta- for check - Windows-10-batch-optimizer-master" "[ ] 3.6.Windows10DebloaterV18" "[ ] 3.7.Windows10NetworkandOptimizerV11" "[ ] 3.8.Reg & ,Bat"
 
 
 ::================================
