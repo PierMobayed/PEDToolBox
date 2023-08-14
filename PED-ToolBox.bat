@@ -10,11 +10,11 @@ echo.
 :m0a.x0.Version
 ::================================
 :: Set version
-set "versionTool=PED-ToolBox-1.258.230812"
+set "versionTool=PED-ToolBox-1.260.230814"
 
 :: Portable type: 1
 :: Installing type: 0 (or any different than 1)
-set "portableSwitch=0"
+set portableSwitch=1
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :m0a.x01.DirectoryPED
@@ -132,6 +132,8 @@ echo.
 :m0a.x11.variable
 ::================================
 set "shortcutToLocation=0"
+set "timestamp=0"
+set "PEDRecoveryFolder=%SYSTEMDRIVE%\PED-Recovery"
 
 :m0a.x12.variableMain
 ::================================
@@ -146,14 +148,12 @@ if %shortcutToLocation% == desktop (
 	set "destinationMain=%cd%"
 )
 
-set "destinationPD=pedDownload"
-if not exist "%destinationMain%\%destinationPD%\." (
-	mkdir "%destinationMain%\%destinationPD%"
+set "destinationPD=%destinationMain%\pedDownload"
+if not exist "%destinationPD%\." (
+	mkdir "%destinationPD%"
 )
 
-cd %destinationMain%\%destinationPD%
-
-set "destinationPD=%destinationMain%\%destinationPD%"
+cd %destinationPD%
 
 call :r3a.x12.downLoadF-files
 if %shortcutToLocation% == desktop (
@@ -179,6 +179,7 @@ if exist "c1.txt" (goto m2a.x5.Oneclick5)
 echo.
 echo.
 echo ...[99%]...
+
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -221,7 +222,7 @@ set mm= %mm% "[ ] Trusted Installer"
 set mm= %mm% ""
 set mm= %mm% "[ ] Download files"
 
-cmdmenusel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto startPED
 if %ERRORLEVEL% == 2 goto m0a.x22.TrustedInstaller
 if %ERRORLEVEL% == 3 goto %menu%
@@ -891,7 +892,7 @@ set mm= %mm% "[+] 2.1.CleanUp-Portable"
 set mm= %mm% "[+] 3.Uninstaller"
 set mm= %mm% "[+] 3.Debloat Windows 10"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
    
 if %ERRORLEVEL% == 1 goto r4a.x0.Drivers
 if %ERRORLEVEL% == 2 goto mainMenu
@@ -958,7 +959,7 @@ set mm= %mm% "[ ] m1a.x02.4.advancedrun-x64"
 set mm= %mm% "[ p ] 0.3.Back up Drivers"
 set mm= %mm% "[ ] 0.4.CrystalDiskInfoPortable"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 
 if %ERRORLEVEL% == 1 (
 	set menuA=1. Programs
@@ -1137,7 +1138,7 @@ set mm= %mm% "------- More: -------"
 set mm= %mm% "[ p ] Optimizer.exe"
 set mm= %mm% "[ p ] TaskSchedulerView.exe"
 
-cmdMenuSel f870 "-|NEXT|- %menuNextName%" "-|BACK|- %menuBackName%" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdmenusel e370 "-|NEXT|- %menuNextName%" "-|BACK|- %menuBackName%" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
 
 if %ERRORLEVEL% == 1 (
 	if %menuBackGoto% == r4a.xPrograms (
@@ -1308,7 +1309,7 @@ set mm= %mm% "[ p ] 2.2.Disk Cleanup"
 set mm= %mm% "[ p ] 2.3.GlaryUtilities_Portable"
 set mm= %mm% "[ p ] 2.4.wiseRegCleaner"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 
 if %ERRORLEVEL% == 1 (
 	if %menu% == m1a.x6.cleanUpJunkfiles (
@@ -1380,7 +1381,7 @@ exit /b
 cls
 echo.
 start cleanmgr.exe 
-cmdMenuSel f870 "Clean - all -fast " "BACK" 
+cmdmenusel e370 "Clean - all -fast " "BACK" 
 if %ERRORLEVEL% == 1 cmd /c cleanmgr.exe /d C: /VERYLOWDISK
 goto %menu%
 
@@ -1449,7 +1450,7 @@ set mm= %mm% "[+] PED:Debloat -Delete unwanted Bloatware:"
 set mm= %mm% ""
 set mm= %mm% "[ ] GridView | Remove-AppxPackage"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 (
 	set menuA=1. Programs
 	set menuB=3. Debloat Windows 10
@@ -1521,7 +1522,7 @@ set mm= %mm% ""
 set mm= %mm% "[+] 3.1.Win10Debloater-master"
 set mm= %mm% "[+] 3.2.ChrisTitusTech Win10script"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 
 if %ERRORLEVEL% == 1 goto %menuNextGoto%
 if %ERRORLEVEL% == 2 goto %menuBackGoto%
@@ -1585,6 +1586,13 @@ cls
 set color1=COLOR 0A
 %color1%
 
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:m1a.x
+::================================
+echo Main Menu
+::================================
+echo.
 ::========
 :mainMenu
 ::========
@@ -1623,7 +1631,7 @@ set mm= %mm% "[ ] One Click Maintenance and Clean"
 if %loc% == 1 (set mm= %mm% "")
 if %loc% == 1 (set mm= %mm% "[ p ] Create Shortcut to Desktop")
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x01.restorePoint
 if %ERRORLEVEL% == 2 goto m1a.x02.testDiagnostic
 
@@ -1653,9 +1661,12 @@ if %loc% == 1 (
 
 goto %menu%
 
+
 :m1a.x01.restorePoint
 ::================================
 set menu=m1a.x01.restorePoint
+
+if not exist "%PEDRecoveryFolder%\." mkdir "%PEDRecoveryFolder%"
 
 set "menuA= Main Menu:"
 set "menuB= Create a restore point:"
@@ -1670,12 +1681,17 @@ set mm= %mm% ""
 set mm= %mm% "[ p ] 2. Create point (CMD fast)"
 set mm= %mm% "[ ] 2. Create point(Powershell with loading bar)"
 set mm= %mm% ""
-set mm= %mm% "[ p ] 3. View and Restore"
+set mm= %mm% "[ p ] 3. View point by PowerShell"
+set mm= %mm% "[ p ] 3. View point and Restore"
 set mm= %mm% ""
-set mm= %mm% "---------- Registry backup ----------"
+set mm= %mm% "---------- PED backup ----------"
 set mm= %mm% "[ p ] Registry backup (CMD)"
+set mm= %mm% "[ p ] Scheduled Tasks backup (CMD)"
+set mm= %mm% "[ p ] Services backup (CMD)"
+set mm= %mm% ""
+set mm= %mm% "[ p ] Open PED-Recovery Folder"
 
-cmdMenuSel f870 %mm%    
+cmdmenusel e370 %mm%    
 if %ERRORLEVEL% == 1 goto m1a.x02.testDiagnostic
 if %ERRORLEVEL% == 2 goto mainMenu
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -1688,27 +1704,76 @@ if %ERRORLEVEL% == 8 goto %menu%
 if %ERRORLEVEL% == 9 start cmd.exe /c "wmic.exe /Namespace:\\root\default Path SystemRestore Call CreateRestorePoint "PED-RestorePoint-cmd", 100, 7" 
 if %ERRORLEVEL% == 10 powershell.exe -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'PED-Restore Point' -RestorePointType 'MODIFY_SETTINGS'"
 if %ERRORLEVEL% == 11 goto %menu%
-if %ERRORLEVEL% == 12 start rstrui.exe
-if %ERRORLEVEL% == 13 goto %menu%
+if %ERRORLEVEL% == 12 (
+	powershell "Get-ComputerRestorePoint | Format-Table -Property Description, SequenceNumber, CreationTime"
+	goto m1a.x02.1.3.0.end
+)
+if %ERRORLEVEL% == 13 start rstrui.exe
 if %ERRORLEVEL% == 14 goto %menu%
-if %ERRORLEVEL% == 15 goto m1a.x01.1.registryBackup
+if %ERRORLEVEL% == 15 goto %menu%
+if %ERRORLEVEL% == 16 goto m1a.x01.1.registryBackup
+if %ERRORLEVEL% == 17 (
+	call :r5a.x3.1.tasksBackup
+)
+if %ERRORLEVEL% == 18 (
+	call :r5a.x3.2.servicesBackup
+)
+if %ERRORLEVEL% == 19 goto %menu%
+
+if %ERRORLEVEL% == 20 start %windir%\explorer.exe "%PEDRecoveryFolder%"
+
 
 goto %menu%
+pause
+exit
+:m1a.x01.0.timestamp
+::================================
+:: Initialize variables
+
+REM Get the current date and time using WMIC
+for /f "delims=" %%a in ('wmic os get LocalDateTime ^| find "."') do set datetime=%%a
+
+REM Extract date and time components from the LocalDateTime
+set "year=%datetime:~0,4%"
+set "month=%datetime:~4,2%"
+set "day=%datetime:~6,2%"
+set "hour=%datetime:~8,2%"
+set "minute=%datetime:~10,2%"
+set "second=%datetime:~12,2%"
+
+REM Display the date and time components
+::echo Year: %year%
+::echo Month: %month%
+::echo Day: %day%
+::echo Hour: %hour%
+::echo Minute: %minute%
+::echo Second: %second%
+
+REM You can use these variables as needed in your script
+REM For example, to create a custom formatted timestamp
+set "timestamp=%year%%month%%day%_%hour%%minute%%second%"
+::echo Current Time: %timestamp%
+
+exit /b
 
 :m1a.x01.1.registryBackup
 ::================================
 cls
 
-SETLOCAL
+call :m1a.x01.0.timestamp
+echo Current Time: %timestamp%
+
+setlocal
 echo.
-echo Write Registry File Name
-set /p registryFileName=
+set registryFileName=regBackup_%timestamp%.reg
+set RegBackup=%PEDRecoveryFolder%
+
 echo.
-ECHO ********** Regystry backup COPY to C:/RegBackup/%registryFileName%.reg 
+ECHO ********** Regystry backup COPY to %RegBackup%\%registryFileName%.reg 
 echo.
 ECHO ********** Please wait....
 echo.
-SET RegBackup=%SYSTEMDRIVE%\RegBackup
+
 IF NOT EXIST "%RegBackup%" md "%RegBackup%"
 IF EXIST "%RegBackup%\HKLM.reg" DEL "%RegBackup%\HKLM.reg"
 REG export HKLM "%RegBackup%\HKLM.reg"
@@ -1728,13 +1793,13 @@ DEL "%RegBackup%\HKCR.reg"
 DEL "%RegBackup%\HKU.reg"
 DEL "%RegBackup%\HKCC.reg"
 ENDLOCAL
-start %windir%\explorer.exe "C:/RegBackup"
+start %windir%\explorer.exe "C:/%RegBackup%"
 pause
 goto %menu%
 
-::========
+::================================
 :m1a.x02.testDiagnostic
-::========
+::================================
 set menu=m1a.x02.testDiagnostic
 
 set "menuA= Main Menu:"
@@ -1763,7 +1828,7 @@ set mm= %mm% "[ ] Start CMD"
 set mm= %mm% ""
 set mm= %mm% "[ ] Copy -RoboCopy cmd"
 
-cmdMenuSel f870 "-|NEXT|- Step 1 : System Check -Update/Repair/Scan:" "-|BACK|- Main Menu" "-|MAIN MENU|- " "================= Select an option =================" "" %mm%
+cmdmenusel e370 "-|NEXT|- Step 1 : System Check -Update/Repair/Scan:" "-|BACK|- Main Menu" "-|MAIN MENU|- " "================= Select an option =================" "" %mm%
 if %ERRORLEVEL% == 1 set "menuBackName=Step 0 : Test and Diagnostic:" && set "menuBackGoto=m1a.x02.testDiagnostic" && goto m1a.x1.systemCheck
 if %ERRORLEVEL% == 2 goto mainMenu
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -1822,7 +1887,7 @@ set mm= %mm% ""
 set mm= %mm% "[ ] Log: boot timer"
 set mm= %mm% "[ ] Log: boot info"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 cls
 if %ERRORLEVEL% == 1 goto m1a.x02.testDiagnostic:
 if %ERRORLEVEL% == 2 goto m1a.x02.testDiagnostic:
@@ -1837,8 +1902,8 @@ if %ERRORLEVEL% == 9 goto m1a.x02.1.3.createShotcut
 if %ERRORLEVEL% == 10 goto %menu%
 if %ERRORLEVEL% == 11 goto m9a.x0.Restart
 if %ERRORLEVEL% == 12 goto %menu%
-if %ERRORLEVEL% == 13 start cmd /c "type %destinationPD%\files\bootTimer\0.bootTimer.txt && echo. && cmdMenuSel f870 "Press ENTER to continue..." "
-if %ERRORLEVEL% == 14 start cmd /c "type %destinationPD%\files\bootTimer\0.bootLog.txt && echo. && cmdMenuSel f870 "Press ENTER to continue..." "
+if %ERRORLEVEL% == 13 start cmd /c "type %destinationPD%\files\bootTimer\0.bootTimer.txt && echo. && cmdmenusel e370 "Press ENTER to continue..." "
+if %ERRORLEVEL% == 14 start cmd /c "type %destinationPD%\files\bootTimer\0.bootLog.txt && echo. && cmdmenusel e370 "Press ENTER to continue..." "
 
 goto %menu%
 
@@ -1878,7 +1943,7 @@ echo Choice from two Options
 echo 1. CMD view    1.30.Create-PED-BootTimer
 echo 2. Pop message 1.31.Create-PED-BootTimerMessage
 echo.
-cmdMenuSel f870 "[ ] 1.30.Create-PED-BootTimer" "[ ] 1.31.Create-PED-BootTimerMessage"
+cmdmenusel e370 "[ ] 1.30.Create-PED-BootTimer" "[ ] 1.31.Create-PED-BootTimerMessage"
 if %ERRORLEVEL% == 1 set "downloadFiles=:r5a.x1.6.Create-PED-BootTimer"
 if %ERRORLEVEL% == 2 set "downloadFiles=:r5a.x1.7.Create-PED-BootTimerMessage"
 %timeoutA%
@@ -2000,7 +2065,7 @@ if %shortcutToLocation% == desktop (endlocal && exit /b)
 
 :m1a.x02.1.3.0.end
 echo.
-cmdMenuSel f870 "Press ENTER to back "
+cmdmenusel e370 "Press ENTER to go back "
 goto %menu%
 
 REM Numeric values for the WindowStyle property in batch scripts
@@ -2047,7 +2112,7 @@ set mm= %mm% ""
 set mm= %mm% "[ p ] 2.Unrestricted"
 set mm= %mm% "[ d ] 2.Restricted"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 cls
 if %ERRORLEVEL% == 1 goto m1a.x02.3.UserAccountControl
 if %ERRORLEVEL% == 2 goto m1a.x02.testDiagnostic:
@@ -2061,7 +2126,7 @@ if %ERRORLEVEL% == 8 start /min powershell "Set-ExecutionPolicy Unrestricted -Fo
 if %ERRORLEVEL% == 9 start /min powershell "Set-ExecutionPolicy Restricted -Force" && start /min powershell "Set-ExecutionPolicy Restricted -Scope CurrentUser -Force"
 
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 Get-ExecutionPolicy -List
@@ -2077,7 +2142,7 @@ set "menuA= Step 0 : Test and Diagnostic:"
 set "menuB= User account control:"
 call :mStyle
 
-cmdMenuSel f870 "-|NEXT|- Accounts and Users:" "-|BACK|- Step 0 : Test and Diagnostic:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.Never notify" "[ ] 1.Notify me only when app try to make changes(do not dim my desktop)" "[ ] 1.Notify me only when app try to make changes(default)" "[ d ] 1.Always notify" 
+cmdmenusel e370 "-|NEXT|- Accounts and Users:" "-|BACK|- Step 0 : Test and Diagnostic:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.Never notify" "[ ] 1.Notify me only when app try to make changes(do not dim my desktop)" "[ ] 1.Notify me only when app try to make changes(default)" "[ d ] 1.Always notify" 
 if %ERRORLEVEL% == 1 goto m1a.x02.4.AccountsUsers
 if %ERRORLEVEL% == 2 goto m1a.x02.testDiagnostic:
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2103,7 +2168,7 @@ set "menuA= Step 0 : Test and Diagnostic:"
 set "menuB= Accounts and Users:"
 call :mStyle
 
-cmdMenuSel f870 "-|NEXT|- Control Panel:" "-|BACK|- Programs" "-|MAIN MENU|- " "========== Select an option ==========" "" "[+] 1.Account Password Reset" "[+] 2.Activate Administrator account" "[+] 3.add account" "[+] 4.Local Users and Groups(Local)"
+cmdmenusel e370 "-|NEXT|- Control Panel:" "-|BACK|- Programs" "-|MAIN MENU|- " "========== Select an option ==========" "" "[+] 1.Account Password Reset" "[+] 2.Activate Administrator account" "[+] 3.add account" "[+] 4.Local Users and Groups(Local)"
 if %ERRORLEVEL% == 1 goto m1a.x02.5.controlPanelView
 if %ERRORLEVEL% == 2 goto r4a.xPrograms
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2185,7 +2250,7 @@ set mm= %mm% "[ ] Activete"
 set mm= %mm% "[ d ] DeActivete "
 set mm= %mm% "[ ] Change administrator Password"
 
-cmdMenuSel f870        
+cmdmenusel e370        
 if %ERRORLEVEL% == 1 goto m1a.x02.4.3.addAccount
 if %ERRORLEVEL% == 2 goto m1a.x02.4.AccountsUsers
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2222,7 +2287,7 @@ set mm= %mm% "user"
 set mm= %mm% "administrator"
 set mm= %mm% "Write account name again"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 %add2% && goto m1a.x02.4.4.LocalUsersAndGroups
 if %ERRORLEVEL% == 2 %add2% && goto m1a.x02.4.AccountsUsers
 if %ERRORLEVEL% == 3 %add2% && goto mainMenu
@@ -2253,7 +2318,7 @@ set mm= %mm% "[ ] lusrmgr.msc"
 set mm= %mm% "[ ] Control panel/User accounts"
 set mm= %mm% "[ p ] User accounts panel 2"
 
-cmdMenuSel f870       
+cmdmenusel e370       
 if %ERRORLEVEL% == 1 set menuBackName=Local Users and Groups(Local) && set menuBackGoto=m1a.x02.4.4.LocalUsersAndGroups && goto m1a.x1.systemCheck
 if %ERRORLEVEL% == 2 goto m1a.x02.4.AccountsUsers
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2277,7 +2342,7 @@ echo -property - member of - add
 echo -admin
 echo change preview user from admin to user
 
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x02.4.4.3.UserAccountsPanel
@@ -2288,7 +2353,7 @@ echo Instructions:
 echo - Properties
 echo - Group Membership
 
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x02.5.controlPanelView
@@ -2318,7 +2383,7 @@ set mm= %mm% "[ ] Disk Defragmenter"
 set mm= %mm% "[ ] Check for errors"
 set mm= %mm% "[ ] Disk Management"
         
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x02.testDiagnostic:
 if %ERRORLEVEL% == 2 goto m1a.x02.testDiagnostic:
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2334,7 +2399,7 @@ if %ERRORLEVEL% == 11 goto m1a.x02.5.1.troubleshooting
 if %ERRORLEVEL% == 12 goto %menu%
 if %ERRORLEVEL% == 13 goto r4a.x0.4.CrystalDiskInfoPortable
 if %ERRORLEVEL% == 14 start dfrgui.exe
-if %ERRORLEVEL% == 15 start cmd /c "chkdsk && echo. && cmdMenuSel f870 "Press ENTER to continue..." "
+if %ERRORLEVEL% == 15 start cmd /c "chkdsk && echo. && cmdmenusel e370 "Press ENTER to continue..." "
 if %ERRORLEVEL% == 16 start diskmgmt.msc
 
 goto %menu%
@@ -2362,7 +2427,7 @@ set mm= %mm% "--[ ] Troubleshooting Network adapter"
 set mm= %mm% "[ ] System and Security"
 set mm= %mm% "--[ ] Troubleshooting System Maintenance"
  
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x02.5.controlPanelView
 if %ERRORLEVEL% == 2 goto m1a.x02.5.controlPanelView
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2401,7 +2466,7 @@ set mm= %mm% "[ p ] Test Speed [MB/s] [megabytes per second]"
 set mm= %mm% ""
 set mm= %mm% "[ p ] Check IP Address"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x02.testDiagnostic:
 
 if %ERRORLEVEL% == 2 goto m1a.x02.testDiagnostic:
@@ -2467,22 +2532,38 @@ goto %menu%
 
 :m1a.x02.7.roboCopy
 ::================================
+set "menuD2=echo."
+set "menuD2=%menuD2% && echo ===================================================="
+set "menuD2=%menuD2% && echo ==================== ROBOCOPY: ==================== "
+set "menuD2=%menuD2% && echo."
+set "menuD2=%menuD2% && echo Description:"
+set "menuD2=%menuD2% && echo."
+set "menuD2=%menuD2% && echo 	- Copy one Folder to another place"
+set "menuD2=%menuD2% && echo 	- Command: /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /LOG+:C:\robocopy.log /TEE"
+set "menuD2=%menuD2% && echo."
+set "menuD2=%menuD2% && echo 	- Example:"
+set "menuD2=%menuD2% && echo 	"C:\Users\%username%\Desktop\source""
+set "menuD2=%menuD2% && echo 	"C:\Users\%username%\Desktop\destination""
+set "menuD2=%menuD2% && echo."
+set "menuD2=%menuD2% && echo ===================================================="
+
 
 set "menuA= Step 0 : Test and Diagnostic:"
 set "menuB= [-] RoboCopy:"
 set "menuC=onlyA"
 call :mStyle
+set "menuD2= "
 
 set /p source=Type source:
 set /p destination=Type destination:
 
-robocopy "%source%" "%destination%" /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT
+robocopy "%source%" "%destination%" /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /LOG+:C:\robocopy.log /TEE
 
 set source=
 set destination=
 
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 
@@ -2531,7 +2612,7 @@ set mm= %mm% "[+] 4. Check Security and Maintenance"
 set mm= %mm% "[+] 5. Check Windows Defender"
 set mm= %mm% "[+] 6. Check for corrupt files"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
   
 if %ERRORLEVEL% == 1 goto m1a.x1.1.restorePoint
 if %ERRORLEVEL% == 2 goto %menuBackGoto%
@@ -2570,7 +2651,7 @@ set mm= %mm% ""
 set mm= %mm% "---------- Registry backup ----------"
 set mm= %mm% "[ p ] Registry backup (CMD)"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x1.2.checkForUpdates
 if %ERRORLEVEL% == 2 goto m1a.x1.systemCheck
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2663,7 +2744,7 @@ set mm= %mm% "[ ] (WAUM) Windows Automatic Updates Manager "
 set mm= %mm% ""
 set mm= %mm% "[ ] Restart PC"
 
-cmdmenusel f870 %mm%
+cmdmenusel e370 %mm%
 
 cls
 echo Please wait...
@@ -2701,7 +2782,7 @@ if %ERRORLEVEL% == 25 goto m9a.x0.Restart
 goto %menu%
 
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 ::"powershell.exe -NoProfile -ExecutionPolicy Bypass -File """C:\ProgramData\Winget-AutoUpdate\user-run.ps1""
 
@@ -2749,7 +2830,7 @@ set mm= %mm% ""
 set mm= %mm% "[ p ] 1.BackUp/Restore Drivers"
 set mm= %mm% "[ p ] 2.SDI drivers"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x1.4.checkSecurityAndMaintenance
 if %ERRORLEVEL% == 2 set menuBackName=Main Menu && set menuBackGoto=mainMenu && goto m1a.x1.systemCheck
@@ -2780,7 +2861,7 @@ set mm= %mm% "[ ] 2.Start Maintenance"
 set mm= %mm% "[ ] 3.Stop Maintenance"
 set mm= %mm% "[ ] 4.Restart PC"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x1.5.checkWindowsDefender
 if %ERRORLEVEL% == 2 set menuBackName=Main Menu && set menuBackGoto=mainMenu && goto m1a.x1.systemCheck
@@ -2816,7 +2897,7 @@ set mm= %mm% "[ ] 2.full virus scan"
 set mm= %mm% "[ ] 3.offline virus scan"
 set mm= %mm% "[ ] 4.boot sector malware scan"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x1.6.checkCorruptFiles
 if %ERRORLEVEL% == 2 set menuBackName=Main Menu && set menuBackGoto=mainMenu && goto m1a.x1.systemCheck
@@ -2832,7 +2913,7 @@ if %ERRORLEVEL% == 10 powershell "& "Start-MpScan -ScanType FullScan""
 if %ERRORLEVEL% == 11 powershell "& "Start-MpWDOScan""
 if %ERRORLEVEL% == 12 cd C:\ProgramData\Microsoft\Windows Defender\Platform\4.18* && MpCmdRun -Scan -ScanType -BootSectorScan
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 
@@ -2855,7 +2936,7 @@ set mm= %mm% "[ p ] 2.Run a DISM command"
 set mm= %mm% ""
 set mm= %mm% "[ ] Auto Scan - SFC-DISM-SFC"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x2.settings 
 if %ERRORLEVEL% == 2 set menuBackName=Main Menu && set menuBackGoto=mainMenu && goto m1a.x1.systemCheck
@@ -2902,7 +2983,7 @@ set mm= %mm% "[ ] Reset this pc"
 set mm= %mm% ""
 set mm= %mm% "[+] More: Page 2:"
           
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 2 set menuBackName=Main Menu && set menuBackGoto=mainMenu && goto m1a.x1.systemCheck
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2958,7 +3039,7 @@ set mm= %mm% "[ ] About - System properties"
 set mm= %mm% "[ ] About - Control panel"
 set mm= %mm% "[ ] About - Windows"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x2.settings
 if %ERRORLEVEL% == 2 goto m1a.x2.settings
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3006,7 +3087,7 @@ set mm= %mm% ""
 set mm= %mm% "[+] More: Github Scripts:
 
 
-cmdMenuSel f870 %mm% 
+cmdmenusel e370 %mm% 
 if %ERRORLEVEL% == 1 goto m1a.x4.cleanUp
 if %ERRORLEVEL% == 2 goto m1a.x2.settings
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3054,7 +3135,7 @@ set mm= %mm% "[ ] Web: winstall.app"
 set mm= %mm% "[ ] Web: Ninite.com"
 set mm= %mm% "[ ] Web: Portableapps.com"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3116,7 +3197,7 @@ set mm= %mm% "--- MS Store: ---"
 set mm= %mm% "[ ] Note: Free Office Mobile"
 
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x3.1.install
 if %ERRORLEVEL% == 2 goto m1a.x3.1.install
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3189,7 +3270,7 @@ set mm= %mm% ""
 set mm= %mm% "---------- User folder ----------"
 set mm= %mm% "[ p ] User folder - delete unwanted/empty folders"
 
-cmdMenuSel f870 %mm%        
+cmdmenusel e370 %mm%        
 
 if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 2 (
@@ -3272,7 +3353,7 @@ timeout 1 /nobreak>nul
 del %startCommand%
 
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x3.2.1.3.UserFolderDeleteUnwantedFolders
@@ -3287,7 +3368,7 @@ IF EXIST "%UserProfile%\Saved" start %windir%\explorer.exe %UserProfile%\Saved G
 IF EXIST "%UserProfile%\Searches" start %windir%\explorer.exe %UserProfile%\Searches
 
 echo.
-cmdMenuSel f870 "Continue without changes" "Delete" 
+cmdmenusel e370 "Continue without changes" "Delete" 
 
 if %ERRORLEVEL% == 1 goto %menu%
 IF EXIST "%UserProfile%\3D Objects" rmdir /s /q "%UserProfile%\3D Objects" && Reg.exe delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}" /f && Reg.exe delete "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}" /f
@@ -3299,7 +3380,7 @@ IF EXIST "%UserProfile%\Searches" rmdir /s /q "%UserProfile%\Searches"
 
 
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x3.3.updateApps
@@ -3320,7 +3401,7 @@ set mm= %mm% "[ p ] List with updates all apps/programs:"
 set mm= %mm% "[ p ] Updates ALL:"
 set mm= %mm% "[ ] Updates Manual:"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 cls
 if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
@@ -3339,14 +3420,14 @@ goto %menu%
 winget upgrade
 %color1%
 echo.
-cmdMenuSel f870 "Press ENTER to continue..."
+cmdmenusel e370 "Press ENTER to continue..."
 
 goto %menu%
 ::winget upgrade -h --id APP-ID
 
 :m1a.x3.3.2.updateAppsAll
 ::================================
-start cmd /c "winget upgrade -h --all && echo. && cmdMenuSel f870 "Press ENTER to continue...""
+start cmd /c "winget upgrade -h --all && echo. && cmdmenusel e370 "Press ENTER to continue...""
 
 %color1%
 
@@ -3362,7 +3443,7 @@ echo.
 set /p "winG1=Type ID: " 
 cls
 echo.
-cmdMenuSel f870 "Update app: %winG1%" "Type Again" "BACK"
+cmdmenusel e370 "Update app: %winG1%" "Type Again" "BACK"
 cls
 if %ERRORLEVEL% == 1 start cmd /c "winget upgrade -h --id %winG1% && pause"
 set "winG1="
@@ -3408,7 +3489,7 @@ set mm= %mm% "[+] 1.StartUp"
 set mm= %mm% "[+] 2.StartMenu"
 set mm= %mm% "[+] 3.Windows Explorer"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x4.1.startUp
 if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3444,7 +3525,7 @@ set mm= %mm% "[+] 5.Startup -Registry editor"
 set mm= %mm% ""
 set mm= %mm% "[ ] 6.Startup manager (GlaryUtility)"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x4.2.startMenu
 if %ERRORLEVEL% == 2 goto m1a.x4.cleanUp
@@ -3469,7 +3550,7 @@ echo Instructions:
 echo.
 echo 1. -Stop unwanted apps
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x4.1.2.startupTasks
@@ -3488,7 +3569,7 @@ set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Disable startup Tasks"
 set mm= %mm% "[ ] 2.Enable startup Tasks"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x4.1.startUp
 if %ERRORLEVEL% == 2 goto m1a.x4.1.startUp
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3499,7 +3580,7 @@ if %ERRORLEVEL% == 6 powershell "Get-ScheduledTask -TaskPath '\'  | Out-GridView
 if %ERRORLEVEL% == 7 powershell "Get-ScheduledTask -TaskPath '\'  | Out-GridView -PassThru | ENABLE-ScheduledTask"
 
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 :::4.1.3.taskmgr
@@ -3517,7 +3598,7 @@ if %ERRORLEVEL% == 1 goto %menu%
 ::REG import "%cd%\B.reg"
 ::DEL B.reg
 ::
-::cmdMenuSel f870 "Press ENTER to continue..." 
+::cmdmenusel e370 "Press ENTER to continue..." 
 ::if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x4.1.4.StartupFolders
@@ -3530,7 +3611,7 @@ echo Instructions:
 echo.
 echo 2. Delete unwanted startup programs
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x4.1.5.RegistryEditor
@@ -3551,7 +3632,7 @@ set mm= %mm% "[ p ] 2.CURRENT_USER\\RunOnce"
 set mm= %mm% "[ p ] 3.LOCAL_MACHINE\\Run"
 set mm= %mm% "[ p ] 4.LOCAL_MACHINE\\RunOnce"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x4.1.startUp
 if %ERRORLEVEL% == 2 goto m1a.x4.1.startUp
@@ -3585,7 +3666,7 @@ set mm= %mm% "[ p ] 1.Start Menu:"
 set mm= %mm% "[ p ] 2.Apps:"
 set mm= %mm% "[ p ] 3.Folders appear to start menu"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x4.3.winExplorer
 if %ERRORLEVEL% == 2 goto m1a.x4.cleanUp
@@ -3626,7 +3707,7 @@ set mm= %mm% "[ ] Recent Items Instance Folder"
 set mm= %mm% ""
 set mm= %mm% "[ ] Restart explorer"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x5.optimizingPrograms
 if %ERRORLEVEL% == 2 goto m1a.x4.cleanUp
@@ -3674,7 +3755,7 @@ set mm= %mm% "---------- Open file explorer to: ----------"
 set mm= %mm% "[ p ] This PC"
 set mm= %mm% "[ d ] Quick access"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x4.3.winExplorer
 if %ERRORLEVEL% == 2 goto m1a.x4.3.winExplorer
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3693,7 +3774,7 @@ if %ERRORLEVEL% == 10 (
 	call :m1a.x4.3.3.1.winExplorerThisPC
 )
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x4.3.3.1.winExplorerThisPC
@@ -3753,7 +3834,7 @@ set mm= %mm% "------- More Options -------"
 set mm= %mm% "[ p ] Administrative Tools"
 
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x6.cleanUpJunkfiles  
 if %ERRORLEVEL% == 2 goto m1a.x4.cleanUp
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3830,7 +3911,7 @@ ECHO *********************************************
 ECHO ********** Optimization complete ! **********
 ECHO *********************************************
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 
@@ -3855,7 +3936,7 @@ set mm= %mm% "------- GridView -------"
 set mm= %mm% "[ ] Disable-ScheduledTask"
 set mm= %mm% "[ ] Stop-ScheduledTask"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x5.optimizingPrograms
 if %ERRORLEVEL% == 2 goto m1a.x5.optimizingPrograms
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -3869,7 +3950,7 @@ if %ERRORLEVEL% == 9 powershell "Get-ScheduledTask | Out-GridView -PassThru | Di
 if %ERRORLEVEL% == 10 powershell "Get-ScheduledTask | Out-GridView -PassThru | Stop-ScheduledTask"
 
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x5.4.1.startUpTaskSchedulerAuto
@@ -3935,7 +4016,7 @@ set mm= %mm% "[ ] Stop"
 set mm= %mm% "[ ] StartupType Disabled"
 set mm= %mm% "[ ] Restart-service" 
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
  
 if %ERRORLEVEL% == 1 goto m1a.x5.optimizingPrograms
 if %ERRORLEVEL% == 2 goto m1a.x5.optimizingPrograms
@@ -3947,7 +4028,7 @@ if %ERRORLEVEL% == 6 powershell "Get-Service | Out-GridView -PassThru | Stop-Ser
 if %ERRORLEVEL% == 7 powershell "Get-Service | Out-GridView -PassThru | Set-Service -StartupType Disabled"
 if %ERRORLEVEL% == 8 powershell "Get-Service | Where-Object {$_.status -eq 'running'}| Out-GridView -PassThru | Restart-service -verbose"
 
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 ::================================
@@ -3997,7 +4078,7 @@ set mm= %mm% "[+] 5. Ram Reducer:"
 set mm= %mm% "[+] 6. Indexing:"
 set mm= %mm% "[+] 7. Hibernate:"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.1.WindowsUpdate
 if %ERRORLEVEL% == 2 goto %menuBackGoto%
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -4040,7 +4121,7 @@ set mm= %mm% "[+] 5. WU Pause next update till:"
 set mm= %mm% ""
 set mm= %mm% "[ d ] default Settings"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.1.1.winUpdateMod
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -4074,7 +4155,7 @@ set mm= %mm% "[ p ] 1.Enable - Ask for download and install"
 set mm= %mm% "[ ] 1.Enable - ask for reboot"
 set mm= %mm% "[ d ] 1.Enable - Automatic Update"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.1.2.winUpdateModTasks
 if %ERRORLEVEL% == 2 goto m1a.x7.1.WindowsUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -4107,7 +4188,7 @@ SET "AutoUpdateN="
 if %startOneClick% == 1 (exit /b)
 
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto m1a.x7.1.2.winUpdateModTasks
 
 :m1a.x7.1.2.winUpdateModTasks
@@ -4126,7 +4207,7 @@ set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Disable"
 set mm= %mm% "[ d ] 1.Enable"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.1.3.winUpdateModServices
 if %ERRORLEVEL% == 2 goto m1a.x7.1.WindowsUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -4160,7 +4241,7 @@ SCHTASKS /Change /TN "\Microsoft\Windows\UpdateOrchestrator\Schedule Scan" /%aut
 SCHTASKS /Change /TN "\Microsoft\Windows\WaaSMedic\PerformRemediation" /%autoUpdateP%
 SCHTASKS /Change /TN "\Microsoft\Windows\WaaSMedic\MaintenanceWork" /%autoUpdateP%
 
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto m1a.x7.1.3.winUpdateModServices
 
 :m1a.x7.1.3.winUpdateModServices
@@ -4179,7 +4260,7 @@ set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Manual" "[ ] 1.Disable"
 set mm= %mm% "[ d ] 1.Enable" 
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.1.4.WinUpdadePause
 if %ERRORLEVEL% == 2 goto m1a.x7.1.WindowsUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -4201,7 +4282,7 @@ NET %AutoUpdateN% usosvc
 sc config bits start= %autoUpdateP%
 NET %AutoUpdateN% bits
 
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto m1a.x7.1.4.WinUpdadePause
 
 :m1a.x7.1.4.WinUpdadePause
@@ -4237,7 +4318,7 @@ set mm= %mm% "[ ] SET manually -Next update date"
 set mm= %mm% ""
 set mm= %mm% "[ ] Modify Driver Updates"
 
-cmdMenuSel f870 %mm% 
+cmdmenusel e370 %mm% 
 if %ERRORLEVEL% == 1 goto m1a.x7.2.securityMaintenance
 if %ERRORLEVEL% == 2 goto m1a.x7.1.WindowsUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -4294,7 +4375,7 @@ goto %menu%
 ::goto m1a.x7.1.4.3.winUpdateSecurityNext
 ::
 :::m1a.x7.1.4.3.winUpdateSecurityNext
-::cmdMenuSel f870 "Press ENTER to continue..." 
+::cmdmenusel e370 "Press ENTER to continue..." 
 ::if %ERRORLEVEL% == 1 goto m1a.x7.1.4.WinUpdadePause
 
 :::m1a.x7.1.4.WinUpdadePause
@@ -4312,7 +4393,7 @@ goto %menu%
 ::set mm= %mm% ""
 ::set mm= %mm% "[ p ] SET manually -Next update date"
 ::
-::cmdMenuSel f870 %mm%
+::cmdmenusel e370 %mm%
 ::if %ERRORLEVEL% == 1 goto m1a.x7.2.securityMaintenance
 ::if %ERRORLEVEL% == 2 goto m1a.x7.1.WindowsUpdate
 ::if %ERRORLEVEL% == 3 goto mainMenu
@@ -4380,7 +4461,7 @@ echo.
 echo Drivers Updates:
 echo.
 
-cmdMenuSel f870 "Yes - Enable" "No - Disable" "" "BACK"
+cmdmenusel e370 "Yes - Enable" "No - Disable" "" "BACK"
 if %ERRORLEVEL% == 1 set winUpdatesPauseTime=0
 if %ERRORLEVEL% == 2 set winUpdatesPauseTime=1
 if %ERRORLEVEL% == 3 goto m1a.x7.1.4.4.WinUpdadeDriversUpdates
@@ -4403,7 +4484,7 @@ echo.
 echo ========== Are you sure you want to continue?
 echo.
 
-cmdMenuSel f870 "Yes" "No"
+cmdmenusel e370 "Yes" "No"
 if %ERRORLEVEL% == 1 goto m1a.x7.1.6.1.winUpdadeDefautApply
 if %ERRORLEVEL% == 2 goto %menu%
 goto %menu%
@@ -4462,7 +4543,7 @@ net start appidsvc
 net start cryptsvc
 
 pause
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x7.2.securityMaintenance
@@ -4494,7 +4575,7 @@ set mm= %mm% ""
 set mm= %mm% "[ ] 2.Disable"
 set mm= %mm% "[ ] 2.Enable"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 CLS
 if %ERRORLEVEL% == 1 goto m1a.x7.3.wDefender
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
@@ -4527,7 +4608,7 @@ if %ERRORLEVEL% == 18 powershell "Get-ScheduledTask | ? {$_.Settings.Maintenance
 if %ERRORLEVEL% == 19 powershell "Get-ScheduledTask | ? {$_.Settings.MaintenanceSettings} | Out-GridView -PassThru | Enable-ScheduledTask"
 
 echo.
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x7.2.1.securityMaintenanceApp
@@ -4586,7 +4667,7 @@ set mm= %mm% ""
 set mm= %mm% "[ ] Disable app"
 set mm= %mm% "[ d ] Enable app"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.4.UltimatePerformance
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -4656,7 +4737,7 @@ set mm= %mm% ""
 set mm= %mm% "[ p ] Add now"
 set mm= %mm% "[ p ] Open Power Plan settings"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x7.5.ramReducer
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -4730,7 +4811,7 @@ echo    -- Sleep
 echo   - Reserve battery level
 echo    -- "7"
 
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x7.5.ramReducer
@@ -4749,7 +4830,7 @@ set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
 set mm= %mm% "[ p ] Reduce now"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
  
 if %ERRORLEVEL% == 1 goto m1a.x7.6.indexing 
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
@@ -4870,7 +4951,7 @@ if %startOneClick% == 0 (cls && echo. && echo 	100%[++++++++++])
 
 if %startOneClick% == 1 (exit /b)
 echo. 
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x7.6.indexing
@@ -4897,7 +4978,7 @@ set mm= %mm% ""
 set mm= %mm% "[ p ] Disable service"
 set mm= %mm% "[ d ] Enable service" 
 
-cmdMenuSel f870 %mm% 
+cmdmenusel e370 %mm% 
  
 if %ERRORLEVEL% == 1 goto m1a.x7.7.hibernate
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
@@ -4927,7 +5008,7 @@ set mm= %mm% ""
 set mm= %mm% "[ p ] Disable"
 set mm= %mm% "[ d ] Enable" 
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 
 if %ERRORLEVEL% == 1 goto m1a.x7.0.endProg
 if %ERRORLEVEL% == 2 goto m1a.x7.turnApps
@@ -4947,7 +5028,7 @@ ECHO *********************************************
 ECHO ********** Optimization complete ! **********
 ECHO *********************************************
 
-cmdMenuSel f870 "Press ENTER to continue..." 
+cmdmenusel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto mainMenu
 
 
@@ -5024,7 +5105,7 @@ if %durMM% == 1 (set mm= %mm% "[X] Deep / Update / Repair"
 ) else (set mm= %mm% "[ ] Deep / Update / Repair")
 
 :m2a.x12.OneClick-Menu2
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 
 if %ERRORLEVEL% == 1 goto mainMenu
 if %ERRORLEVEL% == 2 goto %menu%
@@ -5381,7 +5462,7 @@ set mm= %mm% "[ ] Switch User"
 set mm= %mm% "[ ] Log Off"
 set mm= %mm% "[ ] Lock"
 
-cmdMenuSel f870 %mm%
+cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto mainMenu
 if %ERRORLEVEL% == 2 goto %menu%
 if %ERRORLEVEL% == 3 goto %menu%
@@ -5398,9 +5479,68 @@ exit
 
 
 ::================================
+:r5a.x
 ::================================
+
+:r5a.x0.CreateFunction
 ::================================
+
+::::========================
+::::Variables for copy
+::::========================
+::set "nameFiles=PED-BootTimer.bat"
+::set "directoryFiles=files"
+::set "startMark=REM # StartExtractD7"
+::set "endMark=REM # EndExtractD7"
+::call :r5a.x0.CreateFunction
+::%startMark%
+::%endMark%
+::::========================
+
+::========================
+::Function
+::========================
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+echo 21
+pause
+echo 21 %output_file%
+pause
+echo 21 %startMark%
+pause
+
+echo 221 %endMark%
+pause
+
+REM Set the filename for the extracted code
+set "output_file=%startFiles%"
+echo 213 %output_file%
+pause
+call %CreateFunction%
+REM Find the line number where the code block starts
+for /f "delims=:" %%i in ('findstr /n /c:"%startMark%"') do set "start_line=%%i"
+
+REM Find the line number where the code block ends
+for /f "delims=:" %%i in ('findstr /n /c:"%endMark%" "%~f0"') do set "end_line=%%i"
+
+REM Use the starting and ending lines to extract the desired code
+setlocal enabledelayedexpansion
+(for /f "tokens=1,* delims=:" %%a in ('findstr /n "^" "%~f0"') do (
+    set "line=%%b"
+    if %%a geq %start_line% (
+        echo(!line!
+    )
+    if %%a equ %end_line% (
+        exit /b
+    )
+)) > "%output_file%"
+
+REM Display a message indicating successful extraction
+echo The code has been extracted to "%output_file%"
+exit /b
+
+exit
 :r5a.x1.Create-TaskSchedulerAuto
+::================================
 call :r3a.x12.3.downLoadF-taskCommand
 
 set "directoryFiles=files\taskCommand"
@@ -7016,6 +7156,7 @@ exit /b
 ::========================
 REM # StartExtractD6
 @echo off
+COLOR 0A
 cls
 mode con: cols=52 lines=27
 set "ver=PED ToolBox - BootTimer V1.30.230608.3"
@@ -7143,6 +7284,7 @@ REM Your code starts here
 ::========================
 REM # StartExtractD7
 @echo off
+COLOR 0A
 cls
 if not "%1"=="min" start /min cmd /c %0 min & exit/b
 set "ver=PED-Toolbox-BootTimer-V1.31.230802"
@@ -7291,9 +7433,277 @@ ren "%source_file%" "%new_file_name%"
 exit /b
 
 ::================================
+:r5a.x3.1.tasksBackup
+::================================
+CLS
+SETLOCAL
+::========================
+::Variable
+::========================
+set "fileBackupName=taskBackup"
+set "fileBackupPath=%PEDRecoveryFolder%"
 
+REM Extract Function variables name
+set "fileFuntionName=TaskBackupFunction.ps1"
+set "fileFuntionFolder=files"
 
+REM Extract Marks
+set "startMark=# StartExtractF1"
+set "endMark=# EndExtractF1"
+set "callFun=:r5a.x3.1.1.tasksBackupFunction"
 
+::========================
+::Function
+::========================
+set "fileBackupDir=%fileBackupPath%\%fileBackupName%"
+set "fileFunctionDir=%destinationPD%\%fileFuntionFolder%\%fileFuntionName%"
+
+echo Please wait...
+call :m1a.x01.0.timestamp
+echo.
+echo Current Time: %timestamp%
+
+REM Creating Function
+echo $FilePathDir = "%fileBackupDir%.txt" > %fileFunctionDir%
+call %callFun%
+
+REM Starting Function
+Powershell.exe Set-ExecutionPolicy Bypass -Scope Process -Force; "%fileFunctionDir%" >nul
+del "%fileFunctionDir%" >nul
+
+REM Replace txt with bat executable
+type %fileBackupDir%.txt > %fileBackupDir%.bat
+del %fileBackupDir%.txt
+
+REM Check if exist Backup
+set "fileBackupDir=%fileBackupDir%.bat
+if exist "%fileBackupDir%" (
+	echo ========== %fileBackupDir% Create Successful ===
+) else (
+	echo ========== %fileBackupDir% Unsuccessful ---
+)
+
+echo.
+call :m1a.x01.0.timestamp
+echo Current Time: %timestamp%
+ENDLOCAL
+
+echo.
+cmdmenusel e370 "Press ENTER to go back "
+exit /b
+
+:r5a.x3.1.1.tasksBackupFunction
+::========================
+::Function
+::========================
+
+REM Set the filename for the extracted code
+set "output_file=%fileFunctionDir%"
+
+REM Find the line number where the code block starts
+for /f "delims=:" %%i in ('findstr /n /c:"%startMark%" "%~f0"') do set "start_line=%%i"
+
+REM Find the line number where the code block ends
+for /f "delims=:" %%i in ('findstr /n /c:"%endMark%" "%~f0"') do set "end_line=%%i"
+
+REM Use the starting and ending lines to extract the desired code
+setlocal enabledelayedexpansion
+(for /f "tokens=1,* delims=:" %%a in ('findstr /n "^" "%~f0"') do (
+    set "line=%%b"
+    if %%a geq %start_line% (
+        echo(!line!
+    )
+    if %%a equ %end_line% (
+        exit /b
+    )
+)) >> "%output_file%"
+
+REM Display a message indicating successful extraction
+echo The code has been extracted to "%output_file%"
+exit /b
+
+::========================
+REM Your code starts here
+::========================
+# StartExtractF1
+# $FilePathDir = "$env:SystemDrive\PED-Recovery\taskBackup.txt"
+# Get scheduled tasks
+$scheduledTasks = Get-ScheduledTask
+
+# Create a StringBuilder to store formatted output
+$outputStringBuilder = [System.Text.StringBuilder]::new()
+
+# Iterate through each task and format the output
+foreach ($task in $scheduledTasks) {
+    # Determine if the task should be enabled or disabled
+    $status = if ($task.State -match "Ready|Queued") { "/Enable" } else { "/Disable" }
+
+    # Combine the TaskPath and TaskName
+    $taskFullName = $task.TaskPath + "\" + $task.TaskName
+
+    # Replace any double backslashes with a single backslash
+    $formattedTaskPath = $taskFullName.Replace("\\", "\")
+
+    # Format the SCHTASKS command
+    $formattedTask = "SCHTASKS /Change /TN ""$($formattedTaskPath)"" $status"
+    $outputStringBuilder.AppendLine($formattedTask)
+}
+
+# Convert the StringBuilder content to a string and export to a file
+$outputString = $outputStringBuilder.ToString()
+$outputString | Out-File -FilePath "$FilePathDir"
+# EndExtractF1
+
+::END Script
+::================================
+
+:r5a.x3.2.servicesBackup
+::================================
+CLS
+SETLOCAL
+::========================
+::Variable
+::========================
+set "fileBackupName=servicesBackup"
+set "fileBackupPath=%PEDRecoveryFolder%"
+
+REM Extract Function variables name
+set "fileFuntionName=ServicesBackupFunction.ps1"
+set "fileFuntionFolder=files"
+
+REM Extract Marks
+set "startMark=# StartExtractF2"
+set "endMark=# EndExtractF2"
+set "callFun=:r5a.x3.2.1.servicesBackupFunction"
+
+::========================
+::Function
+::========================
+set "fileBackupDir=%fileBackupPath%\%fileBackupName%"
+set "fileFunctionDir=%destinationPD%\%fileFuntionFolder%\%fileFuntionName%"
+
+echo Please wait...
+call :m1a.x01.0.timestamp
+echo.
+echo Current Time: %timestamp%
+
+REM Creating Function
+echo $FilePathDir = "%fileBackupDir%.txt" > %fileFunctionDir%
+call %callFun%
+
+REM Starting Function
+Powershell.exe Set-ExecutionPolicy Bypass -Scope Process -Force; "%fileFunctionDir%" >nul
+del "%fileFunctionDir%" >nul
+
+REM Replace txt with bat executable
+type %fileBackupDir%.txt > %fileBackupDir%.bat
+del %fileBackupDir%.txt
+
+REM Check if exist Backup
+set "fileBackupDir=%fileBackupDir%.bat
+if exist "%fileBackupDir%" (
+	echo ========== %fileBackupDir% Create Successful ===
+) else (
+	echo ========== %fileBackupDir% Unsuccessful ---
+)
+
+echo.
+call :m1a.x01.0.timestamp
+echo Current Time: %timestamp%
+ENDLOCAL
+
+echo.
+cmdmenusel e370 "Press ENTER to go back "
+exit /b
+
+:r5a.x3.2.1.servicesBackupFunction
+::========================
+::Function
+::========================
+
+REM Set the filename for the extracted code
+set "output_file=%fileFunctionDir%"
+
+REM Find the line number where the code block starts
+for /f "delims=:" %%i in ('findstr /n /c:"%startMark%" "%~f0"') do set "start_line=%%i"
+
+REM Find the line number where the code block ends
+for /f "delims=:" %%i in ('findstr /n /c:"%endMark%" "%~f0"') do set "end_line=%%i"
+
+REM Use the starting and ending lines to extract the desired code
+setlocal enabledelayedexpansion
+(for /f "tokens=1,* delims=:" %%a in ('findstr /n "^" "%~f0"') do (
+    set "line=%%b"
+    if %%a geq %start_line% (
+        echo(!line!
+    )
+    if %%a equ %end_line% (
+        exit /b
+    )
+)) >> "%output_file%"
+
+REM Display a message indicating successful extraction
+echo The code has been extracted to "%output_file%"
+exit /b
+
+::========================
+REM Your code starts here
+::========================
+# StartExtractF2
+# $FilePathDir = "$env:SystemDrive\PED-Recovery\servicesBackup.txt"
+
+# Get services
+$services = Get-Service
+
+# Create the output directory if it doesn't exist
+if (-not (Test-Path -Path $outputDirectory)) {
+    New-Item -Path $outputDirectory -ItemType Directory
+}
+
+# Create a list to store formatted output
+$outputList = @()
+
+# Iterate through each service and format the output for startup settings
+foreach ($service in $services) {
+    # Determine the desired startup type for each service
+    $startupType = switch ($service.StartType) {
+        "Automatic" { "auto" }
+        "Manual"    { "demand" }
+        "Disabled"  { "disabled" }
+    }
+
+    # Format the sc command to change the startup type
+    $formattedStartup = "sc config $($service.Name) start=$startupType"
+    
+    # Add service information to the output list
+    $outputList += [PSCustomObject]@{
+        ServiceName = $service.Name
+        StartupType = $startupType
+        Command     = $formattedStartup
+    }
+}
+
+# Sort the output list by StartupType and then by ServiceName
+$outputListSorted = $outputList | Sort-Object StartupType, ServiceName
+
+# Create a StringBuilder to store formatted output
+$outputStringBuilder = [System.Text.StringBuilder]::new()
+
+# Iterate through the sorted output list and append to the StringBuilder
+$outputListSorted | ForEach-Object {
+    $outputStringBuilder.AppendLine($_.Command)
+}
+
+# Convert the StringBuilder content to a string and export to a file
+$outputString = $outputStringBuilder.ToString()
+$outputString | Out-File -FilePath "$FilePathDir"
+
+# EndExtractF2
+
+::END Script
+::================================
+
+::================================
 ::configurations 
 ::services
 ::schtasks
