@@ -798,8 +798,7 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=cmdMenuSel.exe"
 set isItZip=n
 
-set "fileLinkID=https://drive.google.com/u/0/uc?id=1Q_fszGnCHXNzgJiSgpDJSvhLrJRjJ8Sl&export=download&confirm=t&uuid=f74c976e-3faf-4cad-bfb0-4a40da99637e&at=ALt4Tm2w_TJAvnfc1XkATAngyMV4:1691166353159"
-
+set "fileLinkID=https://rebrand.ly/pedtoolboxmenu"
 ::Download file
 call :r3a.x01.0.downloadFunction
 ::====
