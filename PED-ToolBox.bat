@@ -10,11 +10,11 @@ echo.
 :m0a.x0.Version
 ::================================
 :: Set version
-set "versionTool=PED-ToolBox-1.260.230814"
+set "versionTool=PED-ToolBox-1.261.230815"
 
 :: Portable type: 1
 :: Installing type: 0 (or any different than 1)
-set portableSwitch=1
+set portableSwitch=0
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :m0a.x01.DirectoryPED
@@ -134,6 +134,8 @@ echo.
 set "shortcutToLocation=0"
 set "timestamp=0"
 set "PEDRecoveryFolder=%SYSTEMDRIVE%\PED-Recovery"
+set "fileFunctionDir="
+set "fileStart="
 
 :m0a.x12.variableMain
 ::================================
@@ -798,7 +800,8 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=cmdMenuSel.exe"
 set isItZip=n
 
-set "fileLinkID=https://rebrand.ly/pedtoolboxmenu"
+set "fileLinkID=https://drive.google.com/u/0/uc?id=1Q_fszGnCHXNzgJiSgpDJSvhLrJRjJ8Sl&export=download&confirm=t&uuid=f74c976e-3faf-4cad-bfb0-4a40da99637e&at=ALt4Tm2w_TJAvnfc1XkATAngyMV4:1691166353159"
+
 ::Download file
 call :r3a.x01.0.downloadFunction
 ::====
@@ -1683,10 +1686,12 @@ set mm= %mm% ""
 set mm= %mm% "[ p ] 3. View point by PowerShell"
 set mm= %mm% "[ p ] 3. View point and Restore"
 set mm= %mm% ""
-set mm= %mm% "---------- PED backup ----------"
-set mm= %mm% "[ p ] Registry backup (CMD)"
-set mm= %mm% "[ p ] Scheduled Tasks backup (CMD)"
-set mm= %mm% "[ p ] Services backup (CMD)"
+set mm= %mm% "---------- PED backup (CMD)----------"
+set mm= %mm% "[ p ] Registry backup "
+set mm= %mm% "[ p ] Scheduled Tasks backup "
+set mm= %mm% "[ p ] Services backup "
+set mm= %mm% "[ p ] WinKey backup "
+set mm= %mm% "[ p ] Start Menu layout backup "
 set mm= %mm% ""
 set mm= %mm% "[ p ] Open PED-Recovery Folder"
 
@@ -1717,9 +1722,12 @@ if %ERRORLEVEL% == 17 (
 if %ERRORLEVEL% == 18 (
 	call :r5a.x3.2.servicesBackup
 )
-if %ERRORLEVEL% == 19 goto %menu%
-
-if %ERRORLEVEL% == 20 start %windir%\explorer.exe "%PEDRecoveryFolder%"
+if %ERRORLEVEL% == 19 (
+	call :m1a.x01.2.WinKeyBackup
+)
+if %ERRORLEVEL% == 20 %psP% "Export-StartLayout -Path "%PEDRecoveryFolder%\StartMenuBackup.xml""
+if %ERRORLEVEL% == 21 goto %menu%
+if %ERRORLEVEL% == 22 start %windir%\explorer.exe "%PEDRecoveryFolder%"
 
 
 goto %menu%
@@ -1795,6 +1803,54 @@ ENDLOCAL
 start %windir%\explorer.exe "C:/%RegBackup%"
 pause
 goto %menu%
+
+:m1a.x01.2.WinKeyBackup
+::================================
+CLS
+
+::========================
+REM Add Rest Function code here
+::========================
+
+set "winKeyDir=C:\PED-Recovery\winKey.bat"
+
+::if exist "%winKeyDir%" ()
+
+set "KeyPath=HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform"
+
+for /f "usebackq tokens=2*" %%a in (`reg query "%KeyPath%" /v "BackupProductKeyDefault" ^| find "BackupProductKeyDefault"`) do (
+    set "KeyValue=%%b"
+)
+
+if defined KeyValue (
+    echo @echo off >> "%winKeyDir%"
+    echo reg add "%KeyPath%" /v "BackupProductKeyDefault" /t REG_SZ /d "%KeyValue%" /f >> "%winKeyDir%"
+) else (
+    echo BackupProductKeyDefault value not found.
+)
+
+
+setlocal enabledelayedexpansion
+
+for /f "tokens=2 delims==" %%a in ('wmic path softwarelicensingservice get OA3xOriginalProductKey /value ^| find /i "OA3xOriginalProductKey"') do (
+    set "productKey=%%a"
+)
+
+for /f "tokens=* delims=" %%b in ("!productKey!") do (
+    set "cleanedKey=%%b"
+)
+
+if defined cleanedKey (
+    echo slmgr /ipk !cleanedKey! >> "%winKeyDir%"
+) else (
+    echo Product key not found or in an unexpected format.
+)
+
+endlocal
+exit /b
+::%psP% 
+::%psP% Import-StartLayout -LayoutPath "C:\PED-Recovery\StartMenuBackup.xml" -MountPath "C:\"
+
 
 ::================================
 :m1a.x02.testDiagnostic
@@ -2527,7 +2583,8 @@ echo.
 echo.
 pause
 set "loc="
-goto %menu%
+cmdmenusel e370 "Press ENTER to continue..." 
+if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x02.7.roboCopy
 ::================================
@@ -5481,42 +5538,133 @@ exit
 :r5a.x
 ::================================
 
-:r5a.x0.CreateFunction
+:r5a.x0.1.variableFunction
 ::================================
-
+CLS
 ::::========================
 ::::Variables for copy
 ::::========================
-::set "nameFiles=PED-BootTimer.bat"
-::set "directoryFiles=files"
-::set "startMark=REM # StartExtractD7"
-::set "endMark=REM # EndExtractD7"
-::call :r5a.x0.CreateFunction
-::%startMark%
-::%endMark%
+REM Extract Function variables name
+set "fileFuntionName=#NAME"
+set "fileFuntionFolder=files"
+
+REM Extract Marks
+set "startMark=# StartExtract#CODE"
+set "endMark=# EndExtract#CODE"
+
+REM Delete existing Function
+set "deleteExistingFunction=1"
+
+REM Starting Function after Creation
+set "fileStart=START %fileFunctionDir%"
+
+REM Pause after CreateFunction complete
+REM 0-continue, 1-pause, 2-timeOut 15 Seconds,
+set pauseCreteFunction=1
+
+::========================
+REM Add Functions Before callFun
+::========================
+REM add Functions HERE...
+REM code HERE...
+
+::========================
+REM call Function
+set "callFun=:r5a.x0.2.CreateFunction"
+call %callFun%
+
+set "fileFunctionDir="
+
+::========================
+REM Add Rest Function code here
+::========================
+REM add Rest Code HERE...
+REM code HERE...
+
+::========================
+REM Your EXTRACT code starts here
+::========================
+# StartExtract#CODE
+REM CODE HERE...
+# EndExtract#CODE
+
+Pause
 ::::========================
 
-::========================
-::Function
-::========================
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-echo 21
-pause
-echo 21 %output_file%
-pause
-echo 21 %startMark%
-pause
 
-echo 221 %endMark%
-pause
+:r5a.x0.2.CreateFunction
+::================================
+CLS
+::========================
+::Display progress
+::========================
+set "fileFunctionDir=%destinationPD%\%fileFuntionFolder%\%fileFuntionName%"
 
+SETLOCAL
+
+REM START Time Stamp
+echo Please wait...
+call :m1a.x01.0.timestamp
+echo.
+echo Current Time: %timestamp%
+
+REM check to delete existing Function
+if %deleteExistingFunction% == 1 (
+	if exist %fileFunctionDir% (
+		del %fileFunctionDir% >nul
+	)
+)
+
+REM Creating Function
+call :r5a.x0.2.1.ExtractFunction
+
+REM Check if exist
+if exist "%fileFunctionDir%" (
+	echo ========== %fileFunctionDir% Create Successful ===
+) else (
+	echo ========== %fileFunctionDir% Unsuccessful ---
+)
+
+rem Check if Starting Function is empty
+if not "%fileStart%"=="" (
+	%fileStart% "%fileFunctionDir%"
+	set "fileStart="
+)
+
+
+REM END Time Stamp
+echo.
+call :m1a.x01.0.timestamp
+echo Current Time: %timestamp%
+
+ENDLOCAL
+::====
+
+
+
+REM Pause after CreateFunction complete
+echo.
+if %pauseCreteFunction% == 1 (
+	cmdmenusel e370 "Press ENTER to go back "
+) else ( if %pauseCreteFunction% == 2 (
+	timeout 15 
+	)
+)
+
+::====
+exit /b
+
+::========================
+::Extract Function
+::========================
+:r5a.x0.2.1.ExtractFunction
+::========================
+setlocal
 REM Set the filename for the extracted code
-set "output_file=%startFiles%"
-echo 213 %output_file%
-pause
-call %CreateFunction%
+set "output_file=%fileFunctionDir%"
+
 REM Find the line number where the code block starts
-for /f "delims=:" %%i in ('findstr /n /c:"%startMark%"') do set "start_line=%%i"
+for /f "delims=:" %%i in ('findstr /n /c:"%startMark%" "%~f0"') do set "start_line=%%i"
 
 REM Find the line number where the code block ends
 for /f "delims=:" %%i in ('findstr /n /c:"%endMark%" "%~f0"') do set "end_line=%%i"
@@ -5531,12 +5679,14 @@ setlocal enabledelayedexpansion
     if %%a equ %end_line% (
         exit /b
     )
-)) > "%output_file%"
+)) >> "%output_file%"
 
 REM Display a message indicating successful extraction
 echo The code has been extracted to "%output_file%"
-exit /b
 
+endlocal
+::====
+exit /b
 exit
 :r5a.x1.Create-TaskSchedulerAuto
 ::================================
@@ -7155,8 +7305,8 @@ exit /b
 ::========================
 REM # StartExtractD6
 @echo off
-COLOR 0A
 cls
+COLOR 0A
 mode con: cols=52 lines=27
 set "ver=PED ToolBox - BootTimer V1.30.230608.3"
 cd C:\ProgramData\PEDToolBox\pedDownload\files\bootTimer
@@ -7283,8 +7433,9 @@ REM Your code starts here
 ::========================
 REM # StartExtractD7
 @echo off
-COLOR 0A
 cls
+COLOR 0A
+
 if not "%1"=="min" start /min cmd /c %0 min & exit/b
 set "ver=PED-Toolbox-BootTimer-V1.31.230802"
 cd C:\ProgramData\PEDToolBox\pedDownload\files\bootTimer
@@ -7472,7 +7623,7 @@ del "%fileFunctionDir%" >nul
 
 REM Replace txt with bat executable
 type %fileBackupDir%.txt > %fileBackupDir%.bat
-del %fileBackupDir%.txt
+del %fileBackupDir%.txt >nul
 
 REM Check if exist Backup
 set "fileBackupDir=%fileBackupDir%.bat
