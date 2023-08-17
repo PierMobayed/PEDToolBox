@@ -1,5 +1,6 @@
 # PEDToolBox
 #### Windows 10 optimization , Speed up windows 10 , Repair windows 10
+#### Windows 10 -Speed Up , Repair, Update, Optimize, Clean Junk, Download Apps, Uninstaller, Deployed Bloatware, and more
 
 
 - This is first publisher releases.
@@ -26,3 +27,11 @@
 - On my test machines working well ,but is still test.
 - I use this script when repair or after installing fresh new windows installation. 
 # Enjoy and if you find any bug please write on Issues section.
+
+#PowerShell Link 1
+
+    iex(irm t.ly/ped)
+
+#PowerShell Link  2
+
+    irm t.ly/ped | iex
