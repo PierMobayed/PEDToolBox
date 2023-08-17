@@ -1,6 +1,5 @@
 @echo off
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-::short link: irm t.ly/ped | iex
 
 :m0a.x
 ::================================
@@ -11,13 +10,12 @@ echo.
 :m0a.x0.Version
 ::================================
 :: Set version
-set "versionTool=PED-ToolBox-1.263.230816"
+set "versionTool=PED-ToolBox-1.261.230815"
 
 :: Portable type: 1
 :: Installing type: 0 (or any different than 1)
-set portableSwitch=0
+set portableSwitch=1
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
 
 :m0a.x01.DirectoryPED
 ::================================
@@ -27,22 +25,13 @@ setlocal
 rem Define source and destination paths
 set "destinationDir=C:\ProgramData\PEDToolBox\"
 
-
-set "newName=PED-ToolBox.bat"
-if /I "%~nx0" NEQ "%newName%" (
-    start /w /min cmd /c "ren "%~f0" "%newName%""
-	start cmd /c "%~dp0%newName%"
-	exit
-)
-
-
 rem Function:
 if %portableSwitch% == 1 (
-	set "destinationDir=%~dp0"
+	set "destinationDir=%~dp0"	
 )
 
 set "sourceFile=%~f0"
-set "destinationFile=%destinationDir%PED-ToolBox.bat"
+set "destinationFile=%destinationDir%%~nx0"
 
 if /I "%sourceFile%" NEQ "%destinationFile%" (
 	
@@ -70,14 +59,13 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
 	
 	if not exist "%destinationFile%" (
 		copy "%sourceFile%" "%destinationFile%"
-		
 		if not exist "%destinationFile%" (
 			echo Failed...
 			pause
 			exit
 		)
 	)
-	
+
     ::rem Create a shortcut on the desktop
 	echo Creating desktop shortcut...
 	set "shortcutToLocation=desktop"
@@ -86,11 +74,9 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
     
     rem Start the new version and close this one
     start "" "%destinationFile%"
-	cls
     exit
 )
 endlocal
- 
 
 :m0a.x02.getAdmin
 ::================================
@@ -790,40 +776,6 @@ set "fileLinkID=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-win6
 set isItZip=y
 
 ::Download file
-call :r3a.x01.0.downloadFunction
-exit /b
-::=================
-
-:r3a.x11.4.01.downLoadF-4.01.norton
-::================================
-set "nameFolder=01.norton"
-set "createFolder=Data\4.Anti-virus\%nameFolder%"
-set "destination=%destinationPD%\%createFolder%"
-
-if not exist "%destination%\." mkdir "%destination%"
-
-
-set "fileLocation=NPE.exe"
-set "fileLinkID=https://www.norton.com/npe_latest"
-set isItZip=n
-
-call :r3a.x01.0.downloadFunction
-exit /b
-::=================
-
-:r3a.x11.4.02.downLoadF-4.02.kaspersky
-::================================
-set "nameFolder=02.kaspersky"
-set "createFolder=Data\4.Anti-virus\%nameFolder%"
-set "destination=%destinationPD%\%createFolder%"
-
-if not exist "%destination%\." mkdir "%destination%"
-
-
-set "fileLocation=KVRT.exe"
-set "fileLinkID=https://click.kaspersky.com/?hl=en&version=20.0&pid=kvrt&link=kvrtexe"
-set isItZip=n
-
 call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
@@ -1553,7 +1505,7 @@ set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
 if not exist "%startFiles%" (
 call %downloadFiles%
 )
-start %startFiles%
+start cmd /c %startFiles%
 
 goto %menu%
 
@@ -1586,39 +1538,6 @@ goto %menu%
 
 ::"[+] 3.1.Win10Debloater-master" "[+] 3.2.ChrisTitusTech Win10script" "[ ] 3.3.FULL Win10 Debloat" "[ ] 3.4.Sophia.Script.Win10.v5.12.5" "[ ] 3.5.beta- for check - Windows-10-batch-optimizer-master" "[ ] 3.6.Windows10DebloaterV18" "[ ] 3.7.Windows10NetworkandOptimizerV11" "[ ] 3.8.Reg & ,Bat"
 
-
-:r4a.x5.01.norton
-::================================
-cls
-
-set "nameFiles=NPE.exe"
-set "directoryFiles=Data\4.Anti-virus\01.norton"
-set "downloadFiles=:r3a.x11.4.01.downLoadF-4.01.norton"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-call %downloadFiles%
-)
-start %startFiles%
-
-goto %menu%
-
-:r4a.x5.02.kaspersky
-::================================
-cls
-set "downloadFiles=:r3a.x11.4.02.downLoadF-4.02.kaspersky"
-set "directoryFiles=Data\4.Anti-virus\02.kaspersky"
-set "nameFiles=KVRT.exe"
-
-::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist "%startFiles%" (
-call %downloadFiles%
-)
-start %startFiles%
-
-goto %menu%
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -2162,14 +2081,10 @@ IF EXIST "%shortcut%" (
 		DEL "%shortcut%"
 		endlocal
 		exit /b
-	) else ( if %shortcutToLocation% == desktop (
-		echo Shortcut exist on Desktop
 	) else (
 		DEL "%shortcut%"
 	)
-	)
 )
-
 :: Check if icon exist
 if not exist "%destinationPD%\files\%iconN%" (
 	echo.
@@ -2178,16 +2093,7 @@ if not exist "%destinationPD%\files\%iconN%" (
 )
 
 ::Create Shortcut Function
-set "shortcutCommand=%psP% "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut('%shortcut%'); $s.TargetPath = '%TARGET%'; $s.WorkingDirectory = '%wd%'; $s.IconLocation = '%destinationPD%\files\%iconN%'; $s.WindowStyle = %shortcutStyle%; $s.Save()""
-
-if %shortcutToLocation% == desktop (
-	if not exist %shortcut% (
-	%shortcutCommand%
-	)
-) else (
-	%shortcutCommand%
-)
-
+%psP% "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut('%shortcut%'); $s.TargetPath = '%TARGET%'; $s.WorkingDirectory = '%wd%'; $s.IconLocation = '%destinationPD%\files\%iconN%'; $s.WindowStyle = %shortcutStyle%; $s.Save()"
 
 
 if %startOneClick% == 1 (endlocal && exit /b)
@@ -3321,7 +3227,6 @@ set mm= %mm% "-|BACK|- 1. Install -programs:"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
-set mm= %mm% "--- Install by WinGet: ---"
 set mm= %mm% "[ ] Browsers: Google.Chrome"
 set mm= %mm% "[ ] Archiver: 7zip.7zip"
 set mm= %mm% "[ ] Archiver: RARLab.WinRAR"
@@ -3346,10 +3251,7 @@ set mm= %mm% "[ ] Cleaner: Glarysoft.GlaryUtilities"
 set mm= %mm% ""
 set mm= %mm% "--- MS Store: ---"
 set mm= %mm% "[ ] Note: Free Office Mobile"
-set mm= %mm% ""
-set mm= %mm% "--- Anti-virus-portable: ---"
-set mm= %mm% "[ ] Anti-virus: Norton"
-set mm= %mm% "[ ] Anti-virus: Kaspersky"
+
 
 cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x3.1.install
@@ -3358,40 +3260,35 @@ if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
-if %ERRORLEVEL% == 6 goto %menu%
-if %ERRORLEVEL% == 7 set "appIns=Google.Chrome"
-if %ERRORLEVEL% == 8 set "appIns=7zip.7zip"
-if %ERRORLEVEL% == 9 set "appIns=RARLab.WinRAR"
-if %ERRORLEVEL% == 10 set "appIns=Datronicsoft.SpacedeskDriver.Server"
-if %ERRORLEVEL% == 11 set "appIns=Google.ChromeRemoteDesktop"
-if %ERRORLEVEL% == 12 set "appIns=GitHub.GitHubDesktop
-if %ERRORLEVEL% == 13 set "appIns=Microsoft.VisualStudioCode"
-if %ERRORLEVEL% == 14 set "appIns=OpenJS.NodeJS.LTS"
-if %ERRORLEVEL% == 15 set "appIns=EaseUS.DataRecovery"
-if %ERRORLEVEL% == 16 set "appIns=MiniTool.PartitionWizard.Free"
-if %ERRORLEVEL% == 17 set "appIns=Facebook.Messenger"
-if %ERRORLEVEL% == 18 set "appIns=WhatsApp.WhatsApp"
-if %ERRORLEVEL% == 19 set "appIns=Google.Drive"
-if %ERRORLEVEL% == 20 set "appIns=Microsoft.OneDrive"
-if %ERRORLEVEL% == 21 set "appIns=Notepad++.Notepad++"
-if %ERRORLEVEL% == 22 set "appIns=Apache.OpenOffice"
-if %ERRORLEVEL% == 23 set "appIns=PrimateLabs.Geekbench.5"
-if %ERRORLEVEL% == 24 set "appIns=qBittorrent.qBittorrent"
-if %ERRORLEVEL% == 25 set "appIns=VideoLAN.VLC"
-if %ERRORLEVEL% == 26 set "appIns=RevoUninstaller.RevoUninstallerPro"
-if %ERRORLEVEL% == 27 set "appIns=Glarysoft.GlaryUtilities"
+if %ERRORLEVEL% == 6 set "appIns=Google.Chrome"
+if %ERRORLEVEL% == 7 set "appIns=7zip.7zip"
+if %ERRORLEVEL% == 8 set "appIns=RARLab.WinRAR"
+if %ERRORLEVEL% == 9 set "appIns=Datronicsoft.SpacedeskDriver.Server"
+if %ERRORLEVEL% == 10 set "appIns=Google.ChromeRemoteDesktop"
+if %ERRORLEVEL% == 11 set "appIns=GitHub.GitHubDesktop
+if %ERRORLEVEL% == 12 set "appIns=Microsoft.VisualStudioCode"
+if %ERRORLEVEL% == 13 set "appIns=OpenJS.NodeJS.LTS"
+if %ERRORLEVEL% == 14 set "appIns=EaseUS.DataRecovery"
+if %ERRORLEVEL% == 15 set "appIns=MiniTool.PartitionWizard.Free"
+if %ERRORLEVEL% == 16 set "appIns=Facebook.Messenger"
+if %ERRORLEVEL% == 17 set "appIns=WhatsApp.WhatsApp"
+if %ERRORLEVEL% == 18 set "appIns=Google.Drive"
+if %ERRORLEVEL% == 19 set "appIns=Microsoft.OneDrive"
+if %ERRORLEVEL% == 20 set "appIns=Notepad++.Notepad++"
+if %ERRORLEVEL% == 21 set "appIns=Apache.OpenOffice"
+if %ERRORLEVEL% == 22 set "appIns=PrimateLabs.Geekbench.5"
+if %ERRORLEVEL% == 23 set "appIns=qBittorrent.qBittorrent"
+if %ERRORLEVEL% == 24 set "appIns=VideoLAN.VLC"
+if %ERRORLEVEL% == 25 set "appIns=RevoUninstaller.RevoUninstallerPro"
+if %ERRORLEVEL% == 26 set "appIns=Glarysoft.GlaryUtilities"
 
+if %ERRORLEVEL% == 27 goto %menu%
 if %ERRORLEVEL% == 28 goto %menu%
-if %ERRORLEVEL% == 29 goto %menu%
-if %ERRORLEVEL% == 30 (
+if %ERRORLEVEL% == 29 (
 	start https://www.microsoft.com/store/productid/9WZDNCRFJB9S?ocid=pdpshare
 	start https://www.microsoft.com/store/productid/9WZDNCRFJBH3?ocid=pdpshare
 	goto %menu%
 )
-if %ERRORLEVEL% == 31 goto %menu%
-if %ERRORLEVEL% == 32 goto %menu%
-if %ERRORLEVEL% == 33 (goto r4a.x5.01.norton)
-if %ERRORLEVEL% == 34 (goto r4a.x5.02.kaspersky)
 
 :m1a.x3.1.1.1.appInstaller
 cls
