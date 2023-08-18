@@ -1,6 +1,6 @@
 @echo off
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
+::short link: irm t.ly/ped | iex
 :m0a.x
 ::================================
 echo Welcome to PED Tool Box
@@ -10,12 +10,13 @@ echo.
 :m0a.x0.Version
 ::================================
 :: Set version
-set "versionTool=PED-ToolBox-1.261.230815"
+set "versionTool=PED-ToolBox-1.265.230818"
 
 :: Portable type: 1
 :: Installing type: 0 (or any different than 1)
-set portableSwitch=1
+set portableSwitch=0
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 :m0a.x01.DirectoryPED
 ::================================
@@ -25,13 +26,22 @@ setlocal
 rem Define source and destination paths
 set "destinationDir=C:\ProgramData\PEDToolBox\"
 
+
+set "newName=PED-ToolBox.bat"
+if /I "%~nx0" NEQ "%newName%" (
+    start /w /min cmd /c "ren "%~f0" "%newName%""
+	start cmd /c "%~dp0%newName%"
+	exit
+)
+
+
 rem Function:
 if %portableSwitch% == 1 (
-	set "destinationDir=%~dp0"	
+	set "destinationDir=%~dp0"
 )
 
 set "sourceFile=%~f0"
-set "destinationFile=%destinationDir%%~nx0"
+set "destinationFile=%destinationDir%PED-ToolBox.bat"
 
 if /I "%sourceFile%" NEQ "%destinationFile%" (
 	
@@ -59,24 +69,27 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
 	
 	if not exist "%destinationFile%" (
 		copy "%sourceFile%" "%destinationFile%"
+		
 		if not exist "%destinationFile%" (
 			echo Failed...
 			pause
 			exit
 		)
 	)
-
+	
     ::rem Create a shortcut on the desktop
 	echo Creating desktop shortcut...
 	set "shortcutToLocation=desktop"
-	call :m0a.x12.variableMain
+	call :m0a.x12.mainCommands
 	call :m1a.x02.1.3.createShotcut
     
     rem Start the new version and close this one
     start "" "%destinationFile%"
+	cls
     exit
 )
 endlocal
+ 
 
 :m0a.x02.getAdmin
 ::================================
@@ -115,31 +128,34 @@ echo.
 echo ...[80%]...
 ::Max screen
 if not "%1"=="max" start /MAX cmd /c %0 max & exit
-
+ 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::START
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::=======================================
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
 :m0a.x1
 ::================================
-echo Main Variables
+echo Main Variables and Commands
 ::================================
 echo.
 ::========
-:m0a.x11.variable
+:m0a.x11.mainVariables1
 ::================================
+
+set "PEDRecoveryFolder=%SYSTEMDRIVE%\PED-Recovery"
+
 set "shortcutToLocation=0"
 set "timestamp=0"
-set "PEDRecoveryFolder=%SYSTEMDRIVE%\PED-Recovery"
-set "fileFunctionDir="
-set "fileStart="
+set "fileFunctionDir=0"
+set "fileStart=0"
+set "tokenKey=0"
 
-:m0a.x12.variableMain
+:m0a.x12.mainCommands
 ::================================
 
+REM Destination Main Variable:
 if %shortcutToLocation% == desktop (
 	echo.
 	echo ...[20%]...
@@ -150,6 +166,7 @@ if %shortcutToLocation% == desktop (
 	set "destinationMain=%cd%"
 )
 
+REM Destination PD Variable:
 set "destinationPD=%destinationMain%\pedDownload"
 if not exist "%destinationPD%\." (
 	mkdir "%destinationPD%"
@@ -157,6 +174,7 @@ if not exist "%destinationPD%\." (
 
 cd %destinationPD%
 
+REM Folder .\files :
 call :r3a.x12.downLoadF-files
 if %shortcutToLocation% == desktop (
 	echo.
@@ -165,23 +183,30 @@ if %shortcutToLocation% == desktop (
 	cd files
 )
 
+:m0a.x13.mainVariables2
+::================================
+
+REM Variables:
 set "startOneClick=0"
 set "startOneClickTwo=0"
 set "psP=Powershell.exe Set-ExecutionPolicy Bypass -Scope Process -Force;"
 set "psC=powershell.exe -ExecutionPolicy Bypass -Command"
 set "timeoutA=timeout 2 /nobreak>nul"
 
+REM Rest commands
 if %shortcutToLocation% == desktop (
 	echo.
 	echo ...[35%]...
 	exit /b
 )
 
-if exist "c1.txt" (goto m2a.x5.Oneclick5)
 echo.
 echo.
 echo ...[99%]...
-
+if exist "c1.txt" (
+	cls
+	goto m2a.x5.Oneclick.Configuration
+)
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -196,14 +221,14 @@ echo.
 cls
 set menu=m0a.x21.firstMenu
 
-::Logon Trusted Installer
+REM Logon Trusted Installer:
 set "loc=%destinationPD%\Data\0.Drivers\0.2.advancedrun-x64\e1.txt"
 if exist "%loc%" (
 	del "%loc%"
 	goto startPED
 )
 
-::Check menu exist
+REM Check if menu exist:
 if not exist "%destinationPD%\files\cmdMenuSel.exe" (
 	call :r3a.x12.001.downLoadF-filesCMDMenu
 )
@@ -780,6 +805,40 @@ call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
 
+:r3a.x11.4.01.downLoadF-4.01.norton
+::================================
+set "nameFolder=01.norton"
+set "createFolder=Data\4.Anti-virus\%nameFolder%"
+set "destination=%destinationPD%\%createFolder%"
+
+if not exist "%destination%\." mkdir "%destination%"
+
+
+set "fileLocation=NPE.exe"
+set "fileLinkID=https://www.norton.com/npe_latest"
+set isItZip=n
+
+call :r3a.x01.0.downloadFunction
+exit /b
+::=================
+
+:r3a.x11.4.02.downLoadF-4.02.kaspersky
+::================================
+set "nameFolder=02.kaspersky"
+set "createFolder=Data\4.Anti-virus\%nameFolder%"
+set "destination=%destinationPD%\%createFolder%"
+
+if not exist "%destination%\." mkdir "%destination%"
+
+
+set "fileLocation=KVRT.exe"
+set "fileLinkID=https://click.kaspersky.com/?hl=en&version=20.0&pid=kvrt&link=kvrtexe"
+set isItZip=n
+
+call :r3a.x01.0.downloadFunction
+exit /b
+::=================
+
 ::================================
 :r3a.x12.downLoadF-files
 ::================================
@@ -1044,7 +1103,7 @@ if not exist "%startFiles%" (
 )
 start /w %startFiles%
 
-if startOneClick == 1 (
+if %startOneClick% == 1 (
 	exit /b
 )
 goto %menu%
@@ -1072,11 +1131,7 @@ IF %PROCESSOR_ARCHITECTURE% == x86 (
 goto %menu%
 
 
-:r4a.x0.5.1.startUpdates
-::================================
-call :r3a.x11.1.1.downLoadF-1.1.Eso
-start %destinationPD%\Data\1.Optimizer\1.1.Eso\Eso\eso.exe /A /G=2 20220525-updates.ini
-exit /b
+
 
 :r4a.x0.5.2.showHideUpdates
 ::================================
@@ -1183,16 +1238,34 @@ if not exist %startFiles% (
 	call %downloadFiles%
 )
 
-if %startOneClick% == 1 (
+REM IF
+if %tokenKey% == 1 (
+	echo starting update services :%tokenKey%
+	start %destinationPD%\Data\1.Optimizer\1.1.Eso\Eso\eso.exe /A /G=2 20220525-updates.ini
+	exit /b
+) 
+ if %startOneClick% == 1 (
 	if %optimizeP% == 1 (
 		%startFiles% /A /G=2 20220525.ini
 	) else (
 		%startFiles% /A /G=1 20220525.ini
 	)
 	exit /b
-) else (
-	start %startFiles%
-)
+	) else (
+		start %startFiles%
+	)
+
+goto %menu%
+	
+:r4a.x0.5.1.startUpdates
+::================================
+setlocal
+set "tokenKey=1"
+call :r4a.x1.1.eso
+set "tokenKey=0"
+echo Operation complete: update services :%tokenKey%
+endlocal
+exit /b
 
 goto %menu%
 
@@ -1489,7 +1562,12 @@ set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
 if not exist "%startFiles%" (
 call %downloadFiles%
 )
-start %startFiles%
+if %startOneClick% == 1 (
+	start /w %startFiles%
+	exit /b
+) else (
+	start %startFiles%
+)
 
 goto %menu%
 
@@ -1505,7 +1583,7 @@ set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
 if not exist "%startFiles%" (
 call %downloadFiles%
 )
-start cmd /c %startFiles%
+start %startFiles%
 
 goto %menu%
 
@@ -1538,6 +1616,39 @@ goto %menu%
 
 ::"[+] 3.1.Win10Debloater-master" "[+] 3.2.ChrisTitusTech Win10script" "[ ] 3.3.FULL Win10 Debloat" "[ ] 3.4.Sophia.Script.Win10.v5.12.5" "[ ] 3.5.beta- for check - Windows-10-batch-optimizer-master" "[ ] 3.6.Windows10DebloaterV18" "[ ] 3.7.Windows10NetworkandOptimizerV11" "[ ] 3.8.Reg & ,Bat"
 
+
+:r4a.x5.01.norton
+::================================
+cls
+
+set "nameFiles=NPE.exe"
+set "directoryFiles=Data\4.Anti-virus\01.norton"
+set "downloadFiles=:r3a.x11.4.01.downLoadF-4.01.norton"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+call %downloadFiles%
+)
+start %startFiles%
+
+goto %menu%
+
+:r4a.x5.02.kaspersky
+::================================
+cls
+set "downloadFiles=:r3a.x11.4.02.downLoadF-4.02.kaspersky"
+set "directoryFiles=Data\4.Anti-virus\02.kaspersky"
+set "nameFiles=KVRT.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+call %downloadFiles%
+)
+start %startFiles%
+
+goto %menu%
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -1598,6 +1709,8 @@ echo.
 ::========
 :mainMenu
 ::========
+%title%
+%color1%
 set menu=mainMenu
 set startOneClick=0
 set optimizeP=2
@@ -2070,21 +2183,34 @@ set "iconN=shell32_337.ico"
 set wd=%destination%
 set TARGET=%destination%\%startBoot%
 
+REM set shortcut Location:
 if %shortcutToLocation% == desktop (
 	set "shortcut=%userprofile%\Desktop\%LinkName%.lnk"
 ) else (
 	set "shortcut=C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\%LinkName%.lnk"
 )
 
+REM check if EXIST: Action:
+REM 1/OneClickDeep -DELETE, AND if 0 -END, else -CONTINUE
+REM 2/ToolBox -MESSAGE,
+REM 3/bootTimer IF EXIST OLD -DELETE:
 IF EXIST "%shortcut%" (
 	if %startOneClick% == 1 (
+		echo Shortcut OneClickDeep Deleting...
 		DEL "%shortcut%"
-		endlocal
-		exit /b
+		if %startOneClickTwo% == 0 (
+			endlocal
+			exit /b
+		)
+	) else ( if %shortcutToLocation% == desktop (
+		echo Shortcut exist on Desktop
 	) else (
+		echo Deleting old %LinkName%
 		DEL "%shortcut%"
 	)
+	)
 )
+
 :: Check if icon exist
 if not exist "%destinationPD%\files\%iconN%" (
 	echo.
@@ -2092,16 +2218,25 @@ if not exist "%destinationPD%\files\%iconN%" (
 	call :r3a.x12.002.downLoadF-filesIcons
 )
 
-::Create Shortcut Function
-%psP% "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut('%shortcut%'); $s.TargetPath = '%TARGET%'; $s.WorkingDirectory = '%wd%'; $s.IconLocation = '%destinationPD%\files\%iconN%'; $s.WindowStyle = %shortcutStyle%; $s.Save()"
+::Create Shortcut: Function:
+set "shortcutCommand=%psP% "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut('%shortcut%'); $s.TargetPath = '%TARGET%'; $s.WorkingDirectory = '%wd%'; $s.IconLocation = '%destinationPD%\files\%iconN%'; $s.WindowStyle = %shortcutStyle%; $s.Save()""
+
+if %shortcutToLocation% == desktop (
+	if not exist %shortcut% (
+	%shortcutCommand%
+	)
+) else (
+	%shortcutCommand%
+)
 
 
+REM END CREATE OneClickDeep:
 if %startOneClick% == 1 (endlocal && exit /b)
 
+REM open folder if shortcut is bootTimer:
 if %shortcutToLocation% == desktop (
 	echo.
 	echo ...[60%]...
-	set "shortcutToLocation=0"
 ) else (
 	start %windir%\explorer.exe "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 )
@@ -2109,15 +2244,22 @@ if %shortcutToLocation% == desktop (
 cls
 echo.
 
+REM IF EXIST ECHO MESSAGE:
 if exist "%SHORTCUT%" (
 	echo ========== Shortcut Create Successful ===
 ) else (
 	echo ========== Shortcut Unsuccessful ---
 )
 
+REM END CREATE ToolBox:
+if %shortcutToLocation% == desktop (
+	set "shortcutToLocation=0"
+	endlocal
+	exit /b
+)
 endlocal
-if %shortcutToLocation% == desktop (endlocal && exit /b)
 
+REM END CREATE bootTimer:
 :m1a.x02.1.3.0.end
 echo.
 cmdmenusel e370 "Press ENTER to go back "
@@ -2481,7 +2623,11 @@ set mm= %mm% "[ ] Network and Internet"
 set mm= %mm% "--[ ] Troubleshooting Network adapter"
 set mm= %mm% "[ ] System and Security"
 set mm= %mm% "--[ ] Troubleshooting System Maintenance"
- 
+set mm= %mm% ""
+set mm= %mm% "------------ MS Store Reset ------------"
+set mm= %mm% "[ ] Reset MS Store by cmd"
+set mm= %mm% "[ ] Reset MS Store by PowerShell"
+
 cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x02.5.controlPanelView
 if %ERRORLEVEL% == 2 goto m1a.x02.5.controlPanelView
@@ -2497,6 +2643,11 @@ if %ERRORLEVEL% == 10 start explorer "shell:::{C58C4893-3BE0-4B45-ABB5-A63E4B8C8
 if %ERRORLEVEL% == 11 start msdt.exe -id NetworkDiagnosticsNetworkAdapter
 if %ERRORLEVEL% == 12 start explorer "shell:::{C58C4893-3BE0-4B45-ABB5-A63E4B8C8651}\system"
 if %ERRORLEVEL% == 13 start msdt.exe -id MaintenanceDiagnostic
+if %ERRORLEVEL% == 14 goto %menu%
+
+if %ERRORLEVEL% == 15 goto %menu%
+if %ERRORLEVEL% == 16 start WSReset.exe
+if %ERRORLEVEL% == 17 start %psP% "Get-AppXPackage WindowsStore -AllUsers | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}; pause"
 
 goto %menu%
 
@@ -2556,9 +2707,9 @@ if %errorlevel% equ 0 (
     echo No internet connection.
 	%timeoutA%
 )
-if %menu% == m1a.x02.6.speedTest (
-	goto %menu%
-)
+::if %menu% == m1a.x02.6.speedTest (
+::	goto %menu%
+::)
 goto m1a.x02.6.1.speedTestCheckInternetConnection
 
 
@@ -2610,13 +2761,18 @@ set "menuC=onlyA"
 call :mStyle
 set "menuD2= "
 
-set /p source=Type source:
-set /p destination=Type destination:
+set "sourceRoboCopy="
+set "destinationRoboCopy="
+setlocal
+set /p sourceRoboCopy=Type source:
+set /p destinationRoboCopy=Type destination:
 
-robocopy "%source%" "%destination%" /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /LOG+:C:\robocopy.log /TEE
+robocopy "%sourceRoboCopy%" "%destinationRoboCopy%" /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /LOG+:C:\robocopy.log /TEE
+::robocopy "%sourceRoboCopy%" "%destinationRoboCopy%" /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /MIR /LOG+:C:\robocopy.log /TEE
 
-set source=
-set destination=
+endlocal
+set "sourceRoboCopy="
+set "destinationRoboCopy="
 
 echo.
 cmdmenusel e370 "Press ENTER to continue..." 
@@ -3227,6 +3383,7 @@ set mm= %mm% "-|BACK|- 1. Install -programs:"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
+set mm= %mm% "--- Install by WinGet: ---"
 set mm= %mm% "[ ] Browsers: Google.Chrome"
 set mm= %mm% "[ ] Archiver: 7zip.7zip"
 set mm= %mm% "[ ] Archiver: RARLab.WinRAR"
@@ -3251,7 +3408,10 @@ set mm= %mm% "[ ] Cleaner: Glarysoft.GlaryUtilities"
 set mm= %mm% ""
 set mm= %mm% "--- MS Store: ---"
 set mm= %mm% "[ ] Note: Free Office Mobile"
-
+set mm= %mm% ""
+set mm= %mm% "--- Anti-virus-portable: ---"
+set mm= %mm% "[ ] Anti-virus: Norton"
+set mm= %mm% "[ ] Anti-virus: Kaspersky"
 
 cmdmenusel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x3.1.install
@@ -3260,35 +3420,40 @@ if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
-if %ERRORLEVEL% == 6 set "appIns=Google.Chrome"
-if %ERRORLEVEL% == 7 set "appIns=7zip.7zip"
-if %ERRORLEVEL% == 8 set "appIns=RARLab.WinRAR"
-if %ERRORLEVEL% == 9 set "appIns=Datronicsoft.SpacedeskDriver.Server"
-if %ERRORLEVEL% == 10 set "appIns=Google.ChromeRemoteDesktop"
-if %ERRORLEVEL% == 11 set "appIns=GitHub.GitHubDesktop
-if %ERRORLEVEL% == 12 set "appIns=Microsoft.VisualStudioCode"
-if %ERRORLEVEL% == 13 set "appIns=OpenJS.NodeJS.LTS"
-if %ERRORLEVEL% == 14 set "appIns=EaseUS.DataRecovery"
-if %ERRORLEVEL% == 15 set "appIns=MiniTool.PartitionWizard.Free"
-if %ERRORLEVEL% == 16 set "appIns=Facebook.Messenger"
-if %ERRORLEVEL% == 17 set "appIns=WhatsApp.WhatsApp"
-if %ERRORLEVEL% == 18 set "appIns=Google.Drive"
-if %ERRORLEVEL% == 19 set "appIns=Microsoft.OneDrive"
-if %ERRORLEVEL% == 20 set "appIns=Notepad++.Notepad++"
-if %ERRORLEVEL% == 21 set "appIns=Apache.OpenOffice"
-if %ERRORLEVEL% == 22 set "appIns=PrimateLabs.Geekbench.5"
-if %ERRORLEVEL% == 23 set "appIns=qBittorrent.qBittorrent"
-if %ERRORLEVEL% == 24 set "appIns=VideoLAN.VLC"
-if %ERRORLEVEL% == 25 set "appIns=RevoUninstaller.RevoUninstallerPro"
-if %ERRORLEVEL% == 26 set "appIns=Glarysoft.GlaryUtilities"
+if %ERRORLEVEL% == 6 goto %menu%
+if %ERRORLEVEL% == 7 set "appIns=Google.Chrome"
+if %ERRORLEVEL% == 8 set "appIns=7zip.7zip"
+if %ERRORLEVEL% == 9 set "appIns=RARLab.WinRAR"
+if %ERRORLEVEL% == 10 set "appIns=Datronicsoft.SpacedeskDriver.Server"
+if %ERRORLEVEL% == 11 set "appIns=Google.ChromeRemoteDesktop"
+if %ERRORLEVEL% == 12 set "appIns=GitHub.GitHubDesktop
+if %ERRORLEVEL% == 13 set "appIns=Microsoft.VisualStudioCode"
+if %ERRORLEVEL% == 14 set "appIns=OpenJS.NodeJS.LTS"
+if %ERRORLEVEL% == 15 set "appIns=EaseUS.DataRecovery"
+if %ERRORLEVEL% == 16 set "appIns=MiniTool.PartitionWizard.Free"
+if %ERRORLEVEL% == 17 set "appIns=Facebook.Messenger"
+if %ERRORLEVEL% == 18 set "appIns=WhatsApp.WhatsApp"
+if %ERRORLEVEL% == 19 set "appIns=Google.Drive"
+if %ERRORLEVEL% == 20 set "appIns=Microsoft.OneDrive"
+if %ERRORLEVEL% == 21 set "appIns=Notepad++.Notepad++"
+if %ERRORLEVEL% == 22 set "appIns=Apache.OpenOffice"
+if %ERRORLEVEL% == 23 set "appIns=PrimateLabs.Geekbench.5"
+if %ERRORLEVEL% == 24 set "appIns=qBittorrent.qBittorrent"
+if %ERRORLEVEL% == 25 set "appIns=VideoLAN.VLC"
+if %ERRORLEVEL% == 26 set "appIns=RevoUninstaller.RevoUninstallerPro"
+if %ERRORLEVEL% == 27 set "appIns=Glarysoft.GlaryUtilities"
 
-if %ERRORLEVEL% == 27 goto %menu%
 if %ERRORLEVEL% == 28 goto %menu%
-if %ERRORLEVEL% == 29 (
+if %ERRORLEVEL% == 29 goto %menu%
+if %ERRORLEVEL% == 30 (
 	start https://www.microsoft.com/store/productid/9WZDNCRFJB9S?ocid=pdpshare
 	start https://www.microsoft.com/store/productid/9WZDNCRFJBH3?ocid=pdpshare
 	goto %menu%
 )
+if %ERRORLEVEL% == 31 goto %menu%
+if %ERRORLEVEL% == 32 goto %menu%
+if %ERRORLEVEL% == 33 (goto r4a.x5.01.norton)
+if %ERRORLEVEL% == 34 (goto r4a.x5.02.kaspersky)
 
 :m1a.x3.1.1.1.appInstaller
 cls
@@ -3368,7 +3533,12 @@ if not exist %startFiles% (
 	call %downloadFiles%
 )
 echo Please wait...
+ 
 %psP% %startFiles%
+
+if %startOneClick% == 1 (
+	exit /b
+)
 
 goto %menu%
 
@@ -3873,7 +4043,7 @@ set mm= %mm% "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
-set mm= %mm% "------- Optimize Services/Settings -------"
+set mm= %mm% "----- Optimize Services/Settings -----"
 set mm= %mm% "[ p ] 1.Turbo mode \ Safe configurations"
 set mm= %mm% "[ d ] 1.Default configurations"
 set mm= %mm% ""
@@ -3886,7 +4056,7 @@ set mm= %mm% "[ d ] 2.TaskScheduler -Default config"
 set mm= %mm% ""
 set mm= %mm% "[+] Task Scheduler with GridView:"
 set mm= %mm% ""
-set mm= %mm% "------- More Options -------"
+set mm= %mm% "------------ More Options ------------"
 set mm= %mm% "[ p ] Administrative Tools"
 
 
@@ -5101,7 +5271,12 @@ set dcMM=0
 set guMM=0
 set wrcMM=0
 set fdcMM=0
+
 set durMM=0
+set wuMM=0
+set sfcMM=0
+set uuMM=0
+set csuMM=0
 set optimizeP=2
 
 :m2a.x11.OneClick-Menu
@@ -5157,8 +5332,23 @@ if %wrcMM% == 1 (set mm= %mm% "[X] Wise Reg Cleaner "
 if %fdcMM% == 1 (set mm= %mm% "[X] Flush DNS Cache "
 ) else (set mm= %mm% "[ ] Flush DNS Cache ")
 set mm= %mm% "================================================="
-if %durMM% == 1 (set mm= %mm% "[X] Deep / Update / Repair"
-) else (set mm= %mm% "[ ] Deep / Update / Repair")
+if %wuMM% == 1 (set mm= %mm% "[X] Windows Update"
+) else (set mm= %mm% "[ ] Windows Update")
+if %sfcMM% == 1 (set mm= %mm% "[X] sfc /scannow and dism /Restorehealth"
+) else (set mm= %mm% "[ ] sfc /scannow and dism /Restorehealth")
+if %uuMM% == 1 (set mm= %mm% "[X] Uninstall and Update apps"
+) else (set mm= %mm% "[ ] Uninstall and Update apps")
+if %csuMM% == 1 (set mm= %mm% "[X] Configuration and StartUp settings"
+) else (set mm= %mm% "[ ] Configuration and StartUp settings")
+
+::================================
+set durMM=1
+if %wuMM% == 0 (
+	if %sfcMM% == 0 (
+	if %uuMM% == 0 (
+	if %csuMM% == 0 ( set durMM=0
+)))) 
+
 
 :m2a.x12.OneClick-Menu2
 cmdmenusel e370 %mm%
@@ -5168,7 +5358,7 @@ if %ERRORLEVEL% == 2 goto %menu%
 if %ERRORLEVEL% == 3 goto %menu%
 
 if %ERRORLEVEL% == 4 if %durMM% == 1 (
-	goto m2a.x5.Oneclick5
+	goto m2a.x5.Oneclick.Configuration
 ) else (
 	if not %optimizePStatus% == SelectAuto (goto m2a.x3.OneclickC) else (goto %menu%)
 )
@@ -5195,7 +5385,10 @@ if %ERRORLEVEL% == 21 if %guMM% == 1 (set guMM=0) else (set guMM=1)
 if %ERRORLEVEL% == 22 if %wrcMM% == 1 (set wrcMM=0) else (set wrcMM=1)
 if %ERRORLEVEL% == 23 if %fdcMM% == 1 (set fdcMM=0) else (set fdcMM=1)
 if %ERRORLEVEL% == 24 goto %menu%
-if %ERRORLEVEL% == 25 if %durMM% == 1 (set durMM=0) else (set durMM=1)
+if %ERRORLEVEL% == 25 if %wuMM% == 1 (set wuMM=0) else (set wuMM=1)
+if %ERRORLEVEL% == 26 if %sfcMM% == 1 (set sfcMM=0) else (set sfcMM=1)
+if %ERRORLEVEL% == 27 if %uuMM% == 1 (set uuMM=0) else (set uuMM=1)
+if %ERRORLEVEL% == 28 if %csuMM% == 1 (set csuMM=0) else (set csuMM=1)
 
 goto %menu%
 
@@ -5209,7 +5402,13 @@ set dcMM=1
 set guMM=1
 set wrcMM=0
 set fdcMM=0
+
 set durMM=0
+set wuMM=0
+set sfcMM=0
+set uuMM=0
+set csuMM=0
+
 goto %menu%
 
 :m2a.x2.2.OneclickFULL
@@ -5222,8 +5421,13 @@ set dcMM=1
 set guMM=1
 set wrcMM=1
 set fdcMM=1
+
 set durMM=0
-if %startOneClick% == 2 (goto m2a.x3.OneclickC)
+set wuMM=0
+set sfcMM=0
+set uuMM=0
+set csuMM=0
+
 goto %menu%
 
 :m2a.x3.OneclickC
@@ -5366,21 +5570,14 @@ pause
 goto mainMenu
 
 
-:m2a.x5.Oneclick5
+:m2a.x5.Oneclick.Configuration
 ::================================
 
 rem add timeout question do you want to Continue
 
-	rem if exist file c5.txt goto t5
-if exist c5.txt (goto m2a.x5.5.Oneclick55)
-	rem if exist file c4.txt goto t4
-if exist c4.txt (goto m2a.x5.4.Oneclick54)
-	rem if exist file c3.txt goto t3
-if exist c3.txt (goto m2a.x5.3.Oneclick53)
-	rem if exist file c2.txt goto t2
-if exist c2.txt (goto m2a.x5.2.Oneclick52)
-	rem if exist file c1.txt goto t1
-if exist c1.txt (goto m2a.x5.1.Oneclick51)
+
+rem if exist file c1.txt goto .Start
+if exist c1.txt (goto m2a.x5.0.Oneclick.Start)
 
 rem create file c1.txt
 echo set esoMM=%esoMM% > c1.txt
@@ -5394,16 +5591,112 @@ echo set wrcMM=%wrcMM% >> c1.txt
 echo set fdcMM=%fdcMM% >> c1.txt
 echo set optimizeP=%optimizeP% >> c1.txt
 
+echo set wuMM=%wuMM% >> c1.txt
+echo set sfcMM=%sfcMM% >> c1.txt
+echo set uuMM=%uuMM% >> c1.txt
+echo set csuMM=%csuMM% >> c1.txt
+
 set startOneClick=1
+set startOneClickTwo=1
 call :m1a.x02.1.3.createShotcut
+set startOneClickTwo=0
 
 timeout 5 /nobreak>nul
+if %wuMM% == 0 (
+if %sfcMM% == 0 (
+goto m2a.x5.0.Oneclick.Start
+)
+)
 Shutdown -r -f -t 00
 exit
 rem t1
-:m2a.x5.1.Oneclick51
 
+::switches
+:m2a.x5.0.Oneclick.Start
+
+if not exist cc1.bat (
+copy c1.txt cc1.bat
+)
+call cc1.bat
+
+if not exist c2.txt (
+REM ================================
+	if %wuMM% == 1 (
+	echo ********** Windows Update
+	REM =================
+	set startOneClick=1
+	call :m2a.x5.1.Oneclick51
+	set startOneClick=0
+	)
+)
+if not exist c3.txt (
+REM ================================
+	if %sfcMM% == 1 (
+	echo ********** sfc /scannow and dism /Restorehealth
+	REM =================
+	REM set startOneClick=1
+	call :m2a.x5.2.Oneclick52
+	REM set startOneClick=0
+	)
+)
+if not exist c4.txt (
+REM ================================
+	if %uuMM% == 1 (
+	echo ********** Uninstall and Update apps
+	REM =================
+	set startOneClick=1
+	call :m2a.x5.3.Oneclick53
+	set startOneClick=0
+	)
+)
+if not exist c5.txt (
+REM ================================
+	if %csuMM% == 1 (
+	echo ********** Configuration and StartUp settings
+	REM =================
+	set startOneClick=1
+	call :m2a.x5.4.Oneclick54
+	set startOneClick=0
+	)
+)
+
+::END
+if exist c2.txt (del c2.txt)
+if exist c3.txt (del c3.txt)
+if exist c4.txt (del c4.txt)
+if exist c5.txt (del c5.txt)
+if exist c1.txt (del c1.txt)
+if exist cc1.bat (del cc1.bat)
+
+:m2a.x5.5.Oneclick.Message
+
+REM DELETE SHORTCUT
 set startOneClick=1
+call :m1a.x02.1.3.createShotcut
+set startOneClick=0
+
+if not exist "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\OneClickDeep.lnk" (
+echo OK: shortcut is been deleted
+) else ( echo Error: shortcit is still )
+
+REM message complete:
+
+REM Set your one-line message here
+set "message=Hello! One click Deep repair is done."
+
+REM Show the pop-up message using VBScript
+echo msgbox "%message%">"%temp%\popup_message.vbs"
+cscript /nologo "%temp%\popup_message.vbs"
+
+REM Clean up the temporary VBScript file
+del "%temp%\popup_message.vbs" /q
+
+goto mainMenu
+::===================================================
+
+REM Funtions:
+:m2a.x5.1.Oneclick51
+REM c2.txt
 
 powershell.exe -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'PED-Restore Point1' -RestorePointType 'MODIFY_SETTINGS'"
 
@@ -5412,39 +5705,52 @@ call :m1a.x02.6.1.speedTestCheckInternetConnection
 call :m1a.x1.2.1.checkForPS-Module
 timeout 2 /nobreak>c2.txt
  rem create file c2.txt
- 
+
 call :m1a.x1.2.2.PS-ModuleInstallAll
 timeout 10 /nobreak>nul
 Shutdown -r -f -t 00
 exit
 rem t2
+
+
 :m2a.x5.2.Oneclick52
+REM c3.txt
 
 call :m1a.x02.6.1.speedTestCheckInternetConnection
 chkdsk
-sfc /scannow && dism.exe /Online /Cleanup-image /Restorehealth && sfc /scannow
+sfc /scannow
+dism.exe /Online /Cleanup-image /Restorehealth
+sfc /scannow
 rem create file c3.txt
 timeout 5 /nobreak>c3.txt
-del c2.txt
+
 Shutdown -r -f -t 00
 exit
-rem t3
+
 :m2a.x5.3.Oneclick53
+REM c4.txt
 
 powershell.exe -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'PED-Restore Point2' -RestorePointType 'MODIFY_SETTINGS'"
+
+call :r4a.x3.1.RevoUninstallerPortable
+call :m1a.x3.2.1.0.delete_Bloatware
 
 call :m1a.x02.6.1.speedTestCheckInternetConnection
 
 call :r3a.x11.3.1.downLoadF-3.1.WingetScript
+
 timeout 2 /nobreak>nul
 winget upgrade -h --all
+
 rem create file c4.txt
 timeout 2 /nobreak>c4.txt
-del c3.txt
+
 Shutdown -r -f -t 00
 exit
-rem t4
+
+
 :m2a.x5.4.Oneclick54
+REM c5.txt
 
 call :m1a.x02.6.1.speedTestCheckInternetConnection
 
@@ -5455,8 +5761,8 @@ call :m1a.x4.3.3.1.winExplorerThisPC
 
 set startOneClick=1
 set startOneClickTwo=1
-copy c1.txt cc1.bat
-call cc1.bat
+::copy c1.txt cc1.bat
+::call cc1.bat
 call :m2a.x3.OneclickC
 ::call :m2a.x2.2.OneclickFULL
 
@@ -5470,33 +5776,14 @@ call :m1a.x7.1.4.1.WinUpdadePause
 rem Ram reduce
 call :m1a.x7.5.1.ramReducerApply
 
-
 rem Start up
 call :r4a.x0.3.2.startupManagerGlaryUtility
 rem create file c5.txt
 timeout 2 /nobreak>c5.txt
-del c4.txt
+
 Shutdown -r -f -t 00
 exit
 rem t5
-:m2a.x5.5.Oneclick55
-del c5.txt
-del c1.txt
-del cc1.bat
-call :m1a.x02.1.3.createShotcut
-rem message complete
-
-REM Set your one-line message here
-set "message=Hello! One click Deep repair is done."
-
-REM Show the pop-up message using VBScript
-echo msgbox "%message%">"%temp%\popup_message.vbs"
-cscript /nologo "%temp%\popup_message.vbs"
-
-REM Clean up the temporary VBScript file
-del "%temp%\popup_message.vbs" /q
-
-goto mainMenu
 
 :m9a.x0.Restart
 ::================================
@@ -7894,6 +8181,7 @@ REM Create 15-11-2021 13:52:45
 
 rem PED Folder
 rem https://drive.google.com/drive/folders/1gOiYbhFK026D9MHRrErm_BhWvAHsRM2z
+rem t.ly/pedfolder
 
 rem DigiCertUtil
 rem https://digicert.com/StaticFiles/DigiCertUtil.zip
@@ -7939,4 +8227,9 @@ rem https://digicert.com/StaticFiles/DigiCertUtil.zip
 ::set "desktopShortcut=%userprofile%\Desktop\%~n0.lnk"
 	::mklink "%desktopShortcut%" "%destinationFile%"
 	
+::=======================================================================
+REM ps
+REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm t.ly/ped)"
+REM cmd
+REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; .\p.cmd(irm t.ly/pedbox -o p.cmd)"
 ::=======================================================================
