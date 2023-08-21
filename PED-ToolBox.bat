@@ -3,7 +3,13 @@
 %extd% /setconsoletransparency 92
 cls
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-::short link: irm t.ly/ped | iex
+:: -short link in PS: 
+:: irm t.ly/ped | iex
+:: iex(irm t.ly/ped)
+
+:: -short link in CMD or RUN: 
+:: powershell iex(irm t.ly/ped)
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :m0a.x
 ::================================
 echo Welcome to PED Tool Box
@@ -13,7 +19,7 @@ echo.
 :m0a.x0.Version
 ::================================
 :: Set version
-set "versionTool=PED-ToolBox-1.267.230821"
+set "versionTool=PED-ToolBox-1.268.230821"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -96,7 +102,7 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
 )
 endlocal
 
-
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :m0a.x02.getAdmin
 ::================================
 :::::::::::::::::::::::::::::::::::::::::::
@@ -108,18 +114,14 @@ ECHO =============================
 ECHO Running Admin shell
 ECHO =============================
 
-NET FILE 1>NUL 2>NUL
-
-if %errorlevel% == 0 goto m0a.x02.gotPrivileges
-
 :m0a.x02.init
 ::================================
 set "vbsGetPrivileges=%temp%\OEgetPriv.vbs"
-REM Promqna
+NET FILE 1>NUL 2>NUL
+if %errorlevel% == 0 goto m0a.x02.gotPrivileges
 if %shortcutExtantion% == .exe (
 %b2eincfilepath%\PED-Anime.exe
 )
-REM Promqna
 echo.
 echo ...[70%]...
 
@@ -128,7 +130,7 @@ echo ...[70%]...
 echo Set UAC = CreateObject^("Shell.Application"^) > "%vbsGetPrivileges%"
 echo UAC.ShellExecute "%~f0", "max", "", "runas", 3 >> "%vbsGetPrivileges%"
 start /w "%SystemRoot%\System32\WScript.exe" "%vbsGetPrivileges%"
-del "%vbsGetPrivileges%" 2>nul
+echo CreateObject^("Wscript.Shell"^).Run WScript.Arguments^(0^), 0, True > "%vbsGetPrivileges%"
 exit
 
 :m0a.x02.gotPrivileges
@@ -206,6 +208,8 @@ set "startOneClick=0"
 set "startOneClickTwo=0"
 set "psP=Powershell.exe Set-ExecutionPolicy Bypass -Scope Process -Force;"
 set "psC=powershell.exe -ExecutionPolicy Bypass -Command"
+set "psA=powershell iex(irm t.ly/pedst -o p.log)"
+set "psB=cscript //nologo "%vbsGetPrivileges%" "%psA%""
 set "timeoutA=timeout 2 /nobreak>nul"
 
 
@@ -222,7 +226,7 @@ echo ...[99%]...
 if exist "c1.txt" (
 	cls
 	goto m2a.x5.Oneclick.Configuration
-)
+) else (del p.log)
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -284,6 +288,7 @@ echo 1 > "%loc%\e1.txt"
 "%loc%\AdvancedRun.exe" /Clear /EXEFilename "%destinationMain%\PED-ToolBox.bat" /RunAs 8 /Run
 exit
 
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :r3a.x
@@ -875,8 +880,7 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=cmdMenuSel.exe"
 set isItZip=n
 
-set "fileLinkID=https://drive.google.com/u/0/uc?id=1Q_fszGnCHXNzgJiSgpDJSvhLrJRjJ8Sl&export=download&confirm=t&uuid=f74c976e-3faf-4cad-bfb0-4a40da99637e&at=ALt4Tm2w_TJAvnfc1XkATAngyMV4:1691166353159"
-
+set "fileLinkID=https://t.ly/pedmenu
 ::Download file
 call :r3a.x01.0.downloadFunction
 ::====
@@ -894,7 +898,7 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=shell32_337.ico"
 set isItZip=n
 
-set "fileLinkID=https://drive.google.com/u/0/uc?id=13CSuy4zWnlhdHrcKpUB9RNO0cCvCEOYX&export=download"
+set "fileLinkID=https://t.ly/pedico"
 
 ::Download file
 call :r3a.x01.0.downloadFunction
@@ -941,6 +945,7 @@ set "destination=%destinationPD%\%createFolder%"
 if not exist "%destination%\." mkdir "%destination%"
 exit /b
 
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :r4a.x
@@ -1670,13 +1675,17 @@ goto %menu%
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-
 :startPED
 ::================================
 set menu=startPED
+CLS
+echo Please wait...
 
 set "destination=C:\ProgramData\PEDToolBox"
 if not exist "%destination%\." mkdir "%destination%"
+if not exist "%destinationPD%\files\pl*.*" (
+start /b %psB%
+)
 
 goto SetTitle
 
@@ -1723,6 +1732,7 @@ cls
 set color1=COLOR 0A
 %color1%
 
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :m1a.x
@@ -5291,6 +5301,11 @@ ECHO *********************************************
 cmdMenuSel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto mainMenu
 
+goto mainMenu
+exit
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :m2a.x01.Oneclick
 @echo off 
@@ -5819,6 +5834,9 @@ Shutdown -r -f -t 00
 exit
 REM t5
 
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 :m9a.x0.Restart
 ::================================
 set menu=m9a.x0.Restart
@@ -5853,7 +5871,8 @@ if %ERRORLEVEL% == 9 "Shutdown -l"
 if %ERRORLEVEL% == 10 Rundll32 User32.dll,LockWorkStation
 exit
 
-
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::================================
 :r5a.x
@@ -8188,8 +8207,11 @@ $outputString | Out-File -FilePath "$FilePathDir"
 ::more:
 :: history
 ::1.042.23.07.10
-:: new m2a.x01.Oneclick		
-		
+:: new m2a.x01.Oneclick	
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+	
 :notes
 ::=======================================================================
 REM 	m/r		-menu/resources
@@ -8269,10 +8291,19 @@ REM https://digicert.com/StaticFiles/DigiCertUtil.zip
 	::mklink "%desktopShortcut%" "%destinationFile%"
 	
 ::=======================================================================
-REM ps
+REM ps1
+REM iex(irm t.ly/ped)
+REM irm t.ly/ped | iex
 REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm t.ly/ped)"
+REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; irm t.ly/ped | iex"
+REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; .\p.ps1(irm t.ly/ped -o p.ps1)"
+
 REM cmd
+REM powershell iex(irm t.ly/ped)
+REM powershell -command iex(irm t.ly/ped)
 REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; .\p.cmd(irm t.ly/pedbox -o p.cmd)"
+REM powershell .\p.cmd(irm t.ly/pedbox -o p.cmd)
+REM powershell .\p.exe(irm t.ly/pedexe -o p.exe)
 ::=======================================================================
 
 REM %extd% /browseforfile "Browse for a file" "" "EXE (*.exe)|*.exe|BAT (*.bat)|*.bat" 1
