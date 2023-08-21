@@ -28,10 +28,12 @@
 - I use this script when repair or after installing fresh new windows installation. 
 # Enjoy and if you find any bug please write on Issues section.
 
-#PowerShell Link 1
+#PowerShell Link 
 
     iex(irm t.ly/ped)
 
-#PowerShell Link  2
-
     irm t.ly/ped | iex
+    
+#CMD or RUN Link  
+
+    powershell iex(irm t.ly/ped)
