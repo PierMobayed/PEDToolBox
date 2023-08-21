@@ -31,6 +31,7 @@
 #PowerShell Link 
 
     iex(irm t.ly/ped)
+
 # or
 
     irm t.ly/ped | iex
