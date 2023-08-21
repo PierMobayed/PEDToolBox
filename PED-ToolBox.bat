@@ -8240,7 +8240,7 @@ REM Create 15-11-2021 13:52:45
 ::=======================================================================
 
 REM PED Folder
-REM https://drive.google.com/drive/folders/1gOiYbhFK026D9MHRrErm_BhWvAHsRM2z
+
 REM t.ly/pedfolder
 
 REM DigiCertUtil
@@ -8268,7 +8268,7 @@ REM https://digicert.com/StaticFiles/DigiCertUtil.zip
 ::=======================================================================
 :: iskarva celiq dir plus imeto na faila 
 :: %~f0
-:: C:\Users\pierm\Desktop\PED-ToolBox.bat
+:: C:\Users\user\Desktop\PED-ToolBox.bat
 :: 
 :: iskarva samo imeto na faila
 :: %~nx0
