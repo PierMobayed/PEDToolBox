@@ -29,16 +29,16 @@
 # Enjoy and if you find any bug please write on Issues section.
 
 
-# PowerShell Link 
+## PowerShell Link 
 
     iex(irm t.ly/ped)
 
-#or
+### or
 
     irm t.ly/ped | iex
 
 
-# CMD or RUN Link  
+## CMD or RUN Link  
 
     powershell iex(irm t.ly/ped)
 
