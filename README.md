@@ -28,28 +28,28 @@
 - I use this script when repair or after installing fresh new windows installation. 
 # Enjoy and if you find any bug please write on Issues section.
 
-#PowerShell Link 
+
+# PowerShell Link 
 
     iex(irm t.ly/ped)
 
-# or
+#or
 
     irm t.ly/ped | iex
 
 
-    
-#CMD or RUN Link  
+# CMD or RUN Link  
 
     powershell iex(irm t.ly/ped)
 
-# or
+#or
 
     powershell .\p.exe(irm t.ly/pedexe -o p.exe)
 
-# or
+#or
 
     cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm t.ly/ped)"
 
-# or
+#or
 
     cmd.exe /c powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://t.ly/ped'))""
