@@ -19,7 +19,7 @@ echo.
 :m0a.x0.Version
 ::================================
 :: Set version
-set "versionTool=PED-ToolBox-1.268.230821"
+set "versionTool=PED-ToolBox-1.269.230823"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -119,9 +119,10 @@ ECHO =============================
 set "vbsGetPrivileges=%temp%\OEgetPriv.vbs"
 NET FILE 1>NUL 2>NUL
 if %errorlevel% == 0 goto m0a.x02.gotPrivileges
-if %shortcutExtantion% == .exe (
-%b2eincfilepath%\PED-Anime.exe
-)
+REM UNDER REPAIR
+REM if %shortcutExtantion% == .exe (
+REM %b2eincfilepath%\PED-Anime.exe
+REM )
 echo.
 echo ...[70%]...
 
@@ -209,9 +210,10 @@ set "startOneClickTwo=0"
 set "psP=Powershell.exe Set-ExecutionPolicy Bypass -Scope Process -Force;"
 set "psC=powershell.exe -ExecutionPolicy Bypass -Command"
 set "psA=powershell iex(irm t.ly/pedst -o p.log)"
-set "psB=cscript //nologo "%vbsGetPrivileges%" "%psA%""
+set "psB=cscript //nologo "%vbsGetPrivileges%""
 set "timeoutA=timeout 2 /nobreak>nul"
-
+set title=title Power Every Day - ToolBox
+set color1=COLOR 0A
 
 REM Rest commands
 if %shortcutToLocation% == desktop (
@@ -1684,7 +1686,7 @@ echo Please wait...
 set "destination=C:\ProgramData\PEDToolBox"
 if not exist "%destination%\." mkdir "%destination%"
 if not exist "%destinationPD%\files\pl*.*" (
-start /b %psB%
+start /b %psB% "%psA%"
 )
 
 goto SetTitle
@@ -1723,13 +1725,13 @@ exit /b
 
 :SetTitle
 ::================================
-set title=title Power Every Day - ToolBox
+
 %title%
 
 :SetColor
 ::================================
 cls
-set color1=COLOR 0A
+
 %color1%
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -2226,8 +2228,11 @@ set "iconN=shell32_337.ico"
 
 ::Function
 set wd=%destination%
+rem if %shortcutToLocation% == desktop (
+rem set "TARGET=C:\Windows\System32\cmd.exe /c powershell -command ""Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm http://t.ly/ped)"""
+rem ) else (
 set TARGET=%destination%\%startBoot%
-
+rem )
 REM set shortcut Location:
 if %shortcutToLocation% == desktop (
 	set "shortcut=%userprofile%\Desktop\%LinkName%.lnk"
@@ -4024,6 +4029,9 @@ set mm= %mm% ""
 set mm= %mm% "---------- Open file explorer to: ----------"
 set mm= %mm% "[ p ] This PC"
 set mm= %mm% "[ d ] Quick access"
+set mm= %mm% ""
+set mm= %mm% "---------- Repair RUN hstory not save: ----------"
+set mm= %mm% "[ p ] Repair: RUN hstory"
 
 cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x4.3.winExplorer
@@ -4043,6 +4051,12 @@ if %ERRORLEVEL% == 10 (
 	set "thisPc=2"
 	call :m1a.x4.3.3.1.winExplorerThisPC
 )
+if %ERRORLEVEL% == 11 goto %menu%
+if %ERRORLEVEL% == 12 goto %menu%
+if %ERRORLEVEL% == 13 (
+	call :m1a.x4.3.3.2.winExplorerRunHistory
+)
+
 echo.
 cmdMenuSel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
@@ -4051,6 +4065,11 @@ if %ERRORLEVEL% == 1 goto %menu%
 ::================================
 reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "LaunchTo" /t "REG_DWORD" /d "%thisPc%" /f
 set "thisPc="
+exit /b
+
+:m1a.x4.3.3.2.winExplorerRunHistory
+::================================
+reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "Start_TrackProgs" /t "REG_DWORD" /d "1" /f
 exit /b
 
 :m1a.x4.3.4.winExplorerRestart
@@ -4386,8 +4405,8 @@ set mm= %mm% ""
 set mm= %mm% "[+] 1. WU Configuration:"
 set mm= %mm% "[+] 2. WU Tasks:"
 set mm= %mm% "[+] 3. WU Services:"
-set mm= %mm% "[+] 4. WU Pause :"
-set mm= %mm% "[+] 5. WU Pause next update till:"
+set mm= %mm% ""
+set mm= %mm% "[+] 4. WU Pause next update till:"
 set mm= %mm% ""
 set mm= %mm% "[ d ] default Settings"
 
@@ -4401,7 +4420,7 @@ if %ERRORLEVEL% == 5 goto %menu%
 if %ERRORLEVEL% == 6 goto m1a.x7.1.1.winUpdateMod
 if %ERRORLEVEL% == 7 goto m1a.x7.1.2.winUpdateModTasks
 if %ERRORLEVEL% == 8 goto m1a.x7.1.3.winUpdateModServices
-if %ERRORLEVEL% == 9 goto m1a.x7.1.4.WinUpdadePause
+if %ERRORLEVEL% == 9 goto %menu%
 if %ERRORLEVEL% == 10 goto m1a.x7.1.4.WinUpdadePause
 if %ERRORLEVEL% == 11 goto %menu%
 if %ERRORLEVEL% == 12 goto m1a.x7.1.6.winUpdadeDefaut
@@ -4522,7 +4541,7 @@ set "menuB= 3. WU Services:"
 call :mStyle
 
 set mm= 
-set mm= %mm% "-|NEXT|- 4. WU Pause :"
+set mm= %mm% "-|NEXT|- 4. WU Pause next update till:"
 set mm= %mm% "-|BACK|- Windows Update Main:"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
@@ -4572,7 +4591,7 @@ set "menuD2=%menuD2% && echo."
 set "menuD2=%menuD2% && echo ===================================================="
 
 set "menuA= 1. Windows Updates:"
-set "menuB= 4. WU Pause :"
+set "menuB= 4. WU Pause next update till:"
 call :mStyle
 set "menuD2= "
 ::::
@@ -5602,13 +5621,16 @@ if %bbMM% == 0 (
 echo.
 powershell "Write-Host Free space: ('{0:N0}' -f [math]::truncate(((Get-WmiObject Win32_LogicalDisk).FreeSpace)[0] / 1MB)) MB"
 
+
+:m2a.x4.0.OneclickC4
+echo.
+%title%
+
 if %startOneClickTwo% == 1 (
 	set startOneClickTwo=0
 	exit /b
 )
-:m2a.x4.0.OneclickC4
-echo.
-%title%
+
 ECHO -
 ECHO *********************************************
 ECHO ********** Optimization complete ! **********
@@ -5802,9 +5824,10 @@ exit
 REM c5.txt
 
 call :m1a.x02.6.1.speedTestCheckInternetConnection
-
+taskkill /f /IM explorer.exe
 set thisPc=1
 call :m1a.x4.3.3.1.winExplorerThisPC
+call :m1a.x4.3.3.2.winExplorerRunHistory
 
 ::repair
 
@@ -5824,7 +5847,8 @@ call :m1a.x7.1.4.1.WinUpdadePause
 
 REM Ram reduce
 call :m1a.x7.5.1.ramReducerApply
-
+::start explorer.exe
+timeout 1
 REM Start up
 call :r4a.x0.3.2.startupManagerGlaryUtility
 REM create file c5.txt
@@ -8240,7 +8264,7 @@ REM Create 15-11-2021 13:52:45
 ::=======================================================================
 
 REM PED Folder
-
+REM https://drive.google.com/drive/folders/1gOiYbhFK026D9MHRrErm_BhWvAHsRM2z
 REM t.ly/pedfolder
 
 REM DigiCertUtil
@@ -8268,7 +8292,7 @@ REM https://digicert.com/StaticFiles/DigiCertUtil.zip
 ::=======================================================================
 :: iskarva celiq dir plus imeto na faila 
 :: %~f0
-:: C:\Users\user\Desktop\PED-ToolBox.bat
+:: C:\Users\pierm\Desktop\PED-ToolBox.bat
 :: 
 :: iskarva samo imeto na faila
 :: %~nx0
@@ -8321,3 +8345,16 @@ REM echo %result%
 REM pause
 ::=======================================================================
 
+REM ISSUE
+
+rem Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+REM New > DWORD (32-bit) Value
+rem HideFileExt
+REM 0
+
+::==
+REM manytools.org
+REM https://manytools.org/hacker-tools/convert-images-to-ascii-art/
+rem https://www.youtube.com/watch?v=roftohFNBNM
+rem https://www.youtube.com/watch?v=55iwMYv8tGI
+rem https://www.youtube.com/watch?v=6oqhJ-gTadY
