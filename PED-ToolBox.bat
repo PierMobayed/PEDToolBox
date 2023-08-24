@@ -19,7 +19,7 @@ echo.
 :m0a.x0.Version
 ::================================
 :: Set version
-set "versionTool=PED-ToolBox-1.269.230823"
+set "versionTool=PED-ToolBox-1.270.230824"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -54,10 +54,11 @@ set "sourceFile=%~f0"
 set "destinationFile=%destinationDir%%~nx0"
 
 if /I "%sourceFile%" NEQ "%destinationFile%" (
-	
 	echo.
-	echo Please use shortcut on Desktop next time.
-	echo Thank you
+	echo Thank you for using %ver%
+	echo.
+	echo.
+	echo The script will install cmd menu and shortcut after:
 	timeout 15 
     REM Check if the destination directory exists
     if not exist "%destinationDir%" (
@@ -214,6 +215,7 @@ set "psB=cscript //nologo "%vbsGetPrivileges%""
 set "timeoutA=timeout 2 /nobreak>nul"
 set title=title Power Every Day - ToolBox
 set color1=COLOR 0A
+
 
 REM Rest commands
 if %shortcutToLocation% == desktop (
@@ -1569,7 +1571,7 @@ if %ERRORLEVEL% == 8 goto %menu%
 
 if %ERRORLEVEL% == 9 goto m1a.x3.2.1.debloat
 if %ERRORLEVEL% == 10 goto %menu%
-if %ERRORLEVEL% == 11 %psP% "Get-AppxPackage | Select Name, InstallLocation | Out-GridView -PassThru | Remove-AppxPackage"
+if %ERRORLEVEL% == 11 %psP% "Get-AppxPackage | Select InstallLocation, Name, PackageFullName | Sort-Object InstallLocation, Name | Out-GridView -PassThru | Remove-AppxPackage"
 
 goto %menu%
 
@@ -1818,6 +1820,7 @@ goto %menu%
 :m1a.x01.restorePoint
 ::================================
 set menu=m1a.x01.restorePoint
+set "importStartmenu=0"
 
 if not exist "%PEDRecoveryFolder%\." mkdir "%PEDRecoveryFolder%"
 
@@ -1845,6 +1848,8 @@ set mm= %mm% "[ p ] WinKey backup "
 set mm= %mm% "[ p ] Start Menu layout backup "
 set mm= %mm% ""
 set mm= %mm% "[ p ] Open PED-Recovery Folder"
+set mm= %mm% ""
+set mm= %mm% "[ ] Import Start Menu layout"
 
 cmdMenuSel e370 %mm%    
 if %ERRORLEVEL% == 1 goto m1a.x02.testDiagnostic
@@ -1879,6 +1884,10 @@ if %ERRORLEVEL% == 19 (
 if %ERRORLEVEL% == 20 %psP% "Export-StartLayout -Path "%PEDRecoveryFolder%\StartMenuBackup.xml""
 if %ERRORLEVEL% == 21 goto %menu%
 if %ERRORLEVEL% == 22 start %windir%\explorer.exe "%PEDRecoveryFolder%"
+
+if %ERRORLEVEL% == 23 goto %menu%
+if %ERRORLEVEL% == 24 echo Import StartMenu layout -must be in Drive "C:\" && set /p "importStartmenu=Type Path : "
+if %ERRORLEVEL% == 24 %psP% "Import-StartLayout -LayoutPath "%importStartmenu%" -MountPath "C:\""
 
 
 goto %menu%
@@ -2497,7 +2506,7 @@ set mm= %mm% "[ ] Activete"
 set mm= %mm% "[ d ] DeActivete "
 set mm= %mm% "[ ] Change administrator Password"
 
-cmdMenuSel e370        
+cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x02.4.3.addAccount
 if %ERRORLEVEL% == 2 goto m1a.x02.4.AccountsUsers
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2522,7 +2531,7 @@ set /p "add1= Write account name: "
 set menuD1= 
 echo Account type :(%add1%)
 echo.
-set "add2==set "add1=""
+set "add2=set "add1=""
 
 set mm=
 set mm= %mm% "-|NEXT|- Local Users and Groups(Local) "
@@ -2545,7 +2554,7 @@ if %ERRORLEVEL% == 7 start /w /min net user %add1% /add && start /w /min net loc
 if %ERRORLEVEL% == 8 %add2% && goto m1a.x02.4.3.addAccount
 
 set "add1="
-goto m1a.x02.4.4.LocalUsersAndGroups
+goto %menu%
 
 :m1a.x02.4.4.LocalUsersAndGroups
 ::================================
@@ -2565,7 +2574,7 @@ set mm= %mm% "[ ] lusrmgr.msc"
 set mm= %mm% "[ ] Control panel/User accounts"
 set mm= %mm% "[ p ] User accounts panel 2"
 
-cmdMenuSel e370       
+cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 set menuBackName=Local Users and Groups(Local) && set menuBackGoto=m1a.x02.4.4.LocalUsersAndGroups && goto m1a.x1.systemCheck
 if %ERRORLEVEL% == 2 goto m1a.x02.4.AccountsUsers
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2629,6 +2638,8 @@ set mm= %mm% "[ ] Hard drive test: CrystalDiskInfoPortable"
 set mm= %mm% "[ ] Disk Defragmenter"
 set mm= %mm% "[ ] Check for errors"
 set mm= %mm% "[ ] Disk Management"
+set mm= %mm% ""
+set mm= %mm% "[p] PC Score"
         
 cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x02.testDiagnostic:
@@ -2648,6 +2659,9 @@ if %ERRORLEVEL% == 13 goto r4a.x0.4.CrystalDiskInfoPortable
 if %ERRORLEVEL% == 14 start dfrgui.exe
 if %ERRORLEVEL% == 15 start cmd /c "chkdsk && echo. && cmdMenuSel e370 "Press ENTER to continue..." "
 if %ERRORLEVEL% == 16 start diskmgmt.msc
+
+if %ERRORLEVEL% == 17 goto %menu%
+if %ERRORLEVEL% == 18 %psP% "Get-wmiobject -class Win32_WinSat; pause"
 
 goto %menu%
 
@@ -3205,10 +3219,10 @@ if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
-if %ERRORLEVEL% == 6 sfc /scannow
-if %ERRORLEVEL% == 7 dism.exe /Online /Cleanup-image /Restorehealth 
+if %ERRORLEVEL% == 6 start cmd /c sfc /scannow && pause
+if %ERRORLEVEL% == 7 start cmd /c dism.exe /Online /Cleanup-image /Restorehealth && pause
 if %ERRORLEVEL% == 8 goto %menu%
-if %ERRORLEVEL% == 9 sfc /scannow && dism.exe /Online /Cleanup-image /Restorehealth && sfc /scannow
+if %ERRORLEVEL% == 9 start cmd /c sfc /scannow && dism.exe /Online /Cleanup-image /Restorehealth && sfc /scannow && pause
 
 pause
 goto %menu%
@@ -3457,10 +3471,16 @@ set mm= %mm% "[ ] Cleaner: Glarysoft.GlaryUtilities"
 set mm= %mm% ""
 set mm= %mm% "--- MS Store: ---"
 set mm= %mm% "[ ] Note: Free Office Mobile"
+set mm= %mm% "[ ] Gadget: Widget Launcher"
 set mm= %mm% ""
 set mm= %mm% "--- Anti-virus-portable: ---"
 set mm= %mm% "[ ] Anti-virus: Norton"
 set mm= %mm% "[ ] Anti-virus: Kaspersky"
+set mm= %mm% "[ ] Anti-virus: Virus Total"
+set mm= %mm% "[ ] Anti-virus: EmsisoftEmergencyKit"
+set mm= %mm% "[ ] Anti-virus: HitmanPro_x64.exe"
+set mm= %mm% "[ ] Anti-virus: bitdefender_antivirus.exe"
+set mm= %mm% "[ ] Anti-virus: Malwarebytes_Anti-Malware_Portable"
 
 cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x3.1.install
@@ -3499,10 +3519,16 @@ if %ERRORLEVEL% == 30 (
 	start https://www.microsoft.com/store/productid/9WZDNCRFJBH3?ocid=pdpshare
 	goto %menu%
 )
-if %ERRORLEVEL% == 31 goto %menu%
+if %ERRORLEVEL% == 31 start https://www.microsoft.com/store/productId/9WZDNCRDQFBT
 if %ERRORLEVEL% == 32 goto %menu%
-if %ERRORLEVEL% == 33 (goto r4a.x5.01.norton)
-if %ERRORLEVEL% == 34 (goto r4a.x5.02.kaspersky)
+if %ERRORLEVEL% == 33 goto %menu%
+if %ERRORLEVEL% == 34 (goto r4a.x5.01.norton)
+if %ERRORLEVEL% == 35 (goto r4a.x5.02.kaspersky)
+if %ERRORLEVEL% == 36 start https://www.virustotal.com/static/bin/vtuploader2.2.exe
+if %ERRORLEVEL% == 37 start https://dl.emsisoft.com/EmsisoftEmergencyKit.exe
+if %ERRORLEVEL% == 38 start https://www.cleverbridge.com/747/cookie?affiliate=32138&redirectto=https%3A%2F%2Ffiles.surfright.nl%2FHitmanPro_x64.exe
+if %ERRORLEVEL% == 39 start https://download.bitdefender.com/windows/installer/en-us/bitdefender_antivirus.exe
+if %ERRORLEVEL% == 40 start https://downloads.malwarebytes.com/file/mb4_offline
 
 :m1a.x3.1.1.1.appInstaller
 cls
@@ -5411,12 +5437,18 @@ if %csuMM% == 1 (set mm= %mm% "[X] Configuration and StartUp settings"
 
 ::================================
 set durMM=1
-if %wuMM% == 0 (
-	if %sfcMM% == 0 (
-	if %uuMM% == 0 (
-	if %csuMM% == 0 ( set durMM=0
-)))) 
 
+if %esoMM% == 0 (
+if %oosu10MM% == 0 (
+if %rmMM% == 0 (
+if %tsoMM% == 0 (
+if %bbMM% == 0 (
+if %dcMM% == 0 (
+if %guMM% == 0 (
+if %wrcMM% == 0 (
+if %fdcMM% == 0 (
+	set durMM=0
+)))))))))
 
 :m2a.x12.OneClick-Menu2
 cmdMenuSel e370 %mm%
@@ -5425,10 +5457,8 @@ if %ERRORLEVEL% == 1 goto mainMenu
 if %ERRORLEVEL% == 2 goto %menu%
 if %ERRORLEVEL% == 3 goto %menu%
 
-if %ERRORLEVEL% == 4 if %durMM% == 1 (
-	goto m2a.x5.Oneclick.Configuration
-) else (
-	if not %optimizePStatus% == SelectAuto (goto m2a.x3.OneclickC) else (goto %menu%)
+if %ERRORLEVEL% == 4 (
+	if not %optimizePStatus% == SelectAuto (goto m2a.x5.Oneclick.Configuration) else (goto %menu%)
 )
 
 if %ERRORLEVEL% == 5 goto %menu%
@@ -5494,9 +5524,263 @@ set durMM=0
 set wuMM=0
 set sfcMM=0
 set uuMM=0
-set csuMM=0
+set csuMM=1
 
 goto %menu%
+
+
+:m2a.x5.Oneclick.Configuration
+::================================
+
+REM add timeout question do you want to Continue
+
+
+REM if exist file c1.txt goto .Start
+if exist c1.txt (goto m2a.x5.0.Oneclick.Start)
+
+REM create file c1.txt
+echo set esoMM=%esoMM% > c1.txt
+echo set oosu10MM=%oosu10MM% >> c1.txt
+echo set rmMM=%rmMM% >> c1.txt
+echo set tsoMM=%tsoMM% >> c1.txt
+echo set bbMM=%bbMM% >> c1.txt
+echo set dcMM=%dcMM% >> c1.txt
+echo set guMM=%guMM% >> c1.txt
+echo set wrcMM=%wrcMM% >> c1.txt
+echo set fdcMM=%fdcMM% >> c1.txt
+echo set optimizeP=%optimizeP% >> c1.txt
+echo set durMM=%durMM% >> c1.txt
+echo set wuMM=%wuMM% >> c1.txt
+echo set sfcMM=%sfcMM% >> c1.txt
+echo set uuMM=%uuMM% >> c1.txt
+echo set csuMM=%csuMM% >> c1.txt
+
+call :m1a.x01.0.timestamp
+echo.
+echo Start Time: %timestamp%
+echo.
+echo echo Start Time: %timestamp% >> c1.txt
+
+set startOneClick=1
+set startOneClickTwo=1
+call :m1a.x02.1.3.createShotcut
+set startOneClickTwo=0
+
+timeout 5 /nobreak>nul
+if %wuMM% == 0 (
+if %sfcMM% == 0 (
+goto m2a.x5.0.Oneclick.Start
+)
+)
+echo RESTARTING after:
+timeout 10
+Shutdown -r -f -t 00
+exit
+REM t1
+
+::switches
+:m2a.x5.0.Oneclick.Start
+
+if not exist cc1.bat (
+copy c1.txt cc1.bat
+)
+call cc1.bat
+
+if not exist c2.txt (
+REM ================================
+	if %wuMM% == 1 (
+	echo ********** Windows Update
+	REM =================
+	set startOneClick=1
+	call :m2a.x5.1.Oneclick51
+	set startOneClick=0
+	)
+)
+if not exist c3.txt (
+REM ================================
+	if %sfcMM% == 1 (
+	echo ********** sfc /scannow and dism /Restorehealth
+	REM =================
+	REM set startOneClick=1
+	call :m2a.x5.2.Oneclick52
+	REM set startOneClick=0
+	)
+)
+if not exist c4.txt (
+REM ================================
+	if %uuMM% == 1 (
+	echo ********** Uninstall and Update apps
+	REM =================
+	set startOneClick=1
+	call :m2a.x5.3.Oneclick53
+	set startOneClick=0
+	)
+)
+if not exist c5.txt (
+REM ================================
+	if %csuMM% == 1 (
+	echo ********** Configuration and StartUp settings
+	REM =================
+	set startOneClick=1
+	call :m2a.x5.4.Oneclick54
+	set startOneClick=0
+	) else (if %durMM% == 1 (
+		set startOneClick=1
+		call :m2a.x5.4.Oneclick54
+		set startOneClick=0
+	)
+	)
+)
+
+::END
+if exist c2.txt (del c2.txt)
+if exist c3.txt (del c3.txt)
+if exist c4.txt (del c4.txt)
+if exist c5.txt (del c5.txt)
+if exist c1.txt (del c1.txt)
+if exist cc1.bat (del cc1.bat)
+
+:m2a.x5.5.Oneclick.Message
+
+REM DELETE SHORTCUT
+set startOneClick=1
+call :m1a.x02.1.3.createShotcut
+set startOneClick=0
+
+if not exist "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\OneClickDeep.lnk" (
+echo OK: shortcut is been deleted
+) else ( echo Error: shortcit is still )
+
+call :m1a.x01.0.timestamp
+echo.
+echo END Time: %timestamp%
+echo.
+REM message complete:
+
+REM Set your one-line message here
+set "message=Hello! One click Deep repair is done."
+
+REM Show the pop-up message using VBScript
+echo msgbox "%message%">"%temp%\popup_message.vbs"
+cscript /nologo "%temp%\popup_message.vbs"
+
+REM Clean up the temporary VBScript file
+del "%temp%\popup_message.vbs" /q
+
+goto mainMenu
+::===================================================
+
+REM Funtions:
+:m2a.x5.1.Oneclick51
+REM c2.txt
+
+powershell.exe -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'PED-Restore Point1' -RestorePointType 'MODIFY_SETTINGS'"
+
+call :m1a.x02.6.1.speedTestCheckInternetConnection
+
+call :m1a.x1.2.1.checkForPS-Module
+timeout 2 /nobreak>c2.txt
+ REM create file c2.txt
+
+call :m1a.x1.2.2.PS-ModuleInstallAll
+
+echo RESTARTING after:
+timeout 10
+Shutdown -r -f -t 00
+exit
+REM t2
+
+
+:m2a.x5.2.Oneclick52
+REM c3.txt
+
+call :m1a.x02.6.1.speedTestCheckInternetConnection
+chkdsk
+sfc /scannow
+dism.exe /Online /Cleanup-image /Restorehealth
+sfc /scannow
+REM create file c3.txt
+timeout 5 /nobreak>c3.txt
+
+echo RESTARTING after:
+timeout 10
+Shutdown -r -f -t 00
+exit
+
+:m2a.x5.3.Oneclick53
+REM c4.txt
+
+powershell.exe -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'PED-Restore Point2' -RestorePointType 'MODIFY_SETTINGS'"
+
+call :r4a.x3.1.RevoUninstallerPortable
+call :m1a.x3.2.1.0.delete_Bloatware
+
+call :m1a.x02.6.1.speedTestCheckInternetConnection
+
+call :r3a.x11.3.1.downLoadF-3.1.WingetScript
+
+timeout 2 /nobreak>nul
+winget upgrade -h --all
+
+REM create file c4.txt
+timeout 2 /nobreak>c4.txt
+
+echo RESTARTING after:
+timeout 10
+Shutdown -r -f -t 00
+exit
+
+
+:m2a.x5.4.Oneclick54
+REM c5.txt
+
+call :m1a.x02.6.1.speedTestCheckInternetConnection
+taskkill /f /IM explorer.exe
+
+
+::repair
+
+set startOneClick=1
+set startOneClickTwo=1
+::copy c1.txt cc1.bat
+::call cc1.bat
+call :m2a.x3.OneclickC
+::call :m2a.x2.2.OneclickFULL
+
+call :m1a.x4.3.3.2.winExplorerRunHistory
+
+if %csuMM% == 1 (
+set thisPc=1
+call :m1a.x4.3.3.1.winExplorerThisPC
+call :m1a.x4.3.3.2.winExplorerRunHistory
+
+REM settings updates
+set startOneClick=1
+SET AutoUpdateN=2
+call :m1a.x7.1.1.1.winUpdateModCode
+
+call :m1a.x7.1.4.1.WinUpdadePause
+
+REM Ram reduce
+call :m1a.x7.5.1.ramReducerApply
+::start explorer.exe
+timeout 1
+REM Start up
+call :r4a.x0.3.2.startupManagerGlaryUtility
+
+)
+
+REM create file c5.txt
+timeout 2 /nobreak>c5.txt
+
+echo RESTARTING after:
+timeout 10
+Shutdown -r -f -t 00
+exit
+REM t5
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :m2a.x3.OneclickC
 cls
@@ -5640,223 +5924,6 @@ echo.
 pause
 goto mainMenu
 
-
-:m2a.x5.Oneclick.Configuration
-::================================
-
-REM add timeout question do you want to Continue
-
-
-REM if exist file c1.txt goto .Start
-if exist c1.txt (goto m2a.x5.0.Oneclick.Start)
-
-REM create file c1.txt
-echo set esoMM=%esoMM% > c1.txt
-echo set oosu10MM=%oosu10MM% >> c1.txt
-echo set rmMM=%rmMM% >> c1.txt
-echo set tsoMM=%tsoMM% >> c1.txt
-echo set bbMM=%bbMM% >> c1.txt
-echo set dcMM=%dcMM% >> c1.txt
-echo set guMM=%guMM% >> c1.txt
-echo set wrcMM=%wrcMM% >> c1.txt
-echo set fdcMM=%fdcMM% >> c1.txt
-echo set optimizeP=%optimizeP% >> c1.txt
-
-echo set wuMM=%wuMM% >> c1.txt
-echo set sfcMM=%sfcMM% >> c1.txt
-echo set uuMM=%uuMM% >> c1.txt
-echo set csuMM=%csuMM% >> c1.txt
-
-set startOneClick=1
-set startOneClickTwo=1
-call :m1a.x02.1.3.createShotcut
-set startOneClickTwo=0
-
-timeout 5 /nobreak>nul
-if %wuMM% == 0 (
-if %sfcMM% == 0 (
-goto m2a.x5.0.Oneclick.Start
-)
-)
-Shutdown -r -f -t 00
-exit
-REM t1
-
-::switches
-:m2a.x5.0.Oneclick.Start
-
-if not exist cc1.bat (
-copy c1.txt cc1.bat
-)
-call cc1.bat
-
-if not exist c2.txt (
-REM ================================
-	if %wuMM% == 1 (
-	echo ********** Windows Update
-	REM =================
-	set startOneClick=1
-	call :m2a.x5.1.Oneclick51
-	set startOneClick=0
-	)
-)
-if not exist c3.txt (
-REM ================================
-	if %sfcMM% == 1 (
-	echo ********** sfc /scannow and dism /Restorehealth
-	REM =================
-	REM set startOneClick=1
-	call :m2a.x5.2.Oneclick52
-	REM set startOneClick=0
-	)
-)
-if not exist c4.txt (
-REM ================================
-	if %uuMM% == 1 (
-	echo ********** Uninstall and Update apps
-	REM =================
-	set startOneClick=1
-	call :m2a.x5.3.Oneclick53
-	set startOneClick=0
-	)
-)
-if not exist c5.txt (
-REM ================================
-	if %csuMM% == 1 (
-	echo ********** Configuration and StartUp settings
-	REM =================
-	set startOneClick=1
-	call :m2a.x5.4.Oneclick54
-	set startOneClick=0
-	)
-)
-
-::END
-if exist c2.txt (del c2.txt)
-if exist c3.txt (del c3.txt)
-if exist c4.txt (del c4.txt)
-if exist c5.txt (del c5.txt)
-if exist c1.txt (del c1.txt)
-if exist cc1.bat (del cc1.bat)
-
-:m2a.x5.5.Oneclick.Message
-
-REM DELETE SHORTCUT
-set startOneClick=1
-call :m1a.x02.1.3.createShotcut
-set startOneClick=0
-
-if not exist "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\OneClickDeep.lnk" (
-echo OK: shortcut is been deleted
-) else ( echo Error: shortcit is still )
-
-REM message complete:
-
-REM Set your one-line message here
-set "message=Hello! One click Deep repair is done."
-
-REM Show the pop-up message using VBScript
-echo msgbox "%message%">"%temp%\popup_message.vbs"
-cscript /nologo "%temp%\popup_message.vbs"
-
-REM Clean up the temporary VBScript file
-del "%temp%\popup_message.vbs" /q
-
-goto mainMenu
-::===================================================
-
-REM Funtions:
-:m2a.x5.1.Oneclick51
-REM c2.txt
-
-powershell.exe -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'PED-Restore Point1' -RestorePointType 'MODIFY_SETTINGS'"
-
-call :m1a.x02.6.1.speedTestCheckInternetConnection
-
-call :m1a.x1.2.1.checkForPS-Module
-timeout 2 /nobreak>c2.txt
- REM create file c2.txt
-
-call :m1a.x1.2.2.PS-ModuleInstallAll
-timeout 10 /nobreak>nul
-Shutdown -r -f -t 00
-exit
-REM t2
-
-
-:m2a.x5.2.Oneclick52
-REM c3.txt
-
-call :m1a.x02.6.1.speedTestCheckInternetConnection
-chkdsk
-sfc /scannow
-dism.exe /Online /Cleanup-image /Restorehealth
-sfc /scannow
-REM create file c3.txt
-timeout 5 /nobreak>c3.txt
-
-Shutdown -r -f -t 00
-exit
-
-:m2a.x5.3.Oneclick53
-REM c4.txt
-
-powershell.exe -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'PED-Restore Point2' -RestorePointType 'MODIFY_SETTINGS'"
-
-call :r4a.x3.1.RevoUninstallerPortable
-call :m1a.x3.2.1.0.delete_Bloatware
-
-call :m1a.x02.6.1.speedTestCheckInternetConnection
-
-call :r3a.x11.3.1.downLoadF-3.1.WingetScript
-
-timeout 2 /nobreak>nul
-winget upgrade -h --all
-
-REM create file c4.txt
-timeout 2 /nobreak>c4.txt
-
-Shutdown -r -f -t 00
-exit
-
-
-:m2a.x5.4.Oneclick54
-REM c5.txt
-
-call :m1a.x02.6.1.speedTestCheckInternetConnection
-taskkill /f /IM explorer.exe
-set thisPc=1
-call :m1a.x4.3.3.1.winExplorerThisPC
-call :m1a.x4.3.3.2.winExplorerRunHistory
-
-::repair
-
-set startOneClick=1
-set startOneClickTwo=1
-::copy c1.txt cc1.bat
-::call cc1.bat
-call :m2a.x3.OneclickC
-::call :m2a.x2.2.OneclickFULL
-
-REM settings updates
-set startOneClick=1
-SET AutoUpdateN=2
-call :m1a.x7.1.1.1.winUpdateModCode
-
-call :m1a.x7.1.4.1.WinUpdadePause
-
-REM Ram reduce
-call :m1a.x7.5.1.ramReducerApply
-::start explorer.exe
-timeout 1
-REM Start up
-call :r4a.x0.3.2.startupManagerGlaryUtility
-REM create file c5.txt
-timeout 2 /nobreak>c5.txt
-
-Shutdown -r -f -t 00
-exit
-REM t5
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
