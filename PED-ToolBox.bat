@@ -19,7 +19,7 @@ echo.
 :m0a.x0.Version
 ::================================
 :: Set version
-set "versionTool=PED-ToolBox-1.270.230824"
+set "versionTool=PED-ToolBox-1.272.230910"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -289,7 +289,7 @@ call :r3a.x11.0.2.downLoadF-0.2.advancedrun-x64
 set "loc=%destinationPD%\Data\0.Drivers\0.2.advancedrun-x64"
 
 echo 1 > "%loc%\e1.txt"
-"%loc%\AdvancedRun.exe" /Clear /EXEFilename "%destinationMain%\PED-ToolBox.bat" /RunAs 8 /Run
+"%loc%\AdvancedRun.exe" /Clear /EXEFilename "%destinationMain%\%~nx0" /RunAs 8 /Run
 exit
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -408,10 +408,10 @@ set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 
-set "fileLocation=SDIO_1.12.13.754.zip"
+set "fileLocation=SDIO_1.12.15.756.zip"
 set "isItZip=y"
 
-set "fileLinkID=https://www.glenn.delahoy.com/downloads/sdio/SDIO_1.12.13.754.zip"
+set "fileLinkID=https://www.glenn.delahoy.com/downloads/sdio/SDIO_1.12.15.756.zip"
 call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
@@ -583,10 +583,10 @@ set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 
-set "fileLocation=Optimizer-15.4.exe"
+set "fileLocation=Optimizer-15.8.exe"
 set isItZip=n
 
-set "fileLinkID=https://github.com/hellzerg/optimizer/releases/download/15.4/Optimizer-15.4.exe"
+set "fileLinkID=https://github.com/hellzerg/optimizer/releases/download/15.8/Optimizer-15.8.exe"
 call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
@@ -768,8 +768,8 @@ set "destination=%destinationPD%\%createFolder%"
 if not exist "%destination%\." mkdir "%destination%"
 
 
-set "fileLocation=WRCFree_11.0.2.712.zip"
-set "fileLinkID=https://downloads.wisecleaner.com/soft/WRCFree_11.0.2.712.zip"
+set "fileLocation=WRCFree_11.1.1.716.zip"
+set "fileLinkID=https://downloads.wisecleaner.com/soft/WRCFree_11.1.1.716.zip"
 set isItZip=y
 ::https://www.wisecleaner.com/download.html
 call :r3a.x01.0.downloadFunction
@@ -1452,6 +1452,7 @@ if not exist "%startFiles%" (
 
 if %startOneClick% == 1 (
 	call :r4a.x2.1.1.BleachbitOneClick
+	echo.
 	exit /b
 ) else (
 	echo Please wait bleachbit will start after 20 seconds ...
@@ -2397,8 +2398,19 @@ set menu=m1a.x02.3.UserAccountControl
 set "menuA= Step 0 : Test and Diagnostic:"
 set "menuB= User account control:"
 call :mStyle
+set mm=
+set mm= %mm% "-|NEXT|- Accounts and Users:"
+set mm= %mm% "-|BACK|- Step 0 : Test and Diagnostic:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.Never notify"
+set mm= %mm% "[ ] 1.Notify me only when app try to make changes(do not dim my desktop)"
+set mm= %mm% "[ ] 1.Notify me only when app try to make changes(default)"
+set mm= %mm% "[ d ] 1.Always notify"
 
-cmdMenuSel e370 "-|NEXT|- Accounts and Users:" "-|BACK|- Step 0 : Test and Diagnostic:" "-|MAIN MENU|- " "========== Select an option ==========" "" "[ p ] 1.Never notify" "[ ] 1.Notify me only when app try to make changes(do not dim my desktop)" "[ ] 1.Notify me only when app try to make changes(default)" "[ d ] 1.Always notify" 
+
+cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x02.4.AccountsUsers
 if %ERRORLEVEL% == 2 goto m1a.x02.testDiagnostic:
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2423,8 +2435,18 @@ set menu=m1a.x02.4.AccountsUsers
 set "menuA= Step 0 : Test and Diagnostic:"
 set "menuB= Accounts and Users:"
 call :mStyle
+set mm= 
+set mm= %mm% "-|NEXT|- Control Panel:"
+set mm= %mm% "-|BACK|- Programs"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[+] 1.Account Password Reset"
+set mm= %mm% "[+] 2.Activate Administrator account"
+set mm= %mm% "[+] 3.add account"
+set mm= %mm% "[+] 4.Local Users and Groups(Local)"
 
-cmdMenuSel e370 "-|NEXT|- Control Panel:" "-|BACK|- Programs" "-|MAIN MENU|- " "========== Select an option ==========" "" "[+] 1.Account Password Reset" "[+] 2.Activate Administrator account" "[+] 3.add account" "[+] 4.Local Users and Groups(Local)"
+cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x02.5.controlPanelView
 if %ERRORLEVEL% == 2 goto r4a.xPrograms
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2440,10 +2462,17 @@ if %ERRORLEVEL% == 9 goto m1a.x02.4.4.LocalUsersAndGroups
 set "menuD2=echo."
 set "menuD2=%menuD2% && echo ===================================================="
 set "menuD2=%menuD2% && echo Description:"
+set "menuD2=%menuD2% && echo.
+set "menuD2=%menuD2% && echo AccountPasswordReset [yes]:"
 set "menuD2=%menuD2% && echo -System CMD Boot"
 set "menuD2=%menuD2% && echo copy c:\windows\system32\sethc.exe c:\"
 set "menuD2=%menuD2% && echo copy c:\windows\system32\cmd.exe c:\windows\system32\sethc.exe"
 set "menuD2=%menuD2% && echo -shift 5 times:"
+set "menuD2=%menuD2% && echo."
+set "menuD2=%menuD2% && echo AccountPasswordReset [r]-reverse:"
+set "menuD2=%menuD2% && echo -System CMD Boot"
+set "menuD2=%menuD2% && echo copy c:\windows\system32\sethc1.exe c:\windows\system32\sethc.exe
+set "menuD2=%menuD2% && echo AccountPasswordResetReverse complete:"
 set "menuD2=%menuD2% && echo."
 set "menuD2=%menuD2% && echo ===================================================="
 set menuA= Accounts and Users:
@@ -2461,22 +2490,40 @@ set menuC=mStyleA
 
 echo Are you sure you want to continue?
 
-set /p "add1=Type [yes] or [no]: "
+set /p "add1=Type [yes], [no] or [r]-reverse: "
 
 if "%add1%"=="yes" (
 	set "add1="
 	goto m1a.x02.4.1.1.AccountPasswordResetYes
-) else (
+) else (if "%add1%"=="r" (
+	set "add1="
+	goto m1a.x02.4.1.2.AccountPasswordResetReverse
+	)
+	)
 REM Clear the variable
 set "add1="
 pause
 goto %menu%
-)
+
 :m1a.x02.4.1.1.AccountPasswordResetYes
 ::================================
-copy c:\windows\system32\sethc.exe c:\
+if not exist "c:\windows\system32\sethc1.exe" (
+echo backup Creating...
+copy c:\windows\system32\sethc.exe c:\windows\system32\sethc1.exe
+if exist "c:\windows\system32\sethc1.exe" (echo backup complete!)
+) else (echo backup exist!)
+
 copy c:\windows\system32\cmd.exe c:\windows\system32\sethc.exe
 echo Go to account home screen and PRESS shift 5 times:
+pause
+goto %menu%
+
+:m1a.x02.4.1.2.AccountPasswordResetReverse
+::================================
+if exist "c:\windows\system32\sethc1.exe" (
+copy c:\windows\system32\sethc1.exe c:\windows\system32\sethc.exe
+echo AccountPasswordResetReverse complete:
+) else (echo sethc1.exe does not exist)
 pause
 goto %menu%
 
@@ -2493,8 +2540,8 @@ set "menuB= 2. Active Administrator:"
 
 call :mStyle
 
-set menuD1= 
-set menuD2= 
+set "menuD1= "
+set "menuD2= "
 
 set mm=
 set mm= %mm% "-|NEXT|- Add Account"
@@ -2502,9 +2549,10 @@ set mm= %mm% "-|BACK|- Accounts and Users"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
-set mm= %mm% "[ ] Activete"
-set mm= %mm% "[ d ] DeActivete "
-set mm= %mm% "[ ] Change administrator Password"
+set mm= %mm% "1.[ p ] Activete"
+set mm= %mm% "1.[ d ] DeActivete "
+set mm= %mm% ""
+set mm= %mm% "2.[ p ] Change administrator Password"
 
 cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x02.4.3.addAccount
@@ -2514,7 +2562,10 @@ if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 if %ERRORLEVEL% == 6 net user administrator /active:yes
 if %ERRORLEVEL% == 7 net user administrator /active:no
-if %ERRORLEVEL% == 8 net user administrator *
+if %ERRORLEVEL% == 8 goto %menu%
+if %ERRORLEVEL% == 9 net user administrator *
+
+goto %menu%
 
 :m1a.x02.4.3.addAccount
 ::================================
@@ -2539,9 +2590,10 @@ set mm= %mm% "-|BACK|- Accounts and Users"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
-set mm= %mm% "user"
-set mm= %mm% "administrator"
-set mm= %mm% "Write account name again"
+set mm= %mm% "[ ] user"
+set mm= %mm% "[ ] administrator"
+set mm= %mm% ""
+set mm= %mm% "[ ] Write account name again"
 
 cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 %add2% && goto m1a.x02.4.4.LocalUsersAndGroups
@@ -2551,7 +2603,8 @@ if %ERRORLEVEL% == 4 %add2% && goto %menu%
 if %ERRORLEVEL% == 5 %add2% && goto %menu%
 if %ERRORLEVEL% == 6 start /w net user %add1% /add
 if %ERRORLEVEL% == 7 start /w /min net user %add1% /add && start /w /min net localgroup Administrators %add1% /add && start /w /min net localgroup Users %add1% /remove
-if %ERRORLEVEL% == 8 %add2% && goto m1a.x02.4.3.addAccount
+if %ERRORLEVEL% == 8 %add2% && goto %menu%
+if %ERRORLEVEL% == 9 %add2% && goto m1a.x02.4.3.addAccount
 
 set "add1="
 goto %menu%
