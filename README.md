@@ -1,10 +1,10 @@
 # PEDToolBox
 #### Windows 10 optimization , Speed up windows 10 , Repair windows 10
-#### Windows 10 -Speed Up , Repair, Update, Optimize, Clean Junk, Download Apps, Uninstaller, Deployed Bloatware, and more
+#### Windows 11 optimization , Speed up windows 11 , Repair windows 11
+#### Windows 10 and 11 -Speed Up , Repair, Update, Optimize, Clean Junk, Download Apps, Uninstaller, Deployed Bloatware, and more
 
 
-- This is first publisher releases.
-- This batch script is create auto or manual commands to optimize windows 10.
+- This batch script create auto or manual commands to optimize windows 10 and 11.
 
 ## Overview
     "[+] ------ : Create a restore point:"
@@ -26,26 +26,26 @@
 - Use on your own risk .
 - On my test machines working well ,but is still test.
 - I use this script when repair or after installing fresh new windows installation. 
-## Enjoy and if you find any bug please write on Issues section.
+## Enjoy and if you find any bug please write on Issues section or email on :pedtoolbox@gmail.com.
 
 
 ## PowerShell Link 
 
-    iex(irm t.ly/ped)
+    iex(irm bit.ly/pedboxpc)
 #### or
 
-    irm t.ly/ped | iex
+    irm bit.ly/pedboxpc | iex
 
 
 ## CMD or RUN Link  
 
-    powershell iex(irm t.ly/ped)
+    powershell iex(irm bit.ly/pedboxpc)
 #### or
 
-    cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm t.ly/ped)"
+    cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm bit.ly/pedboxpc)"
 #### or
 
-    cmd.exe /c powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://t.ly/ped'))""
+    cmd.exe /c powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://bit.ly/pedboxpc'))""
 #### or
 
-    powershell .\p.exe(irm t.ly/pedexe -o p.exe)
+    powershell .\p.cmd(irm bit.ly/pedbox -o p.cmd)
