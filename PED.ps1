@@ -1,7 +1,7 @@
-#ver-1.0.2.2
-#21/08/23/16:28
-$fileLinkID = "https://t.ly/pedexe"
-$nameFile = "PED-ToolBox.exe"
+#ver-1.0.2.3
+#06/11/23/16:28
+$fileLinkID = "https://bit.ly/pedbox"
+$nameFile = "PED-ToolBox.bat"
 #$filePath = Join-Path -Path $PWD -ChildPath $nameFile
 $filePath = Join-Path -Path $env:TEMP -ChildPath $nameFile
 

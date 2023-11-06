@@ -1,14 +1,46 @@
-
+::[Bat To Exe Converter]
+::
+::YAwzoRdxOk+EWAjk
+::fBw5plQjdCyDJGyX8VAjFAtdSRaPAES0A5EO4f7+08+JtkgPQOM2dY7VzoieJeQH5Urod5k16ikUusoPBy5IQkP7ICw7p2hLsViMNMiSoDPyQk2F6hhiJDYn0C3ZjyRb
+::YAwzuBVtJxjWCl3EqQJgSA==
+::ZR4luwNxJguZRRnk
+::Yhs/ulQjdF+5
+::cxAkpRVqdFKZSDk=
+::cBs/ulQjdF65
+::ZR41oxFsdFKZSDk=
+::eBoioBt6dFKZSDk=
+::cRo6pxp7LAbNWATEpSI=
+::egkzugNsPRvcWATEpSI=
+::dAsiuh18IRvcCxnZtBJQ
+::cRYluBh/LU+EWAnk
+::YxY4rhs+aU+IeA==
+::cxY6rQJ7JhzQF1fEqQJhZkkaG1bMbAs=
+::ZQ05rAF9IBncCkqN+0xwdVsFAlbMazn0VtU=
+::ZQ05rAF9IAHYFVzEqQIADT8ZeAuNMEm1HtU=
+::eg0/rx1wNQPfEVWB+kM9LVsJDDSnGCaOCboQyufjjw==
+::fBEirQZwNQPfEVWB+kM9LVsJDDSnGCaOCboQyufjjw==
+::cRolqwZ3JBvQF1fEqQIADT8ZeAuNMEm1HtU=
+::dhA7uBVwLU+EWGmh0A8EJxRYbguaXA==
+::YQ03rBFzNR3SWATExGcUZS9bQwigM3Pa
+::dhAmsQZ3MwfNWATE100pOhJTRBDi
+::ZQ0/vhVqMQ3MEVWAtB9wSA==
+::Zg8zqx1/OA3MEVWAtB9wSA==
+::dhA7pRFwIByZRRm00WZ9HBRbQCaNJAs=
+::Zh4grVQjdCyDJGyX8VAjFAtdSRaPAES0A5EO4f7+08+JtkgPQOM2dY7VzoieJeQH5Urod5k16n9Cnfc8KT9sXFz8PEFk5D8MlFCgFPusliusfkeG6kk/Aytxn2aw
+::YB416Ek+ZG8=
+::
+::
+::978f952a14a936cc963da21a135fa983
 @echo off
 %extd% /setconsoletransparency 92
 cls
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: -short link in PS: 
-:: irm t.ly/ped | iex
-:: iex(irm t.ly/ped)
+:: irm bit.ly/pedboxpc | iex
+:: iex(irm bit.ly/pedboxpc)
 
 :: -short link in CMD or RUN: 
-:: powershell iex(irm t.ly/ped)
+:: powershell iex(irm bit.ly/pedboxpc)
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :m0a.x
 ::================================
@@ -19,7 +51,7 @@ echo.
 :m0a.x0.Version
 ::================================
 :: Set version
-set "versionTool=PED-ToolBox-1.272.230910"
+set "versionTool=PED-ToolBox-1.275.231106"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -88,13 +120,8 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
 		)
 	)
 	
-    ::REM Create a shortcut on the desktop
-	echo.
-	echo Creating desktop shortcut...
-	echo.
-	set "shortcutToLocation=desktop"
-	call :m0a.x12.mainCommands
-	call :m1a.x02.1.3.createShotcut
+
+
     
     REM Start the new version and close this one
     start "" "%destinationFile%"
@@ -102,7 +129,13 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
     exit
 )
 endlocal
-
+    ::REM Create a shortcut on the desktop
+	::REM echo.
+	::REM echo Creating desktop shortcut...
+	::REM echo.
+	::REM set "shortcutToLocation=desktop"
+	::REM call :m0a.x12.mainCommands
+	::REM call :m1a.x02.1.3.createShotcut
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :m0a.x02.getAdmin
 ::================================
@@ -210,7 +243,7 @@ set "startOneClick=0"
 set "startOneClickTwo=0"
 set "psP=Powershell.exe Set-ExecutionPolicy Bypass -Scope Process -Force;"
 set "psC=powershell.exe -ExecutionPolicy Bypass -Command"
-set "psA=powershell iex(irm t.ly/pedst -o p.log)"
+set "psA=powershell iex(irm bit.ly/pedlog -o p.log)"
 set "psB=cscript //nologo "%vbsGetPrivileges%""
 set "timeoutA=timeout 2 /nobreak>nul"
 set title=title Power Every Day - ToolBox
@@ -884,7 +917,7 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=cmdMenuSel.exe"
 set isItZip=n
 
-set "fileLinkID=https://t.ly/pedmenu
+set "fileLinkID=https://bit.ly/pedcmdmenu"
 ::Download file
 call :r3a.x01.0.downloadFunction
 ::====
@@ -902,7 +935,7 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=shell32_337.ico"
 set isItZip=n
 
-set "fileLinkID=https://t.ly/pedico"
+set "fileLinkID=https://bit.ly/pedboxicon"
 
 ::Download file
 call :r3a.x01.0.downloadFunction
@@ -1475,6 +1508,7 @@ set "startConsoleFile=%destinationPD%\%directoryFiles%\%consoleFile%"
 start /w /min cmd /c "echo off && for /f "usebackq skip=%lineNo% tokens=1,2 delims== " %%G IN ("%startConfigFile%") DO (if "%%H"=="True" (Echo.%%G | findstr /C:".">nul && (if not errorlevel 1 (%startConsoleFile% -c %%G))))"
 
 ::start /w /min cmd /c "echo off && FOR /F "usebackq skip=%lineNo% tokens=1 delims= " %%G IN ("%startConfigFile%") DO (Echo.%%G | findstr /C:".">nul && (%startConsoleFile% -c %%G))"
+goto :eof
 exit /b
 
 :r4a.x2.2.DiskCleanup
@@ -1514,7 +1548,7 @@ goto %menu%
 ::================================
 if %startOneClick% == 0 (cls)
 set "downloadFiles=:r3a.x11.2.5.downLoadF-2.5.WRCFree"
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.5.WRCFree\WRCFree_11.0.2.712"
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.5.WRCFree\WRCFree_11.1.1.716"
 set "nameFiles=WiseRegCleaner.exe"
 
 ::Function
@@ -2239,7 +2273,7 @@ set "iconN=shell32_337.ico"
 ::Function
 set wd=%destination%
 rem if %shortcutToLocation% == desktop (
-rem set "TARGET=C:\Windows\System32\cmd.exe /c powershell -command ""Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm http://t.ly/ped)"""
+rem set "TARGET=C:\Windows\System32\cmd.exe /c powershell -command ""Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm http://bit.ly/pedbox)"""
 rem ) else (
 set TARGET=%destination%\%startBoot%
 rem )
@@ -3116,6 +3150,12 @@ if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x1.2.1.checkForPS-Module
 ::================================
+call :r4a.x0.5.1.startUpdates
+%psP% "Install-Module PSWindowsUpdate -Force"
+%timeoutA%
+exit /b
+
+::not work
 ::set menu=m1a.x1.2.1.checkForPS-Module
 call :r4a.x0.5.1.startUpdates
 set "moduleName=PSWindowsUpdate"
@@ -7726,7 +7766,7 @@ REM Your EXTRACT code starts here
 # StartExtractD51
 @echo off
 COLOR 0A
-set "ver=PED ToolBox - CpuRam V1.21.23.08.20"
+set "ver=PED ToolBox - CpuRam V1.22.231106"
 title	%ver%
 mode con: cols=37 lines=4
 
@@ -7735,7 +7775,7 @@ powershell.exe -ExecutionPolicy Bypass -Command ^
 $cpuRam = ''; ^
 while (^!$cpuRam) { ^^
     $cpuPro = (Get-Process).Count; ^
-	$memoryTotal = '{0:N0}' -f ((Get-WMIObject Win32_PhysicalMemory ^| Measure-Object Capacity -Sum).sum/1048576); ^
+	$memoryTotal = '{0:N0}' -f [math]::Round((Get-CimInstance -ClassName Win32_ComputerSystem ^| Select-Object TotalPhysicalMemory).TotalPhysicalMemory / 1MB, 0); ^
 	$memoryAvailable = '{0:N0}' -f [math]::Round((wmic OS get FreePhysicalMemory)[2] / 1024); ^
 	$memoryInUse = '{0:N0}' -f ($memoryTotal-$memoryAvailable); ^
 	cls;^
@@ -7796,7 +7836,7 @@ REM # StartExtractD6
 cls
 COLOR 0A
 mode con: cols=52 lines=27
-set "ver=PED ToolBox - BootTimer V1.30.230608.3"
+set "ver=PED ToolBox - BootTimer V1.33.0.1.231105"
 cd C:\ProgramData\PEDToolBox\pedDownload\files\bootTimer
 title	%ver%
 echo 	[%ver%]
@@ -7820,7 +7860,7 @@ $virtualMemory = systeminfo; ^
 $systemBootTime = ((Get-CimInstance Win32_OperatingSystem).LastBootUpTime).ToString('MM/dd/yyyy, HH:mm:ss'); ^
 $cpuPro = (Get-Process).Count; ^
 $cpuThreads = (Get-Process ^| Select-Object -ExpandProperty Threads).Count; ^
-$memoryTotal = '{0:N0}' -f ((Get-WMIObject Win32_PhysicalMemory ^| Measure-Object Capacity -Sum).sum/1048576); ^
+$memoryTotal = '{0:N0}' -f [math]::Round((Get-CimInstance -ClassName Win32_ComputerSystem ^| Select-Object TotalPhysicalMemory).TotalPhysicalMemory / 1MB, 0); ^
 $memoryAvailable = '{0:N0}' -f [math]::Round((wmic OS get FreePhysicalMemory)[2] / 1024); ^
 $memoryInUse = '{0:N0}' -f ($memoryTotal-$memoryAvailable); ^
 
@@ -7925,7 +7965,7 @@ cls
 COLOR 0A
 
 if not "%1"=="min" start /min cmd /c %0 min & exit/b
-set "ver=PED-Toolbox-BootTimer-V1.31.230802"
+set "ver=PED ToolBox - BootTimer V1.33.0.2.231105"
 cd C:\ProgramData\PEDToolBox\pedDownload\files\bootTimer
 title	%ver%
 echo 	[%ver%]
@@ -7949,7 +7989,7 @@ $virtualMemory = systeminfo; ^
 $systemBootTime = ((Get-CimInstance Win32_OperatingSystem).LastBootUpTime).ToString('MM/dd/yyyy, HH:mm:ss'); ^
 $cpuPro = (Get-Process).Count; ^
 $cpuThreads = (Get-Process ^| Select-Object -ExpandProperty Threads).Count; ^
-$memoryTotal = '{0:N0}' -f ((Get-WMIObject Win32_PhysicalMemory ^| Measure-Object Capacity -Sum).sum/1048576); ^
+$memoryTotal = '{0:N0}' -f [math]::Round((Get-CimInstance -ClassName Win32_ComputerSystem ^| Select-Object TotalPhysicalMemory).TotalPhysicalMemory / 1MB, 0); ^
 $memoryAvailable = '{0:N0}' -f [math]::Round((wmic OS get FreePhysicalMemory)[2] / 1024); ^
 $memoryInUse = '{0:N0}' -f ($memoryTotal-$memoryAvailable); ^
 
@@ -8385,7 +8425,7 @@ REM Create 15-11-2021 13:52:45
 
 REM PED Folder
 REM https://drive.google.com/drive/folders/1gOiYbhFK026D9MHRrErm_BhWvAHsRM2z
-REM t.ly/pedfolder
+REM https://bit.ly/pedfolder
 
 REM DigiCertUtil
 REM https://digicert.com/StaticFiles/DigiCertUtil.zip
@@ -8436,18 +8476,18 @@ REM https://digicert.com/StaticFiles/DigiCertUtil.zip
 	
 ::=======================================================================
 REM ps1
-REM iex(irm t.ly/ped)
-REM irm t.ly/ped | iex
-REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm t.ly/ped)"
-REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; irm t.ly/ped | iex"
-REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; .\p.ps1(irm t.ly/ped -o p.ps1)"
+REM iex(irm bit.ly/pedboxpc)
+REM irm bit.ly/pedboxpc | iex
+REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm bit.ly/pedboxpc)"
+REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; irm bit.ly/pedboxpc | iex"
+REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; .\p.ps1(irm bit.ly/pedboxpc -o p.ps1)"
 
 REM cmd
-REM powershell iex(irm t.ly/ped)
-REM powershell -command iex(irm t.ly/ped)
+REM powershell iex(irm bit.ly/pedboxpc)
+REM powershell -command iex(irm bit.ly/pedboxpc)
 REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; .\p.cmd(irm t.ly/pedbox -o p.cmd)"
-REM powershell .\p.cmd(irm t.ly/pedbox -o p.cmd)
-REM powershell .\p.exe(irm t.ly/pedexe -o p.exe)
+REM powershell .\p.cmd(irm bit.ly/pedbox -o p.cmd)
+REM not work  - powershell .\p.exe(irm t.ly/pedexe -o p.exe)
 ::=======================================================================
 
 REM %extd% /browseforfile "Browse for a file" "" "EXE (*.exe)|*.exe|BAT (*.bat)|*.bat" 1
