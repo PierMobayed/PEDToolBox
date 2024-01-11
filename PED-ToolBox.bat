@@ -14,8 +14,8 @@
 ::dAsiuh18IRvcCxnZtBJQ
 ::cRYluBh/LU+EWAnk
 ::YxY4rhs+aU+IeA==
-::cxY6rQJ7JhzQF1fEqQJhZkkaG1bMbAs=
-::ZQ05rAF9IBncCkqN+0xwdVsFAlbMazn0VtU=
+::cxY6rQJ7JhzQF1fEqQJhZkkaG1LMbAs=
+::ZQ05rAF9IBncCkqN+0xwdVsFAlbMaz30VtU=
 ::ZQ05rAF9IAHYFVzEqQIADT8ZeAuNMEm1HtU=
 ::eg0/rx1wNQPfEVWB+kM9LVsJDDSnGCaOCboQyufjjw==
 ::fBEirQZwNQPfEVWB+kM9LVsJDDSnGCaOCboQyufjjw==
@@ -26,7 +26,7 @@
 ::ZQ0/vhVqMQ3MEVWAtB9wSA==
 ::Zg8zqx1/OA3MEVWAtB9wSA==
 ::dhA7pRFwIByZRRm00WZ9HBRbQCaNJAs=
-::Zh4grVQjdCyDJGyX8VAjFAtdSRaPAES0A5EO4f7+08+JtkgPQOM2dY7VzoieJeQH5Urod5k16n9Cnfc8KT9sXFz8PEFk5D8MlFCgFPusliusfkeG6kk/Aytxn2aw
+::Zh4grVQjdCyDJGyX8VAjFAtdSRaPAES0A5EO4f7+08+JtkgPQOM2dY7VzoieJeQH5Urod5k16n9Cnfc8KT8VSh2kYg07sSBHrmHl
 ::YB416Ek+ZG8=
 ::
 ::
@@ -51,12 +51,16 @@ echo.
 :m0a.x0.Version
 ::================================
 :: Set version
-set "versionTool=PED-ToolBox-1.275.231106"
+set "versionTool=PED-ToolBox-1.276.240111"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :m0a.x01.DirectoryPED
 ::================================
+REM Account Password reset
+:: In System cmd type: ped-toolbox.bat pass
+if "%1"=="pass" goto m1a.x02.4.1.AccountPasswordReset
+
 ::Check if the source file is the same as the destination file
 set "shortcutExtantion=%~x0"
 echo %~n0%shortcutExtantion%
@@ -73,8 +77,6 @@ if /I "%fileNameCurrent%" NEQ "%newName%" (
 	exit
 )
 
-
-
 REM Define source and destination paths:
 if exist "%~dp0pedDownload\p.*" (
 set "destinationDir=%~dp0"
@@ -90,7 +92,7 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
 	echo Thank you for using %ver%
 	echo.
 	echo.
-	echo The script will install cmd menu and shortcut after:
+	echo The script will Download and Install cmd menu after:
 	timeout 15 
     REM Check if the destination directory exists
     if not exist "%destinationDir%" (
@@ -2190,10 +2192,10 @@ goto m1a.x02.1.3.0.end
 :m1a.x02.1.1.1.createInstall-BT-Menu
 echo.
 echo Choice from two Options
-echo 1. CMD view    1.30.Create-PED-BootTimer
-echo 2. Pop message 1.31.Create-PED-BootTimerMessage
+echo 1. CMD view    -Create-PED-BootTimer
+echo 2. Pop message -Create-PED-BootTimerMessage
 echo.
-cmdMenuSel e370 "[ ] 1.30.Create-PED-BootTimer" "[ ] 1.31.Create-PED-BootTimerMessage"
+cmdMenuSel e370 "[ ] CMD view - Create-PED-BootTimer" "[ ] Pop message - Create-PED-BootTimerMessage"
 if %ERRORLEVEL% == 1 set "downloadFiles=:r5a.x1.6.Create-PED-BootTimer"
 if %ERRORLEVEL% == 2 set "downloadFiles=:r5a.x1.7.Create-PED-BootTimerMessage"
 %timeoutA%
@@ -2499,13 +2501,13 @@ set "menuD2=%menuD2% && echo Description:"
 set "menuD2=%menuD2% && echo.
 set "menuD2=%menuD2% && echo AccountPasswordReset [yes]:"
 set "menuD2=%menuD2% && echo -System CMD Boot"
-set "menuD2=%menuD2% && echo copy c:\windows\system32\sethc.exe c:\"
+set "menuD2=%menuD2% && echo copy c:\windows\system32\sethc.exe c:\windows\system32\sethc1.exe"
 set "menuD2=%menuD2% && echo copy c:\windows\system32\cmd.exe c:\windows\system32\sethc.exe"
 set "menuD2=%menuD2% && echo -shift 5 times:"
 set "menuD2=%menuD2% && echo."
 set "menuD2=%menuD2% && echo AccountPasswordReset [r]-reverse:"
 set "menuD2=%menuD2% && echo -System CMD Boot"
-set "menuD2=%menuD2% && echo copy c:\windows\system32\sethc1.exe c:\windows\system32\sethc.exe
+set "menuD2=%menuD2% && echo copy c:\windows\system32\sethc1.exe c:\windows\system32\sethc.exe"
 set "menuD2=%menuD2% && echo AccountPasswordResetReverse complete:"
 set "menuD2=%menuD2% && echo."
 set "menuD2=%menuD2% && echo ===================================================="
@@ -2515,9 +2517,10 @@ set menuC= onlyA
 call :mStyle
 REM Check if the variable is empty
 if "%add1%"=="" (
-    echo ^+
+    echo ^+ %1
 ) else (
     echo Variable still has a value: %add1%
+	echo %1
 )
 set menuD2= 
 set menuC=mStyleA
@@ -2537,6 +2540,7 @@ if "%add1%"=="yes" (
 REM Clear the variable
 set "add1="
 pause
+if "%1"=="pass" exit
 goto %menu%
 
 :m1a.x02.4.1.1.AccountPasswordResetYes
@@ -2550,6 +2554,7 @@ if exist "c:\windows\system32\sethc1.exe" (echo backup complete!)
 copy c:\windows\system32\cmd.exe c:\windows\system32\sethc.exe
 echo Go to account home screen and PRESS shift 5 times:
 pause
+if "%1"=="pass" exit
 goto %menu%
 
 :m1a.x02.4.1.2.AccountPasswordResetReverse
@@ -2559,6 +2564,7 @@ copy c:\windows\system32\sethc1.exe c:\windows\system32\sethc.exe
 echo AccountPasswordResetReverse complete:
 ) else (echo sethc1.exe does not exist)
 pause
+if "%1"=="pass" exit
 goto %menu%
 
 :m1a.x02.4.2.ActiveAdministrator
