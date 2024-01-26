@@ -29,23 +29,28 @@
 ## Enjoy and if you find any bug please write on Issues section or email on :pedtoolbox@gmail.com.
 
 
-## PowerShell Link 
-
-    iex(irm bit.ly/pedboxpc)
-#### or
-
-    irm bit.ly/pedboxpc | iex
-
 
 ## CMD or RUN Link  
 
-    powershell iex(irm bit.ly/pedboxpc)
+    powershell iex(irm rebrand.ly/pedbox)
 #### or
 
-    cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm bit.ly/pedboxpc)"
+    powershell irm rebrand.ly/pedbox | iex
 #### or
 
-    cmd.exe /c powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://bit.ly/pedboxpc'))""
+    cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
 #### or
 
+    cmd.exe /c powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://rebrand.ly/pedbox'))""
+#### or
+
+    not workinkg at the moment
     powershell .\p.cmd(irm bit.ly/pedbox -o p.cmd)
+
+## PowerShell Link 
+
+    iex(irm rebrand.ly/pedbox)
+#### or
+
+    irm rebrand.ly/pedbox | iex
+
