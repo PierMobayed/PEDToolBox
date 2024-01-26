@@ -919,7 +919,9 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=cmdMenuSel.exe"
 set isItZip=n
 
-set "fileLinkID=https://bit.ly/pedcmdmenu"
+set "fileLinkID=https://rebrand.ly/pedboxmenu"
+::set "fileLinkID=https://bit.ly/pedcmdmenu"
+
 ::Download file
 call :r3a.x01.0.downloadFunction
 ::====
