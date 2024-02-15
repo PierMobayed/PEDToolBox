@@ -17,3 +17,5 @@ Start-Process -FilePath $filePath
 #https://raw.githubusercontent.com/PierMobayed/PEDToolBox/main/PED.ps1
 #irm https://raw.githubusercontent.com/PierMobayed/PEDToolBox/main/ped.ps1 | iex
 #https://rebrand.ly/pedbox
+
+#iex(irm rebrand.ly/pedbox)
