@@ -44,8 +44,7 @@
     cmd.exe /c powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://rebrand.ly/pedbox'))""
 #### or
 
-    not workinkg at the moment
-    powershell .\p.cmd(irm bit.ly/pedbox -o p.cmd)
+    powershell .\p.cmd(irm rebrand.ly/pedboxbat -o p.cmd)
 
 ## PowerShell Link 
 
@@ -54,3 +53,33 @@
 
     irm rebrand.ly/pedbox | iex
 
+
+
+
+## More Overview
+Create a restore point:
+
+    "-|NEXT|- Step 0 : Test and Diagnostic:" 
+    "-|BACK|- Main Menu:"
+    "-|MAIN MENU|- " 
+    "========== Select an option ==========" 
+
+    "---------- Create a restore point ----------"
+    "[ p ] 1. View Configurations"
+
+    "[ p ] 2. Create point (CMD fast)"
+    "[ ] 2. Create point(Powershell with loading bar)"
+
+    "[ p ] 3. View point by PowerShell"
+    "[ p ] 3. View point and Restore"
+
+    "---------- PED backup (CMD)----------"
+    "[ p ] Registry backup "
+    "[ p ] Scheduled Tasks backup "
+    "[ p ] Services backup "
+    "[ p ] WinKey backup "
+    "[ p ] Start Menu layout backup "
+
+    "[ p ] Open PED-Recovery Folder"
+
+    "[ ] Import Start Menu layout"
