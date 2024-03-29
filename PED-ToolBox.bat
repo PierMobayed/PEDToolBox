@@ -51,7 +51,7 @@ echo.
 :m0a.x0.Version
 ::================================
 :: Set version
-set "versionTool=PED-ToolBox-1.276.240111"
+set "versionTool=PED-ToolBox-1.277.2.240126"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -82,6 +82,7 @@ if exist "%~dp0pedDownload\p.*" (
 set "destinationDir=%~dp0"
 ) else (
 set "destinationDir=C:\ProgramData\PEDToolBox\"
+
 )
 
 set "sourceFile=%~f0"
@@ -109,9 +110,10 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
 	echo ...[10%]...
 	
     REM Copy the script to the destination
+	takeown /f "C:\ProgramData"
     echo Copying itself to destination...
     copy "%sourceFile%" "%destinationFile%"
-	
+
 	if not exist "%destinationFile%" (
 		copy "%sourceFile%" "%destinationFile%"
 		
@@ -534,10 +536,11 @@ set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 
-set "fileLocation=CrystalDiskInfo9_1_1.zip"
+set "fileLocation=CrystalDiskInfo9_2_3.zip"
 set isItZip=y
 
-set "fileLinkID=https://crystalmark.info/redirect.php?product=CrystalDiskInfo"
+set "fileLinkID=https://kumisystems.dl.sourceforge.net/project/crystaldiskinfo/9.2.3/CrystalDiskInfo9_2_3.zip"
+::set "fileLinkID=https://crystalmark.info/redirect.php?product=CrystalDiskInfo"
 ::https://osdn.net/projects/crystaldiskinfo/downloads/78836/CrystalDiskInfo9_0_1a.zip/
 ::https://crystalmark.info/en/download/
 
@@ -621,7 +624,12 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=Optimizer-15.8.exe"
 set isItZip=n
 
-set "fileLinkID=https://github.com/hellzerg/optimizer/releases/download/15.8/Optimizer-15.8.exe"
+set "fileLinkID=https://github.com/hellzerg/optimizer/releases/download/16.4/Optimizer-16.4.exe"
+
+::https://objects.githubusercontent.com/github-production-release-asset-2e65be/103370157/63ccec92-6957-4a1b-8c33-cb37a40a175e?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240322%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240322T163823Z&X-Amz-Expires=300&X-Amz-Signature=cffda623f9952d91487c4f4ae829723fb08567df6cdee3228049b798bd156efa&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=103370157&response-content-disposition=attachment%3B%20filename%3DOptimizer-16.4.exe&response-content-type=application%2Foctet-stream
+::set "fileLinkID=https://github.com/hellzerg/optimizer/releases/download/15.8/Optimizer-15.8.exe"
+::https://github.com/hellzerg/optimizer
+
 call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
@@ -803,8 +811,8 @@ set "destination=%destinationPD%\%createFolder%"
 if not exist "%destination%\." mkdir "%destination%"
 
 
-set "fileLocation=WRCFree_11.1.1.716.zip"
-set "fileLinkID=https://downloads.wisecleaner.com/soft/WRCFree_11.1.1.716.zip"
+set "fileLocation=WRCFree_11.1.3.718.zip"
+set "fileLinkID=https://downloads.wisecleaner.com/soft/WRCFree_11.1.3.718.zip"
 set isItZip=y
 ::https://www.wisecleaner.com/download.html
 call :r3a.x01.0.downloadFunction
@@ -919,13 +927,16 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=cmdMenuSel.exe"
 set isItZip=n
 
+
 set "fileLinkID=https://rebrand.ly/pedboxmenu"
 ::set "fileLinkID=https://bit.ly/pedcmdmenu"
+::set "fileLinkID=https://bit.ly/pedcmdmenu02"
 
 ::Download file
 call :r3a.x01.0.downloadFunction
 ::====
 exit /b
+::https://drive.usercontent.google.com/download?id=1Q_fszGnCHXNzgJiSgpDJSvhLrJRjJ8Sl&export=download&authuser=0&confirm=t&uuid=665d6d44-72cc-4be8-ae13-2f82aec38b14&at=APZUnTUVeKpMBCj5w_cR5llIsIkf:1705053169680
 ::set "fileLinkID=https://github.com/TheBATeam/cmdMenuSel-by-Judago/raw/master/Source%%20Code/Files/cmdMenuSel.exe"
 ::=================
 
@@ -1552,7 +1563,7 @@ goto %menu%
 ::================================
 if %startOneClick% == 0 (cls)
 set "downloadFiles=:r3a.x11.2.5.downLoadF-2.5.WRCFree"
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.5.WRCFree\WRCFree_11.1.1.716"
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.5.WRCFree\WRCFree_11.1.3.718"
 set "nameFiles=WiseRegCleaner.exe"
 
 ::Function
@@ -1822,6 +1833,8 @@ set mm= %mm% ""
 set mm= %mm% "[+] Power Menu"
 set mm= %mm% ""
 set mm= %mm% "[ ] One Click Maintenance and Clean"
+set mm= %mm% ""
+set mm= %mm% "[ ] About -Github project"
 if %loc% == 1 (set mm= %mm% "")
 if %loc% == 1 (set mm= %mm% "[ p ] Create Shortcut to Desktop")
 
@@ -1842,11 +1855,13 @@ if %ERRORLEVEL% == 12 goto %menu%
 if %ERRORLEVEL% == 13 goto m9a.x0.Restart
 if %ERRORLEVEL% == 14 goto %menu%
 if %ERRORLEVEL% == 15 goto m2a.x01.Oneclick
+if %ERRORLEVEL% == 16 goto %menu%
+if %ERRORLEVEL% == 17 start https://github.com/PierMobayed/PEDToolBox
 if %loc% == 1 (
-	if %ERRORLEVEL% == 16 goto %menu%
+	if %ERRORLEVEL% == 18 goto %menu%
 	)
 if %loc% == 1 (
-	if %ERRORLEVEL% == 17 (
+	if %ERRORLEVEL% == 19 (
 		set "shortcutToLocation=desktop"
 		call :m1a.x02.1.3.createShotcut
 		set "shortcutToLocation=0"
@@ -3574,14 +3589,14 @@ set mm= %mm% "--- MS Store: ---"
 set mm= %mm% "[ ] Note: Free Office Mobile"
 set mm= %mm% "[ ] Gadget: Widget Launcher"
 set mm= %mm% ""
-set mm= %mm% "--- Anti-virus-portable: ---"
-set mm= %mm% "[ ] Anti-virus: Norton"
-set mm= %mm% "[ ] Anti-virus: Kaspersky"
-set mm= %mm% "[ ] Anti-virus: Virus Total"
-set mm= %mm% "[ ] Anti-virus: EmsisoftEmergencyKit"
-set mm= %mm% "[ ] Anti-virus: HitmanPro_x64.exe"
-set mm= %mm% "[ ] Anti-virus: bitdefender_antivirus.exe"
-set mm= %mm% "[ ] Anti-virus: Malwarebytes_Anti-Malware_Portable"
+set mm= %mm% "--- Anti-virus: ---"
+set mm= %mm% "[ ] Portable: Norton"
+set mm= %mm% "[ ] Portable: Kaspersky"
+set mm= %mm% "[ ] Portable: HitmanPro_x64.exe"
+set mm= %mm% "[ ] Portable: EmsisoftEmergencyKit"
+set mm= %mm% "[ ] Installer: Virus Total"
+set mm= %mm% "[ ] Installer: bitdefender_antivirus.exe"
+set mm= %mm% "[ ] Installer: Malwarebytes_Anti-Malware_Portable"
 
 cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x3.1.install
@@ -3625,11 +3640,13 @@ if %ERRORLEVEL% == 32 goto %menu%
 if %ERRORLEVEL% == 33 goto %menu%
 if %ERRORLEVEL% == 34 (goto r4a.x5.01.norton)
 if %ERRORLEVEL% == 35 (goto r4a.x5.02.kaspersky)
-if %ERRORLEVEL% == 36 start https://www.virustotal.com/static/bin/vtuploader2.2.exe
+if %ERRORLEVEL% == 36 start https://download.sophos.com/endpoint/clients/HitmanPro_x64.exe
 if %ERRORLEVEL% == 37 start https://dl.emsisoft.com/EmsisoftEmergencyKit.exe
-if %ERRORLEVEL% == 38 start https://www.cleverbridge.com/747/cookie?affiliate=32138&redirectto=https%3A%2F%2Ffiles.surfright.nl%2FHitmanPro_x64.exe
+if %ERRORLEVEL% == 38 start https://www.virustotal.com/static/bin/vtuploader2.2.exe
 if %ERRORLEVEL% == 39 start https://download.bitdefender.com/windows/installer/en-us/bitdefender_antivirus.exe
 if %ERRORLEVEL% == 40 start https://downloads.malwarebytes.com/file/mb4_offline
+
+::if %ERRORLEVEL% == 38 start https://www.cleverbridge.com/747/cookie?affiliate=32138&redirectto=https%3A%2F%2Ffiles.surfright.nl%2FHitmanPro_x64.exe
 
 :m1a.x3.1.1.1.appInstaller
 cls
@@ -5874,6 +5891,7 @@ call :r4a.x0.3.2.startupManagerGlaryUtility
 REM create file c5.txt
 timeout 2 /nobreak>c5.txt
 
+start explorer.exe
 echo RESTARTING after:
 timeout 10
 Shutdown -r -f -t 00
