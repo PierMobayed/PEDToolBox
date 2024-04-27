@@ -31,17 +31,23 @@
 ::
 ::
 ::978f952a14a936cc963da21a135fa983
+
 @echo off
 %extd% /setconsoletransparency 92
 cls
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: -short link in PS: 
-:: irm bit.ly/pedboxpc | iex
-:: iex(irm bit.ly/pedboxpc)
 
-:: -short link in CMD or RUN: 
-:: powershell iex(irm bit.ly/pedboxpc)
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::================================
+REM		NOTES
+REM		Short link in PS: 
+:: irm rebrand.ly/pedbox | iex
+:: iex(irm rebrand.ly/pedbox)
+
+REM		Short link in CMD or RUN: 
+:: powershell iex(irm rebrand.ly/pedbox)
+:: powershell iex (irm 'https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/PED.ps1')
+
+::================================
+
 :m0a.x
 ::================================
 echo Welcome to PED Tool Box
@@ -50,8 +56,13 @@ echo.
 ::========
 :m0a.x0.Version
 ::================================
+REM		NOTES
+REM		Author: PierMobayed @PierMTech
+REM		GitHub: https://github.com/piermobayed
+REM		Web project: https://github.com/PierMobayed/PEDToolBox
+
 :: Set version
-set "versionTool=PED-ToolBox-1.277.3.240329"
+set "versionTool=PED-ToolBox-1.278.1.240427"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -1221,7 +1232,7 @@ goto %menu%
 :r4a.x0.5.4.windowsAutomaticUpdatesManager
 ::================================
 call :r3a.x11.0.3.3.downLoadF-0.3.3.WAUManager
-start %destinationPD%\Data\0.Drivers\0.3.update\WAUManager.exe
+start /min cmd /c "%destinationPD%\Data\0.Drivers\0.3.update\WAU Manager.exe"
 goto %menu%
 
 :r4a.x0.5.5.windowsUpdateMiniTool
@@ -3518,7 +3529,7 @@ set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
-set mm= %mm% "[ ] Script: Winget GUI Installer"
+set mm= %mm% "[ ] Script: Winget GUI Installer (by Romanitho)"
 set mm= %mm% ""
 set mm= %mm% "[+] PED: App installer links"
 set mm= %mm% ""
@@ -3532,8 +3543,9 @@ if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
+if %ERRORLEVEL% == 6 start /min %psP% iex (irm 'https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1')
+::if %ERRORLEVEL% == 6 %psP% iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1'))
 
-if %ERRORLEVEL% == 6 %psP% iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1'))
 if %ERRORLEVEL% == 7 goto %menu%
 if %ERRORLEVEL% == 8 (
 	cls
@@ -3543,7 +3555,7 @@ if %ERRORLEVEL% == 8 (
 	goto m1a.x3.1.1.pedAppInstallerLinks
 )
 if %ERRORLEVEL% == 9 goto %menu%
-if %ERRORLEVEL% == 10 start https://www.winstall.app/apps
+if %ERRORLEVEL% == 10 start https://winstall.app/
 if %ERRORLEVEL% == 11 start https://www.ninite.com
 if %ERRORLEVEL% == 12 start https://portableapps.com/apps
 
@@ -3873,18 +3885,79 @@ goto m1a.x3.3.updateApps
 
 :m1a.x3.4.GithubScripts
 ::================================
-::set menu=m1a.x3.4.GithubScripts
+set menu=m1a.x3.4.GithubScripts
 
 set "menuA= Step 3 : Programs -Install/Uninstall/Update:"
 set "menuB= More: Github Scripts:"
+call :mStyle
 
-set menuNextName=Step 3 : Programs -Install/Uninstall/Update:
-set menuNextGoto=m1a.x3.installUninstallUpdate
-set menuBackName=Step 3 : Programs -Install/Uninstall/Update:
-set menuBackGoto=m1a.x3.installUninstallUpdate
+set mm=
+set mm= %mm% "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update:"
+set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "---------- Utility ----------"
+set mm= %mm% "[ ] Windows Utility (by Chris Titus Tech)"
+set mm= %mm% ""
+set mm= %mm% "---------- Debloat ----------"
+set mm= %mm% "[ ] Windows10Debloater (by Sycnex)"
+set mm= %mm% ""
+set mm= %mm% "---------- Project archive ----------"
+set mm= %mm% "[ ] WindowsToolbox (by WinTweakers)"
 
-goto r4a.x4.DebloatWindows
 
+cmdMenuSel e370 %mm%
+
+if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
+if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
+if %ERRORLEVEL% == 3 goto mainMenu
+if %ERRORLEVEL% == 4 goto %menu%
+if %ERRORLEVEL% == 5 goto %menu%
+
+if %ERRORLEVEL% == 6 goto %menu%
+if %ERRORLEVEL% == 7 %psP% iex (irm 'https://christitus.com/win')
+if %ERRORLEVEL% == 8 goto %menu%
+
+if %ERRORLEVEL% == 9 goto %menu%
+if %ERRORLEVEL% == 10 %psP% iex (irm 'https://raw.githubusercontent.com/Sycnex/Windows10Debloater/master/Windows10DebloaterGUI.ps1')
+if %ERRORLEVEL% == 11 goto %menu%
+
+if %ERRORLEVEL% == 12 goto %menu%
+if %ERRORLEVEL% == 13 %psP% iex (irm 'https://raw.githubusercontent.com/WinTweakers/WindowsToolbox/main/run.ps1')
+
+goto %menu%
+
+::================================
+REM		NOTES
+
+REM		Draft command:
+::%psP% iex (irm 'https://raw.githubusercontent.com/AUTHOR/PROJECT/main/ScriptNAME')
+
+REM		Draft Link:
+::https://raw.githubusercontent.com/AUTHOR/PROJECT/main/ScriptNAME
+
+REM		Old Draft command:
+::powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://www.example.com'))""
+
+::================================
+
+REM		Old version:
+::================================
+:: :m1a.x3.4.GithubScripts
+:: ::================================
+:: ::set menu=m1a.x3.4.GithubScripts
+:: 
+:: set "menuA= Step 3 : Programs -Install/Uninstall/Update:"
+:: set "menuB= More: Github Scripts:"
+:: 
+:: set menuNextName=Step 3 : Programs -Install/Uninstall/Update:
+:: set menuNextGoto=m1a.x3.installUninstallUpdate
+:: set menuBackName=Step 3 : Programs -Install/Uninstall/Update:
+:: set menuBackGoto=m1a.x3.installUninstallUpdate
+:: 
+:: goto r4a.x4.DebloatWindows
+:: ::================================
 
 ::================================
 ::Step 4 : Clean Up -StartUp/StartMenu/Explorer
