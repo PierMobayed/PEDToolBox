@@ -22,7 +22,6 @@
      
     "[ ] One Click Maintenance and Clean"
   
-- This is TEST release .
 - Use on your own risk .
 - On my test machines working well ,but is still test.
 - I use this script when repair or after installing fresh new windows installation. 
@@ -33,7 +32,7 @@
 ## CMD or RUN Link  
 
     powershell iex(irm rebrand.ly/pedbox)
-#### or
+##### or
 
     powershell irm rebrand.ly/pedbox | iex
 #### or
