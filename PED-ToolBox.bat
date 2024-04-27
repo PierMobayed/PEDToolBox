@@ -14,8 +14,8 @@
 ::dAsiuh18IRvcCxnZtBJQ
 ::cRYluBh/LU+EWAnk
 ::YxY4rhs+aU+IeA==
-::cxY6rQJ7JhzQF1fEqQJhZkkaG1LMbAs=
-::ZQ05rAF9IBncCkqN+0xwdVsFAlbMaz30VtU=
+::cxY6rQJ7JhzQF1fEqQJhZkkaG1zMbQs=
+::ZQ05rAF9IBncCkqN+0xwdVsFAlbMazP0V9U=
 ::ZQ05rAF9IAHYFVzEqQIADT8ZeAuNMEm1HtU=
 ::eg0/rx1wNQPfEVWB+kM9LVsJDDSnGCaOCboQyufjjw==
 ::fBEirQZwNQPfEVWB+kM9LVsJDDSnGCaOCboQyufjjw==
@@ -258,7 +258,7 @@ set "startOneClick=0"
 set "startOneClickTwo=0"
 set "psP=Powershell.exe Set-ExecutionPolicy Bypass -Scope Process -Force;"
 set "psC=powershell.exe -ExecutionPolicy Bypass -Command"
-set "psA=powershell iex(irm bit.ly/pedlog -o p.log)"
+set "psA=powershell iex(irm rebrand.ly/pedboxlog -o p.log)"
 set "psB=cscript //nologo "%vbsGetPrivileges%""
 set "timeoutA=timeout 2 /nobreak>nul"
 set title=title Power Every Day - ToolBox
