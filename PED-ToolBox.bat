@@ -62,7 +62,7 @@ REM		GitHub: https://github.com/piermobayed
 REM		Web project: https://github.com/PierMobayed/PEDToolBox
 
 :: Set version
-set "versionTool=PED-ToolBox-1.278.1.240427"
+set "versionTool=PED-ToolBox-1.279.1.240504"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -948,7 +948,7 @@ call :r3a.x01.0.downloadFunction
 ::====
 exit /b
 ::https://drive.usercontent.google.com/download?id=1Q_fszGnCHXNzgJiSgpDJSvhLrJRjJ8Sl&export=download&authuser=0&confirm=t&uuid=665d6d44-72cc-4be8-ae13-2f82aec38b14&at=APZUnTUVeKpMBCj5w_cR5llIsIkf:1705053169680
-::set "fileLinkID=https://github.com/TheBATeam/cmdMenuSel-by-Judago/raw/master/Source%%20Code/Files/cmdMenuSel.exe"
+::https://github.com/TheBATeam/CmdMenuSel-by-Judago/blob/master/Source%20Code/Files/cmdmenusel.exe"
 ::=================
 
 :r3a.x12.002.downLoadF-filesIcons
@@ -1008,6 +1008,15 @@ set "destination=%destinationPD%\%createFolder%"
 if not exist "%destination%\." mkdir "%destination%"
 exit /b
 
+:r3a.x12.5.downLoadF-wingetGui
+::================================
+set "nameFolder=wingetGui"
+set "createFolder=files\%nameFolder%"
+set "destination=%destinationPD%\%createFolder%"
+
+if not exist "%destination%\." mkdir "%destination%"
+exit /b
+::=================
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -3298,6 +3307,18 @@ set mm= %mm% "[ p ] 1.quick virus scan"
 set mm= %mm% "[ ] 2.full virus scan"
 set mm= %mm% "[ ] 3.offline virus scan"
 set mm= %mm% "[ ] 4.boot sector malware scan"
+set mm= %mm% ""
+set mm= %mm% ""
+set mm= %mm% "--- Third-party Anti-virus: ---"
+set mm= %mm% "[ ] Portable: Norton"
+set mm= %mm% "[ ] Portable: Kaspersky"
+set mm= %mm% "[ ] Portable: HitmanPro_x64.exe"
+set mm= %mm% "[ ] Portable: EmsisoftEmergencyKit"
+set mm= %mm% ""
+set mm= %mm% "[ ] Installer: Virus Total"
+set mm= %mm% "[ ] Installer: bitdefender_antivirus.exe"
+set mm= %mm% "[ ] Installer: Malwarebytes_Anti-Malware_Portable"
+
 
 cmdMenuSel e370 %mm%
 
@@ -3314,6 +3335,18 @@ if %ERRORLEVEL% == 9 powershell "& "Start-MpScan -ScanType QuickScan""
 if %ERRORLEVEL% == 10 powershell "& "Start-MpScan -ScanType FullScan""
 if %ERRORLEVEL% == 11 powershell "& "Start-MpWDOScan""
 if %ERRORLEVEL% == 12 cd C:\ProgramData\Microsoft\Windows Defender\Platform\4.18* && MpCmdRun -Scan -ScanType -BootSectorScan
+if %ERRORLEVEL% == 13 goto %menu%
+if %ERRORLEVEL% == 14 goto %menu%
+
+if %ERRORLEVEL% == 15 goto %menu%
+if %ERRORLEVEL% == 16 (goto r4a.x5.01.norton)
+if %ERRORLEVEL% == 17 (goto r4a.x5.02.kaspersky)
+if %ERRORLEVEL% == 18 start https://download.sophos.com/endpoint/clients/HitmanPro_x64.exe
+if %ERRORLEVEL% == 19 start https://dl.emsisoft.com/EmsisoftEmergencyKit.exe
+if %ERRORLEVEL% == 20 goto %menu%
+if %ERRORLEVEL% == 21 start https://www.virustotal.com/static/bin/vtuploader2.2.exe
+if %ERRORLEVEL% == 22 start https://download.bitdefender.com/windows/installer/en-us/bitdefender_antivirus.exe
+if %ERRORLEVEL% == 23 start https://downloads.malwarebytes.com/file/mb4_offline
 echo.
 cmdMenuSel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
@@ -3529,9 +3562,9 @@ set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
-set mm= %mm% "[ ] Script: Winget GUI Installer (by Romanitho)"
+set mm= %mm% "[ ] PED: Winget App Search & Install (Powershell)"
 set mm= %mm% ""
-set mm= %mm% "[+] PED: App installer links"
+set mm= %mm% "[+] PED: App installer links (CMD)"
 set mm= %mm% ""
 set mm= %mm% "[ ] Web: winstall.app"
 set mm= %mm% "[ ] Web: Ninite.com"
@@ -3543,7 +3576,8 @@ if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
-if %ERRORLEVEL% == 6 start /min %psP% iex (irm 'https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1')
+if %ERRORLEVEL% == 6 goto m1a.x3.1.2.wingetGUI
+::if %ERRORLEVEL% == 6 start /min %psP% iex (irm 'https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1')
 ::if %ERRORLEVEL% == 6 %psP% iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1'))
 
 if %ERRORLEVEL% == 7 goto %menu%
@@ -3623,7 +3657,7 @@ if %ERRORLEVEL% == 8 set "appIns=7zip.7zip"
 if %ERRORLEVEL% == 9 set "appIns=RARLab.WinRAR"
 if %ERRORLEVEL% == 10 set "appIns=Datronicsoft.SpacedeskDriver.Server"
 if %ERRORLEVEL% == 11 set "appIns=Google.ChromeRemoteDesktop"
-if %ERRORLEVEL% == 12 set "appIns=GitHub.GitHubDesktop
+if %ERRORLEVEL% == 12 set "appIns=GitHub.GitHubDesktop"
 if %ERRORLEVEL% == 13 set "appIns=Microsoft.VisualStudioCode"
 if %ERRORLEVEL% == 14 set "appIns=OpenJS.NodeJS.LTS"
 if %ERRORLEVEL% == 15 set "appIns=EaseUS.DataRecovery"
@@ -3671,6 +3705,25 @@ set "appIns="
 
 %color1%
 goto %menu%
+
+:m1a.x3.1.2.wingetGUI
+::================================
+cls
+
+set "downloadFiles=:r5a.x4.1.wingetGUI"
+set "directoryFiles=files\wingetGUI"
+set "nameFiles=PED-wingetGUI.ps1"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist %startFiles% (
+	call :r3a.x12.5.downLoadF-wingetGui
+	call %downloadFiles%
+)
+%psP% %startFiles%
+
+goto %menu%
+
 
 :m1a.x3.2.1.debloat
 ::================================
@@ -3900,11 +3953,15 @@ set mm= %mm% ""
 set mm= %mm% "---------- Utility ----------"
 set mm= %mm% "[ ] Windows Utility (by Chris Titus Tech)"
 set mm= %mm% ""
+set mm= %mm% "---------- Installer ----------"
+set mm= %mm% "[ ] Winget GUI Installer (by Romanitho)"
+set mm= %mm% ""
 set mm= %mm% "---------- Debloat ----------"
 set mm= %mm% "[ ] Windows10Debloater (by Sycnex)"
 set mm= %mm% ""
 set mm= %mm% "---------- Project archive ----------"
 set mm= %mm% "[ ] WindowsToolbox (by WinTweakers)"
+
 
 
 cmdMenuSel e370 %mm%
@@ -3920,11 +3977,15 @@ if %ERRORLEVEL% == 7 %psP% iex (irm 'https://christitus.com/win')
 if %ERRORLEVEL% == 8 goto %menu%
 
 if %ERRORLEVEL% == 9 goto %menu%
-if %ERRORLEVEL% == 10 %psP% iex (irm 'https://raw.githubusercontent.com/Sycnex/Windows10Debloater/master/Windows10DebloaterGUI.ps1')
+if %ERRORLEVEL% == 10 start /min %psP% iex (irm 'https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1')
 if %ERRORLEVEL% == 11 goto %menu%
 
 if %ERRORLEVEL% == 12 goto %menu%
-if %ERRORLEVEL% == 13 %psP% iex (irm 'https://raw.githubusercontent.com/WinTweakers/WindowsToolbox/main/run.ps1')
+if %ERRORLEVEL% == 13 %psP% iex (irm 'https://raw.githubusercontent.com/Sycnex/Windows10Debloater/master/Windows10DebloaterGUI.ps1')
+if %ERRORLEVEL% == 14 goto %menu%
+
+if %ERRORLEVEL% == 15 goto %menu%
+if %ERRORLEVEL% == 16 %psP% iex (irm 'https://raw.githubusercontent.com/WinTweakers/WindowsToolbox/main/run.ps1')
 
 goto %menu%
 
@@ -8477,6 +8538,298 @@ $outputString | Out-File -FilePath "$FilePathDir"
 
 # EndExtractF2
 
+
+
+:r5a.x4.1.wingetGUI
+::================================
+CLS
+::::========================
+::::Variables for copy
+::::========================
+REM Extract Function variables name
+set "fileFuntionName=PED-wingetGUI.ps1"
+set "fileFuntionFolder=files\wingetGUI"
+
+REM Extract Marks
+set "startMark=# StartExtractH11"
+set "endMark=# EndExtractH11"
+
+REM Delete existing Function
+set "deleteExistingFunction=0"
+
+REM Starting Function after Creation
+set "fileStart="
+
+REM Pause after CreateFunction complete
+REM 0-continue, 1-pause, 2-timeOut 15 Seconds,
+set pauseCreteFunction=0
+
+::========================
+REM Add Functions Before callFun
+::========================
+REM add Functions HERE...
+REM code HERE...
+
+::========================
+REM call Function
+set "callFun=:r5a.x0.2.CreateFunction"
+call %callFun%
+
+set "fileFunctionDir="
+
+::========================
+REM Add Rest Function code here
+::========================
+REM add Rest Code HERE...
+REM code HERE...
+REM Promqna
+exit /b
+REM Promqna
+::========================
+REM Your EXTRACT code starts here
+::========================
+# StartExtractH11
+# Define the function to get app information using winget search
+cls
+function Get-WingetAppInfo ($SearchApp) {
+    class Software {
+        [string]$Name
+        [string]$Id
+    }
+
+    # Search for winget apps
+    $AppResult = & winget search $SearchApp --accept-source-agreements --source winget
+
+    # Start Conversion of winget format to an array. Check if "-----" exists
+    if (^!($AppResult -match "-----")) {
+        Write-Host "No application found."
+        return
+    }
+
+    # Split winget output to lines
+    $outputLines = $AppResult.Split([Environment]::NewLine) | Where-Object { $_ }
+
+    # Find the line that starts with "------"
+    $headerIndex = 0
+    while (-not $outputLines[$headerIndex].StartsWith("-----")) {
+        $headerIndex++
+    }
+
+    $headerIndex = $headerIndex - 1
+
+    # Get header titles
+    $index = $outputLines[$headerIndex] -split '\s+'
+
+    # Line $headerIndex has the header, we can find char where we find ID and Version
+    $idStart = $outputLines[$headerIndex].IndexOf($index[1])
+    $versionStart = $outputLines[$headerIndex].IndexOf($index[2])
+
+    # Now cycle in real package and split accordingly
+    $searchList = @()
+    For ($i = $headerIndex + 2; $i -lt $outputLines.Length; $i++) {
+        $outputLine = $outputLines[$i]
+        if ($outputLine.Length -gt ($versionStart + 5)) {
+            $software = [Software]::new()
+            $software.Name = $outputLine.Substring(0, $idStart).TrimEnd()
+            $software.Id = $outputLine.Substring($idStart, $versionStart - $idStart).TrimEnd()
+            # Add formatted software to list
+            $searchList += $software
+        }
+    }
+    return $searchList
+}
+
+# Create the GUI form
+Add-Type -AssemblyName System.Windows.Forms
+
+$form = New-Object System.Windows.Forms.Form
+$form.Text = "PED-ToolBox Winget App Search & Install"
+$form.Size = New-Object System.Drawing.Size(600,450)
+$form.StartPosition = "CenterScreen"
+
+# Create TextBox for search term
+$searchBox = New-Object System.Windows.Forms.TextBox
+$searchBox.Location = New-Object System.Drawing.Point(50,50)
+$searchBox.Size = New-Object System.Drawing.Size(200,30)
+$form.Controls.Add($searchBox)
+
+# Create Button for Search
+$searchButton = New-Object System.Windows.Forms.Button
+$searchButton.Location = New-Object System.Drawing.Point(270,50)
+$searchButton.Size = New-Object System.Drawing.Size(100,30)
+$searchButton.Text = "Search"
+$searchButton.Add_Click({
+    $searchTerm = $searchBox.Text
+    $appSearchResults = Get-WingetAppInfo $searchTerm
+    $listBox.Items.Clear()  # Clear previous search results
+    if ($appSearchResults) {
+        foreach ($searchResult in $appSearchResults) {
+            $listBox.Items.Add("$($searchResult.Name) --- ( $($searchResult.Id) )")  # Display both name and ID
+        }
+    }
+})
+$form.Controls.Add($searchButton)
+
+# Create ListBox to display search results
+$listBox = New-Object System.Windows.Forms.ListBox
+$listBox.Location = New-Object System.Drawing.Point(50,100)
+$listBox.Size = New-Object System.Drawing.Size(320,150)
+$form.Controls.Add($listBox)
+
+# Create Label for format example
+$labelFormatExample = New-Object System.Windows.Forms.Label
+$labelFormatExample.Location = New-Object System.Drawing.Point(50,260)
+$labelFormatExample.Size = New-Object System.Drawing.Size(320,20)
+$labelFormatExample.Text = "Example: Name (ID)"
+$form.Controls.Add($labelFormatExample)
+
+# Create Button for Install
+$installButton = New-Object System.Windows.Forms.Button
+$installButton.Location = New-Object System.Drawing.Point(50,300)
+$installButton.Size = New-Object System.Drawing.Size(100,30)
+$installButton.Text = "Install"
+$installButton.Add_Click({
+    if ($listBox.SelectedItem) {
+        $selectedApp = $listBox.SelectedItem.ToString().Split('(')[1].Trim(')').Trim()
+        # Show progress bar during installation
+        $progressBar.Style = "Continuous"
+        $progressBar.Value = 0
+        $progressBar.Maximum = 100
+        $form.Controls.Add($progressBar)
+        $form.Refresh()
+
+        # Use winget install command to install the selected app
+        $installProcess = Start-Process -FilePath "winget" -ArgumentList "install", $selectedApp, "-h" -PassThru -WindowStyle Hidden
+        while (^!$installProcess.HasExited) {
+            $progressBar.PerformStep()
+            $form.Refresh()
+            Start-Sleep -Milliseconds 100
+        }
+        $progressBar.Value = 100
+        $form.Refresh()
+        [System.Windows.Forms.MessageBox]::Show("$selectedApp installed successfully^!", "Success")
+        $form.Controls.Remove($progressBar)
+    } else {
+        [System.Windows.Forms.MessageBox]::Show("Please select an app to install.", "Error")
+    }
+})
+$form.Controls.Add($installButton)
+
+# Create progress bar
+$progressBar = New-Object System.Windows.Forms.ProgressBar
+$progressBar.Location = New-Object System.Drawing.Point(50,350)
+$progressBar.Size = New-Object System.Drawing.Size(320,20)
+
+# Define recommended apps and their IDs
+$recommendedApps = @{
+    "Browsers: Google.Chrome" = "Google.Chrome"
+    "Archiver: 7zip.7zip" = "7zip.7zip"
+    "Archiver: RARLab.WinRAR" = "RARLab.WinRAR"
+    "Remote: Datronicsoft.SpacedeskDriver.Server" = "Datronicsoft.SpacedeskDriver.Server"
+    "Remote: Google.ChromeRemoteDesktop" = "Google.ChromeRemoteDesktop"
+    "Code: GitHub.GitHubDesktop" = "GitHub.GitHubDeskt"
+    "Code: Microsoft.VisualStudioCode" = "Microsoft.VisualStudioCode"
+    "Code: OpenJS.NodeJS.LTS" = "OpenJS.NodeJS.LTS"
+    "DataRecovery: EaseUS.DataRecovery" = "EaseUS.DataRecovery"
+    "Partition: MiniTool.PartitionWizard.Free" = "MiniTool.PartitionWizard.Free"
+    "Social: Facebook.Messenger" = "Facebook.Messenger"
+    "Social: WhatsApp.WhatsApp" = "WhatsApp.WhatsApp"
+    "Storage: Google.Drive" = "Google.Drive"
+    "Storage: Microsoft.OneDrive" = "Microsoft.OneDrive"
+    "Note: Notepad++.Notepad++" = "Notepad++.Notepad++"
+    "Note: Apache.OpenOffice" = "Apache.OpenOffice"
+    "Test: PrimateLabs.Geekbench.5" = "PrimateLabs.Geekbench.5"
+    "Downloader: qBittorrent.qBittorrent" = "qBittorrent.qBittorrent"
+    "Video: VideoLAN.VLC" = "VideoLAN.VLC"
+    "Uninstaller: RevoUninstaller.RevoUninstallerPro" = "RevoUninstaller.RevoUninstallerPro"
+    "Cleaner: Glarysoft.GlaryUtilities" = "Glarysoft.GlaryUtilities"
+}
+
+# Create dropdown menu for recommended apps
+$dropdownMenu = New-Object System.Windows.Forms.ComboBox
+$dropdownMenu.Location = New-Object System.Drawing.Point(50,5)
+$dropdownMenu.Size = New-Object System.Drawing.Size(200, 30)
+$dropdownMenu.DropDownStyle = "DropDownList"
+
+# Define the order of keys
+$orderedKeys = @(
+    "Browsers: Google.Chrome",
+    "Archiver: 7zip.7zip",
+    "Archiver: RARLab.WinRAR",
+    "Remote: Datronicsoft.SpacedeskDriver.Server",
+    "Remote: Google.ChromeRemoteDesktop",
+    "Code: GitHub.GitHubDesktop",
+    "Code: Microsoft.VisualStudioCode",
+    "Code: OpenJS.NodeJS.LTS",
+    "DataRecovery: EaseUS.DataRecovery",
+    "Partition: MiniTool.PartitionWizard.Free",
+    "Social: Facebook.Messenger",
+    "Social: WhatsApp.WhatsApp",
+    "Storage: Google.Drive",
+    "Storage: Microsoft.OneDrive",
+    "Note: Notepad++.Notepad++",
+    "Note: Apache.OpenOffice",
+    "Test: PrimateLabs.Geekbench.5",
+    "Downloader: qBittorrent.qBittorrent",
+    "Video: VideoLAN.VLC",
+    "Uninstaller: RevoUninstaller.RevoUninstallerPro",
+    "Cleaner: Glarysoft.GlaryUtilities"
+)
+
+foreach ($key in $orderedKeys) {
+    $id = $recommendedApps[$key]
+    $item = "$key ($id)"
+    [void]$dropdownMenu.Items.Add($item)
+    #Write-Host "Added to dropdown: $item"
+}
+
+$form.Controls.Add($dropdownMenu)
+
+
+
+
+
+# Create Add to List button
+$addButton = New-Object System.Windows.Forms.Button
+$addButton.Location = New-Object System.Drawing.Point(260,5)
+$addButton.Size = New-Object System.Drawing.Size(60, 30)
+$addButton.Text = "Add"
+$addButton.Add_Click({
+    if ($dropdownMenu.SelectedItem) {
+    #Write-Host "No application found.$dropdownMenu"
+        $selectedOption = $dropdownMenu.SelectedItem.ToString()
+        #Write-Host ""
+        #Write-Host "$selectedOption"
+        $selectedOption2 = $dropdownMenu.SelectedItem
+        #Write-Host "$selectedOption2[0]"
+        #Write-Host ""
+        $selectedApp = $selectedOption.Split('(')[1].Trim(')').Trim()
+        $app = $selectedOption.Split('(')[0].Trim(')').Trim()
+        #Write-Host "$selectedApp"
+        #Write-Host "$app"
+        $listBox.Items.Add("$app --- ( $selectedApp )")  # Add app to list box
+        #Write-Host "$listBox"
+    }
+})
+$form.Controls.Add($addButton)
+
+# Add event handler to the dropdown menu to install the selected app
+$dropdownMenu.Add_SelectedIndexChanged({
+    if ($dropdownMenu.SelectedItem) {
+        $selectedOption = $dropdownMenu.SelectedItem.ToString()
+        $selectedApp = $selectedOption.Split('(')[1].Trim(')').Trim()
+        #Install-App $selectedApp
+    }
+})
+
+
+# Show the form
+$form.ShowDialog() | Out-Null
+
+# EndExtractH11
+
+Pause
+::::========================
 ::END Script
 ::================================
 
