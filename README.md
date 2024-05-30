@@ -1,5 +1,5 @@
 # PEDToolBox
-# Version : 1.280.4.240530
+## Version : 1.281.1.240530
 #### Windows 10 and 11 -Speed Up , Repair, Update, Optimize, Clean Junk, Download Apps, Uninstaller, Deployed Bloatware, and more
 
 - PEDToolBox is a powerful utility designed to optimize, speed up, and repair Windows 10 and 11. Developed by PierMobayed, this batch script provides both auto and manual commands to enhance your Windows experience. Here are some of its key features:
@@ -15,23 +15,22 @@
 
 - Please note that this tool is provided “as is” and should be used at your own risk. If you encounter any issues or have feedback, you can reach out to the developer at:
 ## pedtoolbox@gmail.com.
-- To run PEDToolBox, you can use the following commands:
 
+## To run PEDToolBox, you can use the following commands:
 
-## CMD or RUN Link  
-
+### CMD or RUN links:
+##### Link 1:
     powershell iex(irm rebrand.ly/pedbox)
-#### or
-
+##### Link 2:
     powershell irm rebrand.ly/pedbox | iex
-#### or
+##### Link 3:
 
     cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
 
-## PowerShell Link 
-
+### PowerShell links:
+##### Link 4:
     iex(irm rebrand.ly/pedbox)
-#### or
+##### Link 5:
 
     irm rebrand.ly/pedbox | iex
 
@@ -42,7 +41,8 @@
 #### Windows 10 optimization , Speed up windows 10 , Repair windows 10
 #### Windows 11 optimization , Speed up windows 11 , Repair windows 11
 
-## Main Menu
+## Overview
+### Main Menu
     "[+] ------ : Create a restore point:"
     "[+] Step 0 : Test and Diagnostic:"
      
@@ -59,7 +59,7 @@
     "[ ] One Click Maintenance and Clean"
 
 
-## Create a restore point:
+### Create a restore point:
     "-|NEXT|- Step 0 : Test and Diagnostic:" 
     "-|BACK|- Main Menu:"
     "-|MAIN MENU|- " 
