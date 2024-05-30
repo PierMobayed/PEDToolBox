@@ -1,5 +1,5 @@
-#ver-1.0.2.4
-#24/02/15/11:05
+#ver-1.0.2.5
+#24/05/30/14:00
 $fileLinkID = "https://raw.githubusercontent.com/PierMobayed/PEDToolBox/main/PED-ToolBox.bat"
 #$fileLinkID = "https://rebrand.ly/pedboxbat"
 #https://raw.githubusercontent.com/PierMobayed/PEDToolBox/main/PED-ToolBox.bat
@@ -15,9 +15,11 @@ Start-Process -FilePath $filePath
 
 #exit
 
+#Notes.
+#web link:
 #https://raw.githubusercontent.com/PierMobayed/PEDToolBox/main/PED.ps1
-#irm https://raw.githubusercontent.com/PierMobayed/PEDToolBox/main/ped.ps1 | iex
 #https://rebrand.ly/pedbox
-#https://rebrand.ly/pedboxbat
 
+#powershell link:
+#irm https://raw.githubusercontent.com/PierMobayed/PEDToolBox/main/ped.ps1 | iex
 #iex(irm rebrand.ly/pedbox)
