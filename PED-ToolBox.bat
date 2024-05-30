@@ -47,8 +47,25 @@ REM		Short link in CMD or RUN:
 :: powershell iex (irm 'https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/PED.ps1')
 
 ::================================
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+:m0a.reset
+::================================
+REM Account Password reset
+:: In System cmd type: ped-toolbox.bat pass
+if "%1"=="pass" goto m1a.x02.4.1.AccountPasswordReset
+
+:m0a.admin
+::================================
+	REM Check admin
+	set "vbsGetPrivileges=%temp%\OEgetPriv.vbs"
+	NET FILE 1>NUL 2>NUL
+	if not %errorlevel% == 0 (goto m0a.x02.getPrivileges)
+	takeown /f "C:\ProgramData"
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :m0a.x
+cls
 ::================================
 echo Welcome to PED Tool Box
 ::================================
@@ -62,15 +79,13 @@ REM		GitHub: https://github.com/piermobayed
 REM		Web project: https://github.com/PierMobayed/PEDToolBox
 
 :: Set version
-set "versionTool=PED-ToolBox-1.281.1.240530"
+set "versionTool=PED-ToolBox-1.281.2.240530"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :m0a.x01.DirectoryPED
 ::================================
-REM Account Password reset
-:: In System cmd type: ped-toolbox.bat pass
-if "%1"=="pass" goto m1a.x02.4.1.AccountPasswordReset
+
 
 ::Check if the source file is the same as the destination file
 set "shortcutExtantion=%~x0"
@@ -98,20 +113,23 @@ set "destinationDir=C:\ProgramData\PEDToolBox\"
 
 set "sourceFile=%~f0"
 set "destinationFile=%destinationDir%%~nx0"
-
+	
 if /I "%sourceFile%" NEQ "%destinationFile%" (
+
 	echo.
 	echo Thank you for using %ver%
 	echo.
 	echo.
 	echo The script will Download and Install cmd menu after:
 	timeout 15 
+	
     REM Check if the destination directory exists
+
     if not exist "%destinationDir%" (
         echo Destination directory does not exist. Creating directory...
         mkdir "%destinationDir%"
     )
-
+	
     REM Check if the destination file exists
     if exist "%destinationFile%" (
         echo Old file exists. Deleting old file...
@@ -119,9 +137,9 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
     )
 	echo.
 	echo ...[10%]...
-	
+
     REM Copy the script to the destination
-	takeown /f "C:\ProgramData"
+	
     echo Copying itself to destination...
     copy "%sourceFile%" "%destinationFile%"
 
@@ -185,6 +203,7 @@ exit
 
 :m0a.x02.gotPrivileges
 ::================================
+
 setlocal & pushd .
 cd /d %~dp0
 echo.
@@ -193,9 +212,9 @@ echo ...[80%]...
 if not "%1"=="max" start /MAX cmd /c %0 max & exit
 
 :m01.x03.takeown
-cmd.exe /c takeown /f \"c:\ProgramData" /r /d y && icacls \"c:\ProgramData" /grant administrators:F /t
+::cmd.exe /c takeown /f \"c:\ProgramData" /r /d y && icacls \"c:\ProgramData" /grant administrators:F /t
 ::cmd.exe /c takeown /f \"%1\" /r /d y && icacls \"%1\" /grant administrators:F /t
-
+takeown /f "C:\ProgramData"
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::START
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -210,7 +229,6 @@ echo.
 ::========
 :m0a.x11.mainVariables1
 ::================================
-
 set "PEDRecoveryFolder=%SYSTEMDRIVE%\PED-Recovery"
 
 set "shortcutToLocation=0"
@@ -6268,8 +6286,8 @@ REM 0-continue, 1-Delete
 set "deleteExistingFunction=1"
 
 REM Starting Function after Creation
-REM 0-continue, 1-Start
-set "fileStart=1"
+REM 0-continue, 1-Start in new windows, 2-Start in current console
+set "fileStart=2"
 
 REM Pause after CreateFunction complete
 REM 0-continue, 1-pause, 2-timeOut 15 Seconds,
@@ -6344,6 +6362,11 @@ REM Check if Starting Function is empty
 if "%fileStart%"=="1" (
 	Start %psC% "%fileFunctionDir%"
 	set "fileStart="
+) else ( 
+	if "%fileStart%"=="2" (
+	%psC% "%fileFunctionDir%"
+	set "fileStart="
+	)
 )
 
 
@@ -8588,8 +8611,8 @@ REM 0-continue, 1-Delete
 set "deleteExistingFunction=1"
 
 REM Starting Function after Creation
-REM 0-continue, 1-Start
-set "fileStart=1"
+REM 0-continue, 1-Start in new windows, 2-Start in current console
+set "fileStart=2"
 
 REM Pause after CreateFunction complete
 REM 0-continue, 1-pause, 2-timeOut 15 Seconds,
@@ -8966,6 +8989,19 @@ REM powershell -command iex(irm bit.ly/pedboxpc)
 REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; .\p.cmd(irm t.ly/pedbox -o p.cmd)"
 REM powershell .\p.cmd(irm bit.ly/pedbox -o p.cmd)
 REM not work  - powershell .\p.exe(irm t.ly/pedexe -o p.exe)
+
+REM from git
+
+REM CMD or RUN Link  
+REM powershell iex(irm rebrand.ly/pedbox)
+REM powershell irm rebrand.ly/pedbox | iex
+REM cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
+REM cmd.exe /c powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://rebrand.ly/pedbox'))""
+REM powershell .\p cmd(irm rebrand.ly/pedboxbat -o p.cmd)
+
+REM PowerShell Link 
+REM iex(irm rebrand.ly/pedbox)
+REM irm rebrand.ly/pedbox | iex
 ::=======================================================================
 
 REM %extd% /browseforfile "Browse for a file" "" "EXE (*.exe)|*.exe|BAT (*.bat)|*.bat" 1
