@@ -1,6 +1,7 @@
 #ver-1.0.2.4
 #24/02/15/11:05
-$fileLinkID = "https://rebrand.ly/pedboxbat"
+$fileLinkID = "https://raw.githubusercontent.com/PierMobayed/PEDToolBox/main/PED-ToolBox.bat"
+#$fileLinkID = "https://rebrand.ly/pedboxbat"
 #https://raw.githubusercontent.com/PierMobayed/PEDToolBox/main/PED-ToolBox.bat
 $nameFile = "PED-ToolBox.bat"
 #$filePath = Join-Path -Path $PWD -ChildPath $nameFile
@@ -17,5 +18,6 @@ Start-Process -FilePath $filePath
 #https://raw.githubusercontent.com/PierMobayed/PEDToolBox/main/PED.ps1
 #irm https://raw.githubusercontent.com/PierMobayed/PEDToolBox/main/ped.ps1 | iex
 #https://rebrand.ly/pedbox
+#https://rebrand.ly/pedboxbat
 
 #iex(irm rebrand.ly/pedbox)
