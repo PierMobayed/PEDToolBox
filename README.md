@@ -1,12 +1,48 @@
 # PEDToolBox
-#### Windows 10 optimization , Speed up windows 10 , Repair windows 10
-#### Windows 11 optimization , Speed up windows 11 , Repair windows 11
+# Version : 1.280.4.240530
 #### Windows 10 and 11 -Speed Up , Repair, Update, Optimize, Clean Junk, Download Apps, Uninstaller, Deployed Bloatware, and more
 
+- PEDToolBox is a powerful utility designed to optimize, speed up, and repair Windows 10 and 11. Developed by PierMobayed, this batch script provides both auto and manual commands to enhance your Windows experience. Here are some of its key features:
 
-- This batch script create auto or manual commands to optimize windows 10 and 11.
+- Create Restore Points: Safeguard your system before making changes.
+- System Repair: Scaning system for Updates, Drivers, Maintenance, Virus and  Corrupted files
+- Privacy Settings: Adjust privacy options to your preference.
+- Program Management: Install, uninstall, or update programs with ease.
+- Startup Cleanup: Streamline startup processes.
+- System Optimization: It helps improve system performance by fine-tuning settings and cleaning up unnecessary services and schedule tasks.
+- Junk File Cleanup: Remove unnecessary files.
+- System App Management: Enable or disable specific system apps.
 
-## Overview
+- Please note that this tool is provided “as is” and should be used at your own risk. If you encounter any issues or have feedback, you can reach out to the developer at:
+## pedtoolbox@gmail.com.
+- To run PEDToolBox, you can use the following commands:
+
+
+## CMD or RUN Link  
+
+    powershell iex(irm rebrand.ly/pedbox)
+#### or
+
+    powershell irm rebrand.ly/pedbox | iex
+#### or
+
+    cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
+
+## PowerShell Link 
+
+    iex(irm rebrand.ly/pedbox)
+#### or
+
+    irm rebrand.ly/pedbox | iex
+
+- Feel free to explore the GitHub repository for more details. 🚀
+
+
+
+#### Windows 10 optimization , Speed up windows 10 , Repair windows 10
+#### Windows 11 optimization , Speed up windows 11 , Repair windows 11
+
+## Main Menu
     "[+] ------ : Create a restore point:"
     "[+] Step 0 : Test and Diagnostic:"
      
@@ -21,39 +57,9 @@
     "[+] Power Menu"
      
     "[ ] One Click Maintenance and Clean"
-  
-- Use on your own risk .
-- On my test machines working well ,but is still test.
-- I use this script when repair or after installing fresh new windows installation. 
-## Enjoy and if you find any bug please write on Issues section or email on :pedtoolbox@gmail.com.
 
 
-
-## CMD or RUN Link  
-
-    powershell iex(irm rebrand.ly/pedbox)
-#### or
-
-    powershell irm rebrand.ly/pedbox | iex
-#### or
-
-- cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
-- cmd.exe /c powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://rebrand.ly/pedbox'))""
-- powershell .\p cmd(irm rebrand.ly/pedboxbat -o p.cmd)
-
-## PowerShell Link 
-
-    iex(irm rebrand.ly/pedbox)
-#### or
-
-    irm rebrand.ly/pedbox | iex
-
-
-
-
-## More Overview
-Create a restore point:
-
+## Create a restore point:
     "-|NEXT|- Step 0 : Test and Diagnostic:" 
     "-|BACK|- Main Menu:"
     "-|MAIN MENU|- " 

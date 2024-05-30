@@ -62,7 +62,7 @@ REM		GitHub: https://github.com/piermobayed
 REM		Web project: https://github.com/PierMobayed/PEDToolBox
 
 :: Set version
-set "versionTool=PED-ToolBox-1.279.1.240504"
+set "versionTool=PED-ToolBox-1.281.1.240530"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -192,6 +192,10 @@ echo ...[80%]...
 ::Max screen
 if not "%1"=="max" start /MAX cmd /c %0 max & exit
 
+:m01.x03.takeown
+cmd.exe /c takeown /f \"c:\ProgramData" /r /d y && icacls \"c:\ProgramData" /grant administrators:F /t
+::cmd.exe /c takeown /f \"%1\" /r /d y && icacls \"%1\" /grant administrators:F /t
+
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::START
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -258,12 +262,17 @@ set "startOneClick=0"
 set "startOneClickTwo=0"
 set "psP=Powershell.exe Set-ExecutionPolicy Bypass -Scope Process -Force;"
 set "psC=powershell.exe -ExecutionPolicy Bypass -Command"
-set "psA=powershell iex(irm rebrand.ly/pedlog -o p.log)"
+set "psA=powershell iex(irm rebrand.ly/pedboxlog -o p.log)"
 set "psB=cscript //nologo "%vbsGetPrivileges%""
 set "timeoutA=timeout 2 /nobreak>nul"
 set title=title Power Every Day - ToolBox
 set color1=COLOR 0A
 
+:m0a.x14.mainVariables3
+::================================
+
+REM PED data:
+set "datafile-Optimizer=16.5"
 
 REM Rest commands
 if %shortcutToLocation% == desktop (
@@ -319,13 +328,16 @@ set mm=
 set mm= %mm% "[ ] Administrator: %username%"
 set mm= %mm% "[ ] Trusted Installer"
 set mm= %mm% ""
-set mm= %mm% "[ ] Download files"
-
+set mm= %mm% "[ ] Download all PED data files"
+set mm= %mm% ""
+set mm= %mm% "[p] Get latest update script"
 cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 goto startPED
 if %ERRORLEVEL% == 2 goto m0a.x22.TrustedInstaller
 if %ERRORLEVEL% == 3 goto %menu%
 if %ERRORLEVEL% == 4 goto r3a.x10.0.downloadList
+if %ERRORLEVEL% == 5 goto %menu%
+if %ERRORLEVEL% == 6 powershell iex(irm rebrand.ly/pedbox)
 
 exit
 
@@ -632,13 +644,13 @@ set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 
-set "fileLocation=Optimizer-15.8.exe"
+set "fileLocation=Optimizer-%datafile-Optimizer%.exe"
 set isItZip=n
 
-set "fileLinkID=https://github.com/hellzerg/optimizer/releases/download/16.4/Optimizer-16.4.exe"
+set "fileLinkID=https://github.com/hellzerg/optimizer/releases/download/16.5/Optimizer-16.5.exe"
 
 ::https://objects.githubusercontent.com/github-production-release-asset-2e65be/103370157/63ccec92-6957-4a1b-8c33-cb37a40a175e?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240322%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240322T163823Z&X-Amz-Expires=300&X-Amz-Signature=cffda623f9952d91487c4f4ae829723fb08567df6cdee3228049b798bd156efa&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=103370157&response-content-disposition=attachment%3B%20filename%3DOptimizer-16.4.exe&response-content-type=application%2Foctet-stream
-::set "fileLinkID=https://github.com/hellzerg/optimizer/releases/download/15.8/Optimizer-15.8.exe"
+
 ::https://github.com/hellzerg/optimizer
 
 call :r3a.x01.0.downloadFunction
@@ -1398,14 +1410,15 @@ goto %menu%
 cls
 set "downloadFiles=:r3a.x11.1.3.downLoadF-1.3.Optimizer"
 set "directoryFiles=Data\1.Optimizer\1.3.Optimizer"
-set "nameFiles=Optimizer-15.4.exe"
+set "nameFiles=Optimizer-%datafile-Optimizer%.exe"
 
 ::Function
 set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
 if not exist "%startFiles%" (
 	call %downloadFiles%
 )
-start cmd /c %startFiles%
+
+start %startFiles%
 
 goto %menu%
 
@@ -2954,16 +2967,22 @@ set "menuC=onlyA"
 call :mStyle
 set "menuD2= "
 
+rem function:
 set "sourceRoboCopy="
 set "destinationRoboCopy="
+
 setlocal
 set /p sourceRoboCopy=Type source:
 set /p destinationRoboCopy=Type destination:
 
+REM Sample copy /Backup
 robocopy "%sourceRoboCopy%" "%destinationRoboCopy%" /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /LOG+:C:\robocopy.log /TEE
+
+REM Mirror copy
 ::robocopy "%sourceRoboCopy%" "%destinationRoboCopy%" /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /MIR /LOG+:C:\robocopy.log /TEE
 
 endlocal
+
 set "sourceRoboCopy="
 set "destinationRoboCopy="
 
@@ -3576,11 +3595,10 @@ if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
-if %ERRORLEVEL% == 6 goto m1a.x3.1.2.wingetGUI
-::if %ERRORLEVEL% == 6 start /min %psP% iex (irm 'https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1')
-::if %ERRORLEVEL% == 6 %psP% iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1'))
 
+if %ERRORLEVEL% == 6 goto m1a.x3.1.2.wingetGUI
 if %ERRORLEVEL% == 7 goto %menu%
+
 if %ERRORLEVEL% == 8 (
 	cls
 	echo.
@@ -3589,11 +3607,16 @@ if %ERRORLEVEL% == 8 (
 	goto m1a.x3.1.1.pedAppInstallerLinks
 )
 if %ERRORLEVEL% == 9 goto %menu%
+
 if %ERRORLEVEL% == 10 start https://winstall.app/
 if %ERRORLEVEL% == 11 start https://www.ninite.com
 if %ERRORLEVEL% == 12 start https://portableapps.com/apps
 
 goto %menu%
+
+::if %ERRORLEVEL% == 6 start /min %psP% iex (irm 'https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1')
+::if %ERRORLEVEL% == 6 %psP% iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1'))
+
 
 :m1a.x3.1.1.pedAppInstallerLinks
 ::================================
@@ -3715,15 +3738,19 @@ set "directoryFiles=files\wingetGUI"
 set "nameFiles=PED-wingetGUI.ps1"
 
 ::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-if not exist %startFiles% (
+
 	call :r3a.x12.5.downLoadF-wingetGui
 	call %downloadFiles%
-)
-%psP% %startFiles%
+
 
 goto %menu%
 
+::set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+::if not exist %startFiles% (
+::	call :r3a.x12.5.downLoadF-wingetGui
+::	call %downloadFiles%
+::)
+::%psP% %startFiles%
 
 :m1a.x3.2.1.debloat
 ::================================
@@ -3848,7 +3875,7 @@ IF EXIST "%UserProfile%\3D Objects" start %windir%\explorer.exe %UserProfile%\3D
 IF EXIST "%UserProfile%\Contacts" start %windir%\explorer.exe %UserProfile%\Contacts
 IF EXIST "%UserProfile%\Favorites" start %windir%\explorer.exe %UserProfile%\Favorites
 IF EXIST "%UserProfile%\Links" start %windir%\explorer.exe %UserProfile%\Links
-IF EXIST "%UserProfile%\Saved" start %windir%\explorer.exe %UserProfile%\Saved Games
+::IF EXIST "%UserProfile%\Saved Games" start %windir%\explorer.exe %UserProfile%\Saved Games
 IF EXIST "%UserProfile%\Searches" start %windir%\explorer.exe %UserProfile%\Searches
 
 echo.
@@ -3859,7 +3886,7 @@ IF EXIST "%UserProfile%\3D Objects" rmdir /s /q "%UserProfile%\3D Objects" && Re
 IF EXIST "%UserProfile%\Contacts" rmdir /s /q "%UserProfile%\Contacts"
 IF EXIST "%UserProfile%\Favorites" rmdir /s /q "%UserProfile%\Favorites"
 IF EXIST "%UserProfile%\Links" rmdir /s /q "%UserProfile%\Links"
-IF EXIST "%UserProfile%\Saved Games" rmdir /s /q "%UserProfile%\Saved Games"
+::IF EXIST "%UserProfile%\Saved Games" rmdir /s /q "%UserProfile%\Saved Games"
 IF EXIST "%UserProfile%\Searches" rmdir /s /q "%UserProfile%\Searches"
 
 
@@ -6237,10 +6264,12 @@ set "startMark=# StartExtract#CODE"
 set "endMark=# EndExtract#CODE"
 
 REM Delete existing Function
+REM 0-continue, 1-Delete
 set "deleteExistingFunction=1"
 
 REM Starting Function after Creation
-set "fileStart=START %fileFunctionDir%"
+REM 0-continue, 1-Start
+set "fileStart=1"
 
 REM Pause after CreateFunction complete
 REM 0-continue, 1-pause, 2-timeOut 15 Seconds,
@@ -6312,8 +6341,8 @@ if exist "%fileFunctionDir%" (
 )
 
 REM Check if Starting Function is empty
-if not "%fileStart%"=="" (
-	%fileStart% "%fileFunctionDir%"
+if "%fileStart%"=="1" (
+	Start %psC% "%fileFunctionDir%"
 	set "fileStart="
 )
 
@@ -8555,10 +8584,12 @@ set "startMark=# StartExtractH11"
 set "endMark=# EndExtractH11"
 
 REM Delete existing Function
-set "deleteExistingFunction=0"
+REM 0-continue, 1-Delete
+set "deleteExistingFunction=1"
 
 REM Starting Function after Creation
-set "fileStart="
+REM 0-continue, 1-Start
+set "fileStart=1"
 
 REM Pause after CreateFunction complete
 REM 0-continue, 1-pause, 2-timeOut 15 Seconds,
@@ -8639,6 +8670,8 @@ function Get-WingetAppInfo ($SearchApp) {
     return $searchList
 }
 
+#ver - 1.21.240522
+
 # Create the GUI form
 Add-Type -AssemblyName System.Windows.Forms
 
@@ -8691,34 +8724,39 @@ $installButton.Text = "Install"
 $installButton.Add_Click({
     if ($listBox.SelectedItem) {
         $selectedApp = $listBox.SelectedItem.ToString().Split('(')[1].Trim(')').Trim()
-        # Show progress bar during installation
-        $progressBar.Style = "Continuous"
-        $progressBar.Value = 0
-        $progressBar.Maximum = 100
-        $form.Controls.Add($progressBar)
-        $form.Refresh()
 
-        # Use winget install command to install the selected app
-        $installProcess = Start-Process -FilePath "winget" -ArgumentList "install", $selectedApp, "-h" -PassThru -WindowStyle Hidden
-        while (^!$installProcess.HasExited) {
-            $progressBar.PerformStep()
-            $form.Refresh()
-            Start-Sleep -Milliseconds 100
+        # Use Start-Process to run the winget install command and wait for it to complete
+        $process = Start-Process -FilePath "winget" -ArgumentList "install", $selectedApp, "-h" -NoNewWindow -Wait -PassThru
+
+        if ($process.ExitCode -eq 0) {
+            [System.Windows.Forms.MessageBox]::Show("$selectedApp installed successfully!", "Success")
+        } else {
+            [System.Windows.Forms.MessageBox]::Show("Failed to install $selectedApp. Please check the console for more details.", "Error")
         }
-        $progressBar.Value = 100
-        $form.Refresh()
-        [System.Windows.Forms.MessageBox]::Show("$selectedApp installed successfully^!", "Success")
-        $form.Controls.Remove($progressBar)
+
+        # Clear the console
+        Clear-Host
     } else {
         [System.Windows.Forms.MessageBox]::Show("Please select an app to install.", "Error")
     }
 })
 $form.Controls.Add($installButton)
 
+
+# Create Label for progress status
+$progressLabel = New-Object System.Windows.Forms.Label
+$progressLabel.Location = New-Object System.Drawing.Point(50,350) # Changed the location to align with progress bar
+$progressLabel.Size = New-Object System.Drawing.Size(320,20)
+$form.Controls.Add($progressLabel)
+
 # Create progress bar
 $progressBar = New-Object System.Windows.Forms.ProgressBar
-$progressBar.Location = New-Object System.Drawing.Point(50,350)
+$progressBar.Location = New-Object System.Drawing.Point(50,370) # Changed the location to align with label
 $progressBar.Size = New-Object System.Drawing.Size(320,20)
+$form.Controls.Add($progressBar)
+$progressBar.Visible = $false
+
+# PedWingetGUI-apps.ps1
 
 # Define recommended apps and their IDs
 $recommendedApps = @{
@@ -8727,7 +8765,7 @@ $recommendedApps = @{
     "Archiver: RARLab.WinRAR" = "RARLab.WinRAR"
     "Remote: Datronicsoft.SpacedeskDriver.Server" = "Datronicsoft.SpacedeskDriver.Server"
     "Remote: Google.ChromeRemoteDesktop" = "Google.ChromeRemoteDesktop"
-    "Code: GitHub.GitHubDesktop" = "GitHub.GitHubDeskt"
+    "Code: GitHub.GitHubDesktop" = "GitHub.GitHubDesktop"
     "Code: Microsoft.VisualStudioCode" = "Microsoft.VisualStudioCode"
     "Code: OpenJS.NodeJS.LTS" = "OpenJS.NodeJS.LTS"
     "DataRecovery: EaseUS.DataRecovery" = "EaseUS.DataRecovery"
@@ -8745,11 +8783,6 @@ $recommendedApps = @{
     "Cleaner: Glarysoft.GlaryUtilities" = "Glarysoft.GlaryUtilities"
 }
 
-# Create dropdown menu for recommended apps
-$dropdownMenu = New-Object System.Windows.Forms.ComboBox
-$dropdownMenu.Location = New-Object System.Drawing.Point(50,5)
-$dropdownMenu.Size = New-Object System.Drawing.Size(200, 30)
-$dropdownMenu.DropDownStyle = "DropDownList"
 
 # Define the order of keys
 $orderedKeys = @(
@@ -8776,18 +8809,19 @@ $orderedKeys = @(
     "Cleaner: Glarysoft.GlaryUtilities"
 )
 
+# Create dropdown menu for recommended apps
+$dropdownMenu = New-Object System.Windows.Forms.ComboBox
+$dropdownMenu.Location = New-Object System.Drawing.Point(50,5)
+$dropdownMenu.Size = New-Object System.Drawing.Size(200, 30)
+$dropdownMenu.DropDownStyle = "DropDownList"
+
 foreach ($key in $orderedKeys) {
     $id = $recommendedApps[$key]
     $item = "$key ($id)"
     [void]$dropdownMenu.Items.Add($item)
-    #Write-Host "Added to dropdown: $item"
 }
 
 $form.Controls.Add($dropdownMenu)
-
-
-
-
 
 # Create Add to List button
 $addButton = New-Object System.Windows.Forms.Button
@@ -8796,19 +8830,10 @@ $addButton.Size = New-Object System.Drawing.Size(60, 30)
 $addButton.Text = "Add"
 $addButton.Add_Click({
     if ($dropdownMenu.SelectedItem) {
-    #Write-Host "No application found.$dropdownMenu"
         $selectedOption = $dropdownMenu.SelectedItem.ToString()
-        #Write-Host ""
-        #Write-Host "$selectedOption"
-        $selectedOption2 = $dropdownMenu.SelectedItem
-        #Write-Host "$selectedOption2[0]"
-        #Write-Host ""
         $selectedApp = $selectedOption.Split('(')[1].Trim(')').Trim()
         $app = $selectedOption.Split('(')[0].Trim(')').Trim()
-        #Write-Host "$selectedApp"
-        #Write-Host "$app"
         $listBox.Items.Add("$app --- ( $selectedApp )")  # Add app to list box
-        #Write-Host "$listBox"
     }
 })
 $form.Controls.Add($addButton)
@@ -8818,10 +8843,8 @@ $dropdownMenu.Add_SelectedIndexChanged({
     if ($dropdownMenu.SelectedItem) {
         $selectedOption = $dropdownMenu.SelectedItem.ToString()
         $selectedApp = $selectedOption.Split('(')[1].Trim(')').Trim()
-        #Install-App $selectedApp
     }
 })
-
 
 # Show the form
 $form.ShowDialog() | Out-Null
@@ -8857,10 +8880,13 @@ REM		x		-step
 REM m0a.x first permision menu
 REM m1a.x main menu with links
 REM m2a.x oneClick menu
+
 REM r3a.x download Resources
-REM r4a.x Resources
+REM r4a.x Execute Resources
 REM r5a.x create files
+
 REM m9a.x power menu
+
 
 ::=======================================================================
 REM History:
@@ -8883,7 +8909,7 @@ REM DigiCertUtil
 REM https://digicert.com/StaticFiles/DigiCertUtil.zip
 
 ::=======================================================================
-::Check this create Shortcut
+::Check this -create Shortcut
 ::@echo off
 ::setlocal
 ::
