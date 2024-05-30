@@ -8966,6 +8966,19 @@ REM powershell -command iex(irm bit.ly/pedboxpc)
 REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; .\p.cmd(irm t.ly/pedbox -o p.cmd)"
 REM powershell .\p.cmd(irm bit.ly/pedbox -o p.cmd)
 REM not work  - powershell .\p.exe(irm t.ly/pedexe -o p.exe)
+
+REM from git
+
+REM CMD or RUN Link  
+REM powershell iex(irm rebrand.ly/pedbox)
+REM powershell irm rebrand.ly/pedbox | iex
+REM cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
+REM cmd.exe /c powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://rebrand.ly/pedbox'))""
+REM powershell .\p cmd(irm rebrand.ly/pedboxbat -o p.cmd)
+
+REM PowerShell Link 
+REM iex(irm rebrand.ly/pedbox)
+REM irm rebrand.ly/pedbox | iex
 ::=======================================================================
 
 REM %extd% /browseforfile "Browse for a file" "" "EXE (*.exe)|*.exe|BAT (*.bat)|*.bat" 1
