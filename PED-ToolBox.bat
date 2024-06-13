@@ -14,8 +14,8 @@
 ::dAsiuh18IRvcCxnZtBJQ
 ::cRYluBh/LU+EWAnk
 ::YxY4rhs+aU+IeA==
-::cxY6rQJ7JhzQF1fEqQJhZkkaG1zMbQs=
-::ZQ05rAF9IBncCkqN+0xwdVsFAlbMazP0V9U=
+::cxY6rQJ7JhzQF1fEqQJhZkkaFFXMbgs=
+::ZQ05rAF9IBncCkqN+0xwdVsFAlbMZDr0VNU=
 ::ZQ05rAF9IAHYFVzEqQIADT8ZeAuNMEm1HtU=
 ::eg0/rx1wNQPfEVWB+kM9LVsJDDSnGCaOCboQyufjjw==
 ::fBEirQZwNQPfEVWB+kM9LVsJDDSnGCaOCboQyufjjw==
@@ -46,6 +46,15 @@ REM		Short link in CMD or RUN:
 :: powershell iex(irm rebrand.ly/pedbox)
 :: powershell iex (irm 'https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/PED.ps1')
 
+REM		NOTES
+REM		Author: PierMobayed @PierMTech
+REM		GitHub: https://github.com/piermobayed
+REM		Web project page: https://github.com/PierMobayed/PEDToolBox
+REM		Web project readme: https://piermobayed.github.io/PEDToolBox
+
+REM		Web project file: https://piermobayed.github.io/PEDToolBox/PED.ps1
+REM		Web project file: https://piermobayed.github.io/PEDToolBox/PED-ToolBox.bat
+
 ::================================
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -54,6 +63,7 @@ REM		Short link in CMD or RUN:
 REM Account Password reset
 :: In System cmd type: ped-toolbox.bat pass
 if "%1"=="pass" goto m1a.x02.4.1.AccountPasswordReset
+if "%systemdrive%"=="X:" goto m1a.x02.4.1.AccountPasswordReset
 
 :m0a.admin
 ::================================
@@ -73,13 +83,9 @@ echo.
 ::========
 :m0a.x0.Version
 ::================================
-REM		NOTES
-REM		Author: PierMobayed @PierMTech
-REM		GitHub: https://github.com/piermobayed
-REM		Web project: https://github.com/PierMobayed/PEDToolBox
 
 :: Set version
-set "versionTool=PED-ToolBox-1.281.2.240530"
+set "versionTool=PED-ToolBox-1.282.3.240606"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -1302,6 +1308,23 @@ goto %menu%
 ::start cmd /c "%startFiles% -a && pause"
 ::start cmd /c "%startFiles% -A && pause"
 
+:r4a.x0.7.backupDrivers
+::================================
+cls
+set "downloadFiles=:r5a.x3.3.backupDrivers"
+set "directoryFiles=files"
+set "nameFiles=Backup_or_Restore_Device_Drivers.bat"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+	call %downloadFiles%
+)
+REM Promqna
+start cmd /c "%startFiles%"
+REM Promqna
+goto %menu%
+
 :r4a.x1.Optimizer
 ::================================
 set menu=r4a.x1.Optimizer
@@ -1776,6 +1799,41 @@ start %startFiles%
 
 goto %menu%
 
+:r4a.x6.01.YTvideos
+::================================
+cls
+REM Variable
+:: Directory Folder
+set "directoryFiles=Data\3.Scripts\youtube-dl"
+
+:: File name
+set "nameFiles=youtube-dl.exe"
+
+:: URL link
+set "fileLinkID=https://github.com/ytdl-org/youtube-dl/releases/download/2021.12.17/youtube-dl.exe"
+
+:: is it Zip
+set isItZip=n
+
+::download Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+if not exist "%startFiles%" (
+
+	set "destination=%destinationPD%\%directoryFiles%"
+	if not exist "%destination%\." mkdir "%destination%"
+
+	set "fileLocation=%nameFiles%"
+	call :r3a.x01.0.downloadFunction
+
+)
+
+SET /P "URL=[Enter video URL] "
+::set "URL=%appYT:&=^&%"
+%startFiles% "%URL%" -o "%UserProfile%/Desktop/%(title)s-%(id)s.%(ext)s"
+pause
+
+goto %menu%
+
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -1951,6 +2009,7 @@ set mm= %mm% "[ p ] Scheduled Tasks backup "
 set mm= %mm% "[ p ] Services backup "
 set mm= %mm% "[ p ] WinKey backup "
 set mm= %mm% "[ p ] Start Menu layout backup "
+set mm= %mm% "[ p ] Drivers backup "
 set mm= %mm% ""
 set mm= %mm% "[ p ] Open PED-Recovery Folder"
 set mm= %mm% ""
@@ -1987,13 +2046,21 @@ if %ERRORLEVEL% == 19 (
 	call :m1a.x01.2.WinKeyBackup
 )
 if %ERRORLEVEL% == 20 %psP% "Export-StartLayout -Path "%PEDRecoveryFolder%\StartMenuBackup.xml""
-if %ERRORLEVEL% == 21 goto %menu%
-if %ERRORLEVEL% == 22 start %windir%\explorer.exe "%PEDRecoveryFolder%"
+if %ERRORLEVEL% == 21 (
+	set driversToken=dismExport
+	goto m1a.x1.3.1.driversFunBackup
+)
+if %ERRORLEVEL% == 22 goto %menu%
+if %ERRORLEVEL% == 23 start %windir%\explorer.exe "%PEDRecoveryFolder%"
 
-if %ERRORLEVEL% == 23 goto %menu%
-if %ERRORLEVEL% == 24 echo Import StartMenu layout -must be in Drive "C:\" && set /p "importStartmenu=Type Path : "
-if %ERRORLEVEL% == 24 %psP% "Import-StartLayout -LayoutPath "%importStartmenu%" -MountPath "C:\""
-
+if %ERRORLEVEL% == 24 goto %menu%
+if %ERRORLEVEL% == 25 (
+	echo Import StartMenu layout -must be in Drive "C:\"
+	set /p "importStartmenu=Type Path : "
+)
+if %ERRORLEVEL% == 25 (
+	%psP% "Import-StartLayout -LayoutPath "%importStartmenu%" -MountPath "C:\""
+)
 
 goto %menu%
 pause
@@ -2127,9 +2194,14 @@ set "menuB= Step 0 : Test and Diagnostic:"
 call :mStyle
 
 set mm=
-set mm= %mm% "[+] Test boot time run"
+set mm= %mm% "-|NEXT|- Step 1 : System Check -Update/Repair/Scan:"
+set mm= %mm% "-|BACK|- Main Menu"
+set mm= %mm% "-|MAIN MENU|-"
+set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
-set mm= %mm% "[ ] Show CPU/RAM usage"
+set mm= %mm% "[+] PED: Test boot time run"
+set mm= %mm% ""
+set mm= %mm% "[ ] PED: Show CPU/RAM usage"
 set mm= %mm% ""
 set mm= %mm% "[+] Test internet speed"
 set mm= %mm% ""
@@ -2147,8 +2219,13 @@ set mm= %mm% ""
 set mm= %mm% "[ ] Start CMD"
 set mm= %mm% ""
 set mm= %mm% "[ ] Copy -RoboCopy cmd"
+set mm= %mm% ""
+set mm= %mm% "---------- WEB ----------"
+set mm= %mm% ""
+set mm= %mm% "[+] Generate autounattend.xml files for Windows 10/11  "
 
-cmdMenuSel e370 "-|NEXT|- Step 1 : System Check -Update/Repair/Scan:" "-|BACK|- Main Menu" "-|MAIN MENU|- " "================= Select an option =================" "" %mm%
+
+cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 set "menuBackName=Step 0 : Test and Diagnostic:" && set "menuBackGoto=m1a.x02.testDiagnostic" && goto m1a.x1.systemCheck
 if %ERRORLEVEL% == 2 goto mainMenu
 if %ERRORLEVEL% == 3 goto mainMenu
@@ -2179,6 +2256,12 @@ if %ERRORLEVEL% == 22 goto %menu%
 if %ERRORLEVEL% == 23 start %windir%\system32\cmd.exe
 if %ERRORLEVEL% == 24 goto %menu%
 if %ERRORLEVEL% == 25 goto m1a.x02.7.roboCopy
+if %ERRORLEVEL% == 26 goto %menu%
+
+if %ERRORLEVEL% == 27 goto %menu%
+if %ERRORLEVEL% == 28 goto %menu%
+if %ERRORLEVEL% == 29 start https://schneegans.de/windows/unattend-generator/
+
 
 goto %menu%
 
@@ -2535,6 +2618,7 @@ goto %menu%
 ::========
 set menu=m1a.x02.4.AccountsUsers
 
+set "accountToken=0"
 
 set "menuA= Step 0 : Test and Diagnostic:"
 set "menuB= Accounts and Users:"
@@ -2545,10 +2629,17 @@ set mm= %mm% "-|BACK|- Programs"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
-set mm= %mm% "[+] 1.Account Password Reset"
+set mm= %mm% "---------- Windows apps ----------"
+set mm= %mm% "[ ] lusrmgr.msc"
+set mm= %mm% "[ ] Control panel/User accounts"
+set mm= %mm% "[ p ] User accounts panel 2"
+set mm= %mm% ""
+set mm= %mm% " ---------- CMD----------"
+set mm= %mm% "[+] 1.Account Password Reset(replace sethc with cmd)"
 set mm= %mm% "[+] 2.Activate Administrator account"
-set mm= %mm% "[+] 3.add account"
-set mm= %mm% "[+] 4.Local Users and Groups(Local)"
+set mm= %mm% "[+] 3.Add Local Account"
+set mm= %mm% ""
+set mm= %mm% "[+] 3.1.Bypass Microsoft account - Add Local Account"
 
 cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x02.5.controlPanelView
@@ -2556,10 +2647,21 @@ if %ERRORLEVEL% == 2 goto r4a.xPrograms
 if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
-if %ERRORLEVEL% == 6 goto m1a.x02.4.1.AccountPasswordReset
-if %ERRORLEVEL% == 7 goto m1a.x02.4.2.ActiveAdministrator
-if %ERRORLEVEL% == 8 goto m1a.x02.4.3.addAccount
-if %ERRORLEVEL% == 9 goto m1a.x02.4.4.LocalUsersAndGroups
+
+if %ERRORLEVEL% == 6 goto %menu%
+if %ERRORLEVEL% == 7 start lusrmgr.msc && goto m1a.x02.4.4.1.LocalUsersAndGroups
+if %ERRORLEVEL% == 8 start control userpasswords
+if %ERRORLEVEL% == 9 start control userpasswords2 && goto m1a.x02.4.4.3.UserAccountsPanel
+if %ERRORLEVEL% == 10 goto %menu%
+
+if %ERRORLEVEL% == 11 goto %menu%
+if %ERRORLEVEL% == 12 goto m1a.x02.4.1.AccountPasswordReset
+if %ERRORLEVEL% == 13 goto m1a.x02.4.2.ActiveAdministrator
+if %ERRORLEVEL% == 14 set "accountToken=0" && goto m1a.x02.4.3.addAccount
+if %ERRORLEVEL% == 15 goto %menu%
+if %ERRORLEVEL% == 16 set "accountToken=1" && goto m1a.x02.4.3.addAccount
+
+goto %menu%
 
 :m1a.x02.4.1.AccountPasswordReset
 ::================================
@@ -2637,8 +2739,8 @@ goto %menu%
 
 :m1a.x02.4.2.ActiveAdministrator
 ::================================
-
 set menu=m1a.x02.4.2.ActiveAdministrator
+
 set menuD1=net user administrator
 set "menuD2=echo - Activate or DeActivate Administrator account?"
 set "menuD2=%menuD2% && echo - Change administrator Password"
@@ -2709,42 +2811,58 @@ if %ERRORLEVEL% == 2 %add2% && goto m1a.x02.4.AccountsUsers
 if %ERRORLEVEL% == 3 %add2% && goto mainMenu
 if %ERRORLEVEL% == 4 %add2% && goto %menu%
 if %ERRORLEVEL% == 5 %add2% && goto %menu%
-if %ERRORLEVEL% == 6 start /w net user %add1% /add
-if %ERRORLEVEL% == 7 start /w /min net user %add1% /add && start /w /min net localgroup Administrators %add1% /add && start /w /min net localgroup Users %add1% /remove
+
+if %ERRORLEVEL% == 6 (
+	start /w net user %add1% /add
+	if %accountToken% == 1 (
+	start "C:\Windows\System32\oobe\msoobe.exe"
+	shutdown.exe -r
+	)
+)
+if %ERRORLEVEL% == 7 (
+	start /w /min net user %add1% /add
+	start /w /min net localgroup Administrators %add1% /add
+	start /w /min net localgroup Users %add1% /remove
+	
+	if %accountToken% == 1 (
+	start "C:\Windows\System32\oobe\msoobe.exe"
+	shutdown.exe -r
+	)
+)
 if %ERRORLEVEL% == 8 %add2% && goto %menu%
 if %ERRORLEVEL% == 9 %add2% && goto m1a.x02.4.3.addAccount
 
 set "add1="
 goto %menu%
 
-:m1a.x02.4.4.LocalUsersAndGroups
-::================================
-set menu=m1a.x02.4.4.LocalUsersAndGroups
-
-set "menuA= Accounts and Users:"
-set "menuB= 4. Local Users and Groups(Local) :"
-call :mStyle
-
-set mm=
-set mm= %mm% "-|NEXT|- Step 1 : System Check -Update/Repair/Scan"
-set mm= %mm% "-|BACK|- Accounts and Users"
-set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
-set mm= %mm% ""
-set mm= %mm% "[ ] lusrmgr.msc"
-set mm= %mm% "[ ] Control panel/User accounts"
-set mm= %mm% "[ p ] User accounts panel 2"
-
-cmdMenuSel e370 %mm%
-if %ERRORLEVEL% == 1 set menuBackName=Local Users and Groups(Local) && set menuBackGoto=m1a.x02.4.4.LocalUsersAndGroups && goto m1a.x1.systemCheck
-if %ERRORLEVEL% == 2 goto m1a.x02.4.AccountsUsers
-if %ERRORLEVEL% == 3 goto mainMenu
-if %ERRORLEVEL% == 4 goto %menu%
-if %ERRORLEVEL% == 5 goto %menu%
-if %ERRORLEVEL% == 6 start lusrmgr.msc && goto m1a.x02.4.4.1.LocalUsersAndGroups
-if %ERRORLEVEL% == 7 start control userpasswords
-if %ERRORLEVEL% == 8 start control userpasswords2 && goto m1a.x02.4.4.3.UserAccountsPanel
-goto %menu%
+:: :m1a.x02.4.4.LocalUsersAndGroups
+:: ::================================
+:: set menu=m1a.x02.4.4.LocalUsersAndGroups
+:: 
+:: set "menuA= Accounts and Users:"
+:: set "menuB= 4. Local Users and Groups(Local) :"
+:: call :mStyle
+:: 
+:: set mm=
+:: set mm= %mm% "-|NEXT|- Step 1 : System Check -Update/Repair/Scan"
+:: set mm= %mm% "-|BACK|- Accounts and Users"
+:: set mm= %mm% "-|MAIN MENU|- "
+:: set mm= %mm% "========== Select an option =========="
+:: set mm= %mm% ""
+:: set mm= %mm% "[ ] lusrmgr.msc"
+:: set mm= %mm% "[ ] Control panel/User accounts"
+:: set mm= %mm% "[ p ] User accounts panel 2"
+:: 
+:: cmdMenuSel e370 %mm%
+:: if %ERRORLEVEL% == 1 set menuBackName=Local Users and Groups(Local) && set menuBackGoto=m1a.x02.4.4.LocalUsersAndGroups && goto m1a.x1.systemCheck
+:: if %ERRORLEVEL% == 2 goto m1a.x02.4.AccountsUsers
+:: if %ERRORLEVEL% == 3 goto mainMenu
+:: if %ERRORLEVEL% == 4 goto %menu%
+:: if %ERRORLEVEL% == 5 goto %menu%
+:: if %ERRORLEVEL% == 6 start lusrmgr.msc && goto m1a.x02.4.4.1.LocalUsersAndGroups
+:: if %ERRORLEVEL% == 7 start control userpasswords
+:: if %ERRORLEVEL% == 8 start control userpasswords2 && goto m1a.x02.4.4.3.UserAccountsPanel
+:: goto %menu%
 
 :m1a.x02.4.4.1.LocalUsersAndGroups 
 ::================================
@@ -2963,46 +3081,88 @@ if %ERRORLEVEL% == 1 goto %menu%
 
 :m1a.x02.7.roboCopy
 ::================================
-set "menuD2=echo."
-set "menuD2=%menuD2% && echo ===================================================="
-set "menuD2=%menuD2% && echo ==================== ROBOCOPY: ==================== "
-set "menuD2=%menuD2% && echo."
-set "menuD2=%menuD2% && echo Description:"
-set "menuD2=%menuD2% && echo."
-set "menuD2=%menuD2% && echo 	- Copy one Folder to another place"
-set "menuD2=%menuD2% && echo 	- Command: /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /LOG+:C:\robocopy.log /TEE"
-set "menuD2=%menuD2% && echo."
-set "menuD2=%menuD2% && echo 	- Example:"
-set "menuD2=%menuD2% && echo 	"C:\Users\%username%\Desktop\source""
-set "menuD2=%menuD2% && echo 	"C:\Users\%username%\Desktop\destination""
-set "menuD2=%menuD2% && echo."
-set "menuD2=%menuD2% && echo ===================================================="
-
-
-set "menuA= Step 0 : Test and Diagnostic:"
-set "menuB= [-] RoboCopy:"
-set "menuC=onlyA"
-call :mStyle
-set "menuD2= "
-
-rem function:
+cls
+rem Variable:
 set "sourceRoboCopy="
 set "destinationRoboCopy="
+set "applyRoboCopy="
+set "logFile=%userprofile%\Desktop\robocopy.log"
 
-setlocal
+REM Copy Directories:
+
+cls
+echo.
+echo Description source folder:
+echo.
+echo     - Example source - :
+echo     "C:\Users\%username%\Desktop\source"
+echo.
+echo    ==================================================================================
+
 set /p sourceRoboCopy=Type source:
+
+cls
+echo.
+echo Description destination folder:
+echo.
+echo     - Example destination - :
+echo     "C:\Users\%username%\Desktop\destination"
+echo    ==================================================================================
+
 set /p destinationRoboCopy=Type destination:
 
-REM Sample copy /Backup
-robocopy "%sourceRoboCopy%" "%destinationRoboCopy%" /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /LOG+:C:\robocopy.log /TEE
+cls
+echo    source - %sourceRoboCopy%
+echo    destination - %destinationRoboCopy%
 
-REM Mirror copy
-::robocopy "%sourceRoboCopy%" "%destinationRoboCopy%" /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /MIR /LOG+:C:\robocopy.log /TEE
+REM Copy types:
 
-endlocal
+echo.
+echo Description:
+echo.
+echo     [a] - copy all files 
+echo     - Copy one Folder to another place
+echo     - Command: /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /LOG+:"%logFile%" /TEE
+echo.
+echo    ==================================================================================
+echo.
+echo     [m] - Mirror copy 
+echo     - Copy one Folder to another place
+echo     - Command: /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /MIR /LOG+:"%logFile%" /TEE
+echo.
+echo    ==================================================================================
+echo.
+echo     Press any other key to Start Again
+echo.
+echo    ==================================================================================
+echo.
 
-set "sourceRoboCopy="
-set "destinationRoboCopy="
+set /p applyRoboCopy=Type copy mod:
+
+:: function
+cls
+if "%applyRoboCopy%" == "a" (
+
+set "applyRoboCopy=/e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /LOG+:"%logFile%" /TEE"
+echo.
+echo [a] - copy all files 
+echo.
+call :m1a.x02.7.1.roboCopyFun
+
+) else ( 
+	if "%applyRoboCopy%" == "m" (
+	set "applyRoboCopy=/e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /MIR /LOG+:"%logFile%" /TEE"
+	echo.
+	echo [m] - Mirror copy
+	echo.
+	call :m1a.x02.7.1.roboCopyFun
+	)
+)
+
+goto %menu%
+
+:m1a.x02.7.1.roboCopyFun
+robocopy "%sourceRoboCopy%" "%destinationRoboCopy%" %applyRoboCopy%
 
 echo.
 cmdMenuSel e370 "Press ENTER to continue..." 
@@ -3049,7 +3209,7 @@ set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
 set mm= %mm% "[+] 1. Create a restore point"
 set mm= %mm% "[+] 2. Check for Updates"
-set mm= %mm% "[+] 3. Drivers"
+set mm= %mm% "[+] 3. Check Drivers:"
 set mm= %mm% "[+] 4. Check Security and Maintenance"
 set mm= %mm% "[+] 5. Check Windows Defender"
 set mm= %mm% "[+] 6. Check for corrupt files"
@@ -3265,6 +3425,10 @@ exit/b
 ::================================
 set menu=m1a.x1.3.drivers
 
+set addDriverPath=
+set driversToken=
+
+
 set "menuA= Step 1 : System Check -Update/Repair/Scan:"
 set "menuB= 3. Check Drivers:"
 call :mStyle
@@ -3275,8 +3439,16 @@ set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan:"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
-set mm= %mm% "[ p ] 1.BackUp/Restore Drivers"
-set mm= %mm% "[ p ] 2.SDI drivers"
+set mm= %mm% "[ p ] 1.BackUp/Restore Drivers (by GlaryUtility)"
+set mm= %mm% "[ p ] 2.BackUp Drivers(by DISM)"
+set mm= %mm% "[ p ] 3.BackUp Drivers(by PowerShell)"
+set mm= %mm% ""
+set mm= %mm% "[ p ] 1.Add/Restore Drivers(by cmd/pnputil)"
+set mm= %mm% "[ p ] 2.Add/Restore Drivers(by DISM)"
+set mm= %mm% ""
+set mm= %mm% "[ p ] Backup or Restore Device Drivers (CMD by Matthew Wai at TenForums.com)"
+set mm= %mm% ""
+set mm= %mm% "[ p ] Snappy Driver Installer Origin"
 
 cmdMenuSel e370 %mm%
 
@@ -3287,7 +3459,72 @@ if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
 if %ERRORLEVEL% == 6 goto r4a.x0.3.1.backUpDriversGlaryUtilities
-if %ERRORLEVEL% == 7 goto r4a.x0.1.SDI
+if %ERRORLEVEL% == 7 (
+	set driversToken=dismExport
+	goto m1a.x1.3.1.driversFunBackup
+)
+
+if %ERRORLEVEL% == 8 (
+	set driversToken=ps
+	goto m1a.x1.3.1.driversFunBackup
+)
+
+if %ERRORLEVEL% == 9 goto %menu%
+if %ERRORLEVEL% == 10 (
+	set driversToken=pnputil
+	goto m1a.x1.3.2.driversFunAdd
+)
+if %ERRORLEVEL% == 11 (
+	set driversToken=DismAdd
+	goto m1a.x1.3.2.driversFunAdd
+)
+
+if %ERRORLEVEL% == 12 goto %menu%
+if %ERRORLEVEL% == 13 goto r4a.x0.7.backupDrivers
+if %ERRORLEVEL% == 14 goto %menu%
+if %ERRORLEVEL% == 15 goto r4a.x0.1.SDI
+
+goto %menu%
+
+:m1a.x1.3.1.driversFunBackup
+::================================
+set "driversFolder=%PEDRecoveryFolder%\drivers"
+if not exist "%driversFolder%\." mkdir "%driversFolder%"
+
+CLS
+Echo.
+echo Drivers will be Backup in:
+echo %driversFolder%
+
+if %driversToken% == dismExport (
+	start /w cmd /c dism.exe /online /export-driver /destination:"%driversFolder%" && echo. && pause
+)
+if %driversToken% == ps (
+%psP% Export-WindowsDriver -Online -Destination %driversFolder%; pause
+)
+
+start %windir%\explorer.exe "%driversFolder%"
+set driversToken=
+goto %menu%
+
+:m1a.x1.3.2.driversFunAdd
+::================================
+set "driversFolder=%PEDRecoveryFolder%\drivers"
+
+
+CLS
+Echo.
+echo add Drivers example: %driversFolder%
+set /p "addDriverPath=Type Path : "
+
+if %driversToken% == pnputil (
+start /w cmd /c pnputil /add-driver "%addDriverPath%\*.inf" /subdirs /install /reboot
+)
+if %driversToken% == DismAdd (
+Dism /online /Add-Driver /Driver:%addDriverPath% /Recurse
+)
+set driversToken=
+goto %menu%
 
 
 :m1a.x1.4.checkSecurityAndMaintenance
@@ -3337,16 +3574,18 @@ set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan:"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
-set mm= %mm% "[ p ] 1.Open Microsoft Defender"
-set mm= %mm% "[ p ] 2.Check for updates on Defender"
-set mm= %mm% "---------"
+set mm= %mm% "[ p ] Microsoft Defender"
+set mm= %mm% "[ ] Windows Malicious Software Removal Tool - MSRT"
+set mm= %mm% ""
+set mm= %mm% " ---------- Defender CMD (fast)----------"
+set mm= %mm% "[ p ] Check for updates on Defender"
+set mm= %mm% ""
 set mm= %mm% "[ p ] 1.quick virus scan"
 set mm= %mm% "[ ] 2.full virus scan"
 set mm= %mm% "[ ] 3.offline virus scan"
 set mm= %mm% "[ ] 4.boot sector malware scan"
 set mm= %mm% ""
-set mm= %mm% ""
-set mm= %mm% "--- Third-party Anti-virus: ---"
+set mm= %mm% " ---------- Third-party Anti-virus:----------"
 set mm= %mm% "[ ] Portable: Norton"
 set mm= %mm% "[ ] Portable: Kaspersky"
 set mm= %mm% "[ ] Portable: HitmanPro_x64.exe"
@@ -3354,8 +3593,11 @@ set mm= %mm% "[ ] Portable: EmsisoftEmergencyKit"
 set mm= %mm% ""
 set mm= %mm% "[ ] Installer: Virus Total"
 set mm= %mm% "[ ] Installer: bitdefender_antivirus.exe"
-set mm= %mm% "[ ] Installer: Malwarebytes_Anti-Malware_Portable"
-
+set mm= %mm% "[ ] Installer: Malwarebytes_Anti-Malware"
+set mm= %mm% ""
+set mm= %mm% "---------- Web:----------"
+set mm= %mm% "[ ] Virus Total"
+set mm= %mm% "[ ] Jotti's malware scan"
 
 cmdMenuSel e370 %mm%
 
@@ -3366,24 +3608,33 @@ if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
 if %ERRORLEVEL% == 6 start ms-settings:windowsdefender
-if %ERRORLEVEL% == 7 powershell "& "Update-MpSignature""
+if %ERRORLEVEL% == 7 start mrt
 if %ERRORLEVEL% == 8 goto %menu%
-if %ERRORLEVEL% == 9 powershell "& "Start-MpScan -ScanType QuickScan""
-if %ERRORLEVEL% == 10 powershell "& "Start-MpScan -ScanType FullScan""
-if %ERRORLEVEL% == 11 powershell "& "Start-MpWDOScan""
-if %ERRORLEVEL% == 12 cd C:\ProgramData\Microsoft\Windows Defender\Platform\4.18* && MpCmdRun -Scan -ScanType -BootSectorScan
-if %ERRORLEVEL% == 13 goto %menu%
-if %ERRORLEVEL% == 14 goto %menu%
 
-if %ERRORLEVEL% == 15 goto %menu%
-if %ERRORLEVEL% == 16 (goto r4a.x5.01.norton)
-if %ERRORLEVEL% == 17 (goto r4a.x5.02.kaspersky)
-if %ERRORLEVEL% == 18 start https://download.sophos.com/endpoint/clients/HitmanPro_x64.exe
-if %ERRORLEVEL% == 19 start https://dl.emsisoft.com/EmsisoftEmergencyKit.exe
-if %ERRORLEVEL% == 20 goto %menu%
-if %ERRORLEVEL% == 21 start https://www.virustotal.com/static/bin/vtuploader2.2.exe
-if %ERRORLEVEL% == 22 start https://download.bitdefender.com/windows/installer/en-us/bitdefender_antivirus.exe
-if %ERRORLEVEL% == 23 start https://downloads.malwarebytes.com/file/mb4_offline
+if %ERRORLEVEL% == 9 goto %menu%
+if %ERRORLEVEL% == 10 powershell "& "Update-MpSignature""
+if %ERRORLEVEL% == 11 goto %menu%
+if %ERRORLEVEL% == 12 powershell "& "Start-MpScan -ScanType QuickScan""
+if %ERRORLEVEL% == 13 powershell "& "Start-MpScan -ScanType FullScan""
+if %ERRORLEVEL% == 14 powershell "& "Start-MpWDOScan""
+if %ERRORLEVEL% == 15 cd C:\ProgramData\Microsoft\Windows Defender\Platform\4.18* && MpCmdRun -Scan -ScanType -BootSectorScan
+if %ERRORLEVEL% == 16 goto %menu%
+
+if %ERRORLEVEL% == 17 goto %menu%
+if %ERRORLEVEL% == 18 (goto r4a.x5.01.norton)
+if %ERRORLEVEL% == 19 (goto r4a.x5.02.kaspersky)
+if %ERRORLEVEL% == 20 start https://download.sophos.com/endpoint/clients/HitmanPro_x64.exe
+if %ERRORLEVEL% == 21 start https://dl.emsisoft.com/EmsisoftEmergencyKit.exe
+if %ERRORLEVEL% == 22 goto %menu%
+if %ERRORLEVEL% == 23 start https://www.virustotal.com/static/bin/vtuploader2.2.exe
+if %ERRORLEVEL% == 24 start https://download.bitdefender.com/windows/installer/en-us/bitdefender_antivirus.exe
+if %ERRORLEVEL% == 25 start https://downloads.malwarebytes.com/file/mb4_offline
+if %ERRORLEVEL% == 26 goto %menu%
+
+if %ERRORLEVEL% == 27 goto %menu%
+if %ERRORLEVEL% == 28 start https://www.virustotal.com/gui/home/upload
+if %ERRORLEVEL% == 29 start https://virusscan.jotti.org/
+
 echo.
 cmdMenuSel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
@@ -3404,9 +3655,11 @@ set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "========== Select an option =========="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Run a SFC /Scan now"
-set mm= %mm% "[ p ] 2.Run a DISM command"
+set mm= %mm% "[ p ] 2.Run a DISM /Restorehealth"
 set mm= %mm% ""
-set mm= %mm% "[ ] Auto Scan - SFC-DISM-SFC"
+set mm= %mm% "[ ] Auto Scan - SFC-DISM/Restorehealth-SFC"
+set mm= %mm% ""
+set mm= %mm% "[ ] DISM /StartComponentCleanup"
 
 cmdMenuSel e370 %mm%
 
@@ -3420,6 +3673,8 @@ if %ERRORLEVEL% == 6 start cmd /c sfc /scannow && pause
 if %ERRORLEVEL% == 7 start cmd /c dism.exe /Online /Cleanup-image /Restorehealth && pause
 if %ERRORLEVEL% == 8 goto %menu%
 if %ERRORLEVEL% == 9 start cmd /c sfc /scannow && dism.exe /Online /Cleanup-image /Restorehealth && sfc /scannow && pause
+if %ERRORLEVEL% == 10 goto %menu%
+if %ERRORLEVEL% == 11 start cmd /c dism /online /Cleanup-Image /StartComponentCleanup
 
 pause
 goto %menu%
@@ -3606,6 +3861,10 @@ set mm= %mm% ""
 set mm= %mm% "[ ] Web: winstall.app"
 set mm= %mm% "[ ] Web: Ninite.com"
 set mm= %mm% "[ ] Web: Portableapps.com"
+set mm= %mm% ""
+set mm= %mm% "[+] Download web videos"
+
+
 
 cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
@@ -3629,11 +3888,79 @@ if %ERRORLEVEL% == 9 goto %menu%
 if %ERRORLEVEL% == 10 start https://winstall.app/
 if %ERRORLEVEL% == 11 start https://www.ninite.com
 if %ERRORLEVEL% == 12 start https://portableapps.com/apps
+if %ERRORLEVEL% == 13 goto %menu%
+
+if %ERRORLEVEL% == 14 goto m1a.x3.1.3.downloadVideos
 
 goto %menu%
 
 ::if %ERRORLEVEL% == 6 start /min %psP% iex (irm 'https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1')
 ::if %ERRORLEVEL% == 6 %psP% iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1'))
+:m1a.x3.1.3.downloadVideos
+::================================
+set menu=m1a.x3.1.3.downloadVideos
+set "menuA= 1. Install -programs:"
+set "menuB= Download YT video"
+call :mStyle
+
+set "appYT="
+
+set mm=
+set mm= %mm% "-|NEXT|- 1. Install -programs:"
+set mm= %mm% "-|BACK|- 1. Install -programs:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ ] download YT video (by y2mate.is)"
+::set mm= %mm% ""
+::set mm= %mm% "[ ] download YT video (youtube-dl by youtube-dl)"
+
+cmdMenuSel e370 %mm%
+if %ERRORLEVEL% == 1 goto m1a.x3.1.install
+if %ERRORLEVEL% == 2 goto m1a.x3.1.install
+if %ERRORLEVEL% == 3 goto mainMenu
+if %ERRORLEVEL% == 4 goto %menu%
+if %ERRORLEVEL% == 5 goto %menu%
+
+if %ERRORLEVEL% == 6 goto m1a.x3.1.3.1.downloadVideosPED
+::if %ERRORLEVEL% == 7 goto %menu%
+::if %ERRORLEVEL% == 8 goto r4a.x6.01.YTvideos
+
+goto %menu%
+
+:m1a.x3.1.3.1.downloadVideosPED
+echo.
+
+setlocal enabledelayedexpansion
+
+:: Prompt user to paste the link
+set /p "appYT=Paste link: "
+
+:: Escape the & character in the input URL
+set "url=%appYT:&=^&%"
+
+:: Define the prefix and insertion
+set "prefix=https://www.youtube"
+set "insertion=pi"
+
+:: Extract the rest of the URL after "https://www.youtube"
+set "rest_of_url=!url:~19!"
+
+:: Construct the new URL
+set "new_url=%prefix%%insertion%%rest_of_url%"
+
+:: Display the new URL
+REM echo %new_url%
+
+:: Start the new URL in the default web browser
+start "" "%new_url:^&=&%"
+
+endlocal
+goto %menu%
+
+
+
+https://objects.githubusercontent.com/github-production-release-asset-2e65be/1039520/8e86f072-4cf3-4ba1-bd20-c0b6e18345c4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=releaseassetproduction%2F20240605%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240605T133156Z&X-Amz-Expires=300&X-Amz-Signature=5a843a488adf2e1dcd8c7ef059be720263fd62c59a67600c48ae569224b623d2&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=1039520&response-content-disposition=attachment%3B%20filename%3Dyoutube-dl.exe&response-content-type=application%2Foctet-stream
 
 
 :m1a.x3.1.1.pedAppInstallerLinks
@@ -3705,7 +4032,7 @@ if %ERRORLEVEL% == 15 set "appIns=EaseUS.DataRecovery"
 if %ERRORLEVEL% == 16 set "appIns=MiniTool.PartitionWizard.Free"
 if %ERRORLEVEL% == 17 set "appIns=Facebook.Messenger"
 if %ERRORLEVEL% == 18 set "appIns=WhatsApp.WhatsApp"
-if %ERRORLEVEL% == 19 set "appIns=Google.Drive"
+if %ERRORLEVEL% == 19 set "appIns=Google.GoogleDrive"
 if %ERRORLEVEL% == 20 set "appIns=Microsoft.OneDrive"
 if %ERRORLEVEL% == 21 set "appIns=Notepad++.Notepad++"
 if %ERRORLEVEL% == 22 set "appIns=Apache.OpenOffice"
@@ -8875,6 +9202,150 @@ $form.ShowDialog() | Out-Null
 # EndExtractH11
 
 Pause
+
+:r5a.x3.3.backupDrivers
+::================================
+CLS
+::::========================
+::::Variables for copy
+::::========================
+REM Extract Function variables name
+set "fileFuntionName=Backup_or_Restore_Device_Drivers.bat"
+set "fileFuntionFolder=files"
+
+REM Extract Marks
+set "startMark=# StartExtract#J1"
+set "endMark=# EndExtract#J1"
+
+REM Delete existing Function
+REM 0-continue, 1-Delete
+set "deleteExistingFunction=1"
+
+REM Starting Function after Creation
+REM 0-continue, 1-Start in new windows, 2-Start in current console
+set "fileStart=0"
+
+REM Pause after CreateFunction complete
+REM 0-continue, 1-pause, 2-timeOut 15 Seconds,
+set pauseCreteFunction=0
+
+::========================
+REM Add Functions Before callFun
+::========================
+REM add Functions HERE...
+REM code HERE...
+
+::========================
+REM call Function
+set "callFun=:r5a.x0.2.CreateFunction"
+call %callFun%
+
+set "fileFunctionDir="
+
+::========================
+REM Add Rest Function code here
+::========================
+REM add Rest Code HERE...
+REM code HERE...
+REM Promqna
+exit /b
+REM Promqna
+::========================
+REM Your EXTRACT code starts here
+::========================
+# StartExtract#J1
+
+ :: This script was created by Matthew Wai at TenForums.com/members/matthew-wai.html
+ :: http://www.tenforums.com/tutorials/68426-backup-restore-device-drivers-windows-10-a.html
+ :: ************************************************************************************/
+@echo off & Title Backup or Restore Device Drivers & mode con cols=93 & color 17
+(Net session >nul 2>&1)&&(cd /d "%~dp0")||(PowerShell start """%~0""" -verb RunAs & Exit /B)
+ :: ************************************************************************************/
+echo. 
+echo    Press (1) to back up all 3rd-party device drivers into a folder.
+echo    Press (2) to restore all 3rd-party device drivers from a folder.
+echo    Press (3) to restore a device driver backup via Device Manager.
+ :r5a.x3.3.backupDriversChoice
+CHOICE /C "123" /M "Your choice?:" >nul 2>&1  
+If %errorlevel%==1  (goto r5a.x3.3.backupDriversOption_1) & Exit
+If %errorlevel%==2  (goto r5a.x3.3.backupDriversOption_2) & Exit
+If %errorlevel%==3  (goto r5a.x3.3.backupDriversOption_3) & Exit
+Exit
+ :r5a.x3.3.backupDriversOption_1
+Call:r5a.x3.3.backupDrivers0 "Please select a folder or click on [ Make New Folder ] at the bottom. It is advisable to select a folder on an external device." SourceFolder
+ :r5a.x3.3.backupDrivers0
+Set "backupDrivers="(new-object -COM 'Shell.Application').BrowseForFolder(0,'%1',0,0).self.path""
+For /f "usebackq delims=" %%# in (`PowerShell %backupDrivers%`) do set "FolderDirBackup=%%#"
+If "%FolderDirBackup%"=="" (Goto r5a.x3.3.backupDriversChoice & Exit) 
+dism /online /export-driver /destination:"%FolderDirBackup%"
+Echo.&Echo    The device drivers have been exported into the following folder:
+Echo    "%FolderDirBackup%" & Echo.&Echo    Press a key to exit.
+pause >nul & Exit
+Exit
+ :r5a.x3.3.backupDriversOption_2
+Call:r5a.x3.3.backupDrivers0 "Please select the folder containing the device drivers previously exported." SourceFolder
+ :r5a.x3.3.backupDrivers0
+Set "backupDrivers="(new-object -COM 'Shell.Application').BrowseForFolder(0,'%1',0x200,0).self.path""
+For /f "usebackq delims=" %%# in (`PowerShell %backupDrivers%`) do set "FolderDirBackup=%%#"
+If "%FolderDirBackup%"=="" (Goto r5a.x3.3.backupDriversChoice & Exit) 
+Echo.
+Echo    If necessary, the computer will be automatically restarted to complete the operation of
+Echo    importing the drivers. Please save and close anything open and then press a key to start
+Echo    the operation.
+Echo.
+pause >nul
+pnputil /add-driver "%FolderDirBackup%\*.inf" /subdirs /install /reboot
+echo. & Echo    The process has completed successfully.
+Echo    If the computer does not automatically reboot, you may press a key to exit.
+pause >nul & Exit
+Exit
+ :r5a.x3.3.backupDriversOption_3
+Start "" "devmgmt.msc" & Exit
+# EndExtract#J1
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::================================
+:f1a.x
+::================================
+
+:f1a.x0.1.fileToUpload
+::================================
+
+set dialog="about:<input type=file id=FILE><script>FILE.click();new ActiveXObject
+set dialog=%dialog%('Scripting.FileSystemObject').GetStandardStream(1).WriteLine(FILE.value);
+set dialog=%dialog%close();resizeTo(0,0);</script>"
+
+for /f "tokens=* delims=" %%p in ('mshta.exe %dialog%') do set "file=%%p"
+echo selected  file is : "%file%"
+pause
+
+:f1a.x0.2.BrowseForFolder1
+Set "psCommand="(new-object -COM 'Shell.Application').BrowseForFolder(0,'%1',0x200,0).self.path""
+For /f "usebackq delims=" %%# in (`PowerShell %psCommand%`) do set "BrowseForFolder=%%#"
+echo %BrowseForFolder%
+pause
+
+:f1a.x0.3.BrowseForFolder2
+for /f %%A in ('powershell -command "(new-object -COM 'Shell.Application').BrowseForFolder(0,'Please choose a folder.',0,0).self.path"') do set "BrowseForFolder=%%A"
+echo %BrowseForFolder%
+pause
+
+:f1a.x0.4.BrowseForFolder3
+
+setlocal
+
+set "psCommand="(new-object -COM 'Shell.Application')^
+.BrowseForFolder(0,'Please choose a folder.',0,0).self.path""
+
+for /f "usebackq delims=" %%I in (`powershell %psCommand%`) do set "BrowseForFolder=%%I"
+
+setlocal enabledelayedexpansion
+echo You chose !BrowseForFolder!
+endlocal
+
+
 ::::========================
 ::END Script
 ::================================
@@ -8908,6 +9379,8 @@ REM r3a.x download Resources
 REM r4a.x Execute Resources
 REM r5a.x create files
 
+REM f1a.x global function
+
 REM m9a.x power menu
 
 
@@ -8927,9 +9400,6 @@ REM Create 15-11-2021 13:52:45
 REM PED Folder
 REM https://drive.google.com/drive/folders/1gOiYbhFK026D9MHRrErm_BhWvAHsRM2z
 REM https://bit.ly/pedfolder
-
-REM DigiCertUtil
-REM https://digicert.com/StaticFiles/DigiCertUtil.zip
 
 ::=======================================================================
 ::Check this -create Shortcut
@@ -9032,3 +9502,25 @@ REM https://manytools.org/hacker-tools/convert-images-to-ascii-art/
 rem https://www.youtube.com/watch?v=roftohFNBNM
 rem https://www.youtube.com/watch?v=55iwMYv8tGI
 rem https://www.youtube.com/watch?v=6oqhJ-gTadY
+::=======================================================================
+
+:: :r5a.x3.3.backupDrivers0
+::Set "backupDrivers="(new-object -COM 'Shell.Application').BrowseForFolder(0,'%1',0,0).self.path""
+::For /f "usebackq delims=" %%# in (`PowerShell %backupDrivers%`) do set "FolderDirBackup=%%#"
+::If "%FolderDirBackup%"=="" (Goto r5a.x3.3.backupDriversChoice & Exit)
+
+::or gpt
+::in ps
+::$FolderDirBackup = (New-Object -ComObject 'Shell.Application').BrowseForFolder(0, '%1', 0x200, 0).Self.Path
+
+::in CMD
+::for /f %%A in ('powershell -command "(new-object -COM 'Shell.Application').BrowseForFolder(0,'%1',0x200,0).self.path"') do set "FolderDirBackup=%%A"
+
+::=======================================================================
+
+::sign tool
+::Windows SDK (10.0.26100)
+::https://download.microsoft.com/download/2/6/f/26f7aa55-ef6f-4882-b19b-a1be0e7328fe/KIT_BUNDLE_WINDOWSSDK_MEDIACREATION/winsdksetup.exe
+::winsdksetup.exe
+::-application verifier for windows
+::-windows app certification kit
