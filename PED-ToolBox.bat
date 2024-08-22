@@ -85,7 +85,7 @@ echo.
 ::================================
 
 :: Set version
-set "versionTool=PED-ToolBox-1.282.3.240606"
+set "versionTool=PED-ToolBox-1.283.2.240822"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -974,8 +974,8 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=cmdMenuSel.exe"
 set isItZip=n
 
-
-set "fileLinkID=https://rebrand.ly/pedboxmenu"
+set "fileLinkID=https://github.com/PierMobayed/PEDToolBox/raw/Tool/pedDownload/files/cmdmenusel.exe"
+::set "fileLinkID=https://rebrand.ly/pedboxmenu"
 ::set "fileLinkID=https://bit.ly/pedcmdmenu"
 ::set "fileLinkID=https://bit.ly/pedcmdmenu02"
 
@@ -2334,6 +2334,7 @@ if not exist "%startFiles%" (
 set "destination=%destinationPD%\%directoryFiles%"
 
 if exist "%startFiles%" (
+	takeown /f "C:\ProgramData\PEDToolBox\pedDownload\files"
 	start %windir%\explorer.exe "%destination%"
 	echo ========== File Create Successful ===
 ) else (echo ========== File Unsuccessful ===) 
@@ -9524,3 +9525,15 @@ rem https://www.youtube.com/watch?v=6oqhJ-gTadY
 ::winsdksetup.exe
 ::-application verifier for windows
 ::-windows app certification kit
+
+:notesVersion
+exit
+
+::set "versionTool=PED-ToolBox-1.283.2.240822"
+::update :m1a.x02.1.1.createInstall-BT
+
+::set "versionTool=PED-ToolBox-1.283.1.240820"
+::change/update cmdmenusel download link
+::
+::set "versionTool=PED-ToolBox-1.282.3.240606"
+::
