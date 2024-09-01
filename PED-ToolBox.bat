@@ -85,7 +85,7 @@ echo.
 ::================================
 
 :: Set version
-set "versionTool=PED-ToolBox-1.284.2.240901"
+set "versionTool=PED-ToolBox-1.284.3.240901"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -3096,6 +3096,8 @@ set mm= %mm% "[ p ] Test Speed [Mbps] [megabits per second]"
 set mm= %mm% "[ p ] Test Speed [MB/s] [megabytes per second]"
 set mm= %mm% ""
 set mm= %mm% "[ p ] Check IP Address"
+set mm= %mm% ""
+set mm= %mm% "[ p ] Check WiFiPassword"
 
 cmdMenuSel e370 %mm%
 if %ERRORLEVEL% == 1 goto m1a.x02.testDiagnostic:
@@ -3115,6 +3117,8 @@ if %ERRORLEVEL% == 7 (
 )
 if %ERRORLEVEL% == 8 goto %menu%
 if %ERRORLEVEL% == 9 goto m1a.x02.6.2.speedTestIPAddress
+if %ERRORLEVEL% == 10 goto %menu%
+if %ERRORLEVEL% == 11 goto m1a.x02.6.3.wifiPass
 
 goto %menu%
 
@@ -3160,6 +3164,41 @@ echo.
 set "loc="
 cmdMenuSel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
+
+
+:m1a.x02.6.3.wifiPass
+::================================
+cls
+::02
+setlocal enabledelayedexpansion
+
+echo List of Wi-Fi Profiles and Passwords:
+echo -------------------------------------
+
+:: Loop through each Wi-Fi profile found on the system
+for /f "tokens=2 delims=:" %%i in ('netsh wlan show profiles ^| findstr /c:"All User Profile"') do (
+    set "profile=%%i"
+    set "profile=!profile:~1!"  :: Remove leading spaces
+
+    :: Initialize variables
+    set "password=[Not available]"
+
+    :: Capture the full output of the profile command
+for /f "tokens=2 delims=:" %%k in ('netsh wlan show profile name^="!profile!" key^=clear ^| findstr "Key Content"') do (
+    set "password=%%k"
+    set "password=!password:~1!"
+)
+
+    :: Display profile name and password
+    echo Profile Name: !profile!
+    echo Password: !password!
+    echo -------------------------------------
+)
+
+echo.
+cmdMenuSel e370 "Press ENTER to continue..." 
+if %ERRORLEVEL% == 1 goto %menu%
+
 
 :m1a.x02.7.roboCopy
 ::================================
@@ -9663,6 +9702,9 @@ rem https://www.youtube.com/watch?v=6oqhJ-gTadY
 
 :notesVersion
 exit
+::PED-ToolBox-1.284.3.240901
+:: New show wifi password
+
 ::PED-ToolBox-1.284.2.240901
 :: New office download links
 

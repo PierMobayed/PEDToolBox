@@ -1,6 +1,6 @@
 # PEDToolBox
 
-## Version : 1.284.2.240901
+## Version : 1.284.3.240901
 #### Windows 10 and 11 -Speed Up , Repair, Update, Optimize, Clean Junk, Download Apps, Uninstaller, Deployed Bloatware, and more
 
 - PEDToolBox is a powerful utility designed to optimize, speed up, and repair Windows 10 and 11. Developed by PierMobayed, this batch script provides both auto and manual commands to enhance your Windows experience. Here are some of its key features:
@@ -116,14 +116,17 @@
 	""
 	"[ ] Copy -RoboCopy cmd"
 	""
-	"---------- WEB ----------"
+	"---------- Windows Creation ----------"
 	""
-	"[+] Generate autounattend.xml files for Windows 10/11  "
+	"[ ] Generate autounattend.xml files for Windows 10/11  "
+	"[ ] Download Windows OS"
+	"[ ] Download Rufus - Create bootable USB drives the easy way"
+	"[ ] Download Ventoy - Bootable USB "
 	
-	
+
 ### Step 1 : System Check -Update/Repair/Scan:
 	"-|NEXT|- 1. Create a restore point:"
-    "-|BACK|- %menuBackName%"
+    "-|BACK|- Main Menu"
     "-|MAIN MENU|- "   
     "========== Select an option =========="
     ""
