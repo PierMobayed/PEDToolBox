@@ -85,7 +85,7 @@ echo.
 ::================================
 
 :: Set version
-set "versionTool=PED-ToolBox-1.283.2.240822"
+set "versionTool=PED-ToolBox-1.284.2.240901"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -954,6 +954,37 @@ call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
 
+:r3a.x11.5.01.downLoadF-5.01.office
+::================================
+set "nameFolder=officeSetup"
+set "createFolder=Data\5.Notes\%nameFolder%"
+set "destination=%destinationPD%\%createFolder%"
+
+if not exist "%destination%\." mkdir "%destination%"
+
+set "fileLocation=officedeploymenttool.exe"
+set "fileLinkID=https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_17830-20162.exe"
+set isItZip=y
+
+call :r3a.x01.0.downloadFunction
+
+::set "destination=%destination%\"
+set "fileLocation=Office365.xml"
+set isItZip=n
+set "fileLinkID=https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/pedDownload/config/Office365.xml"
+
+call :r3a.x01.0.downloadFunction
+
+::set "destination=%destination%\"
+set "fileLocation=OfficePro21.xml"
+set isItZip=n
+set "fileLinkID=https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/pedDownload/config/OfficePro21.xml"
+
+call :r3a.x01.0.downloadFunction
+
+exit /b
+::=================
+
 ::================================
 :r3a.x12.downLoadF-files
 ::================================
@@ -1051,6 +1082,26 @@ set "createFolder=files\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
+exit /b
+::=================
+
+:r3a.x12.6.downLoadF-Fido
+::================================
+
+::Location
+set "nameFolder=Fido"
+set "createFolder=Data\3.Scripts\%nameFolder%"
+
+set "destination=%destinationPD%\%createFolder%"
+if not exist "%destination%\." mkdir "%destination%"
+
+::File information
+set "fileLocation=Fido-master.zip"
+set "fileLinkID=https://github.com/pbatard/Fido/archive/refs/heads/master.zip"
+set isItZip=y
+
+::Download file
+call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -1834,6 +1885,24 @@ pause
 
 goto %menu%
 
+:r4a.x6.02.Fido
+::================================
+
+cls
+set "downloadFiles=:r3a.x12.6.downLoadF-Fido"
+set "directoryFiles=Data\3.Scripts\Fido\Fido-master"
+set "nameFiles=Fido.ps1"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+
+	call %downloadFiles%
+
+%psP% %startFiles%
+
+
+goto %menu%
+
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -1991,7 +2060,8 @@ set "menuA= Main Menu:"
 set "menuB= Create a restore point:"
 call :mStyle
 
-set mm= "-|NEXT|- Step 0 : Test and Diagnostic:" 
+set mm=
+set mm= %mm% "-|NEXT|- Step 0 : Test and Diagnostic:" 
 set mm= %mm% "-|BACK|- Main Menu:"
 set mm= %mm% "-|MAIN MENU|- " "========== Select an option ==========" ""
 set mm= %mm% "---------- Create a restore point ----------"
@@ -2220,9 +2290,12 @@ set mm= %mm% "[ ] Start CMD"
 set mm= %mm% ""
 set mm= %mm% "[ ] Copy -RoboCopy cmd"
 set mm= %mm% ""
-set mm= %mm% "---------- WEB ----------"
+set mm= %mm% "---------- Windows Creation ----------"
 set mm= %mm% ""
-set mm= %mm% "[+] Generate autounattend.xml files for Windows 10/11  "
+set mm= %mm% "[ ] Generate autounattend.xml files for Windows 10/11  "
+set mm= %mm% "[ ] Download Windows OS"
+set mm= %mm% "[ ] Download Rufus - Create bootable USB drives the easy way"
+set mm= %mm% "[ ] Download Ventoy - Bootable USB "
 
 
 cmdMenuSel e370 %mm%
@@ -2261,9 +2334,17 @@ if %ERRORLEVEL% == 26 goto %menu%
 if %ERRORLEVEL% == 27 goto %menu%
 if %ERRORLEVEL% == 28 goto %menu%
 if %ERRORLEVEL% == 29 start https://schneegans.de/windows/unattend-generator/
+if %ERRORLEVEL% == 30 call :r4a.x6.02.Fido
+if %ERRORLEVEL% == 31 start https://github.com/pbatard/rufus/releases/download/v4.5/rufus-4.5p.exe
+
+if %ERRORLEVEL% == 32 start https://downloads.sourceforge.net/project/ventoy/v1.0.99/ventoy-1.0.99-windows.zip?ts=gAAAAABmzO2P4UhaV9uNex1moPQQBeV8uKLHh2s41cySs2eHH9fxnR9TXzd-hu5M43WIL71kV_Yw4MLZvaQmfeoa59IY8c0mlQ%3D%3D&use_mirror=autoselect&r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fventoy%2Ffiles%2Fv1.0.99%2Fventoy-1.0.99-windows.zip%2Fdownload%3Fuse_mirror%3Dautoselect
 
 
 goto %menu%
+
+::NOTES
+::https://rufus.ie/downloads/
+::https://sourceforge.net/projects/ventoy/files/
 
 :m1a.x02.1.bootTime
 ::================================
@@ -3897,6 +3978,199 @@ goto %menu%
 
 ::if %ERRORLEVEL% == 6 start /min %psP% iex (irm 'https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1')
 ::if %ERRORLEVEL% == 6 %psP% iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1'))
+
+
+:m1a.x3.1.1.pedAppInstallerLinks
+::================================
+set menu=m1a.x3.1.1.pedAppInstallerLinks
+set "menuA= 1. Install -programs:"
+set "menuB= PED: App installer links (CMD)"
+call :mStyle
+
+set mm=
+set mm= %mm% "-|NEXT|- 1. Install -programs:"
+set mm= %mm% "-|BACK|- 1. Install -programs:"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "========== Install by WinGet: =========="
+set mm= %mm% "[ ] Browsers: Google.Chrome"
+set mm= %mm% "[ ] Archiver: 7zip.7zip"
+set mm= %mm% "[ ] Archiver: RARLab.WinRAR"
+set mm= %mm% "[ ] Remote: Datronicsoft.SpacedeskDriver.Server"
+set mm= %mm% "[ ] Remote: Google.ChromeRemoteDesktop"
+set mm= %mm% "[ ] Code: GitHub.GitHubDesktop"
+set mm= %mm% "[ ] Code: Microsoft.VisualStudioCode"
+set mm= %mm% "[ ] Code: OpenJS.NodeJS.LTS"
+set mm= %mm% "[ ] DataRecovery: EaseUS.DataRecovery"
+set mm= %mm% "[ ] Partition: MiniTool.PartitionWizard.Free"
+set mm= %mm% "[ ] Social: Facebook.Messenger"
+set mm= %mm% "[ ] Social: WhatsApp.WhatsApp"
+set mm= %mm% "[ ] Storage: Google.Drive"
+set mm= %mm% "[ ] Storage: Microsoft.OneDrive"
+set mm= %mm% "[ ] Note: Notepad++.Notepad++"
+set mm= %mm% "[ ] Note: Apache.OpenOffice"
+set mm= %mm% "[ ] Test: PrimateLabs.Geekbench.5"
+set mm= %mm% "[ ] Downloader: qBittorrent.qBittorrent"
+set mm= %mm% "[ ] Video: VideoLAN.VLC"
+set mm= %mm% "[ ] Uninstaller: RevoUninstaller.RevoUninstallerPro"
+set mm= %mm% "[ ] Cleaner: Glarysoft.GlaryUtilities"
+set mm= %mm% ""
+set mm= %mm% "========== MS Store: =========="
+set mm= %mm% "[ ] Note: Free Office Mobile"
+set mm= %mm% "[ ] Gadget: Widget Launcher"
+set mm= %mm% ""
+set mm= %mm% "========== Install by WEB links: =========="
+set mm= %mm% "[+] Note: MS Office "
+set mm= %mm% ""
+set mm= %mm% "--- Anti-virus: ---"
+set mm= %mm% "[ ] Portable: Norton"
+set mm= %mm% "[ ] Portable: Kaspersky"
+set mm= %mm% "[ ] Portable: HitmanPro_x64.exe"
+set mm= %mm% "[ ] Portable: EmsisoftEmergencyKit"
+set mm= %mm% "[ ] Installer: Virus Total"
+set mm= %mm% "[ ] Installer: bitdefender_antivirus.exe"
+set mm= %mm% "[ ] Installer: Malwarebytes_Anti-Malware_Portable"
+
+cmdMenuSel e370 %mm%
+if %ERRORLEVEL% == 1 goto m1a.x3.1.install
+if %ERRORLEVEL% == 2 goto m1a.x3.1.install
+if %ERRORLEVEL% == 3 goto mainMenu
+if %ERRORLEVEL% == 4 goto %menu%
+if %ERRORLEVEL% == 5 goto %menu%
+
+if %ERRORLEVEL% == 6 goto %menu%
+if %ERRORLEVEL% == 7 set "appIns=Google.Chrome"
+if %ERRORLEVEL% == 8 set "appIns=7zip.7zip"
+if %ERRORLEVEL% == 9 set "appIns=RARLab.WinRAR"
+if %ERRORLEVEL% == 10 set "appIns=Datronicsoft.SpacedeskDriver.Server"
+if %ERRORLEVEL% == 11 set "appIns=Google.ChromeRemoteDesktop"
+if %ERRORLEVEL% == 12 set "appIns=GitHub.GitHubDesktop"
+if %ERRORLEVEL% == 13 set "appIns=Microsoft.VisualStudioCode"
+if %ERRORLEVEL% == 14 set "appIns=OpenJS.NodeJS.LTS"
+if %ERRORLEVEL% == 15 set "appIns=EaseUS.DataRecovery"
+if %ERRORLEVEL% == 16 set "appIns=MiniTool.PartitionWizard.Free"
+if %ERRORLEVEL% == 17 set "appIns=Facebook.Messenger"
+if %ERRORLEVEL% == 18 set "appIns=WhatsApp.WhatsApp"
+if %ERRORLEVEL% == 19 set "appIns=Google.GoogleDrive"
+if %ERRORLEVEL% == 20 set "appIns=Microsoft.OneDrive"
+if %ERRORLEVEL% == 21 set "appIns=Notepad++.Notepad++"
+if %ERRORLEVEL% == 22 set "appIns=Apache.OpenOffice"
+if %ERRORLEVEL% == 23 set "appIns=PrimateLabs.Geekbench.5"
+if %ERRORLEVEL% == 24 set "appIns=qBittorrent.qBittorrent"
+if %ERRORLEVEL% == 25 set "appIns=VideoLAN.VLC"
+if %ERRORLEVEL% == 26 set "appIns=RevoUninstaller.RevoUninstallerPro"
+if %ERRORLEVEL% == 27 set "appIns=Glarysoft.GlaryUtilities"
+if %ERRORLEVEL% == 28 goto %menu%
+
+if %ERRORLEVEL% == 29 goto %menu%
+if %ERRORLEVEL% == 30 (
+	start https://www.microsoft.com/store/productid/9WZDNCRFJB9S?ocid=pdpshare
+	start https://www.microsoft.com/store/productid/9WZDNCRFJBH3?ocid=pdpshare
+	goto %menu%
+)
+if %ERRORLEVEL% == 31 start https://www.microsoft.com/store/productId/9WZDNCRDQFBT
+if %ERRORLEVEL% == 32 goto %menu%
+
+if %ERRORLEVEL% == 33 goto %menu%
+if %ERRORLEVEL% == 34 goto :m1a.x3.1.1.2.pedAppInstallerLinksOffice
+if %ERRORLEVEL% == 35 goto %menu%
+
+if %ERRORLEVEL% == 36 goto %menu%
+if %ERRORLEVEL% == 37 (goto r4a.x5.01.norton)
+if %ERRORLEVEL% == 38 (goto r4a.x5.02.kaspersky)
+if %ERRORLEVEL% == 39 start https://download.sophos.com/endpoint/clients/HitmanPro_x64.exe
+if %ERRORLEVEL% == 40 start https://dl.emsisoft.com/EmsisoftEmergencyKit.exe
+if %ERRORLEVEL% == 41 start https://www.virustotal.com/static/bin/vtuploader2.2.exe
+if %ERRORLEVEL% == 42 start https://download.bitdefender.com/windows/installer/en-us/bitdefender_antivirus.exe
+if %ERRORLEVEL% == 43 start https://downloads.malwarebytes.com/file/mb4_offline
+
+:m1a.x3.1.1.1.appInstaller
+cls
+echo.
+Echo Install %appIns%
+
+start cmd /c "winget install %appIns% -h && pause"
+::echo. && if %ERRORLEVEL% EQU 0 (Echo %appIns% installed successfully.) else (Echo %appIns% installed Unsuccessfully.)
+set "appIns="
+
+%color1%
+goto %menu%
+
+:m1a.x3.1.1.2.pedAppInstallerLinksOffice
+::================================
+set menu=m1a.x3.1.1.2.pedAppInstallerLinksOffice
+
+set "menuA= PED: App installer links (CMD)"
+set "menuB= Note: MS Office "
+call :mStyle
+
+set currentCD=%destinationPD%\files
+
+set mm=
+set mm= %mm% "-|NEXT|- PED: App installer links (CMD)"
+set mm= %mm% "-|BACK|- PED: App installer links (CMD)"
+set mm= %mm% "-|MAIN MENU|- "
+set mm= %mm% "========== Select an option =========="
+set mm= %mm% ""
+set mm= %mm% "[ ] Download Office 365"
+set mm= %mm% "[ ] Download Office Professional Plus 2021"
+set mm= %mm% ""
+set mm= %mm% "[ ] WEB: Office Customization Tool"
+set mm= %mm% "[ ] WEB: Office Deployment Tool"
+set mm= %mm% ""
+
+cd %currentCD%
+cmdMenuSel e370 %mm%        
+
+if %ERRORLEVEL% == 1 goto m1a.x3.1.1.pedAppInstallerLinks
+if %ERRORLEVEL% == 2 goto m1a.x3.1.1.pedAppInstallerLinks 
+if %ERRORLEVEL% == 3 goto mainMenu
+if %ERRORLEVEL% == 4 goto %menu%
+if %ERRORLEVEL% == 5 goto %menu%
+
+if %ERRORLEVEL% == 6 (
+	call :r3a.x11.5.01.downLoadF-5.01.office
+	cd "%destinationPD%\Data\5.Notes\officeSetup
+	start cmd /c "setup /configure Office365.xml"
+)
+if %ERRORLEVEL% == 7 (
+	call :r3a.x11.5.01.downLoadF-5.01.office
+	cd "%destinationPD%\Data\5.Notes\officeSetup
+	start cmd /c "setup /configure OfficePro21.xml"
+)
+if %ERRORLEVEL% == 8 goto %menu%
+
+if %ERRORLEVEL% == 9 start https://config.office.com/deploymentsettings
+if %ERRORLEVEL% == 10 start https://www.microsoft.com/en-us/download/details.aspx?id=49117
+if %ERRORLEVEL% == 11 goto %menu%
+
+goto %menu%
+
+
+:m1a.x3.1.2.wingetGUI
+::================================
+cls
+
+set "downloadFiles=:r5a.x4.1.wingetGUI"
+set "directoryFiles=files\wingetGUI"
+set "nameFiles=PED-wingetGUI.ps1"
+
+::Function
+
+	call :r3a.x12.5.downLoadF-wingetGui
+	call %downloadFiles%
+
+
+goto %menu%
+
+::set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+::if not exist %startFiles% (
+::	call :r3a.x12.5.downLoadF-wingetGui
+::	call %downloadFiles%
+::)
+::%psP% %startFiles%
+
 :m1a.x3.1.3.downloadVideos
 ::================================
 set menu=m1a.x3.1.3.downloadVideos
@@ -3958,145 +4232,6 @@ start "" "%new_url:^&=&%"
 
 endlocal
 goto %menu%
-
-
-
-https://objects.githubusercontent.com/github-production-release-asset-2e65be/1039520/8e86f072-4cf3-4ba1-bd20-c0b6e18345c4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=releaseassetproduction%2F20240605%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240605T133156Z&X-Amz-Expires=300&X-Amz-Signature=5a843a488adf2e1dcd8c7ef059be720263fd62c59a67600c48ae569224b623d2&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=1039520&response-content-disposition=attachment%3B%20filename%3Dyoutube-dl.exe&response-content-type=application%2Foctet-stream
-
-
-:m1a.x3.1.1.pedAppInstallerLinks
-::================================
-set menu=m1a.x3.1.1.pedAppInstallerLinks
-set "menuA= 1. Install -programs:"
-set "menuB= PED: App Installer links (winget)"
-call :mStyle
-
-set mm=
-set mm= %mm% "-|NEXT|- 1. Install -programs:"
-set mm= %mm% "-|BACK|- 1. Install -programs:"
-set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
-set mm= %mm% ""
-set mm= %mm% "--- Install by WinGet: ---"
-set mm= %mm% "[ ] Browsers: Google.Chrome"
-set mm= %mm% "[ ] Archiver: 7zip.7zip"
-set mm= %mm% "[ ] Archiver: RARLab.WinRAR"
-set mm= %mm% "[ ] Remote: Datronicsoft.SpacedeskDriver.Server"
-set mm= %mm% "[ ] Remote: Google.ChromeRemoteDesktop"
-set mm= %mm% "[ ] Code: GitHub.GitHubDesktop"
-set mm= %mm% "[ ] Code: Microsoft.VisualStudioCode"
-set mm= %mm% "[ ] Code: OpenJS.NodeJS.LTS"
-set mm= %mm% "[ ] DataRecovery: EaseUS.DataRecovery"
-set mm= %mm% "[ ] Partition: MiniTool.PartitionWizard.Free"
-set mm= %mm% "[ ] Social: Facebook.Messenger"
-set mm= %mm% "[ ] Social: WhatsApp.WhatsApp"
-set mm= %mm% "[ ] Storage: Google.Drive"
-set mm= %mm% "[ ] Storage: Microsoft.OneDrive"
-set mm= %mm% "[ ] Note: Notepad++.Notepad++"
-set mm= %mm% "[ ] Note: Apache.OpenOffice"
-set mm= %mm% "[ ] Test: PrimateLabs.Geekbench.5"
-set mm= %mm% "[ ] Downloader: qBittorrent.qBittorrent"
-set mm= %mm% "[ ] Video: VideoLAN.VLC"
-set mm= %mm% "[ ] Uninstaller: RevoUninstaller.RevoUninstallerPro"
-set mm= %mm% "[ ] Cleaner: Glarysoft.GlaryUtilities"
-set mm= %mm% ""
-set mm= %mm% "--- MS Store: ---"
-set mm= %mm% "[ ] Note: Free Office Mobile"
-set mm= %mm% "[ ] Gadget: Widget Launcher"
-set mm= %mm% ""
-set mm= %mm% "--- Anti-virus: ---"
-set mm= %mm% "[ ] Portable: Norton"
-set mm= %mm% "[ ] Portable: Kaspersky"
-set mm= %mm% "[ ] Portable: HitmanPro_x64.exe"
-set mm= %mm% "[ ] Portable: EmsisoftEmergencyKit"
-set mm= %mm% "[ ] Installer: Virus Total"
-set mm= %mm% "[ ] Installer: bitdefender_antivirus.exe"
-set mm= %mm% "[ ] Installer: Malwarebytes_Anti-Malware_Portable"
-
-cmdMenuSel e370 %mm%
-if %ERRORLEVEL% == 1 goto m1a.x3.1.install
-if %ERRORLEVEL% == 2 goto m1a.x3.1.install
-if %ERRORLEVEL% == 3 goto mainMenu
-if %ERRORLEVEL% == 4 goto %menu%
-if %ERRORLEVEL% == 5 goto %menu%
-
-if %ERRORLEVEL% == 6 goto %menu%
-if %ERRORLEVEL% == 7 set "appIns=Google.Chrome"
-if %ERRORLEVEL% == 8 set "appIns=7zip.7zip"
-if %ERRORLEVEL% == 9 set "appIns=RARLab.WinRAR"
-if %ERRORLEVEL% == 10 set "appIns=Datronicsoft.SpacedeskDriver.Server"
-if %ERRORLEVEL% == 11 set "appIns=Google.ChromeRemoteDesktop"
-if %ERRORLEVEL% == 12 set "appIns=GitHub.GitHubDesktop"
-if %ERRORLEVEL% == 13 set "appIns=Microsoft.VisualStudioCode"
-if %ERRORLEVEL% == 14 set "appIns=OpenJS.NodeJS.LTS"
-if %ERRORLEVEL% == 15 set "appIns=EaseUS.DataRecovery"
-if %ERRORLEVEL% == 16 set "appIns=MiniTool.PartitionWizard.Free"
-if %ERRORLEVEL% == 17 set "appIns=Facebook.Messenger"
-if %ERRORLEVEL% == 18 set "appIns=WhatsApp.WhatsApp"
-if %ERRORLEVEL% == 19 set "appIns=Google.GoogleDrive"
-if %ERRORLEVEL% == 20 set "appIns=Microsoft.OneDrive"
-if %ERRORLEVEL% == 21 set "appIns=Notepad++.Notepad++"
-if %ERRORLEVEL% == 22 set "appIns=Apache.OpenOffice"
-if %ERRORLEVEL% == 23 set "appIns=PrimateLabs.Geekbench.5"
-if %ERRORLEVEL% == 24 set "appIns=qBittorrent.qBittorrent"
-if %ERRORLEVEL% == 25 set "appIns=VideoLAN.VLC"
-if %ERRORLEVEL% == 26 set "appIns=RevoUninstaller.RevoUninstallerPro"
-if %ERRORLEVEL% == 27 set "appIns=Glarysoft.GlaryUtilities"
-
-if %ERRORLEVEL% == 28 goto %menu%
-if %ERRORLEVEL% == 29 goto %menu%
-if %ERRORLEVEL% == 30 (
-	start https://www.microsoft.com/store/productid/9WZDNCRFJB9S?ocid=pdpshare
-	start https://www.microsoft.com/store/productid/9WZDNCRFJBH3?ocid=pdpshare
-	goto %menu%
-)
-if %ERRORLEVEL% == 31 start https://www.microsoft.com/store/productId/9WZDNCRDQFBT
-if %ERRORLEVEL% == 32 goto %menu%
-if %ERRORLEVEL% == 33 goto %menu%
-if %ERRORLEVEL% == 34 (goto r4a.x5.01.norton)
-if %ERRORLEVEL% == 35 (goto r4a.x5.02.kaspersky)
-if %ERRORLEVEL% == 36 start https://download.sophos.com/endpoint/clients/HitmanPro_x64.exe
-if %ERRORLEVEL% == 37 start https://dl.emsisoft.com/EmsisoftEmergencyKit.exe
-if %ERRORLEVEL% == 38 start https://www.virustotal.com/static/bin/vtuploader2.2.exe
-if %ERRORLEVEL% == 39 start https://download.bitdefender.com/windows/installer/en-us/bitdefender_antivirus.exe
-if %ERRORLEVEL% == 40 start https://downloads.malwarebytes.com/file/mb4_offline
-
-::if %ERRORLEVEL% == 38 start https://www.cleverbridge.com/747/cookie?affiliate=32138&redirectto=https%3A%2F%2Ffiles.surfright.nl%2FHitmanPro_x64.exe
-
-:m1a.x3.1.1.1.appInstaller
-cls
-echo.
-Echo Install %appIns%
-
-start cmd /c "winget install %appIns% -h && pause"
-::echo. && if %ERRORLEVEL% EQU 0 (Echo %appIns% installed successfully.) else (Echo %appIns% installed Unsuccessfully.)
-set "appIns="
-
-%color1%
-goto %menu%
-
-:m1a.x3.1.2.wingetGUI
-::================================
-cls
-
-set "downloadFiles=:r5a.x4.1.wingetGUI"
-set "directoryFiles=files\wingetGUI"
-set "nameFiles=PED-wingetGUI.ps1"
-
-::Function
-
-	call :r3a.x12.5.downLoadF-wingetGui
-	call %downloadFiles%
-
-
-goto %menu%
-
-::set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
-::if not exist %startFiles% (
-::	call :r3a.x12.5.downLoadF-wingetGui
-::	call %downloadFiles%
-::)
-::%psP% %startFiles%
 
 :m1a.x3.2.1.debloat
 ::================================
@@ -9528,6 +9663,11 @@ rem https://www.youtube.com/watch?v=6oqhJ-gTadY
 
 :notesVersion
 exit
+::PED-ToolBox-1.284.2.240901
+:: New office download links
+
+::PED-ToolBox-1.284.1.240826
+:: new download links and files for windows os 
 
 ::set "versionTool=PED-ToolBox-1.283.2.240822"
 ::update :m1a.x02.1.1.createInstall-BT
