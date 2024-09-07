@@ -24,23 +24,24 @@
 
 
 ## 🚀 How to Run PEDToolBox:
+## New link: ped.run
 
 ### 🖥️ CMD or RUN Commands:
 #### 🔗 Link 1:
-    powershell iex(irm rebrand.ly/pedbox)
+    powershell iex(irm ped.run)
     
 #### 🔗 Link 2:
-    powershell irm rebrand.ly/pedbox | iex
+    powershell irm ped.run | iex
     
 #### 🔗 Link 3:
     cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
 
 ### 🖥️ PowerShell links:
 #### 🔗 Link 4:
-    iex(irm rebrand.ly/pedbox)
+    iex(irm ped.run)
     
 #### 🔗 Link 5:
-    irm rebrand.ly/pedbox | iex
+    irm ped.run | iex
 
 - Feel free to explore the GitHub repository for more details. 🚀
 
