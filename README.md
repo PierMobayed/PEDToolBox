@@ -51,193 +51,193 @@
 
 ## Overview
 ### Main Menu
-    "[+] ------ : Create a restore point:"
-    "[+] Step 0 : Test and Diagnostic:"
+    [+] ------ : Create a restore point:
+    [+] Step 0 : Test and Diagnostic:
      
-    "[+] Step 1 : System Check -Update/Repair/Scan:"
-    "[+] Step 2 : Privacy Settings"
-    "[+] Step 3 : Programs -Install/Uninstall/Update"
-    "[+] Step 4 : Clean Up -StartUp/StartMenu/Explorer"
-    "[+] Step 5 : Optimizing Programs"
-    "[+] Step 6 : Clean Up Junk files "
-    "[+] Step 7 : Turn on\off apps"
+    [+] Step 1 : System Check -Update/Repair/Scan:
+    [+] Step 2 : Privacy Settings
+    [+] Step 3 : Programs -Install/Uninstall/Update
+    [+] Step 4 : Clean Up -StartUp/StartMenu/Explorer
+    [+] Step 5 : Optimizing Programs
+    [+] Step 6 : Clean Up Junk files 
+    [+] Step 7 : Turn on\off apps
     
-    "[+] Power Menu"
+    [+] Power Menu
      
-    "[ ] One Click Maintenance and Clean"
+    [ ] One Click Maintenance and Clean
 
 
 ### Create a restore point:
-    "-|NEXT|- Step 0 : Test and Diagnostic:" 
-    "-|BACK|- Main Menu:"
-    "-|MAIN MENU|- " 
-    "========== Select an option ==========" 
+    -|NEXT|- Step 0 : Test and Diagnostic: 
+    -|BACK|- Main Menu:
+    -|MAIN MENU|-  
+    ========== Select an option ========== 
 
-	"---------- Create a restore point ----------"
-	"[ p ] 1. View Configurations"
-	""
-	"[ p ] 2. Create point (CMD fast)"
-	"[ ] 2. Create point(Powershell with loading bar)"
-	""
-	"[ p ] 3. View point by PowerShell"
-	"[ p ] 3. View point and Restore"
-	""
-	"---------- PED backup (CMD)----------"
-	"[ p ] Registry backup "
-	"[ p ] Scheduled Tasks backup "
-	"[ p ] Services backup "
-	"[ p ] WinKey backup "
-	"[ p ] Start Menu layout backup "
-	"[ p ] Drivers backup "
-	""
-	"[ p ] Open PED-Recovery Folder"
-	""
-	"[ ] Import Start Menu layout"
+    ---------- Create a restore point ----------
+    [ p ] 1. View Configurations
+	
+    [ p ] 2. Create point (CMD fast)
+    [ ] 2. Create point(Powershell with loading bar)
+	
+    [ p ] 3. View point by PowerShell
+    [ p ] 3. View point and Restore
+	
+    ---------- PED backup (CMD)----------
+    [ p ] Registry backup 
+    [ p ] Scheduled Tasks backup 
+    [ p ] Services backup 
+    [ p ] WinKey backup 
+    [ p ] Start Menu layout backup 
+    [ p ] Drivers backup 
+	
+    [ p ] Open PED-Recovery Folder
+	
+    [ ] Import Start Menu layout
 	
 
 ### Step 0 : Test and Diagnostic:
-	"-|NEXT|- Step 1 : System Check -Update/Repair/Scan:"
-	"-|BACK|- Main Menu"
-	"-|MAIN MENU|-"
-	"========== Select an option =========="
-	""
-	"[+] PED: Test boot time run"
-	""
-	"[ ] PED: Show CPU/RAM usage"
-	""
-	"[+] Test internet speed"
-	""
-	"---------- Configurations / Diagnostic ----------"
-	""
-	"[+] Execution Policy configuration"
-	"[+] User account control"
-	""
-	"[+] Accounts & Users "
-	""
-	"[+] Control Panel "
-	""
-	"---------- CMD ----------"
-	""
-	"[ ] Start CMD"
-	""
-	"[ ] Copy -RoboCopy cmd"
-	""
-	"---------- Windows Creation ----------"
-	""
-	"[ ] Generate autounattend.xml files for Windows 10/11  "
-	"[ ] Download Windows OS"
-	"[ ] Download Rufus - Create bootable USB drives the easy way"
-	"[ ] Download Ventoy - Bootable USB "
+    -|NEXT|- Step 1 : System Check -Update/Repair/Scan:
+    -|BACK|- Main Menu
+    -|MAIN MENU|-
+    ========== Select an option ==========
+	
+    [+] PED: Test boot time run
+	
+    [ ] PED: Show CPU/RAM usage
+	
+    [+] Test internet speed
+
+    ---------- Configurations / Diagnostic ----------
+
+    [+] Execution Policy configuration
+    [+] User account control
+
+    [+] Accounts & Users 
+
+    [+] Control Panel 
+    
+    ---------- CMD ----------
+    
+    [ ] Start CMD
+    
+    [ ] Copy -RoboCopy cmd
+    
+    ---------- Windows Creation ----------
+	
+    [ ] Generate autounattend.xml files for Windows 10/11  
+    [ ] Download Windows OS
+    [ ] Download Rufus - Create bootable USB drives the easy way
+    [ ] Download Ventoy - Bootable USB 
 	
 
 ### Step 1 : System Check -Update/Repair/Scan:
-	"-|NEXT|- 1. Create a restore point:"
-    "-|BACK|- Main Menu"
-    "-|MAIN MENU|- "   
-    "========== Select an option =========="
-    ""
-    "[+] 1. Create a restore point"
-    "[+] 2. Check for Updates"
-    "[+] 3. Check Drivers:"
-    "[+] 4. Check Security and Maintenance"
-    "[+] 5. Check Windows Defender"
-    "[+] 6. Check for corrupt files"
+    -|NEXT|- 1. Create a restore point:
+    -|BACK|- Main Menu
+    -|MAIN MENU|-    
+    ========== Select an option ==========
+    
+    [+] 1. Create a restore point
+    [+] 2. Check for Updates
+    [+] 3. Check Drivers:
+    [+] 4. Check Security and Maintenance
+    [+] 5. Check Windows Defender
+    [+] 6. Check for corrupt files
 	
 	
 ### Step 2 : Privacy Settings:
-	"-|NEXT|- Step 3 : Programs -Install/Uninstall/Update"
-	"-|BACK|- Step 1 : System Check -Update/Repair/Scan"
-    "-|MAIN MENU|- "
-    "========== Select an option =========="
-    ""
-    "[ p ] Create a restore point"
-    "[ p ] Startup Apps"
-    "[ p ] Add or remove programs"
-    "--[ p ] Windows Features"
-    "--[ p ] Optional features"
-    "[ p ] Privacy Settings"
-    "[ p ] Storage settings"
-    "[ p ] Power Options"
-    "--[ p ] Power Options -Buttons settings"
-    "--[ p ] Power Options -Display and Sleep time settings"
-    "[ p ] Background apps"
-    "[ p ] View advanced system settings"
-    "[ p ] System configuration"
-    ""
-    "[ ] Reset this pc"
-    ""
-    "[+] More: Page 2:"
+    -|NEXT|- Step 3 : Programs -Install/Uninstall/Update
+    -|BACK|- Step 1 : System Check -Update/Repair/Scan
+    -|MAIN MENU|- 
+    ========== Select an option ==========
+    
+    [ p ] Create a restore point
+    [ p ] Startup Apps
+    [ p ] Add or remove programs
+    --[ p ] Windows Features
+    --[ p ] Optional features
+    [ p ] Privacy Settings
+    [ p ] Storage settings
+    [ p ] Power Options
+    --[ p ] Power Options -Buttons settings
+    --[ p ] Power Options -Display and Sleep time settings
+    [ p ] Background apps
+    [ p ] View advanced system settings
+    [ p ] System configuration
+    
+    [ ] Reset this pc
+    
+    [+] More: Page 2:
 	
 	
 ### Step 3 : Programs -Install/Uninstall/Update:
-	"-|NEXT|- Step 4 : Clean Up -StartUp/StartMenu/Explorer"
-    "-|BACK|- Step 2 : Privacy Settings"
-    "-|MAIN MENU|- "
-    "========== Select an option =========="
-    ""
-    "[+] 1.Install app/program:"
-    "[+] 2.Uninstall app/program:"
-    "[+] 3.Update all app/program:"
-    ""
-    "[+] More: Github Scripts:
+    -|NEXT|- Step 4 : Clean Up -StartUp/StartMenu/Explorer
+    -|BACK|- Step 2 : Privacy Settings
+    -|MAIN MENU|- 
+    ========== Select an option ==========
+    
+    [+] 1.Install app/program:
+    [+] 2.Uninstall app/program:
+    [+] 3.Update all app/program:
+    
+    [+] More: Github Scripts:
 	
 	
 ### Step 4 : Clean Up -StartUp/StartMenu/Explorer:
-	"-|NEXT|- 1.StartUp"
-    "-|BACK|- Step 3 : Programs -Install/Uninstall/Update"
-    "-|MAIN MENU|- "
-    "========== Select an option =========="
-    ""
-    "[+] 1.StartUp"
-    "[+] 2.StartMenu"
-    "[+] 3.Windows Explorer"
+    -|NEXT|- 1.StartUp
+    -|BACK|- Step 3 : Programs -Install/Uninstall/Update
+    -|MAIN MENU|- 
+    ========== Select an option ==========
+    
+    [+] 1.StartUp
+    [+] 2.StartMenu
+    [+] 3.Windows Explorer
 	
 	
 ### Step 5 : Optimizing Programs:
-	"-|NEXT|- Step 6 : Clean Up Junk files  "
-    "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer"
-    "-|MAIN MENU|- "
-    "========== Select an option =========="
-    ""
-    "----- Optimize Services/Settings -----"
-    "[ p ] 1.Turbo mode \ Safe configurations"
-    "[ d ] 1.Default configurations"
-    ""
-    "[+] Config Optimize programs"
-    "[+] Services with GridView:"
-    ""
-    "------- Optimize TaskScheduler -------"
-    "[ p ] 2.TaskScheduler -Auto config"
-    "[ d ] 2.TaskScheduler -Default config"
-    ""
-    "[+] Task Scheduler with GridView:"
-    ""
-    "------------ More Options ------------"
-    "[ p ] Administrative Tools"
+    -|NEXT|- Step 6 : Clean Up Junk files  
+    -|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer
+    -|MAIN MENU|- 
+    ========== Select an option ==========
+    
+    ----- Optimize Services/Settings -----
+    [ p ] 1.Turbo mode \ Safe configurations
+    [ d ] 1.Default configurations
+    
+    [+] Config Optimize programs
+    [+] Services with GridView:
+    
+    ------- Optimize TaskScheduler -------
+    [ p ] 2.TaskScheduler -Auto config
+    [ d ] 2.TaskScheduler -Default config
+    
+    [+] Task Scheduler with GridView:
+    
+    ------------ More Options ------------
+    [ p ] Administrative Tools
 	
 	
 ### Step 6 : Clean Up Junk files
-	"-|NEXT|- "
-    "-|BACK|- "
-    "-|MAIN MENU|- "
-    "========== Select an option =========="
-    ""
-    "[ p ] 2.1.Bleachbit"
-    "[ p ] 2.2.Disk Cleanup"
-    "[ p ] 2.3.GlaryUtilities_Portable"
-    "[ p ] 2.4.wiseRegCleaner"
+    -|NEXT|- 
+    -|BACK|- 
+    -|MAIN MENU|- 
+    ========== Select an option ==========
+    
+    [ p ] 2.1.Bleachbit
+    [ p ] 2.2.Disk Cleanup
+    [ p ] 2.3.GlaryUtilities_Portable
+    [ p ] 2.4.wiseRegCleaner
 	
 	
 ### Step 7 : Turn on\off apps:
-	"-|NEXT|- 1. Windows Updates:"
-    "-|BACK|- "
-    "-|MAIN MENU|- "
-    "========== Select an option =========="
-    ""
-    "[+] 1. Windows Updates:"       
-    "[+] 2. Security and Maintenance:"
-    "[+] 3. Microsoft Defender Application:"
-    "[+] 4. Power Plan -Ultimate Performance:"
-    "[+] 5. Ram Reducer:"
-    "[+] 6. Indexing:"
-    "[+] 7. Hibernate:"
+    -|NEXT|- 1. Windows Updates:
+    -|BACK|- 
+    -|MAIN MENU|- 
+    ========== Select an option ==========
+    
+    [+] 1. Windows Updates:       
+    [+] 2. Security and Maintenance:
+    [+] 3. Microsoft Defender Application:
+    [+] 4. Power Plan -Ultimate Performance:
+    [+] 5. Ram Reducer:
+    [+] 6. Indexing:
+    [+] 7. Hibernate:
