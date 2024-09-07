@@ -239,8 +239,8 @@
 	
 	
 ### 🧹 Step 6 : Clean Up Junk files
-	-|NEXT|- 
-    -|BACK|- 
+    -|NEXT|- Step 7 : Turn on\off apps:
+    -|BACK|- Step 5 : Optimizing Programs:
     -|MAIN MENU|- 
     ========== Select an option ==========
     
