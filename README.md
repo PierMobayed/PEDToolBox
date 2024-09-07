@@ -1,7 +1,8 @@
 # 🛠️ [PEDToolBox](https://piermobayed.github.io/PEDToolBox/)
+⭐⭐⭐⭐⭐
 
-
-#### ⭐ If you found this project helpful or interesting, please consider giving it a ⭐star⭐! Thank you for your support! ⭐
+#### ⭐ If you found this project helpful or interesting, please consider giving it a ⭐star⭐! 
+#### ⭐ Thank you for your support! ⭐
 
 ## Version : 1.285.1.240904
 #### 🖥️ Windows 10 and 11 - 🚀 Speed Up, 🛠️ Repair, 🔄 Update, ⚡ Optimize, 🧹 Clean Junk, 📦 Download Apps, 🗑️ Uninstaller, 🧯 Deployed Bloatware, and more
@@ -22,8 +23,8 @@
 > Please note that this tool is provided “as is” and should be used at your own risk. If you encounter any issues or have feedback, you can reach out to the developer at:
 ## 📧 pedtoolbox@gmail.com
 
-
-## 🚀 How to Run PEDToolBox:
+⭐⭐⭐⭐⭐
+## 🚀 How to Run PEDToolBox: 
 ## New link: ped.run
 
 ### 🖥️ CMD or RUN Commands:
@@ -46,11 +47,11 @@
 - Feel free to explore the GitHub repository for more details. 🚀
 
 
-
 #### ⚡ Windows 10 Optimization, 🚀 Speed Up Windows 10, 🛠️ Repair Windows 10
 #### ⚡ Windows 11 Optimization, 🚀 Speed Up Windows 11, 🛠️ Repair Windows 11
 
 
+⭐⭐⭐⭐⭐
 ## ⚙️ Overview
 ### 📋 Main Menu
     [+] ------ : Create a restore point:
