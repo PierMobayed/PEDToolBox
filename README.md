@@ -39,6 +39,8 @@
     iex(irm rebrand.ly/pedbox)
 ##### Link 5:
     irm rebrand.ly/pedbox | iex
+##### Link 6:
+    iex (irm 'https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/PED.ps1')
 
 - Feel free to explore the GitHub repository for more details. 🚀
 
