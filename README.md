@@ -30,14 +30,14 @@
 ##### Link 2:
     powershell irm rebrand.ly/pedbox | iex
 ##### Link 3:
-
     cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
+##### Link 4:
+    powershell iex (irm 'https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/PED.ps1')
 
 ### PowerShell links: 💻
 ##### Link 4:
     iex(irm rebrand.ly/pedbox)
 ##### Link 5:
-
     irm rebrand.ly/pedbox | iex
 
 - Feel free to explore the GitHub repository for more details. 🚀
