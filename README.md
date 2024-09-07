@@ -1,6 +1,6 @@
 # PEDToolBox
 
-## Version : 1.284.3.240901
+## Version : 1.285.1.240904
 #### Windows 10 and 11 -Speed Up , Repair, Update, Optimize, Clean Junk, Download Apps, Uninstaller, Deployed Bloatware, and more
 
 - PEDToolBox is a powerful utility designed to optimize, speed up, and repair Windows 10 and 11. Developed by PierMobayed, this batch script provides both auto and manual commands to enhance your Windows experience. Here are some of its key features:

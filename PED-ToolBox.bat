@@ -85,7 +85,7 @@ echo.
 ::================================
 
 :: Set version
-set "versionTool=PED-ToolBox-1.284.3.240901"
+set "versionTool=PED-ToolBox-1.285.1.240904"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -119,7 +119,8 @@ set "destinationDir=C:\ProgramData\PEDToolBox\"
 
 set "sourceFile=%~f0"
 set "destinationFile=%destinationDir%%~nx0"
-	
+
+REM Installing script
 if /I "%sourceFile%" NEQ "%destinationFile%" (
 
 	echo.
@@ -217,10 +218,43 @@ echo ...[80%]...
 ::Max screen
 if not "%1"=="max" start /MAX cmd /c %0 max & exit
 
-:m01.x03.takeown
+:m01.x03.more
 ::cmd.exe /c takeown /f \"c:\ProgramData" /r /d y && icacls \"c:\ProgramData" /grant administrators:F /t
 ::cmd.exe /c takeown /f \"%1\" /r /d y && icacls \"%1\" /grant administrators:F /t
-takeown /f "C:\ProgramData"
+::takeown /f "C:\ProgramData"
+
+REM Reset Permissions:
+REM Type the following command and press Enter:
+::icacls C:\ProgramData /T /Q /C /RESET
+REM Take Ownership (if needed):
+REM If you still face issues, you might need to take ownership of the folder. Use this command:
+::takeown /F C:\ProgramData /R /D Y
+REM Grant Full Control (if needed):
+REM To grant full control to your user account, use:
+REM Replace YourUsername with your actual Windows username.
+::icacls C:\ProgramData /grant YourUsername:F /T
+::or
+::icacls C:\ProgramData /grant administrators:F /T
+
+REM Check if LineWrap exists
+set "fullRegPath=HKCU\Console\%%SystemRoot%%_System32_cmd.exe"
+
+::REM Check if LineWrap exists 
+::reg query "%fullRegPath%" /v LineWrap >nul 2>&1
+::if %errorlevel% equ 0 (
+::  REM LineWrap exists,
+::	reg delete "%fullRegPath%" /v LineWrap /f
+::	start "" "%~f0"
+::  exit
+::)
+
+reg query "%fullRegPath%" /v LineWrap | find "0x0" >nul 2>&1
+if not %errorlevel% == 0 (
+    reg add "%fullRegPath%" /v LineWrap /t REG_DWORD /d 0 /f
+    start "" "%~f0"
+    exit
+)
+
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::START
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -1125,7 +1159,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 0.Drivers & Run & More"
 set mm= %mm% "-|BACK|- MAIN MENU"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[+] 0.Drivers & Run & More"
 set mm= %mm% "[+] 1.Optimizer"
@@ -1193,7 +1227,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Optimizer"
 set mm= %mm% "-|BACK|- Programs"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] r4a.xSnappy driver installer"
 set mm= %mm% "[ ] m1a.x02.4.advancedrun-x64"
@@ -1392,7 +1426,7 @@ set mm= %mm% "------- More: -------"
 set mm= %mm% "[ p ] Optimizer.exe"
 set mm= %mm% "[ p ] TaskSchedulerView.exe"
 
-cmdMenuSel e370 "-|NEXT|- %menuNextName%" "-|BACK|- %menuBackName%" "-|MAIN MENU|- " "========== Select an option ==========" "" %mm%
+cmdMenuSel e370 "-|NEXT|- %menuNextName%" "-|BACK|- %menuBackName%" "-|MAIN MENU|- " "====================================================" "" %mm%
 
 if %ERRORLEVEL% == 1 (
 	if %menuBackGoto% == r4a.xPrograms (
@@ -1575,7 +1609,7 @@ set mm=
 set mm= %mm% "-|NEXT|- %menuNextName%"
 set mm= %mm% "-|BACK|- %menuBackName%"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 2.1.Bleachbit"
 set mm= %mm% "[ p ] 2.2.Disk Cleanup"
@@ -1716,12 +1750,12 @@ set mm=
 set mm= %mm% "-|NEXT|- %menuNextName%"
 set mm= %mm% "-|BACK|- %menuBackName%"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Revo Uninstaller Portable"
 set mm= %mm% "[ p ] 2.OOappBuster"
 set mm= %mm% ""
-set mm= %mm% "[+] PED:Debloat -Delete unwanted Bloatware:"
+::set mm= %mm% "[+] PED:Debloat -Delete unwanted Bloatware:"
 set mm= %mm% ""
 set mm= %mm% "[ ] GridView | Remove-AppxPackage"
 
@@ -1744,9 +1778,9 @@ if %ERRORLEVEL% == 6 goto r4a.x3.1.RevoUninstallerPortable
 if %ERRORLEVEL% == 7 goto r4a.x3.2.OOappBuster
 if %ERRORLEVEL% == 8 goto %menu%
 
-if %ERRORLEVEL% == 9 goto m1a.x3.2.1.debloat
-if %ERRORLEVEL% == 10 goto %menu%
-if %ERRORLEVEL% == 11 %psP% "Get-AppxPackage | Select InstallLocation, Name, PackageFullName | Sort-Object InstallLocation, Name | Out-GridView -PassThru | Remove-AppxPackage"
+::if %ERRORLEVEL% == 9 goto m1a.x3.2.1.debloat
+if %ERRORLEVEL% == 9 goto %menu%
+if %ERRORLEVEL% == 10 %psP% "Get-AppxPackage | Select InstallLocation, Name, PackageFullName | Sort-Object InstallLocation, Name | Out-GridView -PassThru | Remove-AppxPackage"
 
 goto %menu%
 
@@ -1797,7 +1831,7 @@ set mm=
 set mm= %mm% "-|NEXT|- %menuNextName%"
 set mm= %mm% "-|BACK|- %menuBackName%"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[+] 3.1.Win10Debloater-master"
 set mm= %mm% "[+] 3.2.ChrisTitusTech Win10script"
@@ -2063,7 +2097,7 @@ call :mStyle
 set mm=
 set mm= %mm% "-|NEXT|- Step 0 : Test and Diagnostic:" 
 set mm= %mm% "-|BACK|- Main Menu:"
-set mm= %mm% "-|MAIN MENU|- " "========== Select an option ==========" ""
+set mm= %mm% "-|MAIN MENU|- " "====================================================" ""
 set mm= %mm% "---------- Create a restore point ----------"
 set mm= %mm% "[ p ] 1. View Configurations"
 set mm= %mm% ""
@@ -2267,7 +2301,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Step 1 : System Check -Update/Repair/Scan:"
 set mm= %mm% "-|BACK|- Main Menu"
 set mm= %mm% "-|MAIN MENU|-"
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[+] PED: Test boot time run"
 set mm= %mm% ""
@@ -2359,7 +2393,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Step 0 : Test and Diagnostic:"
 set mm= %mm% "-|BACK|- Step 0 : Test and Diagnostic:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1. Create Boot Folder"
 set mm= %mm% "------"
@@ -2630,7 +2664,7 @@ call :mStyle
 
 set mm= "-|NEXT|- 2. User account control:" 
 set mm= %mm% "-|BACK|- Step 0 : Test and Diagnostic:"
-set mm= %mm% "-|MAIN MENU|- " "================= Select an option ================="
+set mm= %mm% "-|MAIN MENU|- " "=================================================================="
 set mm= %mm% ""
 
 set mm= %mm% "[p] 1.List"   
@@ -2671,7 +2705,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Accounts and Users:"
 set mm= %mm% "-|BACK|- Step 0 : Test and Diagnostic:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Never notify"
 set mm= %mm% "[ ] 1.Notify me only when app try to make changes(do not dim my desktop)"
@@ -2709,7 +2743,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Control Panel:"
 set mm= %mm% "-|BACK|- Programs"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "---------- Windows apps ----------"
 set mm= %mm% "[ ] lusrmgr.msc"
@@ -2839,7 +2873,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Add Account"
 set mm= %mm% "-|BACK|- Accounts and Users"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "1.[ p ] Activete"
 set mm= %mm% "1.[ d ] DeActivete "
@@ -2880,7 +2914,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Local Users and Groups(Local) "
 set mm= %mm% "-|BACK|- Accounts and Users"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ ] user"
 set mm= %mm% "[ ] administrator"
@@ -2929,7 +2963,7 @@ goto %menu%
 :: set mm= %mm% "-|NEXT|- Step 1 : System Check -Update/Repair/Scan"
 :: set mm= %mm% "-|BACK|- Accounts and Users"
 :: set mm= %mm% "-|MAIN MENU|- "
-:: set mm= %mm% "========== Select an option =========="
+:: set mm= %mm% "===================================================="
 :: set mm= %mm% ""
 :: set mm= %mm% "[ ] lusrmgr.msc"
 :: set mm= %mm% "[ ] Control panel/User accounts"
@@ -2986,7 +3020,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Step 0 : Test and Diagnostic:"
 set mm= %mm% "-|BACK|- Step 0 : Test and Diagnostic:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ ] Control Panel (icons view)"
 set mm= %mm% "[ ] Control panel :All Tasks -shortcuts"
@@ -3038,7 +3072,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 5. Control Panel:"
 set mm= %mm% "-|BACK|- 5. Control Panel:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ ] Troubleshooting (Settings)"
 set mm= %mm% "[ ] Troubleshooting (Control Panel)"
@@ -3090,7 +3124,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Step 0 : Test and Diagnostic:"
 set mm= %mm% "-|BACK|- Step 0 : Test and Diagnostic:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] Test Speed [Mbps] [megabits per second]"
 set mm= %mm% "[ p ] Test Speed [MB/s] [megabytes per second]"
@@ -3326,7 +3360,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 1. Create a restore point:"
 set mm= %mm% "-|BACK|- %menuBackName%"
 set mm= %mm% "-|MAIN MENU|- "   
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[+] 1. Create a restore point"
 set mm= %mm% "[+] 2. Check for Updates"
@@ -3362,7 +3396,7 @@ call :mStyle
 set mm=
 set mm= %mm% "-|NEXT|- 2. Check For Updates:" 
 set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan"
-set mm= %mm% "-|MAIN MENU|- " "========== Select an option ==========" ""
+set mm= %mm% "-|MAIN MENU|- " "====================================================" ""
 set mm= %mm% "---------- Create a restore point ----------"
 set mm= %mm% "[ p ] 1. View Configurations"
 set mm= %mm% ""
@@ -3445,7 +3479,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 3. Check Drivers:"
 set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""       
 set mm= %mm% "[ p ] 0. Start Update Services"
 set mm= %mm% ""
@@ -3558,7 +3592,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 4. Check Security And Maintenance:"
 set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.BackUp/Restore Drivers (by GlaryUtility)"
 set mm= %mm% "[ p ] 2.BackUp Drivers(by DISM)"
@@ -3660,7 +3694,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 5. Check Windows Defender:"
 set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Open Security And Maintenance"
 set mm= %mm% "[ ] 2.Start Maintenance"
@@ -3693,7 +3727,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 6. Check Windows System folder for corrupt files:"
 set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] Microsoft Defender"
 set mm= %mm% "[ ] Windows Malicious Software Removal Tool - MSRT"
@@ -3773,7 +3807,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Step 2 : Privacy Settings:"
 set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Run a SFC /Scan now"
 set mm= %mm% "[ p ] 2.Run a DISM /Restorehealth"
@@ -3811,7 +3845,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update"
 set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] Create a restore point"
 set mm= %mm% "[ p ] Startup Apps"
@@ -3871,7 +3905,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Step 2 : Privacy Settings:"
 set mm= %mm% "-|BACK|- Step 2 : Privacy Settings:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ ] Security and Maintenance"
 set mm= %mm% "[ ] Windows Security (Defender)"
@@ -3926,56 +3960,11 @@ set mm=
 set mm= %mm% "-|NEXT|- Step 4 : Clean Up -StartUp/StartMenu/Explorer"
 set mm= %mm% "-|BACK|- Step 2 : Privacy Settings"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
-set mm= %mm% "[+] 1.Install app/program:"
-set mm= %mm% "[+] 2.Uninstall app/program:"
-set mm= %mm% "[+] 3.Update all app/program:"
+set mm= %mm% "========== 1.Install app/program: =================="
 set mm= %mm% ""
-set mm= %mm% "[+] More: Github Scripts:
-
-
-cmdMenuSel e370 %mm% 
-if %ERRORLEVEL% == 1 goto m1a.x4.cleanUp
-if %ERRORLEVEL% == 2 goto m1a.x2.settings
-if %ERRORLEVEL% == 3 goto mainMenu
-if %ERRORLEVEL% == 4 goto %menu%
-if %ERRORLEVEL% == 5 goto %menu%
-
-if %ERRORLEVEL% == 6 goto m1a.x3.1.install
-if %ERRORLEVEL% == 7 (
-	set menu1=r4a.x3.Uninstaller
-	set menuA=Step 3 : Programs -Install/Uninstall/Update:
-	set menuB=2.Uninstaller
-	set menuNextName=Step 3 : Programs -Install/Uninstall/Update:
-	set menuNextGoto=m1a.x3.installUninstallUpdate
-	set menuBackName=Step 3 : Programs -Install/Uninstall/Update:
-	set menuBackGoto=m1a.x3.installUninstallUpdate
-	goto r4a.x3.Uninstaller
-)
-if %ERRORLEVEL% == 8 goto m1a.x3.3.updateApps
-
-if %ERRORLEVEL% == 9 goto %menu%
-if %ERRORLEVEL% == 10 goto m1a.x3.4.GithubScripts
-
-
-goto %menu%
-
-:m1a.x3.1.install
-::================================
-set menu=m1a.x3.1.install
-
-set "menuA= Step 3 : Programs -Install/Uninstall/Update:"
-set "menuB= 1. Install -programs:"
-call :mStyle
-
-set mm=
-set mm= %mm% "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update:"
-set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:"
-set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
-set mm= %mm% ""
-set mm= %mm% "[ ] PED: Winget App Search & Install (Powershell)"
+set mm= %mm% "[ p ] PED: Winget App Search & Install (Powershell GUI)"
 set mm= %mm% ""
 set mm= %mm% "[+] PED: App installer links (CMD)"
 set mm= %mm% ""
@@ -3984,36 +3973,123 @@ set mm= %mm% "[ ] Web: Ninite.com"
 set mm= %mm% "[ ] Web: Portableapps.com"
 set mm= %mm% ""
 set mm= %mm% "[+] Download web videos"
+set mm= %mm% ""
+set mm= %mm% "========== 2.Uninstall app/program: ================"
+set mm= %mm% ""
+set mm= %mm% "[ ] 1.Revo Uninstaller Portable"
+set mm= %mm% "[ ] 2.OOappBuster"
+set mm= %mm% ""
+set mm= %mm% "[ p ] PED-Delete_Bloatware app (Powershell GUI)"
+set mm= %mm% ""
+set mm= %mm% "[+] More:"
+set mm= %mm% ""
+set mm= %mm% "========== 3.Update all app/program: ==============="
+set mm= %mm% ""
+set mm= %mm% "[ p ] List with updates all apps/programs:"
+set mm= %mm% "[ p ] Updates ALL:"
+set mm= %mm% "[ ] Updates Manual:"
+set mm= %mm% ""
+set mm= %mm% "========== 4.More: ================================="
+set mm= %mm% ""
+set mm= %mm% "[+] Github Scripts:"
 
 
-
-cmdMenuSel e370 %mm%
-if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
-if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
+cmdMenuSel e370 %mm% 
+if %ERRORLEVEL% == 1 goto m1a.x4.cleanUp
+if %ERRORLEVEL% == 2 goto m1a.x2.settings
 if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
-
-if %ERRORLEVEL% == 6 goto m1a.x3.1.2.wingetGUI
+if %ERRORLEVEL% == 6 goto %menu%
 if %ERRORLEVEL% == 7 goto %menu%
-
-if %ERRORLEVEL% == 8 (
+if %ERRORLEVEL% == 8 goto m1a.x3.1.2.wingetGUI
+if %ERRORLEVEL% == 9 goto %menu%
+if %ERRORLEVEL% == 10 (
 	cls
 	echo.
 	call :r3a.x11.3.1.downLoadF-3.1.WingetScript
 	%timeoutA%
 	goto m1a.x3.1.1.pedAppInstallerLinks
 )
-if %ERRORLEVEL% == 9 goto %menu%
-
-if %ERRORLEVEL% == 10 start https://winstall.app/
-if %ERRORLEVEL% == 11 start https://www.ninite.com
-if %ERRORLEVEL% == 12 start https://portableapps.com/apps
-if %ERRORLEVEL% == 13 goto %menu%
-
-if %ERRORLEVEL% == 14 goto m1a.x3.1.3.downloadVideos
+if %ERRORLEVEL% == 11 goto %menu%
+if %ERRORLEVEL% == 12 start https://winstall.app/
+if %ERRORLEVEL% == 13 start https://www.ninite.com
+if %ERRORLEVEL% == 14 start https://portableapps.com/apps
+if %ERRORLEVEL% == 15 goto %menu%
+if %ERRORLEVEL% == 16 goto m1a.x3.1.3.downloadVideos
+if %ERRORLEVEL% == 17 goto %menu%
+if %ERRORLEVEL% == 18 goto %menu%
+if %ERRORLEVEL% == 19 goto %menu%
+if %ERRORLEVEL% == 20 goto r4a.x3.1.RevoUninstallerPortable
+if %ERRORLEVEL% == 21 goto r4a.x3.2.OOappBuster
+if %ERRORLEVEL% == 22 goto %menu%
+if %ERRORLEVEL% == 23 goto m1a.x3.2.1.0.delete_Bloatware
+if %ERRORLEVEL% == 24 goto %menu%
+if %ERRORLEVEL% == 25 goto m1a.x3.2.1.debloat
+if %ERRORLEVEL% == 26 goto %menu%
+if %ERRORLEVEL% == 27 goto %menu%
+if %ERRORLEVEL% == 28 goto %menu%
+if %ERRORLEVEL% == 29 goto m1a.x3.3.1.updateAppsList
+if %ERRORLEVEL% == 30 goto m1a.x3.3.2.updateAppsAll
+if %ERRORLEVEL% == 31 goto m1a.x3.3.3.updateAppsManual
+if %ERRORLEVEL% == 32 goto %menu%
+if %ERRORLEVEL% == 33 goto %menu%
+if %ERRORLEVEL% == 34 goto %menu%
+if %ERRORLEVEL% == 35 goto m1a.x3.4.GithubScripts
 
 goto %menu%
+
+:::m1a.x3.1.install
+::::================================
+::set menu=m1a.x3.1.install
+::
+::set "menuA= Step 3 : Programs -Install/Uninstall/Update:"
+::set "menuB= 1. Install -programs:"
+::call :mStyle
+::
+::set mm=
+::set mm= %mm% "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update:"
+::set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:"
+::set mm= %mm% "-|MAIN MENU|- "
+::set mm= %mm% "===================================================="
+::set mm= %mm% ""
+::set mm= %mm% "[ ] PED: Winget App Search & Install (Powershell)"
+::set mm= %mm% ""
+::set mm= %mm% "[+] PED: App installer links (CMD)"
+::set mm= %mm% ""
+::set mm= %mm% "[ ] Web: winstall.app"
+::set mm= %mm% "[ ] Web: Ninite.com"
+::set mm= %mm% "[ ] Web: Portableapps.com"
+::set mm= %mm% ""
+::set mm= %mm% "[+] Download web videos"
+::
+::cmdMenuSel e370 %mm%
+::if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
+::if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
+::if %ERRORLEVEL% == 3 goto mainMenu
+::if %ERRORLEVEL% == 4 goto %menu%
+::if %ERRORLEVEL% == 5 goto %menu%
+::
+::if %ERRORLEVEL% == 6 goto m1a.x3.1.2.wingetGUI
+::if %ERRORLEVEL% == 7 goto %menu%
+::
+::if %ERRORLEVEL% == 8 (
+::	cls
+::	echo.
+::	call :r3a.x11.3.1.downLoadF-3.1.WingetScript
+::	%timeoutA%
+::	goto m1a.x3.1.1.pedAppInstallerLinks
+::)
+::if %ERRORLEVEL% == 9 goto %menu%
+::
+::if %ERRORLEVEL% == 10 start https://winstall.app/
+::if %ERRORLEVEL% == 11 start https://www.ninite.com
+::if %ERRORLEVEL% == 12 start https://portableapps.com/apps
+::if %ERRORLEVEL% == 13 goto %menu%
+::
+::if %ERRORLEVEL% == 14 goto m1a.x3.1.3.downloadVideos
+::
+::goto %menu%
 
 ::if %ERRORLEVEL% == 6 start /min %psP% iex (irm 'https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1')
 ::if %ERRORLEVEL% == 6 %psP% iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Romanitho/Winget-Install-GUI/main/Sources/Winget-Install-GUI.ps1'))
@@ -4027,10 +4103,10 @@ set "menuB= PED: App installer links (CMD)"
 call :mStyle
 
 set mm=
-set mm= %mm% "-|NEXT|- 1. Install -programs:"
-set mm= %mm% "-|BACK|- 1. Install -programs:"
+set mm= %mm% "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update:"
+set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "========== Install by WinGet: =========="
 set mm= %mm% "[ ] Browsers: Google.Chrome"
@@ -4072,8 +4148,8 @@ set mm= %mm% "[ ] Installer: bitdefender_antivirus.exe"
 set mm= %mm% "[ ] Installer: Malwarebytes_Anti-Malware_Portable"
 
 cmdMenuSel e370 %mm%
-if %ERRORLEVEL% == 1 goto m1a.x3.1.install
-if %ERRORLEVEL% == 2 goto m1a.x3.1.install
+if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
+if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
@@ -4150,7 +4226,7 @@ set mm=
 set mm= %mm% "-|NEXT|- PED: App installer links (CMD)"
 set mm= %mm% "-|BACK|- PED: App installer links (CMD)"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ ] Download Office 365"
 set mm= %mm% "[ ] Download Office Professional Plus 2021"
@@ -4213,25 +4289,26 @@ goto %menu%
 :m1a.x3.1.3.downloadVideos
 ::================================
 set menu=m1a.x3.1.3.downloadVideos
-set "menuA= 1. Install -programs:"
+
+set "menuA= Step 3 : Programs -Install/Uninstall/Update:"
 set "menuB= Download YT video"
 call :mStyle
 
 set "appYT="
 
 set mm=
-set mm= %mm% "-|NEXT|- 1. Install -programs:"
-set mm= %mm% "-|BACK|- 1. Install -programs:"
+set mm= %mm% "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update:"
+set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ ] download YT video (by y2mate.is)"
 ::set mm= %mm% ""
 ::set mm= %mm% "[ ] download YT video (youtube-dl by youtube-dl)"
 
 cmdMenuSel e370 %mm%
-if %ERRORLEVEL% == 1 goto m1a.x3.1.install
-if %ERRORLEVEL% == 2 goto m1a.x3.1.install
+if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
+if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
@@ -4276,53 +4353,46 @@ goto %menu%
 ::================================
 set menu=m1a.x3.2.1.debloat
 
-set "menuA= 2. Uninstall app/program:"
-set "menuB= PED:Debloat Delete unwanted Bloatware:"
+set "menuA= Step 3 : Programs -Install/Uninstall/Update:"
+set "menuB= 2. Uninstall app/program: More:"
 call :mStyle
 
 set mm=
 set mm= %mm% "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update:"
-set mm= %mm% "-|BACK|- 2.Uninstaller"
+set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
-set mm= %mm% "---------- NEW Bloatware app ----------"
-set mm= %mm% "[ p ] PED-Delete_Bloatware app"
+set mm= %mm% "---------- User folder: ----------------------------"
+set mm= %mm% "[ ] User folder - delete unwanted/empty folders"
 set mm= %mm% ""
-set mm= %mm% "---------- cmd Delete by Location folder (old)----------"
+set mm= %mm% "---------- More: -----------------------------------"
+set mm= %mm% "[ ] GridView | Remove-AppxPackage"
+set mm= %mm% ""
+set mm= %mm% "---------- cmd Delete by Location folder (old)------"
 set mm= %mm% "[ ] 1.Open files for corrections"
 set mm= %mm% "[ ] 2.Delete"
-set mm= %mm% ""
-set mm= %mm% "---------- User folder ----------"
-set mm= %mm% "[ p ] User folder - delete unwanted/empty folders"
 
 cmdMenuSel e370 %mm%        
 
 if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
-if %ERRORLEVEL% == 2 (
-	set menu1=r4a.x3.Uninstaller 
-	set menuA=Step 3 : Programs -Install/Uninstall/Update:
-	set menuB=2.Uninstaller
-	set menuNextName=Step 3 : Programs -Install/Uninstall/Update:
-	set menuNextGoto=m1a.x3.installUninstallUpdate
-	set menuBackName=Step 3 : Programs -Install/Uninstall/Update:
-	set menuBackGoto=m1a.x3.installUninstallUpdate
-	goto r4a.x3.Uninstaller
-)
+if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
 if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
 if %ERRORLEVEL% == 6 goto %menu%
-if %ERRORLEVEL% == 7 goto m1a.x3.2.1.0.delete_Bloatware
+if %ERRORLEVEL% == 7 goto goto m1a.x3.2.1.3.UserFolderDeleteUnwantedFolders
 if %ERRORLEVEL% == 8 goto %menu%
 
 if %ERRORLEVEL% == 9 goto %menu%
-if %ERRORLEVEL% == 10 goto m1a.x3.2.1.1.openDebloat
-if %ERRORLEVEL% == 11 goto m1a.x3.2.1.2.debloatDel
+if %ERRORLEVEL% == 10 %psP% "Get-AppxPackage | Select InstallLocation, Name, PackageFullName | Sort-Object InstallLocation, Name | Out-GridView -PassThru | Remove-AppxPackage"
+if %ERRORLEVEL% == 11 goto %menu%
+
 if %ERRORLEVEL% == 12 goto %menu%
-if %ERRORLEVEL% == 13 goto %menu%
-if %ERRORLEVEL% == 14 goto m1a.x3.2.1.3.UserFolderDeleteUnwantedFolders
+if %ERRORLEVEL% == 13 goto m1a.x3.2.1.1.openDebloat
+if %ERRORLEVEL% == 14 goto m1a.x3.2.1.2.debloatDel
+
 goto %menu%
 
 :m1a.x3.2.1.0.delete_Bloatware
@@ -4414,40 +4484,42 @@ echo.
 cmdMenuSel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
 
-:m1a.x3.3.updateApps
-::================================
-set menu=m1a.x3.3.updateApps
-
-set "menuA= Step 3 : Programs -Install/Uninstall/Update:"
-set "menuB= 3.Update all app/program:"
-call :mStyle
-
-set mm=
-set mm= %mm% "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update:"
-set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:"
-set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
-set mm= %mm% ""
-set mm= %mm% "[ p ] List with updates all apps/programs:"
-set mm= %mm% "[ p ] Updates ALL:"
-set mm= %mm% "[ ] Updates Manual:"
-
-cmdMenuSel e370 %mm%
-cls
-if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
-if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
-if %ERRORLEVEL% == 3 goto mainMenu
-if %ERRORLEVEL% == 4 goto %menu%
-if %ERRORLEVEL% == 5 goto %menu%
-
-if %ERRORLEVEL% == 6 goto m1a.x3.3.1.updateAppsList
-if %ERRORLEVEL% == 7 goto m1a.x3.3.2.updateAppsAll
-if %ERRORLEVEL% == 8 goto m1a.x3.3.3.updateAppsManual
-
-goto %menu%
+:::m1a.x3.3.updateApps
+::::================================
+::set menu=m1a.x3.3.updateApps
+::
+::set "menuA= Step 3 : Programs -Install/Uninstall/Update:"
+::set "menuB= 3.Update all app/program:"
+::call :mStyle
+::
+::set mm=
+::set mm= %mm% "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update:"
+::set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:"
+::set mm= %mm% "-|MAIN MENU|- "
+::set mm= %mm% "===================================================="
+::set mm= %mm% ""
+::set mm= %mm% "[ p ] List with updates all apps/programs:"
+::set mm= %mm% "[ p ] Updates ALL:"
+::set mm= %mm% "[ ] Updates Manual:"
+::
+::cmdMenuSel e370 %mm%
+::cls
+::if %ERRORLEVEL% == 1 goto m1a.x3.installUninstallUpdate
+::if %ERRORLEVEL% == 2 goto m1a.x3.installUninstallUpdate
+::if %ERRORLEVEL% == 3 goto mainMenu
+::if %ERRORLEVEL% == 4 goto %menu%
+::if %ERRORLEVEL% == 5 goto %menu%
+::
+::if %ERRORLEVEL% == 6 goto m1a.x3.3.1.updateAppsList
+::if %ERRORLEVEL% == 7 goto m1a.x3.3.2.updateAppsAll
+::if %ERRORLEVEL% == 8 goto m1a.x3.3.3.updateAppsManual
+::
+::goto %menu%
 
 :m1a.x3.3.1.updateAppsList
 ::================================
+cls
+echo.
 winget upgrade
 %color1%
 echo.
@@ -4458,6 +4530,8 @@ goto %menu%
 
 :m1a.x3.3.2.updateAppsAll
 ::================================
+cls
+echo.
 start cmd /c "winget upgrade -h --all && echo. && cmdMenuSel e370 "Press ENTER to continue...""
 
 %color1%
@@ -4467,6 +4541,9 @@ goto %menu%
 :m1a.x3.3.3.updateAppsManual
 ::================================
 set menu=m1a.x3.3.3.updateAppsManual
+
+cls
+echo.
 
 winget upgrade 
 %color1% 
@@ -4481,11 +4558,13 @@ set "winG1="
 if %ERRORLEVEL% == 2 goto %menu%
 
 %color1%
-goto m1a.x3.3.updateApps
+goto m1a.x3.installUninstallUpdate
 
 :m1a.x3.4.GithubScripts
 ::================================
 set menu=m1a.x3.4.GithubScripts
+
+cls
 
 set "menuA= Step 3 : Programs -Install/Uninstall/Update:"
 set "menuB= More: Github Scripts:"
@@ -4495,7 +4574,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Step 3 : Programs -Install/Uninstall/Update:"
 set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "---------- Utility ----------"
 set mm= %mm% "[ ] Windows Utility (by Chris Titus Tech)"
@@ -4583,7 +4662,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 1.StartUp"
 set mm= %mm% "-|BACK|- Step 3 : Programs -Install/Uninstall/Update"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[+] 1.StartUp"
 set mm= %mm% "[+] 2.StartMenu"
@@ -4615,7 +4694,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 2.Clean Start Menu"
 set mm= %mm% "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Startup -Apps settings"
 set mm= %mm% "[+] 2.Startup -Tasks"
@@ -4664,7 +4743,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 1.Clean StartUp apps:"
 set mm= %mm% "-|BACK|- 1.Clean StartUp apps:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Disable startup Tasks"
 set mm= %mm% "[ ] 2.Enable startup Tasks"
@@ -4725,7 +4804,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 1.Clean StartUp apps:"
 set mm= %mm% "-|BACK|- 1.Clean StartUp apps:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.CURRENT_USER\\Run"
 set mm= %mm% "[ p ] 2.CURRENT_USER\\RunOnce"
@@ -4760,7 +4839,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 3.Clean Windows Explorer"
 set mm= %mm% "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Start Menu:"
 set mm= %mm% "[ p ] 2.Apps:"
@@ -4792,7 +4871,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Step 5 : Optimizing Programs"
 set mm= %mm% "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Desktop icon settings"
 set mm= %mm% "[ p ] 2.Icons - Notification Area and System Tray-Icons"
@@ -4847,7 +4926,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 3.Clean Windows Explorer:"
 set mm= %mm% "-|BACK|- 3.Clean Windows Explorer:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ ] File Options"
 set mm= %mm% ""
@@ -4929,7 +5008,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Step 6 : Clean Up Junk files  "
 set mm= %mm% "-|BACK|- Step 4 : Clean Up -StartUp/StartMenu/Explorer"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "----- Optimize Services/Settings -----"
 set mm= %mm% "[ p ] 1.Turbo mode \ Safe configurations"
@@ -5042,7 +5121,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Step 5 : Optimizing Programs"
 set mm= %mm% "-|BACK|- Step 5 : Optimizing Programs"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] Open - Task Scheduler settings"
 set mm= %mm% ""
@@ -5124,7 +5203,7 @@ set mm=
 set mm= %mm% "-|NEXT|- Step 5 : Optimizing Programs"
 set mm= %mm% "-|BACK|- Step 5 : Optimizing Programs"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ ] Stop"
 set mm= %mm% "[ ] StartupType Disabled"
@@ -5182,7 +5261,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 1. Windows Updates:"
 set mm= %mm% "-|BACK|- %menuBackName%"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[+] 1. Windows Updates:"       
 set mm= %mm% "[+] 2. Security and Maintenance:"
@@ -5225,7 +5304,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 1. WU Configuration:"
 set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[+] 1. WU Configuration:"
 set mm= %mm% "[+] 2. WU Tasks:"
@@ -5262,7 +5341,7 @@ set mm=
 set mm= %mm% "-|NEXT|-  2. WU Tasks:"
 set mm= %mm% "-|BACK|- Windows Update Main:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ ] 1.Disable - AutoUpdate"
 set mm= %mm% "[ p ] 1.Enable - Ask for download and install"
@@ -5316,7 +5395,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 3. WU Services:"
 set mm= %mm% "-|BACK|- Windows Update Main:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Disable"
 set mm= %mm% "[ d ] 1.Enable"
@@ -5369,7 +5448,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 4. WU Pause next update till:"
 set mm= %mm% "-|BACK|- Windows Update Main:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Manual" "[ ] 1.Disable"
 set mm= %mm% "[ d ] 1.Enable" 
@@ -5424,7 +5503,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 2. Security and Maintenance:"
 set mm= %mm% "-|BACK|- Windows Update Main:"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] [[Apply -Auto]]"
 set mm= %mm% ""
@@ -5503,7 +5582,7 @@ goto %menu%
 ::set mm= %mm% "-|NEXT|- 2. Security and Maintenance:"
 ::set mm= %mm% "-|BACK|- Windows Update Main:"
 ::set mm= %mm% "-|MAIN MENU|- "
-::set mm= %mm% "========== Select an option =========="
+::set mm= %mm% "===================================================="
 ::set mm= %mm% ""
 ::set mm= %mm% "[ p ] SET manually -Next update date"
 ::
@@ -5672,7 +5751,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 3. Microsoft Defender Application:"
 set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "------- Application -------"
 set mm= %mm% ""
@@ -5769,7 +5848,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 4. Power Plan -Ultimate Performance:"
 set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "------- Tasks -------"
 set mm= %mm% ""
@@ -5846,7 +5925,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 5. Ram Reducer:"
 set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] Add now"
 set mm= %mm% "[ p ] Open Power Plan settings"
@@ -5940,7 +6019,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 6. Indexing:"
 set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] Reduce now"
 
@@ -6087,7 +6166,7 @@ set mm=
 set mm= %mm% "-|NEXT|- 7. Hibernate:"
 set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] Disable service"
 set mm= %mm% "[ d ] Enable service" 
@@ -6117,7 +6196,7 @@ set mm=
 set mm= %mm% "-|NEXT|- END "
 set mm= %mm% "-|BACK|- Step 7 : Turn on\off apps"
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] Disable"
 set mm= %mm% "[ d ] Enable" 
@@ -6188,7 +6267,7 @@ if %optimizeP% == 1 (set optimizePStatus=Optimize
 
 set mm=
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "================= Select an option ================="
+set mm= %mm% "=================================================================="
 set mm= %mm% ""
 
 if not %optimizePStatus% == SelectAuto (
@@ -6738,7 +6817,7 @@ call :mStyle
 
 set mm=
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "========== Select an option =========="
+set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ ] Restart"
 set mm= %mm% "[ ] Restart with Boot Options Menu"
