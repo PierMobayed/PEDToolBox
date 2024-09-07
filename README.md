@@ -1,7 +1,7 @@
 # 🛠️ [PEDToolBox](https://piermobayed.github.io/PEDToolBox/)
 
 
-### ⭐ If you found this project helpful or interesting, please consider giving it a star! Thank you for your support! ⭐
+#### ⭐ If you found this project helpful or interesting, please consider giving it a ⭐star⭐! Thank you for your support! ⭐
 
 ## Version : 1.285.1.240904
 #### 🖥️ Windows 10 and 11 - 🚀 Speed Up, 🛠️ Repair, 🔄 Update, ⚡ Optimize, 🧹 Clean Junk, 📦 Download Apps, 🗑️ Uninstaller, 🧯 Deployed Bloatware, and more
