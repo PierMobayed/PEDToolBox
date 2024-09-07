@@ -3,26 +3,26 @@
 # PEDToolBox
 
 ## Version : 1.284.3.240901
-#### Windows 10 and 11 -Speed Up , Repair, Update, Optimize, Clean Junk, Download Apps, Uninstaller, Deployed Bloatware, and more
+#### Windows 10 and 11 - Speed Up 🚀, Repair 🛠️, Update 🔄, Optimize ⚙️, Clean Junk 🗑️, Download Apps ⬇️, Uninstaller 🗑️, Deployed Bloatware 🚫
 
 - PEDToolBox is a powerful utility designed to optimize, speed up, and repair Windows 10 and 11. Developed by PierMobayed, this batch script provides both auto and manual commands to enhance your Windows experience. Here are some of its key features:
 
-- Create Restore Points: Safeguard your system before making changes.
-- System Test and Diagnostic: Test -Boot time, -Internet speed, Show -CPU/RAM usage, Diagnostic and more settings.
-- System Repair: Scaning system for Updates, Drivers, Maintenance, Virus and  Corrupted files.
-- Privacy Settings: Adjust privacy options to your preference.
-- Program Management: Install, uninstall, or update programs with ease.
-- Startup Cleanup: Streamline startup processes.
-- System Optimization: It helps improve system performance by fine-tuning settings and cleaning up unnecessary services and schedule tasks.
-- Junk File Cleanup: Remove unnecessary files.
-- System App Management: Enable or disable specific system apps.
+- Create Restore Points: 🛡️ Safeguard your system before making changes.
+- System Test and Diagnostic: 🧪 Test - Boot time, - Internet speed, Show - CPU/RAM usage, Diagnostic and more settings.
+- System Repair: 🔧 Scanning system for Updates, Drivers, Maintenance, Virus, and Corrupted files.
+- Privacy Settings: 🔒 Adjust privacy options to your preference.
+- Program Management: 💾 Install, uninstall, or update programs with ease.
+- Startup Cleanup: 🧹 Streamline startup processes.
+- System Optimization: ⚙️ It helps improve system performance by fine-tuning settings and cleaning up unnecessary services and scheduled tasks.
+- Junk File Cleanup: 🗑️ Remove unnecessary files.
+- System App Management: 📲 Enable or disable specific system apps.
 
 - Please note that this tool is provided “as is” and should be used at your own risk. If you encounter any issues or have feedback, you can reach out to the developer at:
 ## pedtoolbox@gmail.com.
 
 ## To run PEDToolBox, you can use the following commands:
 
-### CMD or RUN links:
+### CMD or RUN links: 🖥️
 ##### Link 1:
     powershell iex(irm rebrand.ly/pedbox)
 ##### Link 2:
@@ -31,7 +31,7 @@
 
     cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
 
-### PowerShell links:
+### PowerShell links: 💻
 ##### Link 4:
     iex(irm rebrand.ly/pedbox)
 ##### Link 5:
