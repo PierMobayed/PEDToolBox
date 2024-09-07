@@ -1,4 +1,4 @@
-## Please give one STAR if you like it. Thank you!
+## Please give a ⭐ if you like it. Thank you!
 
 # PEDToolBox
 
