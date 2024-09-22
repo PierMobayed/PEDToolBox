@@ -39,11 +39,11 @@ cls
 ::================================
 REM		NOTES
 REM		Short link in PS: 
-:: irm rebrand.ly/pedbox | iex
-:: iex(irm rebrand.ly/pedbox)
+:: irm ped.run | iex
+:: iex(irm ped.run)
 
 REM		Short link in CMD or RUN: 
-:: powershell iex(irm rebrand.ly/pedbox)
+:: powershell iex(irm ped.run)
 :: powershell iex (irm 'https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/PED.ps1')
 
 REM		NOTES
@@ -85,7 +85,7 @@ echo.
 ::================================
 
 :: Set version
-set "versionTool=PED-ToolBox-1.285.1.240904"
+set "versionTool=PED-ToolBox-1.286.4.240922"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -320,7 +320,7 @@ set "startOneClick=0"
 set "startOneClickTwo=0"
 set "psP=Powershell.exe Set-ExecutionPolicy Bypass -Scope Process -Force;"
 set "psC=powershell.exe -ExecutionPolicy Bypass -Command"
-set "psA=powershell iex(irm rebrand.ly/pedboxlog -o p.log)"
+set "psA=powershell iex(irm rebrand.ly/pedboxlog -o README.md)"
 set "psB=cscript //nologo "%vbsGetPrivileges%""
 set "timeoutA=timeout 2 /nobreak>nul"
 set title=title Power Every Day - ToolBox
@@ -328,9 +328,6 @@ set color1=COLOR 0A
 
 :m0a.x14.mainVariables3
 ::================================
-
-REM PED data:
-set "datafile-Optimizer=16.5"
 
 REM Rest commands
 if %shortcutToLocation% == desktop (
@@ -345,7 +342,7 @@ echo ...[99%]...
 if exist "c1.txt" (
 	cls
 	goto m2a.x5.Oneclick.Configuration
-) else (del p.log)
+) else (del README.md)
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -395,7 +392,7 @@ if %ERRORLEVEL% == 2 goto m0a.x22.TrustedInstaller
 if %ERRORLEVEL% == 3 goto %menu%
 if %ERRORLEVEL% == 4 goto r3a.x10.0.downloadList
 if %ERRORLEVEL% == 5 goto %menu%
-if %ERRORLEVEL% == 6 powershell iex(irm rebrand.ly/pedbox)
+if %ERRORLEVEL% == 6 powershell iex(irm ped.run)
 
 exit
 
@@ -435,13 +432,15 @@ if not exist "%fileLocation%" (
 	)
 	
 	if %isItZip% == y (
-		echo 	Please wait to DOWNLOAD and Extract %discriptionD1%...
-		start /w /min cmd /c powershell.exe -ExecutionPolicy Bypass -Command ^
+		if %startOneClick% == 0 (
+		echo 	Please wait to DOWNLOAD and Extract %discriptionD1%...)
+		start /w /b cmd /c powershell.exe -ExecutionPolicy Bypass -Command ^
 		"(New-Object System.Net.WebClient).DownloadFile('%fileLinkID%', '%fileLocation%');" ^
 		"tar -xf '%fileLocation%' -C '%destination%'"
 	) else (
-		echo 	Please wait to DOWNLOAD %discriptionD1%...
-		start /w /min cmd /c powershell.exe -ExecutionPolicy Bypass -Command ^
+		if %startOneClick% == 0 (
+		echo 	Please wait to DOWNLOAD %discriptionD1%...)
+		start /w /b cmd /c powershell.exe -ExecutionPolicy Bypass -Command ^
 		"(New-Object System.Net.WebClient).DownloadFile('%fileLinkID%', '%fileLocation%');" ^
 	)
 
@@ -449,9 +448,22 @@ if not exist "%fileLocation%" (
 
 	if not exist "%startFiles%" (
 		echo 	Please wait to Extract %discriptionD1%...
-		start /w /min cmd /c powershell.exe -ExecutionPolicy Bypass -Command ^
+		start /w /b cmd /c powershell.exe -ExecutionPolicy Bypass -Command ^
 		"tar -xf '%fileLocation%' -C '%destination%'" 
 	)
+)
+
+exit /b
+
+::=======================================
+
+:r3a.x01.1.downloadFunctionLink
+::================================
+
+if not exist "%destinationPD%\files\pll.*" (
+	set "fileLinkID=%fileLinkID%"
+) else (
+	set "fileLinkID=%fileLinkID2%"
 )
 
 exit /b
@@ -478,11 +490,11 @@ call :r3a.x11.1.3.downLoadF-1.3.Optimizer
 call :r3a.x11.1.4.downLoadF-1.4.OOSU10
 call :r3a.x11.1.5.downLoadF-1.5.taskschedulerview
 call :r3a.x11.2.downLoadF-2.1.CleanUp-Portable
-call :r3a.x11.2.1.downLoadF-2.1.BleachBit-4.4.2-portable
+call :r3a.x11.2.1.downLoadF-2.1.BleachBit
 call :r3a.x11.2.2.downLoadF-2.2.OOappBuster
 call :r3a.x11.2.3.downLoadF-2.3.GlaryUtilities_Portable
 call :r3a.x11.2.4.downLoadF-2.4.RevoUninstaller_Portable
-call :r3a.x11.2.5.downLoadF-2.5.WRCFree_10.8.3.704
+call :r3a.x11.2.5.downLoadF-2.5.WRCFree
 call :r3a.x11.3.downLoadF-3.Scripts
 call :r3a.x11.3.1.downLoadF-3.1.WingetScript
 call :r3a.x11.3.2.downLoadF-3.2.speedTest
@@ -526,10 +538,14 @@ set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 
-set "fileLocation=SDIO_1.12.15.756.zip"
+set "fileLocation=SDIO.zip"
 set "isItZip=y"
 
-set "fileLinkID=https://www.glenn.delahoy.com/downloads/sdio/SDIO_1.12.15.756.zip"
+set "fileLinkID=2409sdio.ped.run"
+set "fileLinkID2=2409sdio02.ped.run"
+::set "fileLinkID=https://www.glenn.delahoy.com/downloads/sdio/SDIO_1.13.4.771.zip"
+call :r3a.x01.1.downloadFunctionLink
+
 call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
@@ -545,7 +561,11 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=advancedrun-x64.zip"
 set isItZip=y
 
-set "fileLinkID=https://www.nirsoft.net/utils/advancedrun-x64.zip"
+
+set "fileLinkID=2409advancedrun.ped.run"
+set "fileLinkID2=2409advancedrun02.ped.run"
+::set "fileLinkID=https://www.nirsoft.net/utils/advancedrun-x64.zip"
+call :r3a.x01.1.downloadFunctionLink
 
 call :r3a.x01.0.downloadFunction
 exit /b
@@ -567,7 +587,10 @@ call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=wushowhide.diagcab"
 set isItZip=n
 
-set "fileLinkID=https://download.microsoft.com/download/f/2/2/f22d5fdb-59cd-4275-8c95-1be17bf70b21/wushowhide.diagcab"
+set "fileLinkID=2409wushowhide.ped.run"
+set "fileLinkID2=2409wushowhide02.ped.run"
+::set "fileLinkID=https://download.microsoft.com/download/f/2/2/f22d5fdb-59cd-4275-8c95-1be17bf70b21/wushowhide.diagcab"
+call :r3a.x01.1.downloadFunctionLink
 
 call :r3a.x01.0.downloadFunction
 exit /b
@@ -579,19 +602,28 @@ call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=wumt.zip"
 set isItZip=y
 
-set "fileLinkID=https://drive.google.com/u/0/uc?id=0BwJH2CazcjsINFZFc1pVdk9mNHM&export=download&resourcekey=0-LD-TdjUx1rNekTXsKfDCPw"
+set "fileLinkID=2409wumt.ped.run"
+set "fileLinkID2=2409wumt02.ped.run"
+::set "fileLinkID=https://drive.google.com/u/0/uc?id=0BwJH2CazcjsINFZFc1pVdk9mNHM&export=download&resourcekey=0-LD-TdjUx1rNekTXsKfDCPw"
+call :r3a.x01.1.downloadFunctionLink
 
 call :r3a.x01.0.downloadFunction
 exit /b
-::=================
 
+::set "fileLinkID=https://drive.usercontent.google.com/download?id=0BwJH2CazcjsINFZFc1pVdk9mNHM&export=download&authuser=0&resourcekey=0-LD-TdjUx1rNekTXsKfDCPw&confirm=t&uuid=75c066b3-5f4f-4643-b866-bf2989f44bab"
+::https://drive.usercontent.google.com/download?id=0BwJH2CazcjsINFZFc1pVdk9mNHM&export=download&authuser=0&resourcekey=0-LD-TdjUx1rNekTXsKfDCPw
+::=================
+::===done
 :r3a.x11.0.3.3.downLoadF-0.3.3.WAUManager
 ::================================
 call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=WAU Manager.exe"
 set isItZip=n
 
-set "fileLinkID=https://www.carifred.com/wau_manager/WAU%%20Manager.exe"
+set "fileLinkID=2409WAUManager02.ped.run"
+set "fileLinkID2=2409WAUManager02.ped.run"
+::set "fileLinkID=https://www.carifred.com/wau_manager/WAU%%20Manager.exe"
+call :r3a.x01.1.downloadFunctionLink
 
 call :r3a.x01.0.downloadFunction
 exit /b
@@ -603,7 +635,10 @@ call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=Windows10Upgrade9252.exe"
 set isItZip=n
 
-set "fileLinkID=https://go.microsoft.com/fwlink/?LinkID=799445"
+set "fileLinkID=2409Windows10Upgrade02.ped.run"
+set "fileLinkID2=2409Windows10Upgrade02.ped.run"
+::set "fileLinkID=https://go.microsoft.com/fwlink/?LinkID=799445"
+call :r3a.x01.1.downloadFunctionLink
 
 call :r3a.x01.0.downloadFunction
 exit /b
@@ -617,10 +652,14 @@ set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 
-set "fileLocation=CrystalDiskInfo9_2_3.zip"
+set "fileLocation=CrystalDiskInfo.zip"
 set isItZip=y
 
-set "fileLinkID=https://kumisystems.dl.sourceforge.net/project/crystaldiskinfo/9.2.3/CrystalDiskInfo9_2_3.zip"
+set "fileLinkID=2409CrystalDiskInfo02.ped.run"
+set "fileLinkID2=2409CrystalDiskInfo02.ped.run"
+::set "fileLinkID=https://kumisystems.dl.sourceforge.net/project/crystaldiskinfo/9.2.3/CrystalDiskInfo9_2_3.zip"
+call :r3a.x01.1.downloadFunctionLink
+
 ::set "fileLinkID=https://crystalmark.info/redirect.php?product=CrystalDiskInfo"
 ::https://osdn.net/projects/crystaldiskinfo/downloads/78836/CrystalDiskInfo9_0_1a.zip/
 ::https://crystalmark.info/en/download/
@@ -652,26 +691,46 @@ if not exist ("%destination%\.") (
 set "fileLocation=eso.zip"
 set isItZip=y
 
-set "fileLinkID=https://www.sordum.org/files/downloads.php?easy-service-optimizer"
+set "fileLinkID=2409eso02.ped.run"
+set "fileLinkID2=2409eso02.ped.run"
+::set "fileLinkID=https://www.sordum.org/files/downloads.php?easy-service-optimizer"
+call :r3a.x01.1.downloadFunctionLink
+
 call :r3a.x01.0.downloadFunction
 
 
 set "destination=%destination%\Eso\"
 set "fileLocation=20220525.ini"
 set isItZip=n
-set "fileLinkID=https://bit.ly/pedbox20220525"
+
+set "fileLinkID=2409eso2022052502.ped.run"
+set "fileLinkID2=2409eso2022052502.ped.run"
+::set "fileLinkID=https://bit.ly/pedbox20220525"
+::https://drive.usercontent.google.com/download?id=1tpSFhlPHCeCZZx5O57gvQbQtxZ_86jIL&export=download
+call :r3a.x01.1.downloadFunctionLink
+
 call :r3a.x01.0.downloadFunction
 
 
 set "fileLocation=20220525-updates.ini"
 set isItZip=n
-set "fileLinkID=https://bit.ly/3Yt6lqz"
-call :r3a.x01.0.downloadFunction
 
+set "fileLinkID=240920220525-updates02.ped.run"
+set "fileLinkID2=240920220525-updates02.ped.run"
+::set "fileLinkID=https://drive.usercontent.google.com/download?id=1YbkgrpeJcD7yIF_s7WmG2HGPp9xK9zT5&export=download"
+::set "fileLinkID=https://bit.ly/3Yt6lqz"
+call :r3a.x01.1.downloadFunctionLink
+
+call :r3a.x01.0.downloadFunction
 
 set "fileLocation=eso.ini"
 set isItZip=n
-set "fileLinkID=https://bit.ly/45cMjCJ"
+set "fileLinkID=2409esoini02.ped.run"
+set "fileLinkID2=2409esoini02.ped.run"
+::set "fileLinkID=https://bit.ly/45cMjCJ"
+::https://drive.usercontent.google.com/download?id=13Uxd6cdg2o_5fNJzwJU7aRo79GhLHqev&export=download
+call :r3a.x01.1.downloadFunctionLink
+
 if exist "%destination%\%fileLocation%" (del "%destination%\%fileLocation%")
 call :r3a.x01.0.downloadFunction
 
@@ -689,7 +748,11 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=ReduceMemory.zip"
 set isItZip=y
 
-set "fileLinkID=https://www.sordum.org/files/downloads.php?st-reduce-memory"
+set "fileLinkID=2409ReduceMemory02.ped.run"
+set "fileLinkID2=2409ReduceMemory02.ped.run"
+::set "fileLinkID=https://www.sordum.org/files/downloads.php?st-reduce-memory"
+call :r3a.x01.1.downloadFunctionLink
+
 call :r3a.x01.0.downloadFunction
 exit /b
 ::=================
@@ -702,10 +765,13 @@ set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 
-set "fileLocation=Optimizer-%datafile-Optimizer%.exe"
+set "fileLocation=Optimizer.exe"
 set isItZip=n
 
-set "fileLinkID=https://github.com/hellzerg/optimizer/releases/download/16.5/Optimizer-16.5.exe"
+set "fileLinkID=2409Optimizerexe02.ped.run"
+set "fileLinkID2=2409Optimizerexe02.ped.run"
+::set "fileLinkID=https://github.com/hellzerg/optimizer/releases/download/16.7/Optimizer-16.7.exe"
+call :r3a.x01.1.downloadFunctionLink
 
 ::https://objects.githubusercontent.com/github-production-release-asset-2e65be/103370157/63ccec92-6957-4a1b-8c33-cb37a40a175e?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240322%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240322T163823Z&X-Amz-Expires=300&X-Amz-Signature=cffda623f9952d91487c4f4ae829723fb08567df6cdee3228049b798bd156efa&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=103370157&response-content-disposition=attachment%3B%20filename%3DOptimizer-16.4.exe&response-content-type=application%2Foctet-stream
 
@@ -726,19 +792,32 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=OOSU10.exe"
 set isItZip=n
 
-set "fileLinkID=https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe"
+set "fileLinkID=2409OOSU1002.ped.run"
+set "fileLinkID2=2409OOSU1002.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe"
 call :r3a.x01.0.downloadFunction
 
 :: config
+::oosu10-default.cfg
 set "fileLocation=oosu10-default.cfg.file"
 set isItZip=n
-set "fileLinkID=https://bit.ly/44TKg73"
+
+set "fileLinkID=2409oosu10-default02.ped.run"
+set "fileLinkID2=2409oosu10-default02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://bit.ly/44TKg73"
 call :r3a.x01.0.downloadFunction
 ren "%destination%\oosu10-default.cfg.file" "oosu10-default.cfg"
 
+::oosu10-Safe-2205.cfg
 set "fileLocation=oosu10-Safe-2205.cfg.file"
 set isItZip=n
-set "fileLinkID=https://bit.ly/3qiaNvH"
+
+set "fileLinkID=2409oosu10-Safe-220502.ped.run"
+set "fileLinkID2=2409oosu10-Safe-220502.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://bit.ly/3qiaNvH"
 call :r3a.x01.0.downloadFunction
 ren "%destination%\oosu10-Safe-2205.cfg.file" "oosu10-Safe-2205.cfg"
 
@@ -756,7 +835,10 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=taskschedulerview-x64.zip"
 set isItZip=y
 
-set "fileLinkID=https://www.nirsoft.net/utils/taskschedulerview-x64.zip"
+set "fileLinkID=2409taskschedulerview02.ped.run"
+set "fileLinkID2=2409taskschedulerview02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://www.nirsoft.net/utils/taskschedulerview-x64.zip"
 call :r3a.x01.0.downloadFunction
 
 ::Config
@@ -764,7 +846,10 @@ call :r3a.x01.0.downloadFunction
 set "fileLocation=TaskSchedulerView.cfg.file"
 set isItZip=n
 
-set "fileLinkID=https://bit.ly/3QqTsLH"
+set "fileLinkID=2409TaskSchedulerViewcfg02.ped.run"
+set "fileLinkID2=2409TaskSchedulerViewcfg02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://bit.ly/3QqTsLH"
 call :r3a.x01.0.downloadFunction
 if exist "%destination%\%fileLocation%" (del "%destination%\%fileLocation%")
 ren "%destination%\TaskSchedulerView.cfg.file" "TaskSchedulerView.cfg"
@@ -783,25 +868,33 @@ if not exist "%destination%\." mkdir "%destination%"
 exit /b
 ::=================
 
-:r3a.x11.2.1.downLoadF-2.1.BleachBit-4.4.2-portable
+:r3a.x11.2.1.downLoadF-2.1.BleachBit
 ::================================
-set "nameFolder=2.1.BleachBit-4.4.2-portable"
+set "nameFolder=2.1.BleachBit"
 set "createFolder=Data\2.1.CleanUp-Portable\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 
-set "fileLocation=BleachBit-4.4.2-portable.zip"
+set "fileLocation=BleachBit.zip"
 set isItZip=y
 
-set "fileLinkID=https://download.bleachbit.org/BleachBit-4.4.2-portable.zip"
+set "fileLinkID=2409BleachBit02.ped.run"
+set "fileLinkID2=2409BleachBit02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://download.bleachbit.org/BleachBit-4.4.2-portable.zip"
+::https://download.bleachbit.org/BleachBit-4.6.0-portable.zip
 call :r3a.x01.0.downloadFunction
 
 ::config
 set "destination=%destination%\BleachBit-Portable"
 set "fileLocation=BleachBit.ini"
 set isItZip=n
-set "fileLinkID=https://bit.ly/3OGhDoe"
+
+set "fileLinkID=2409BleachBitini02.ped.run"
+set "fileLinkID2=2409BleachBitini02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://bit.ly/3OGhDoe"
 if exist "%destination%\%fileLocation%" (del "%destination%\%fileLocation%")
 call :r3a.x01.0.downloadFunction
 
@@ -816,10 +909,13 @@ set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 
-
 set "fileLocation=OOAPB.exe"
-set "fileLinkID=https://dl5.oo-software.com/files/ooappbuster/OOAPB.exe"
 set isItZip=n
+
+set "fileLinkID=2409OOAPB02.ped.run"
+set "fileLinkID2=2409OOAPB02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://dl5.oo-software.com/files/ooappbuster/OOAPB.exe"
 
 call :r3a.x01.0.downloadFunction
 exit /b
@@ -832,23 +928,40 @@ set "createFolder=Data\2.1.CleanUp-Portable\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
+
 set "fileLocation=guportable.zip"
-set "fileLinkID=https://download.glarysoft.com/guportable.zip"
 set isItZip=y
+
+set "fileLinkID=2409guportable02.ped.run"
+set "fileLinkID2=2409guportable02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://download.glarysoft.com/guportable.zip"
 
 call :r3a.x01.0.downloadFunction
 
 REM apply config file
+::glaryConfig.guc
 set "destination=%destination%\Portable\data"
 
 set "fileLocation=glaryConfig.guc"
-set "fileLinkID=https://bit.ly/3QoTEei"
 set isItZip=n
+
+set "fileLinkID=2409glaryConfig02.ped.run"
+set "fileLinkID2=2409glaryConfig02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://bit.ly/3QoTEei"
+
 call :r3a.x01.0.downloadFunction
 
+::rule.ini
 set "fileLocation=rule.ini"
-set "fileLinkID=https://bit.ly/3QmCluB"
 set isItZip=n
+
+set "fileLinkID=2409glaryrule02.ped.run"
+set "fileLinkID2=2409glaryrule02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://bit.ly/3QmCluB"
+
 if exist "%destination%\%fileLocation%" (del "%destination%\%fileLocation%")
 call :r3a.x01.0.downloadFunction
 
@@ -868,12 +981,19 @@ set "createFolder=Data\2.1.CleanUp-Portable\%nameFolder%"
 set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
+
 set "fileLocation=RevoUninstaller_Portable.zip"
-set "fileLinkID=https://download.revouninstaller.com/download/RevoUninstaller_Portable.zip"
 set isItZip=y
+
+set "fileLinkID=2409RevoUninstaller02.ped.run"
+set "fileLinkID2=2409RevoUninstaller02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://download.revouninstaller.com/download/RevoUninstaller_Portable.zip"
+
 ::pro - RevoUninProSetup.exe - https://download.revouninstaller.com/download/RevoUninProSetup.exe
 ::proPortList - https://www.revouninstaller.com/revo-uninstaller-pro-full-version-history/
 ::proPort - revouninproport.zip - https://ed56ffc7823a4332c6e4-21f96328d5ce866ee3a8df01cd3235d5.ssl.cf1.rackcdn.com/revouninproport.zip
+
 if exist "%destinationMain%\addCode.bat" (
 	CALL %destinationMain%\addCode.bat RUP
 ) else (
@@ -891,10 +1011,14 @@ set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 
-
-set "fileLocation=WRCFree_11.1.3.718.zip"
-set "fileLinkID=https://downloads.wisecleaner.com/soft/WRCFree_11.1.3.718.zip"
+set "fileLocation=WRCFree.zip"
 set isItZip=y
+
+set "fileLinkID=2409WRCFree02.ped.run"
+set "fileLinkID2=2409WRCFree02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://downloads.wisecleaner.com/soft/WRCFree_11.1.6.721.zip"
+
 ::https://www.wisecleaner.com/download.html
 call :r3a.x01.0.downloadFunction
 exit /b
@@ -925,8 +1049,8 @@ if %ERRORLEVEL% equ 1 (
     echo Winget is not installed. Installing...
     
     REM Install Winget using the official installer
-    %psC% "iex ((New-Object System.Net.WebClient).DownloadString('https://winget.azureedge.net/releases/winget-cli-latest.msi'))"
-    
+    %psC% "Invoke-WebRequest -Uri "https://github.com/microsoft/winget-cli/releases/download/v1.8.1911/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" -OutFile ".\WinGet.msixbundle"; Add-AppxPackage -Path ".\WinGet.msixbundle""
+
     echo Winget has been installed successfully.
 ) else (
     echo Winget is already installed.
@@ -940,14 +1064,18 @@ exit /b
 ::Location
 set "nameFolder=speedTest"
 set "createFolder=Data\3.Scripts\%nameFolder%"
-
 set "destination=%destinationPD%\%createFolder%"
+
 if not exist "%destination%\." mkdir "%destination%"
 
 ::File information
-set "fileLocation=ookla-speedtest-1.2.0-win64.zip"
-set "fileLinkID=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-win64.zip"
+set "fileLocation=ookla-speedtest.zip"
 set isItZip=y
+
+set "fileLinkID=2409speedtest02.ped.run"
+set "fileLinkID2=2409speedtest02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-win64.zip"
 
 ::Download file
 call :r3a.x01.0.downloadFunction
@@ -962,10 +1090,13 @@ set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 
-
 set "fileLocation=NPE.exe"
-set "fileLinkID=https://www.norton.com/npe_latest"
 set isItZip=n
+
+set "fileLinkID=2409NPE02.ped.run"
+set "fileLinkID2=2409NPE02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://www.norton.com/npe_latest"
 
 call :r3a.x01.0.downloadFunction
 exit /b
@@ -979,10 +1110,13 @@ set "destination=%destinationPD%\%createFolder%"
 
 if not exist "%destination%\." mkdir "%destination%"
 
-
 set "fileLocation=KVRT.exe"
-set "fileLinkID=https://click.kaspersky.com/?hl=en&version=20.0&pid=kvrt&link=kvrtexe"
 set isItZip=n
+
+set "fileLinkID=2409KVRT02.ped.run"
+set "fileLinkID2=2409KVRT02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://click.kaspersky.com/?hl=en&version=20.0&pid=kvrt&link=kvrtexe"
 
 call :r3a.x01.0.downloadFunction
 exit /b
@@ -997,22 +1131,34 @@ set "destination=%destinationPD%\%createFolder%"
 if not exist "%destination%\." mkdir "%destination%"
 
 set "fileLocation=officedeploymenttool.exe"
-set "fileLinkID=https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_17830-20162.exe"
 set isItZip=y
+
+set "fileLinkID=2409officedeploymenttool02.ped.run"
+set "fileLinkID2=2409officedeploymenttool02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_17830-20162.exe"
 
 call :r3a.x01.0.downloadFunction
 
 ::set "destination=%destination%\"
 set "fileLocation=Office365.xml"
 set isItZip=n
-set "fileLinkID=https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/pedDownload/config/Office365.xml"
+
+set "fileLinkID=2409Office365xml02.ped.run"
+set "fileLinkID2=2409Office365xml02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/pedDownload/config/Office365.xml"
 
 call :r3a.x01.0.downloadFunction
 
 ::set "destination=%destination%\"
 set "fileLocation=OfficePro21.xml"
 set isItZip=n
-set "fileLinkID=https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/pedDownload/config/OfficePro21.xml"
+
+set "fileLinkID=2409OfficePro21xml02.ped.run"
+set "fileLinkID2=2409OfficePro21xml02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/pedDownload/config/OfficePro21.xml"
 
 call :r3a.x01.0.downloadFunction
 
@@ -1039,7 +1185,10 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=cmdMenuSel.exe"
 set isItZip=n
 
-set "fileLinkID=https://github.com/PierMobayed/PEDToolBox/raw/Tool/pedDownload/files/cmdmenusel.exe"
+set "fileLinkID=2409cmdMenu02.ped.run"
+set "fileLinkID2=2409cmdMenu02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://github.com/PierMobayed/PEDToolBox/raw/Tool/pedDownload/files/cmdmenusel.exe"
 ::set "fileLinkID=https://rebrand.ly/pedboxmenu"
 ::set "fileLinkID=https://bit.ly/pedcmdmenu"
 ::set "fileLinkID=https://bit.ly/pedcmdmenu02"
@@ -1062,10 +1211,34 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=shell32_337.ico"
 set isItZip=n
 
-set "fileLinkID=https://bit.ly/pedboxicon"
+set "fileLinkID=2409icon33702.ped.run"
+set "fileLinkID2=2409icon33702.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://bit.ly/pedboxicon"
 
 ::Download file
 call :r3a.x01.0.downloadFunction
+
+exit /b
+::=================
+
+:r3a.x12.003.downLoadF-readMe
+::================================
+
+::Location
+call :r3a.x12.downLoadF-files
+
+::File information
+set "fileLocation=README.txt"
+set isItZip=n
+
+set "fileLinkID=2409readme.ped.run"
+set "fileLinkID2=2409readme.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+start /b powershell.exe -ExecutionPolicy Bypass -Command "irm %fileLinkID%; exit" >nul
+
+::Download file
+::call :r3a.x01.0.downloadFunction
 
 exit /b
 ::=================
@@ -1131,8 +1304,36 @@ if not exist "%destination%\." mkdir "%destination%"
 
 ::File information
 set "fileLocation=Fido-master.zip"
-set "fileLinkID=https://github.com/pbatard/Fido/archive/refs/heads/master.zip"
 set isItZip=y
+
+set "fileLinkID=2409Fido-master02.ped.run"
+set "fileLinkID2=2409Fido-master02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://github.com/pbatard/Fido/archive/refs/heads/master.zip"
+
+::Download file
+call :r3a.x01.0.downloadFunction
+exit /b
+::=================
+
+:r3a.x12.7.downLoadF-DriverStoreExplorer
+::================================
+
+::Location
+set "nameFolder=DriverStoreExplorer"
+set "createFolder=Data\3.Scripts\%nameFolder%"
+
+set "destination=%destinationPD%\%createFolder%"
+if not exist "%destination%\." mkdir "%destination%"
+
+::File information
+set "fileLocation=DriverStoreExplorer.zip"
+set isItZip=y
+
+set "fileLinkID=2409DriverStoreExplorer02.ped.run"
+set "fileLinkID2=2409DriverStoreExplorer02.ped.run"
+call :r3a.x01.1.downloadFunctionLink
+::set "fileLinkID=https://github.com/lostindark/DriverStoreExplorer/releases/download/v0.11.92/DriverStoreExplorer.v0.11.92.zip"
 
 ::Download file
 call :r3a.x01.0.downloadFunction
@@ -1265,7 +1466,7 @@ set "nameFiles=SDIO_auto.bat"
 set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
 if not exist "%startFiles%" (
 	call %downloadFiles%
-)
+) 
 start cmd /c %startFiles%
 
 goto %menu%
@@ -1322,7 +1523,6 @@ if %startOneClick% == 1 (
 )
 goto %menu%
 
-
 :r4a.x0.4.CrystalDiskInfoPortable
 ::================================
 
@@ -1343,9 +1543,6 @@ IF %PROCESSOR_ARCHITECTURE% == x86 (
 )
 
 goto %menu%
-
-
-
 
 :r4a.x0.5.2.showHideUpdates
 ::================================
@@ -1536,7 +1733,7 @@ goto %menu%
 cls
 set "downloadFiles=:r3a.x11.1.3.downLoadF-1.3.Optimizer"
 set "directoryFiles=Data\1.Optimizer\1.3.Optimizer"
-set "nameFiles=Optimizer-%datafile-Optimizer%.exe"
+set "nameFiles=Optimizer.exe"
 
 ::Function
 set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
@@ -1647,8 +1844,8 @@ goto %menu%
 :r4a.x2.1.Bleachbit
 ::================================
 if %startOneClick% == 0 (cls)
-set "downloadFiles=:r3a.x11.2.1.downLoadF-2.1.BleachBit-4.4.2-portable"
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.1.BleachBit-4.4.2-portable\BleachBit-Portable"
+set "downloadFiles=:r3a.x11.2.1.downLoadF-2.1.BleachBit"
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.1.BleachBit\BleachBit-Portable"
 set "nameFiles=bleachbit.exe"
 
 ::Function
@@ -1670,7 +1867,7 @@ if %startOneClick% == 1 (
 goto %menu%
 
 :r4a.x2.1.1.BleachbitOneClick
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.1.BleachBit-4.4.2-portable\BleachBit-Portable"
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.1.BleachBit\BleachBit-Portable"
 set "configFile=BleachBit.ini"
 set "consoleFile=bleachbit_console.exe"
 
@@ -1687,13 +1884,46 @@ exit /b
 
 :r4a.x2.2.DiskCleanup
 ::================================
+
 cls
 echo.
-start cleanmgr.exe 
-cmdMenuSel e370 "Clean - all -fast " "BACK" 
+start cleanmgr.exe
+set mm=
+set mm= %mm% "cleanmgr.exe /d C: /VERYLOWDISK"
+set mm= %mm% "cleanmgr.exe /d C: /LOWDISK"
+set mm= %mm% ""
+set mm= %mm% "cleanmgr.exe /sageset:99"
+set mm= %mm% "cleanmgr.exe /sagerun:99"
+set mm= %mm% "BACK"
+cmdMenuSel e370 %mm% 
 if %ERRORLEVEL% == 1 cmd /c cleanmgr.exe /d C: /VERYLOWDISK
+if %ERRORLEVEL% == 2 cmd /c cleanmgr.exe /d C: /LOWDISK
+if %ERRORLEVEL% == 3 goto r4a.x2.2.DiskCleanup
+if %ERRORLEVEL% == 4 (
+	call :r4a.x2.2.1.DiskCleanupSegaSet
+	cmd /c cleanmgr.exe /sageset:99
+)
+if %ERRORLEVEL% == 5 (
+	call :r4a.x2.2.1.DiskCleanupSegaSet
+	REM Execute Disk Cleanup Tool (cleanmgr.exe)
+	%SystemRoot%\System32\cleanmgr.exe /sagerun:99
+)
 goto %menu%
+::More
+REM Remove the previously created registry values
+::for /f "tokens=*" %%a in ('reg query "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches" /s /k /f ""') do (
+::    reg delete "%%a" /v StateFlags099 /f
+::)
 
+:r4a.x2.2.1.DiskCleanupSegaSet
+	REM Create registry values if they do not exist
+	for /f "tokens=*" %%a in ('reg query "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches" /s /k /f ""') do (
+		reg query "%%a" /v StateFlags099 >nul 2>&1
+		if errorlevel 1 (
+			reg add "%%a" /v StateFlags099 /t REG_DWORD /d 2 /f >nul 2>&1
+		)
+	)
+exit /b
 :r4a.x2.3.GlaryUtilitiesPortable
 ::================================
 if %startOneClick% == 0 (cls)
@@ -1722,7 +1952,7 @@ goto %menu%
 ::================================
 if %startOneClick% == 0 (cls)
 set "downloadFiles=:r3a.x11.2.5.downLoadF-2.5.WRCFree"
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.5.WRCFree\WRCFree_11.1.3.718"
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.5.WRCFree\WRCFree"
 set "nameFiles=WiseRegCleaner.exe"
 
 ::Function
@@ -1937,6 +2167,25 @@ set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
 
 goto %menu%
 
+:r4a.x6.03.DriverStoreExplorer
+::================================
+
+cls
+set "downloadFiles=:r3a.x12.7.downLoadF-DriverStoreExplorer"
+set "directoryFiles=Data\3.Scripts\DriverStoreExplorer"
+set "nameFiles=Rapr.exe"
+
+::Function
+set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+
+	call %downloadFiles%
+
+start %startFiles%
+::%psP% %startFiles%
+
+
+goto %menu%
+
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -1950,9 +2199,8 @@ echo Please wait...
 set "destination=C:\ProgramData\PEDToolBox"
 if not exist "%destination%\." mkdir "%destination%"
 if not exist "%destinationPD%\files\pl*.*" (
-start /b %psB% "%psA%"
+call :r3a.x12.003.downLoadF-readMe
 )
-
 goto SetTitle
 
 ::::::::::::::::::::::::::::
@@ -2068,7 +2316,11 @@ if %ERRORLEVEL% == 13 goto m9a.x0.Restart
 if %ERRORLEVEL% == 14 goto %menu%
 if %ERRORLEVEL% == 15 goto m2a.x01.Oneclick
 if %ERRORLEVEL% == 16 goto %menu%
-if %ERRORLEVEL% == 17 start https://github.com/PierMobayed/PEDToolBox
+if %ERRORLEVEL% == 17 (
+start https://github.com/PierMobayed/PEDToolBox
+start https://www.paypal.com/pools/c/98cNbgYbFL
+start https://paypal.me/PierM?country.x=GB&locale.x=en_GB
+)
 if %loc% == 1 (
 	if %ERRORLEVEL% == 18 goto %menu%
 	)
@@ -2116,8 +2368,8 @@ set mm= %mm% "[ p ] Start Menu layout backup "
 set mm= %mm% "[ p ] Drivers backup "
 set mm= %mm% ""
 set mm= %mm% "[ p ] Open PED-Recovery Folder"
-set mm= %mm% ""
-set mm= %mm% "[ ] Import Start Menu layout"
+::set mm= %mm% ""
+::set mm= %mm% "[ ] Import Start Menu layout"
 
 cmdMenuSel e370 %mm%    
 if %ERRORLEVEL% == 1 goto m1a.x02.testDiagnostic
@@ -2149,7 +2401,9 @@ if %ERRORLEVEL% == 18 (
 if %ERRORLEVEL% == 19 (
 	call :m1a.x01.2.WinKeyBackup
 )
-if %ERRORLEVEL% == 20 %psP% "Export-StartLayout -Path "%PEDRecoveryFolder%\StartMenuBackup.xml""
+if %ERRORLEVEL% == 20 (
+	call :m1a.x01.3.StartMenuBackup
+)
 if %ERRORLEVEL% == 21 (
 	set driversToken=dismExport
 	goto m1a.x1.3.1.driversFunBackup
@@ -2157,16 +2411,17 @@ if %ERRORLEVEL% == 21 (
 if %ERRORLEVEL% == 22 goto %menu%
 if %ERRORLEVEL% == 23 start %windir%\explorer.exe "%PEDRecoveryFolder%"
 
-if %ERRORLEVEL% == 24 goto %menu%
-if %ERRORLEVEL% == 25 (
-	echo Import StartMenu layout -must be in Drive "C:\"
-	set /p "importStartmenu=Type Path : "
-)
-if %ERRORLEVEL% == 25 (
-	%psP% "Import-StartLayout -LayoutPath "%importStartmenu%" -MountPath "C:\""
-)
-
 goto %menu%
+
+::if %ERRORLEVEL% == 24 goto %menu%
+::if %ERRORLEVEL% == 25 (
+::	echo Import StartMenu layout -must be in Drive "C:\"
+::	set /p "importStartmenu=Type Path : "
+::)
+::if %ERRORLEVEL% == 25 (
+::	%psP% "Import-StartLayout -LayoutPath "%importStartmenu%" -MountPath "C:\""
+::)
+
 pause
 exit
 :m1a.x01.0.timestamp
@@ -2208,11 +2463,11 @@ echo Current Time: %timestamp%
 
 setlocal
 echo.
-set registryFileName=regBackup_%timestamp%.reg
-set RegBackup=%PEDRecoveryFolder%
+set "registryFileName=regBackup_%timestamp%.reg"
+set "RegBackup=%PEDRecoveryFolder%"
 
 echo.
-ECHO ********** Regystry backup COPY to %RegBackup%\%registryFileName%.reg 
+ECHO ********** Regystry backup COPY to %RegBackup%\%registryFileName%
 echo.
 ECHO ********** Please wait....
 echo.
@@ -2228,8 +2483,8 @@ IF EXIST "%RegBackup%\HKU.reg" DEL "%RegBackup%\HKU.reg"
 REG export HKU "%RegBackup%\HKU.reg"
 IF EXIST "%RegBackup%\HKCC.reg" DEL "%RegBackup%\HKCC.reg"
 REG export HKCC "%RegBackup%\HKCC.reg"
-IF EXIST "%RegBackup%\%registryFileName%.reg" DEL "%RegBackup%\%registryFileName%.reg"
-COPY "%RegBackup%\HKLM.reg"+"%RegBackup%\HKCU.reg"+"%RegBackup%\HKCR.reg"+"%RegBackup%\HKU.reg"+"%RegBackup%\HKCC.reg" "%RegBackup%\%registryFileName%.reg"
+IF EXIST "%RegBackup%\%registryFileName%" DEL "%RegBackup%\%registryFileName%"
+COPY "%RegBackup%\HKLM.reg"+"%RegBackup%\HKCU.reg"+"%RegBackup%\HKCR.reg"+"%RegBackup%\HKU.reg"+"%RegBackup%\HKCC.reg" "%RegBackup%\%registryFileName%"
 DEL "%RegBackup%\HKLM.reg"
 DEL "%RegBackup%\HKCU.reg"
 DEL "%RegBackup%\HKCR.reg"
@@ -2284,9 +2539,22 @@ if defined cleanedKey (
 
 endlocal
 exit /b
+
+:m1a.x01.3.StartMenuBackup
+cls
+call :m1a.x01.0.timestamp
+echo Current Time: %timestamp%
+
+set "registryFileName=StartMenuBackup_%timestamp%.reg"
+set "RegBackup=%PEDRecoveryFolder%"
+IF NOT EXIST "%RegBackup%" md "%RegBackup%"
+reg export HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount "%RegBackup%\%registryFileName%"
+
+exit /b
+
 ::%psP% 
 ::%psP% Import-StartLayout -LayoutPath "C:\PED-Recovery\StartMenuBackup.xml" -MountPath "C:\"
-
+::%psP% "Export-StartLayout -Path "%PEDRecoveryFolder%\StartMenuBackup.xml""
 
 ::================================
 :m1a.x02.testDiagnostic
@@ -3240,6 +3508,7 @@ cls
 rem Variable:
 set "sourceRoboCopy="
 set "destinationRoboCopy="
+set "destinationFileRoboCopy="
 set "applyRoboCopy="
 set "logFile=%userprofile%\Desktop\robocopy.log"
 
@@ -3287,6 +3556,11 @@ echo     - Command: /e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /MIR /LOG+:"%logFil
 echo.
 echo    ==================================================================================
 echo.
+echo     [1] - copy single file
+echo     - Copy one File to another place
+echo.
+echo    ==================================================================================
+echo.
 echo     Press any other key to Start Again
 echo.
 echo    ==================================================================================
@@ -3304,24 +3578,35 @@ echo [a] - copy all files
 echo.
 call :m1a.x02.7.1.roboCopyFun
 
-) else ( 
-	if "%applyRoboCopy%" == "m" (
+) else if "%applyRoboCopy%" == "m" (
 	set "applyRoboCopy=/e /w:5 /r:2 /COPY:DATSOU /DCOPY:DAT /MT /MIR /LOG+:"%logFile%" /TEE"
 	echo.
 	echo [m] - Mirror copy
 	echo.
 	call :m1a.x02.7.1.roboCopyFun
-	)
+) else if "%applyRoboCopy%" == "1" (
+	set "applyRoboCopy="
+	set /p destinationFileRoboCopy=Type file name:
+	goto m1a.x02.7.2.roboCopyFunfileCopy
 )
+
 
 goto %menu%
 
 :m1a.x02.7.1.roboCopyFun
-robocopy "%sourceRoboCopy%" "%destinationRoboCopy%" %applyRoboCopy%
+robocopy "%sourceRoboCopy%" %destinationRoboCopy% %applyRoboCopy%
 
 echo.
 cmdMenuSel e370 "Press ENTER to continue..." 
 if %ERRORLEVEL% == 1 goto %menu%
+
+:m1a.x02.7.2.roboCopyFunfileCopy
+set destinationRoboCopy=%destinationRoboCopy% %destinationFileRoboCopy%
+echo.
+echo [a] - copy single file
+echo.
+
+goto m1a.x02.7.1.roboCopyFun
 
 
 :m1a.x02.8.cpuRamUsage
@@ -3594,16 +3879,18 @@ set mm= %mm% "-|BACK|- Step 1 : System Check -Update/Repair/Scan:"
 set mm= %mm% "-|MAIN MENU|- "
 set mm= %mm% "===================================================="
 set mm= %mm% ""
-set mm= %mm% "[ p ] 1.BackUp/Restore Drivers (by GlaryUtility)"
-set mm= %mm% "[ p ] 2.BackUp Drivers(by DISM)"
-set mm= %mm% "[ p ] 3.BackUp Drivers(by PowerShell)"
+set mm= %mm% "[ p ] 1.BackUp Drivers(by DISM)"
+set mm= %mm% "[ p ] 1.BackUp Drivers(by PowerShell)"
 set mm= %mm% ""
-set mm= %mm% "[ p ] 1.Add/Restore Drivers(by cmd/pnputil)"
+set mm= %mm% "[ p ] 2.Add/Restore Drivers(by cmd/pnputil)"
 set mm= %mm% "[ p ] 2.Add/Restore Drivers(by DISM)"
 set mm= %mm% ""
-set mm= %mm% "[ p ] Backup or Restore Device Drivers (CMD by Matthew Wai at TenForums.com)"
+set mm= %mm% "[ p ] 3.Backup or Restore Device Drivers (CMD by Matthew Wai at TenForums.com)"
+set mm= %mm% "[ p ] 3.BackUp/Restore Drivers (by GlaryUtility)"
 set mm= %mm% ""
 set mm= %mm% "[ p ] Snappy Driver Installer Origin"
+set mm= %mm% ""
+set mm= %mm% "[ p ] DriverStoreExplorer (by lostindark)"
 
 cmdMenuSel e370 %mm%
 
@@ -3613,31 +3900,35 @@ if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
-if %ERRORLEVEL% == 6 goto r4a.x0.3.1.backUpDriversGlaryUtilities
-if %ERRORLEVEL% == 7 (
+
+if %ERRORLEVEL% == 6 (
 	set driversToken=dismExport
 	goto m1a.x1.3.1.driversFunBackup
 )
 
-if %ERRORLEVEL% == 8 (
+if %ERRORLEVEL% == 7 (
 	set driversToken=ps
 	goto m1a.x1.3.1.driversFunBackup
 )
 
-if %ERRORLEVEL% == 9 goto %menu%
-if %ERRORLEVEL% == 10 (
+if %ERRORLEVEL% == 8 goto %menu%
+if %ERRORLEVEL% == 9 (
 	set driversToken=pnputil
 	goto m1a.x1.3.2.driversFunAdd
 )
-if %ERRORLEVEL% == 11 (
+if %ERRORLEVEL% == 10 (
 	set driversToken=DismAdd
 	goto m1a.x1.3.2.driversFunAdd
 )
 
-if %ERRORLEVEL% == 12 goto %menu%
-if %ERRORLEVEL% == 13 goto r4a.x0.7.backupDrivers
+if %ERRORLEVEL% == 11 goto %menu%
+if %ERRORLEVEL% == 12 goto r4a.x0.7.backupDrivers
+if %ERRORLEVEL% == 13 goto r4a.x0.3.1.backUpDriversGlaryUtilities
 if %ERRORLEVEL% == 14 goto %menu%
 if %ERRORLEVEL% == 15 goto r4a.x0.1.SDI
+if %ERRORLEVEL% == 16 goto %menu%
+if %ERRORLEVEL% == 17 goto r4a.x6.03.DriverStoreExplorer
+
 
 goto %menu%
 
@@ -3811,10 +4102,10 @@ set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Run a SFC /Scan now"
 set mm= %mm% "[ p ] 2.Run a DISM /Restorehealth"
+set mm= %mm% "[ p ] 3.DISM /StartComponentCleanup"
 set mm= %mm% ""
-set mm= %mm% "[ ] Auto Scan - SFC-DISM/Restorehealth-SFC"
-set mm= %mm% ""
-set mm= %mm% "[ ] DISM /StartComponentCleanup"
+set mm= %mm% "[ ] Auto Scan - SFC/Scan now - DISM/Restorehealth - DISM/StartComponentCleanup"
+
 
 cmdMenuSel e370 %mm%
 
@@ -3824,14 +4115,12 @@ if %ERRORLEVEL% == 3 goto mainMenu
 if %ERRORLEVEL% == 4 goto %menu%
 if %ERRORLEVEL% == 5 goto %menu%
 
-if %ERRORLEVEL% == 6 start cmd /c sfc /scannow && pause
-if %ERRORLEVEL% == 7 start cmd /c dism.exe /Online /Cleanup-image /Restorehealth && pause
-if %ERRORLEVEL% == 8 goto %menu%
-if %ERRORLEVEL% == 9 start cmd /c sfc /scannow && dism.exe /Online /Cleanup-image /Restorehealth && sfc /scannow && pause
-if %ERRORLEVEL% == 10 goto %menu%
-if %ERRORLEVEL% == 11 start cmd /c dism /online /Cleanup-Image /StartComponentCleanup
+if %ERRORLEVEL% == 6 start cmd /c "sfc /scannow && pause"
+if %ERRORLEVEL% == 7 start cmd /c "dism.exe /Online /Cleanup-image /Restorehealth && pause"
+if %ERRORLEVEL% == 8 start cmd /c "dism /online /Cleanup-Image /StartComponentCleanup && pause"
+if %ERRORLEVEL% == 9 goto %menu%
+if %ERRORLEVEL% == 10 start cmd /c "sfc /scannow && dism.exe /Online /Cleanup-image /Restorehealth && dism /online /Cleanup-Image /StartComponentCleanup && pause"
 
-pause
 goto %menu%
 
 :m1a.x2.settings
@@ -4368,6 +4657,7 @@ set mm= %mm% "[ ] User folder - delete unwanted/empty folders"
 set mm= %mm% ""
 set mm= %mm% "---------- More: -----------------------------------"
 set mm= %mm% "[ ] GridView | Remove-AppxPackage"
+set mm= %mm% "[ ] Reinstall pre-build windows app"
 set mm= %mm% ""
 set mm= %mm% "---------- cmd Delete by Location folder (old)------"
 set mm= %mm% "[ ] 1.Open files for corrections"
@@ -4387,11 +4677,12 @@ if %ERRORLEVEL% == 8 goto %menu%
 
 if %ERRORLEVEL% == 9 goto %menu%
 if %ERRORLEVEL% == 10 %psP% "Get-AppxPackage | Select InstallLocation, Name, PackageFullName | Sort-Object InstallLocation, Name | Out-GridView -PassThru | Remove-AppxPackage"
-if %ERRORLEVEL% == 11 goto %menu%
-
+if %ERRORLEVEL% == 11 start %psP% "cd 'C:\WINDOWS\system32'; pause; Get-AppxPackage -AllUsers | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register \"$($_.InstallLocation)\AppXManifest.xml\"};"
 if %ERRORLEVEL% == 12 goto %menu%
-if %ERRORLEVEL% == 13 goto m1a.x3.2.1.1.openDebloat
-if %ERRORLEVEL% == 14 goto m1a.x3.2.1.2.debloatDel
+
+if %ERRORLEVEL% == 13 goto %menu%
+if %ERRORLEVEL% == 14 goto m1a.x3.2.1.1.openDebloat
+if %ERRORLEVEL% == 15 goto m1a.x3.2.1.2.debloatDel
 
 goto %menu%
 
@@ -6248,7 +6539,11 @@ set durMM=0
 set wuMM=0
 set sfcMM=0
 set uuMM=0
-set csuMM=0
+set startUpMM=0
+set updateMM=0
+set configMM=0
+
+
 set optimizeP=2
 
 :m2a.x11.OneClick-Menu
@@ -6267,7 +6562,7 @@ if %optimizeP% == 1 (set optimizePStatus=Optimize
 
 set mm=
 set mm= %mm% "-|MAIN MENU|- "
-set mm= %mm% "=================================================================="
+set mm= %mm% "================= Select an option ================="
 set mm= %mm% ""
 
 if not %optimizePStatus% == SelectAuto (
@@ -6285,34 +6580,70 @@ set mm= %mm% "[   ] CLEAR"
 if not %optimizePStatus% == SelectAuto (set mm= %mm% "") else (goto m2a.x12.OneClick-Menu2)
 
 set mm= %mm% "================= Select manual ================="
-if %esoMM% == 1 (set mm= %mm% "[X] Easy Services Optimization "
-) else (set mm= %mm% "[ ] Easy Services Optimization ")
-if %oosu10MM% == 1 (set mm= %mm% "[X] O&O ShutUp10 "
-) else (set mm= %mm% "[ ] O&O ShutUp10 ")
-if %rmMM% == 1 (set mm= %mm% "[X] Reduce Memory "
-) else (set mm= %mm% "[ ] Reduce Memory ")
-if %tsoMM% == 1 (set mm= %mm% "[X] Tasks Schedular Optimization "
-) else (set mm= %mm% "[ ] Tasks Schedular Optimization ")
-if %bbMM% == 1 (set mm= %mm% "[X] Bleachbit "
-) else (set mm= %mm% "[ ] Bleachbit ")
-if %dcMM% == 1 (set mm= %mm% "[X] Disk Cleanup "
-) else (set mm= %mm% "[ ] Disk Cleanup ")
-if %guMM% == 1 (set mm= %mm% "[X] Glary Utilities "
-) else (set mm= %mm% "[ ] Glary Utilities ")
-if %wrcMM% == 1 (set mm= %mm% "[X] Wise Reg Cleaner "
-) else (set mm= %mm% "[ ] Wise Reg Cleaner ")
-if %fdcMM% == 1 (set mm= %mm% "[X] Flush DNS Cache "
-) else (set mm= %mm% "[ ] Flush DNS Cache ")
-set mm= %mm% "================================================="
-if %wuMM% == 1 (set mm= %mm% "[X] Windows Update"
-) else (set mm= %mm% "[ ] Windows Update")
-if %sfcMM% == 1 (set mm= %mm% "[X] sfc /scannow and dism /Restorehealth"
-) else (set mm= %mm% "[ ] sfc /scannow and dism /Restorehealth")
-if %uuMM% == 1 (set mm= %mm% "[X] Uninstall and Update apps"
-) else (set mm= %mm% "[ ] Uninstall and Update apps")
-if %csuMM% == 1 (set mm= %mm% "[X] Configuration and StartUp settings"
-) else (set mm= %mm% "[ ] Configuration and StartUp settings")
+if %rmMM% == 1 (
+	set mm= %mm% "[X] Reduce Memory "
+) else (
+	set mm= %mm% "[ ] Reduce Memory ")
+if %oosu10MM% == 1 (
+	set mm= %mm% "[X] O&O ShutUp10 "
+) else (
+	set mm= %mm% "[ ] O&O ShutUp10 ")
+if %esoMM% == 1 (
+	set mm= %mm% "[X] Easy Services Optimization "
+) else (
+	set mm= %mm% "[ ] Easy Services Optimization ")
+if %tsoMM% == 1 (
+	set mm= %mm% "[X] Tasks Schedular Optimization "
+) else (
+	set mm= %mm% "[ ] Tasks Schedular Optimization ")
 
+if %dcMM% == 1 (
+	set mm= %mm% "[X] Disk Cleanup "
+) else (
+	set mm= %mm% "[ ] Disk Cleanup ")
+if %bbMM% == 1 (
+	set mm= %mm% "[X] Bleachbit "
+) else (
+	set mm= %mm% "[ ] Bleachbit ")
+if %guMM% == 1 (
+	set mm= %mm% "[X] Glary Utilities "
+) else (
+	set mm= %mm% "[ ] Glary Utilities ")
+if %wrcMM% == 1 (
+	set mm= %mm% "[X] Wise Reg Cleaner "
+) else (
+	set mm= %mm% "[ ] Wise Reg Cleaner ")
+if %fdcMM% == 1 (
+	set mm= %mm% "[X] Flush DNS Cache "
+) else (
+	set mm= %mm% "[ ] Flush DNS Cache ")
+set mm= %mm% "================================================="
+if %wuMM% == 1 (
+	set mm= %mm% "[X] System Update"
+) else (
+	set mm= %mm% "[ ] System Update")
+if %sfcMM% == 1 (
+	set mm= %mm% "[X] sfc /scannow and dism /Restorehealth"
+) else (
+	set mm= %mm% "[ ] sfc /scannow and dism /Restorehealth")
+if %uuMM% == 1 (
+	set mm= %mm% "[X] Uninstall apps"
+) else (
+	set mm= %mm% "[ ] Uninstall apps")
+if %updateMM% == 1 (
+	set mm= %mm% "[X] Update all apps"
+) else (
+	set mm= %mm% "[ ] Update all apps")
+if %startUpMM% == 1 (
+	set mm= %mm% "[X] StartUp settings"
+) else (
+	set mm= %mm% "[ ] StartUp settings")
+if %configMM% == 1 (
+	set mm= %mm% "[X] Configurations and Windows Update Pause"
+) else (
+	set mm= %mm% "[ ] Configurations and Windows Update Pause")
+
+ 
 ::================================
 set durMM=1
 
@@ -6327,6 +6658,7 @@ if %wrcMM% == 0 (
 if %fdcMM% == 0 (
 	set durMM=0
 )))))))))
+
 
 :m2a.x12.OneClick-Menu2
 cmdMenuSel e370 %mm%
@@ -6345,34 +6677,37 @@ if %ERRORLEVEL% == 6 goto %menu%
 if %ERRORLEVEL% == 7 set optimizeP=1 && goto m2a.x2.1.OneclickLITE
 if %ERRORLEVEL% == 8 set optimizeP=1 && goto m2a.x2.2.OneclickFULL
 if %ERRORLEVEL% == 9 goto %menu%
-if %ERRORLEVEL% == 10 set optimizeP=0 && goto m2a.x2.1.OneclickLITE
+if %ERRORLEVEL% == 10 set optimizeP=0 && goto m2a.x2.3.OneclickDef
 if %ERRORLEVEL% == 11 goto %menu%
 if %ERRORLEVEL% == 12 goto m2a.x02.OneclickA
 if %ERRORLEVEL% == 13 goto %menu%
 
 if %ERRORLEVEL% == 14 goto %menu%
-if %ERRORLEVEL% == 15 if %esoMM% == 1 (set esoMM=0) else (set esoMM=1)
+if %ERRORLEVEL% == 15 if %rmMM% == 1 (set rmMM=0) else (set rmMM=1)
 if %ERRORLEVEL% == 16 if %oosu10MM% == 1 (set oosu10MM=0) else (set oosu10MM=1)
-if %ERRORLEVEL% == 17 if %rmMM% == 1 (set rmMM=0) else (set rmMM=1)
+if %ERRORLEVEL% == 17 if %esoMM% == 1 (set esoMM=0) else (set esoMM=1)
 if %ERRORLEVEL% == 18 if %tsoMM% == 1 (set tsoMM=0) else (set tsoMM=1)
-if %ERRORLEVEL% == 19 if %bbMM% == 1 (set bbMM=0) else (set bbMM=1)
-if %ERRORLEVEL% == 20 if %dcMM% == 1 (set dcMM=0) else (set dcMM=1)
+if %ERRORLEVEL% == 19 if %dcMM% == 1 (set dcMM=0) else (set dcMM=1)
+if %ERRORLEVEL% == 20 if %bbMM% == 1 (set bbMM=0) else (set bbMM=1)
 if %ERRORLEVEL% == 21 if %guMM% == 1 (set guMM=0) else (set guMM=1)
 if %ERRORLEVEL% == 22 if %wrcMM% == 1 (set wrcMM=0) else (set wrcMM=1)
 if %ERRORLEVEL% == 23 if %fdcMM% == 1 (set fdcMM=0) else (set fdcMM=1)
 if %ERRORLEVEL% == 24 goto %menu%
+
 if %ERRORLEVEL% == 25 if %wuMM% == 1 (set wuMM=0) else (set wuMM=1)
 if %ERRORLEVEL% == 26 if %sfcMM% == 1 (set sfcMM=0) else (set sfcMM=1)
 if %ERRORLEVEL% == 27 if %uuMM% == 1 (set uuMM=0) else (set uuMM=1)
-if %ERRORLEVEL% == 28 if %csuMM% == 1 (set csuMM=0) else (set csuMM=1)
+if %ERRORLEVEL% == 28 if %updateMM% == 1 (set updateMM=0) else (set updateMM=1)
+if %ERRORLEVEL% == 29 if %startUpMM% == 1 (set startUpMM=0) else (set startUpMM=1)
+if %ERRORLEVEL% == 30 if %configMM% == 1 (set configMM=0) else (set configMM=1)
 
 goto %menu%
 
 :m2a.x2.1.OneclickLITE
-set esoMM=1
-set oosu10MM=1
+set esoMM=0
+set oosu10MM=0
 set rmMM=1
-set tsoMM=1
+set tsoMM=0
 set bbMM=0
 set dcMM=1
 set guMM=1
@@ -6383,7 +6718,9 @@ set durMM=0
 set wuMM=0
 set sfcMM=0
 set uuMM=0
-set csuMM=0
+set startUpMM=0
+set updateMM=0
+set configMM=0
 
 goto %menu%
 
@@ -6401,11 +6738,33 @@ set fdcMM=1
 set durMM=0
 set wuMM=0
 set sfcMM=0
-set uuMM=0
-set csuMM=1
+set uuMM=1
+set startUpMM=1
+set updateMM=1
+set configMM=1
 
 goto %menu%
 
+:m2a.x2.3.OneclickDef
+set esoMM=1
+set oosu10MM=1
+set rmMM=1
+set tsoMM=1
+set bbMM=0
+set dcMM=1
+set guMM=1
+set wrcMM=1
+set fdcMM=1
+
+set durMM=0
+set wuMM=0
+set sfcMM=0
+set uuMM=1
+set startUpMM=1
+set updateMM=1
+set configMM=1
+
+goto %menu%
 
 :m2a.x5.Oneclick.Configuration
 ::================================
@@ -6431,7 +6790,9 @@ echo set durMM=%durMM% >> c1.txt
 echo set wuMM=%wuMM% >> c1.txt
 echo set sfcMM=%sfcMM% >> c1.txt
 echo set uuMM=%uuMM% >> c1.txt
-echo set csuMM=%csuMM% >> c1.txt
+echo set startUpMM=%startUpMM% >> c1.txt
+echo set updateMM=%updateMM% >> c1.txt
+echo set configMM=%configMM% >> c1.txt
 
 call :m1a.x01.0.timestamp
 echo.
@@ -6446,10 +6807,11 @@ set startOneClickTwo=0
 
 timeout 5 /nobreak>nul
 if %wuMM% == 0 (
-if %sfcMM% == 0 (
-goto m2a.x5.0.Oneclick.Start
+	if %sfcMM% == 0 (
+		goto m2a.x5.0.Oneclick.Start
+	)
 )
-)
+
 echo RESTARTING after:
 timeout 10
 Shutdown -r -f -t 00
@@ -6474,6 +6836,7 @@ REM ================================
 	set startOneClick=0
 	)
 )
+
 if not exist c3.txt (
 REM ================================
 	if %sfcMM% == 1 (
@@ -6484,30 +6847,70 @@ REM ================================
 	REM set startOneClick=0
 	)
 )
+
 if not exist c4.txt (
 REM ================================
 	if %uuMM% == 1 (
-	echo ********** Uninstall and Update apps
+	echo ********** Uninstall apps
 	REM =================
 	set startOneClick=1
 	call :m2a.x5.3.Oneclick53
 	set startOneClick=0
 	)
 )
+
 if not exist c5.txt (
 REM ================================
-	if %csuMM% == 1 (
-	echo ********** Configuration and StartUp settings
+	if %updateMM% == 1 (
+	echo ********** Update all apps
 	REM =================
 	set startOneClick=1
 	call :m2a.x5.4.Oneclick54
 	set startOneClick=0
-	) else (if %durMM% == 1 (
-		set startOneClick=1
-		call :m2a.x5.4.Oneclick54
-		set startOneClick=0
 	)
+)
+
+if not exist c6.txt (
+REM ================================
+	if %durMM% == 1 (
+	echo ********** Optimize
+	REM =================
+	set startOneClick=1
+	call :m2a.x5.5.Oneclick55
+	set startOneClick=0
 	)
+)
+if not exist c7.txt (
+REM ================================
+	if %configMM% == 1 (
+	echo ********** Configurations and Windows Update Pause
+	REM =================
+	set startOneClick=1
+	call :m2a.x5.6.Oneclick56
+	set startOneClick=0
+	)
+)
+if not exist c8.txt (
+REM ================================
+	if %startUpMM% == 1 (
+	echo ********** StartUp settings
+	REM =================
+	set startOneClick=1
+	call :m2a.x5.7.Oneclick57
+	set startOneClick=0
+	)
+)
+if not exist c9.txt (
+REM ================================
+start explorer.exe
+
+REM create file c9.txt
+timeout 2 /nobreak>c9.txt
+
+echo RESTARTING after:
+timeout 10
+Shutdown -r -f -t 00
+exit
 )
 
 ::END
@@ -6515,6 +6918,10 @@ if exist c2.txt (del c2.txt)
 if exist c3.txt (del c3.txt)
 if exist c4.txt (del c4.txt)
 if exist c5.txt (del c5.txt)
+if exist c6.txt (del c6.txt)
+if exist c7.txt (del c7.txt)
+if exist c8.txt (del c8.txt)
+if exist c9.txt (del c9.txt)
 if exist c1.txt (del c1.txt)
 if exist cc1.bat (del cc1.bat)
 
@@ -6568,15 +6975,16 @@ Shutdown -r -f -t 00
 exit
 REM t2
 
-
 :m2a.x5.2.Oneclick52
 REM c3.txt
 
+powershell.exe -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'PED-Restore Point1' -RestorePointType 'MODIFY_SETTINGS'"
+
 call :m1a.x02.6.1.speedTestCheckInternetConnection
-chkdsk
-sfc /scannow
-dism.exe /Online /Cleanup-image /Restorehealth
-sfc /scannow
+start /w cmd /c "chkdsk"
+start /w cmd /c "sfc /scannow"
+start /w cmd /c "dism.exe /Online /Cleanup-image /Restorehealth"
+start /w cmd /c "dism /online /Cleanup-Image /StartComponentCleanup"
 REM create file c3.txt
 timeout 5 /nobreak>c3.txt
 
@@ -6588,49 +6996,50 @@ exit
 :m2a.x5.3.Oneclick53
 REM c4.txt
 
-powershell.exe -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'PED-Restore Point2' -RestorePointType 'MODIFY_SETTINGS'"
-
 call :r4a.x3.1.RevoUninstallerPortable
 call :m1a.x3.2.1.0.delete_Bloatware
-
-call :m1a.x02.6.1.speedTestCheckInternetConnection
-
-call :r3a.x11.3.1.downLoadF-3.1.WingetScript
-
-timeout 2 /nobreak>nul
-winget upgrade -h --all
 
 REM create file c4.txt
 timeout 2 /nobreak>c4.txt
 
-echo RESTARTING after:
-timeout 10
-Shutdown -r -f -t 00
-exit
-
+exit /b
 
 :m2a.x5.4.Oneclick54
 REM c5.txt
 
 call :m1a.x02.6.1.speedTestCheckInternetConnection
+call :r3a.x11.3.1.downLoadF-3.1.WingetScript
+
+timeout 1 /nobreak>nul
+winget upgrade -h --all
+
+REM create file c5.txt
+timeout 2 /nobreak>c5.txt
+
+exit /b
+
+:m2a.x5.5.Oneclick55
+REM c5.txt
+
+call :m1a.x02.6.1.speedTestCheckInternetConnection
 taskkill /f /IM explorer.exe
-
-
-::repair
 
 set startOneClick=1
 set startOneClickTwo=1
-::copy c1.txt cc1.bat
-::call cc1.bat
+
 call :m2a.x3.OneclickC
-::call :m2a.x2.2.OneclickFULL
 
 call :m1a.x4.3.3.2.winExplorerRunHistory
 
-if %csuMM% == 1 (
+REM create file c6.txt
+timeout 2 /nobreak>c6.txt
+
+exit /b
+
+:m2a.x5.6.Oneclick56
+if %configMM% == 1 (
 set thisPc=1
 call :m1a.x4.3.3.1.winExplorerThisPC
-call :m1a.x4.3.3.2.winExplorerRunHistory
 
 REM settings updates
 set startOneClick=1
@@ -6642,21 +7051,21 @@ call :m1a.x7.1.4.1.WinUpdadePause
 REM Ram reduce
 call :m1a.x7.5.1.ramReducerApply
 ::start explorer.exe
-timeout 1
+
+REM create file c7.txt
+timeout 2 /nobreak>c7.txt
+)
+
+exit /b
+
+:m2a.x5.7.Oneclick57
 REM Start up
 call :r4a.x0.3.2.startupManagerGlaryUtility
 
-)
+REM create file c8.txt
+timeout 2 /nobreak>c8.txt
 
-REM create file c5.txt
-timeout 2 /nobreak>c5.txt
-
-start explorer.exe
-echo RESTARTING after:
-timeout 10
-Shutdown -r -f -t 00
-exit
-REM t5
+exit /b
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -9781,6 +10190,24 @@ rem https://www.youtube.com/watch?v=6oqhJ-gTadY
 
 :notesVersion
 exit
+::PED-ToolBox-1.286.4.240922
+::update one click Maintenance
+::update DiskCleanup menu
+::update startMenu backup
+
+::PED-ToolBox-1.286.3.240915
+::update download Function
+::uddate log-readme file
+::add :r3a.x01.1.downloadFunctionLink
+::update all links
+
+::PED-ToolBox-1.286.2.240910
+::update robocopy add single file copy
+
+::PED-ToolBox-1.286.1.240909
+:: add r4a.x6.03.DriverStoreExplorer
+:: add Reinstall pre-build windows app
+
 ::PED-ToolBox-1.284.3.240901
 :: New show wifi password
 
