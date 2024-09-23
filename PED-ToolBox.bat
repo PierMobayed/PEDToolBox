@@ -463,10 +463,10 @@ exit /b
 if not exist "%destinationPD%\files\pll.*" (
 	set "fileLinkID=%fileLinkID%"
 ) else (
-pause
+
 	set "fileLinkID=%fileLinkID2%"
 )
-pause
+
 exit /b
 
 ::=======================================
