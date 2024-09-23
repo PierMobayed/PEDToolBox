@@ -85,7 +85,7 @@ echo.
 ::================================
 
 :: Set version
-set "versionTool=PED-ToolBox-1.286.6.240923"
+set "versionTool=PED-ToolBox-1.286.7.240923"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -416,7 +416,8 @@ echo Download_Resources
 ::================================
 pause
 ::========
-:r3a.x01.0.downloadFunction
+:
+r3a.x01.0.downloadFunction
 ::================================
 
 if %startOneClick% == 0 (cls)
@@ -605,7 +606,7 @@ call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=wumt.zip"
 set isItZip=y
 
-set "fileLinkID=www.2409wumt.ped.run"
+set "fileLinkID=www.2409wumt02.ped.run"
 set "fileLinkID2=www.2409wumt02.ped.run"
 ::set "fileLinkID=https://drive.google.com/u/0/uc?id=0BwJH2CazcjsINFZFc1pVdk9mNHM&export=download&resourcekey=0-LD-TdjUx1rNekTXsKfDCPw"
 call :r3a.x01.1.downloadFunctionLink
@@ -703,11 +704,11 @@ call :r3a.x01.0.downloadFunction
 
 
 set "destination=%destination%\Eso\"
-set "fileLocation=20220525.ini"
+set "fileLocation=20240519.ini"
 set isItZip=n
 
-set "fileLinkID=www.2409eso2022052502.ped.run"
-set "fileLinkID2=www.2409eso2022052502.ped.run"
+set "fileLinkID=www.2409eso20240519ini02.ped.run"
+set "fileLinkID2=www.2409eso20240519ini02.ped.run"
 ::set "fileLinkID=https://bit.ly/pedbox20220525"
 ::https://drive.usercontent.google.com/download?id=1tpSFhlPHCeCZZx5O57gvQbQtxZ_86jIL&export=download
 call :r3a.x01.1.downloadFunctionLink
@@ -803,7 +804,7 @@ call :r3a.x01.0.downloadFunction
 
 :: config
 ::oosu10-default.cfg
-set "fileLocation=oosu10-default.cfg.file"
+set "fileLocation=oosu10-default.cfg"
 set isItZip=n
 
 set "fileLinkID=www.2409oosu10-default02.ped.run"
@@ -811,10 +812,10 @@ set "fileLinkID2=www.2409oosu10-default02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://bit.ly/44TKg73"
 call :r3a.x01.0.downloadFunction
-ren "%destination%\oosu10-default.cfg.file" "oosu10-default.cfg"
+::ren "%destination%\oosu10-default.cfg.file" "oosu10-default.cfg"
 
 ::oosu10-Safe-2205.cfg
-set "fileLocation=oosu10-Safe-2205.cfg.file"
+set "fileLocation=oosu10-Safe-2205.cfg"
 set isItZip=n
 
 set "fileLinkID=www.2409oosu10-Safe-220502.ped.run"
@@ -822,7 +823,7 @@ set "fileLinkID2=www.2409oosu10-Safe-220502.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://bit.ly/3qiaNvH"
 call :r3a.x01.0.downloadFunction
-ren "%destination%\oosu10-Safe-2205.cfg.file" "oosu10-Safe-2205.cfg"
+::ren "%destination%\oosu10-Safe-2205.cfg.file" "oosu10-Safe-2205.cfg"
 
 exit /b
 ::=================
@@ -846,7 +847,7 @@ call :r3a.x01.0.downloadFunction
 
 ::Config
 
-set "fileLocation=TaskSchedulerView.cfg.file"
+set "fileLocation=TaskSchedulerView.cfg"
 set isItZip=n
 
 set "fileLinkID=www.2409TaskSchedulerViewcfg02.ped.run"
@@ -855,7 +856,7 @@ call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://bit.ly/3QqTsLH"
 call :r3a.x01.0.downloadFunction
 if exist "%destination%\%fileLocation%" (del "%destination%\%fileLocation%")
-ren "%destination%\TaskSchedulerView.cfg.file" "TaskSchedulerView.cfg"
+::ren "%destination%\TaskSchedulerView.cfg.file" "TaskSchedulerView.cfg"
 
 exit /b
 ::=================
@@ -969,7 +970,7 @@ if exist "%destination%\%fileLocation%" (del "%destination%\%fileLocation%")
 call :r3a.x01.0.downloadFunction
 
 REM rename config
-call :r5a.x2.1.renameGlaryConfig
+::call :r5a.x2.1.renameGlaryConfig
 
 if exist "%destinationMain%\addCode.bat" (
 	CALL %destinationMain%\addCode.bat GUP
@@ -1677,9 +1678,9 @@ if %tokenKey% == 1 (
 ) 
  if %startOneClick% == 1 (
 	if %optimizeP% == 1 (
-		%startFiles% /A /G=2 20220525.ini
+		%startFiles% /A /G=2 20240519.ini
 	) else (
-		%startFiles% /A /G=1 20220525.ini
+		%startFiles% /A /G=1 20240519.ini
 	)
 	exit /b
 	) else (
@@ -10194,6 +10195,7 @@ rem https://www.youtube.com/watch?v=6oqhJ-gTadY
 :notesVersion
 exit
 
+::PED-ToolBox-1.286.7.240923
 ::PED-ToolBox-1.286.6.240923
 ::PED-ToolBox-1.286.5.240923
 ::update all links
