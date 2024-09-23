@@ -85,7 +85,7 @@ echo.
 ::================================
 
 :: Set version
-set "versionTool=PED-ToolBox-1.286.7.240923"
+set "versionTool=PED-ToolBox-1.286.8.240924"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -416,8 +416,7 @@ echo Download_Resources
 ::================================
 pause
 ::========
-:
-r3a.x01.0.downloadFunction
+:r3a.x01.0.downloadFunction
 ::================================
 
 if %startOneClick% == 0 (cls)
@@ -608,13 +607,14 @@ set isItZip=y
 
 set "fileLinkID=www.2409wumt02.ped.run"
 set "fileLinkID2=www.2409wumt02.ped.run"
-::set "fileLinkID=https://drive.google.com/u/0/uc?id=0BwJH2CazcjsINFZFc1pVdk9mNHM&export=download&resourcekey=0-LD-TdjUx1rNekTXsKfDCPw"
+
 call :r3a.x01.1.downloadFunctionLink
 
 call :r3a.x01.0.downloadFunction
 exit /b
 
-::set "fileLinkID=https://drive.usercontent.google.com/download?id=0BwJH2CazcjsINFZFc1pVdk9mNHM&export=download&authuser=0&resourcekey=0-LD-TdjUx1rNekTXsKfDCPw&confirm=t&uuid=75c066b3-5f4f-4643-b866-bf2989f44bab"
+::https://drive.google.com/u/0/uc?id=0BwJH2CazcjsINFZFc1pVdk9mNHM&export=download&resourcekey=0-LD-TdjUx1rNekTXsKfDCPw"
+::https://drive.usercontent.google.com/download?id=0BwJH2CazcjsINFZFc1pVdk9mNHM&export=download&authuser=0&resourcekey=0-LD-TdjUx1rNekTXsKfDCPw&confirm=t&uuid=75c066b3-5f4f-4643-b866-bf2989f44bab"
 ::https://drive.usercontent.google.com/download?id=0BwJH2CazcjsINFZFc1pVdk9mNHM&export=download&authuser=0&resourcekey=0-LD-TdjUx1rNekTXsKfDCPw
 ::=================
 ::===done
