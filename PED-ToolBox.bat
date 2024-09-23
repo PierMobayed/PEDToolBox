@@ -85,7 +85,7 @@ echo.
 ::================================
 
 :: Set version
-set "versionTool=PED-ToolBox-1.286.4.240922"
+set "versionTool=PED-ToolBox-1.286.5.240923"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -463,9 +463,10 @@ exit /b
 if not exist "%destinationPD%\files\pll.*" (
 	set "fileLinkID=%fileLinkID%"
 ) else (
+pause
 	set "fileLinkID=%fileLinkID2%"
 )
-
+pause
 exit /b
 
 ::=======================================
@@ -541,8 +542,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=SDIO.zip"
 set "isItZip=y"
 
-set "fileLinkID=2409sdio.ped.run"
-set "fileLinkID2=2409sdio02.ped.run"
+set "fileLinkID=https://2409sdio.ped.run"
+set "fileLinkID2=https://2409sdio02.ped.run"
 ::set "fileLinkID=https://www.glenn.delahoy.com/downloads/sdio/SDIO_1.13.4.771.zip"
 call :r3a.x01.1.downloadFunctionLink
 
@@ -562,8 +563,8 @@ set "fileLocation=advancedrun-x64.zip"
 set isItZip=y
 
 
-set "fileLinkID=2409advancedrun.ped.run"
-set "fileLinkID2=2409advancedrun02.ped.run"
+set "fileLinkID=https://2409advancedrun.ped.run"
+set "fileLinkID2=https://2409advancedrun02.ped.run"
 ::set "fileLinkID=https://www.nirsoft.net/utils/advancedrun-x64.zip"
 call :r3a.x01.1.downloadFunctionLink
 
@@ -587,8 +588,8 @@ call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=wushowhide.diagcab"
 set isItZip=n
 
-set "fileLinkID=2409wushowhide.ped.run"
-set "fileLinkID2=2409wushowhide02.ped.run"
+set "fileLinkID=https://2409wushowhide.ped.run"
+set "fileLinkID2=https://2409wushowhide02.ped.run"
 ::set "fileLinkID=https://download.microsoft.com/download/f/2/2/f22d5fdb-59cd-4275-8c95-1be17bf70b21/wushowhide.diagcab"
 call :r3a.x01.1.downloadFunctionLink
 
@@ -602,8 +603,8 @@ call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=wumt.zip"
 set isItZip=y
 
-set "fileLinkID=2409wumt.ped.run"
-set "fileLinkID2=2409wumt02.ped.run"
+set "fileLinkID=https://2409wumt.ped.run"
+set "fileLinkID2=https://2409wumt02.ped.run"
 ::set "fileLinkID=https://drive.google.com/u/0/uc?id=0BwJH2CazcjsINFZFc1pVdk9mNHM&export=download&resourcekey=0-LD-TdjUx1rNekTXsKfDCPw"
 call :r3a.x01.1.downloadFunctionLink
 
@@ -620,8 +621,8 @@ call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=WAU Manager.exe"
 set isItZip=n
 
-set "fileLinkID=2409WAUManager02.ped.run"
-set "fileLinkID2=2409WAUManager02.ped.run"
+set "fileLinkID=https://2409WAUManager02.ped.run"
+set "fileLinkID2=https://2409WAUManager02.ped.run"
 ::set "fileLinkID=https://www.carifred.com/wau_manager/WAU%%20Manager.exe"
 call :r3a.x01.1.downloadFunctionLink
 
@@ -635,8 +636,8 @@ call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=Windows10Upgrade9252.exe"
 set isItZip=n
 
-set "fileLinkID=2409Windows10Upgrade02.ped.run"
-set "fileLinkID2=2409Windows10Upgrade02.ped.run"
+set "fileLinkID=https://2409Windows10Upgrade02.ped.run"
+set "fileLinkID2=https://2409Windows10Upgrade02.ped.run"
 ::set "fileLinkID=https://go.microsoft.com/fwlink/?LinkID=799445"
 call :r3a.x01.1.downloadFunctionLink
 
@@ -655,8 +656,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=CrystalDiskInfo.zip"
 set isItZip=y
 
-set "fileLinkID=2409CrystalDiskInfo02.ped.run"
-set "fileLinkID2=2409CrystalDiskInfo02.ped.run"
+set "fileLinkID=https://2409CrystalDiskInfo02.ped.run"
+set "fileLinkID2=https://2409CrystalDiskInfo02.ped.run"
 ::set "fileLinkID=https://kumisystems.dl.sourceforge.net/project/crystaldiskinfo/9.2.3/CrystalDiskInfo9_2_3.zip"
 call :r3a.x01.1.downloadFunctionLink
 
@@ -691,8 +692,8 @@ if not exist ("%destination%\.") (
 set "fileLocation=eso.zip"
 set isItZip=y
 
-set "fileLinkID=2409eso02.ped.run"
-set "fileLinkID2=2409eso02.ped.run"
+set "fileLinkID=https://2409eso02.ped.run"
+set "fileLinkID2=https://2409eso02.ped.run"
 ::set "fileLinkID=https://www.sordum.org/files/downloads.php?easy-service-optimizer"
 call :r3a.x01.1.downloadFunctionLink
 
@@ -703,8 +704,8 @@ set "destination=%destination%\Eso\"
 set "fileLocation=20220525.ini"
 set isItZip=n
 
-set "fileLinkID=2409eso2022052502.ped.run"
-set "fileLinkID2=2409eso2022052502.ped.run"
+set "fileLinkID=https://2409eso2022052502.ped.run"
+set "fileLinkID2=https://2409eso2022052502.ped.run"
 ::set "fileLinkID=https://bit.ly/pedbox20220525"
 ::https://drive.usercontent.google.com/download?id=1tpSFhlPHCeCZZx5O57gvQbQtxZ_86jIL&export=download
 call :r3a.x01.1.downloadFunctionLink
@@ -715,8 +716,8 @@ call :r3a.x01.0.downloadFunction
 set "fileLocation=20220525-updates.ini"
 set isItZip=n
 
-set "fileLinkID=240920220525-updates02.ped.run"
-set "fileLinkID2=240920220525-updates02.ped.run"
+set "fileLinkID=https://240920220525-updates02.ped.run"
+set "fileLinkID2=https://240920220525-updates02.ped.run"
 ::set "fileLinkID=https://drive.usercontent.google.com/download?id=1YbkgrpeJcD7yIF_s7WmG2HGPp9xK9zT5&export=download"
 ::set "fileLinkID=https://bit.ly/3Yt6lqz"
 call :r3a.x01.1.downloadFunctionLink
@@ -725,8 +726,8 @@ call :r3a.x01.0.downloadFunction
 
 set "fileLocation=eso.ini"
 set isItZip=n
-set "fileLinkID=2409esoini02.ped.run"
-set "fileLinkID2=2409esoini02.ped.run"
+set "fileLinkID=https://2409esoini02.ped.run"
+set "fileLinkID2=https://2409esoini02.ped.run"
 ::set "fileLinkID=https://bit.ly/45cMjCJ"
 ::https://drive.usercontent.google.com/download?id=13Uxd6cdg2o_5fNJzwJU7aRo79GhLHqev&export=download
 call :r3a.x01.1.downloadFunctionLink
@@ -748,8 +749,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=ReduceMemory.zip"
 set isItZip=y
 
-set "fileLinkID=2409ReduceMemory02.ped.run"
-set "fileLinkID2=2409ReduceMemory02.ped.run"
+set "fileLinkID=https://2409ReduceMemory02.ped.run"
+set "fileLinkID2=https://2409ReduceMemory02.ped.run"
 ::set "fileLinkID=https://www.sordum.org/files/downloads.php?st-reduce-memory"
 call :r3a.x01.1.downloadFunctionLink
 
@@ -768,8 +769,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=Optimizer.exe"
 set isItZip=n
 
-set "fileLinkID=2409Optimizerexe02.ped.run"
-set "fileLinkID2=2409Optimizerexe02.ped.run"
+set "fileLinkID=https://2409Optimizerexe02.ped.run"
+set "fileLinkID2=https://2409Optimizerexe02.ped.run"
 ::set "fileLinkID=https://github.com/hellzerg/optimizer/releases/download/16.7/Optimizer-16.7.exe"
 call :r3a.x01.1.downloadFunctionLink
 
@@ -792,8 +793,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=OOSU10.exe"
 set isItZip=n
 
-set "fileLinkID=2409OOSU1002.ped.run"
-set "fileLinkID2=2409OOSU1002.ped.run"
+set "fileLinkID=https://2409OOSU1002.ped.run"
+set "fileLinkID2=https://2409OOSU1002.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe"
 call :r3a.x01.0.downloadFunction
@@ -803,8 +804,8 @@ call :r3a.x01.0.downloadFunction
 set "fileLocation=oosu10-default.cfg.file"
 set isItZip=n
 
-set "fileLinkID=2409oosu10-default02.ped.run"
-set "fileLinkID2=2409oosu10-default02.ped.run"
+set "fileLinkID=https://2409oosu10-default02.ped.run"
+set "fileLinkID2=https://2409oosu10-default02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://bit.ly/44TKg73"
 call :r3a.x01.0.downloadFunction
@@ -814,8 +815,8 @@ ren "%destination%\oosu10-default.cfg.file" "oosu10-default.cfg"
 set "fileLocation=oosu10-Safe-2205.cfg.file"
 set isItZip=n
 
-set "fileLinkID=2409oosu10-Safe-220502.ped.run"
-set "fileLinkID2=2409oosu10-Safe-220502.ped.run"
+set "fileLinkID=https://2409oosu10-Safe-220502.ped.run"
+set "fileLinkID2=https://2409oosu10-Safe-220502.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://bit.ly/3qiaNvH"
 call :r3a.x01.0.downloadFunction
@@ -835,8 +836,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=taskschedulerview-x64.zip"
 set isItZip=y
 
-set "fileLinkID=2409taskschedulerview02.ped.run"
-set "fileLinkID2=2409taskschedulerview02.ped.run"
+set "fileLinkID=https://2409taskschedulerview02.ped.run"
+set "fileLinkID2=https://2409taskschedulerview02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://www.nirsoft.net/utils/taskschedulerview-x64.zip"
 call :r3a.x01.0.downloadFunction
@@ -846,8 +847,8 @@ call :r3a.x01.0.downloadFunction
 set "fileLocation=TaskSchedulerView.cfg.file"
 set isItZip=n
 
-set "fileLinkID=2409TaskSchedulerViewcfg02.ped.run"
-set "fileLinkID2=2409TaskSchedulerViewcfg02.ped.run"
+set "fileLinkID=https://2409TaskSchedulerViewcfg02.ped.run"
+set "fileLinkID2=https://2409TaskSchedulerViewcfg02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://bit.ly/3QqTsLH"
 call :r3a.x01.0.downloadFunction
@@ -879,8 +880,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=BleachBit.zip"
 set isItZip=y
 
-set "fileLinkID=2409BleachBit02.ped.run"
-set "fileLinkID2=2409BleachBit02.ped.run"
+set "fileLinkID=https://2409BleachBit02.ped.run"
+set "fileLinkID2=https://2409BleachBit02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://download.bleachbit.org/BleachBit-4.4.2-portable.zip"
 ::https://download.bleachbit.org/BleachBit-4.6.0-portable.zip
@@ -891,8 +892,8 @@ set "destination=%destination%\BleachBit-Portable"
 set "fileLocation=BleachBit.ini"
 set isItZip=n
 
-set "fileLinkID=2409BleachBitini02.ped.run"
-set "fileLinkID2=2409BleachBitini02.ped.run"
+set "fileLinkID=https://2409BleachBitini02.ped.run"
+set "fileLinkID2=https://2409BleachBitini02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://bit.ly/3OGhDoe"
 if exist "%destination%\%fileLocation%" (del "%destination%\%fileLocation%")
@@ -912,8 +913,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=OOAPB.exe"
 set isItZip=n
 
-set "fileLinkID=2409OOAPB02.ped.run"
-set "fileLinkID2=2409OOAPB02.ped.run"
+set "fileLinkID=https://2409OOAPB02.ped.run"
+set "fileLinkID2=https://2409OOAPB02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://dl5.oo-software.com/files/ooappbuster/OOAPB.exe"
 
@@ -932,8 +933,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=guportable.zip"
 set isItZip=y
 
-set "fileLinkID=2409guportable02.ped.run"
-set "fileLinkID2=2409guportable02.ped.run"
+set "fileLinkID=https://2409guportable02.ped.run"
+set "fileLinkID2=https://2409guportable02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://download.glarysoft.com/guportable.zip"
 
@@ -946,8 +947,8 @@ set "destination=%destination%\Portable\data"
 set "fileLocation=glaryConfig.guc"
 set isItZip=n
 
-set "fileLinkID=2409glaryConfig02.ped.run"
-set "fileLinkID2=2409glaryConfig02.ped.run"
+set "fileLinkID=https://2409glaryConfig02.ped.run"
+set "fileLinkID2=https://2409glaryConfig02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://bit.ly/3QoTEei"
 
@@ -957,8 +958,8 @@ call :r3a.x01.0.downloadFunction
 set "fileLocation=rule.ini"
 set isItZip=n
 
-set "fileLinkID=2409glaryrule02.ped.run"
-set "fileLinkID2=2409glaryrule02.ped.run"
+set "fileLinkID=https://2409glaryrule02.ped.run"
+set "fileLinkID2=https://2409glaryrule02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://bit.ly/3QmCluB"
 
@@ -985,8 +986,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=RevoUninstaller_Portable.zip"
 set isItZip=y
 
-set "fileLinkID=2409RevoUninstaller02.ped.run"
-set "fileLinkID2=2409RevoUninstaller02.ped.run"
+set "fileLinkID=https://2409RevoUninstaller02.ped.run"
+set "fileLinkID2=https://2409RevoUninstaller02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://download.revouninstaller.com/download/RevoUninstaller_Portable.zip"
 
@@ -1014,8 +1015,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=WRCFree.zip"
 set isItZip=y
 
-set "fileLinkID=2409WRCFree02.ped.run"
-set "fileLinkID2=2409WRCFree02.ped.run"
+set "fileLinkID=https://2409WRCFree02.ped.run"
+set "fileLinkID2=https://2409WRCFree02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://downloads.wisecleaner.com/soft/WRCFree_11.1.6.721.zip"
 
@@ -1072,8 +1073,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=ookla-speedtest.zip"
 set isItZip=y
 
-set "fileLinkID=2409speedtest02.ped.run"
-set "fileLinkID2=2409speedtest02.ped.run"
+set "fileLinkID=https://2409speedtest02.ped.run"
+set "fileLinkID2=https://2409speedtest02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-win64.zip"
 
@@ -1093,8 +1094,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=NPE.exe"
 set isItZip=n
 
-set "fileLinkID=2409NPE02.ped.run"
-set "fileLinkID2=2409NPE02.ped.run"
+set "fileLinkID=https://2409NPE02.ped.run"
+set "fileLinkID2=https://2409NPE02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://www.norton.com/npe_latest"
 
@@ -1113,8 +1114,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=KVRT.exe"
 set isItZip=n
 
-set "fileLinkID=2409KVRT02.ped.run"
-set "fileLinkID2=2409KVRT02.ped.run"
+set "fileLinkID=https://2409KVRT02.ped.run"
+set "fileLinkID2=https://2409KVRT02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://click.kaspersky.com/?hl=en&version=20.0&pid=kvrt&link=kvrtexe"
 
@@ -1133,8 +1134,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=officedeploymenttool.exe"
 set isItZip=y
 
-set "fileLinkID=2409officedeploymenttool02.ped.run"
-set "fileLinkID2=2409officedeploymenttool02.ped.run"
+set "fileLinkID=https://2409officedeploymenttool02.ped.run"
+set "fileLinkID2=https://2409officedeploymenttool02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_17830-20162.exe"
 
@@ -1144,8 +1145,8 @@ call :r3a.x01.0.downloadFunction
 set "fileLocation=Office365.xml"
 set isItZip=n
 
-set "fileLinkID=2409Office365xml02.ped.run"
-set "fileLinkID2=2409Office365xml02.ped.run"
+set "fileLinkID=https://2409Office365xml02.ped.run"
+set "fileLinkID2=https://2409Office365xml02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/pedDownload/config/Office365.xml"
 
@@ -1155,8 +1156,8 @@ call :r3a.x01.0.downloadFunction
 set "fileLocation=OfficePro21.xml"
 set isItZip=n
 
-set "fileLinkID=2409OfficePro21xml02.ped.run"
-set "fileLinkID2=2409OfficePro21xml02.ped.run"
+set "fileLinkID=https://2409OfficePro21xml02.ped.run"
+set "fileLinkID2=https://2409OfficePro21xml02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://raw.githubusercontent.com/PierMobayed/PEDToolBox/Tool/pedDownload/config/OfficePro21.xml"
 
@@ -1185,8 +1186,8 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=cmdMenuSel.exe"
 set isItZip=n
 
-set "fileLinkID=2409cmdMenu02.ped.run"
-set "fileLinkID2=2409cmdMenu02.ped.run"
+set "fileLinkID=https://2409cmdMenu02.ped.run"
+set "fileLinkID2=https://2409cmdMenu02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://github.com/PierMobayed/PEDToolBox/raw/Tool/pedDownload/files/cmdmenusel.exe"
 ::set "fileLinkID=https://rebrand.ly/pedboxmenu"
@@ -1211,8 +1212,8 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=shell32_337.ico"
 set isItZip=n
 
-set "fileLinkID=2409icon33702.ped.run"
-set "fileLinkID2=2409icon33702.ped.run"
+set "fileLinkID=https://2409icon33702.ped.run"
+set "fileLinkID2=https://2409icon33702.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://bit.ly/pedboxicon"
 
@@ -1232,8 +1233,8 @@ call :r3a.x12.downLoadF-files
 set "fileLocation=README.txt"
 set isItZip=n
 
-set "fileLinkID=2409readme.ped.run"
-set "fileLinkID2=2409readme.ped.run"
+set "fileLinkID=https://2409readme.ped.run"
+set "fileLinkID2=https://2409readme.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 start /b powershell.exe -ExecutionPolicy Bypass -Command "irm %fileLinkID%; exit" >nul
 
@@ -1306,8 +1307,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=Fido-master.zip"
 set isItZip=y
 
-set "fileLinkID=2409Fido-master02.ped.run"
-set "fileLinkID2=2409Fido-master02.ped.run"
+set "fileLinkID=https://2409Fido-master02.ped.run"
+set "fileLinkID2=https://2409Fido-master02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://github.com/pbatard/Fido/archive/refs/heads/master.zip"
 
@@ -1330,8 +1331,8 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=DriverStoreExplorer.zip"
 set isItZip=y
 
-set "fileLinkID=2409DriverStoreExplorer02.ped.run"
-set "fileLinkID2=2409DriverStoreExplorer02.ped.run"
+set "fileLinkID=https://2409DriverStoreExplorer02.ped.run"
+set "fileLinkID2=https://2409DriverStoreExplorer02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
 ::set "fileLinkID=https://github.com/lostindark/DriverStoreExplorer/releases/download/v0.11.92/DriverStoreExplorer.v0.11.92.zip"
 
@@ -10190,6 +10191,9 @@ rem https://www.youtube.com/watch?v=6oqhJ-gTadY
 
 :notesVersion
 exit
+::PED-ToolBox-1.286.5.240923
+::update all links
+
 ::PED-ToolBox-1.286.4.240922
 ::update one click Maintenance
 ::update DiskCleanup menu
