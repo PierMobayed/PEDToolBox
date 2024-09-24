@@ -555,7 +555,7 @@ if not exist "%destination%\." mkdir "%destination%"
 set "fileLocation=SDIO.zip"
 set "isItZip=y"
 
-set "fileLinkID=http://www.2409sdio.ped.run"
+set "fileLinkID=http://www.2409sdio02.ped.run"
 set "fileLinkID2=http://www.2409sdio02.ped.run"
 ::set "fileLinkID=https://www.glenn.delahoy.com/downloads/sdio/SDIO_1.13.4.771.zip"
 call :r3a.x01.1.downloadFunctionLink
@@ -576,7 +576,7 @@ set "fileLocation=advancedrun-x64.zip"
 set isItZip=y
 
 
-set "fileLinkID=http://www.2409advancedrun.ped.run"
+set "fileLinkID=http://www.2409advancedrun02.ped.run"
 set "fileLinkID2=http://www.2409advancedrun02.ped.run"
 ::set "fileLinkID=https://www.nirsoft.net/utils/advancedrun-x64.zip"
 call :r3a.x01.1.downloadFunctionLink
@@ -601,7 +601,7 @@ call :r3a.x11.0.3.downLoadF-0.3.update
 set "fileLocation=wushowhide.diagcab"
 set isItZip=n
 
-set "fileLinkID=http://www.2409wushowhide.ped.run"
+set "fileLinkID=http://www.2409wushowhide02.ped.run"
 set "fileLinkID2=http://www.2409wushowhide02.ped.run"
 ::set "fileLinkID=https://download.microsoft.com/download/f/2/2/f22d5fdb-59cd-4275-8c95-1be17bf70b21/wushowhide.diagcab"
 call :r3a.x01.1.downloadFunctionLink
