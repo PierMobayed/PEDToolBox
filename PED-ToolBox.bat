@@ -344,6 +344,12 @@ if exist "c1.txt" (
 	goto m2a.x5.Oneclick.Configuration
 ) else (del README.md)
 
+REM LAST Update up2409
+if not exist "%destinationPD%\files\up2409*.*" (
+rmdir /s /q "%destinationPD%\Data"
+echo last update > %destinationPD%\files\up2409.txt
+)
+
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :m0a.x2
@@ -2210,6 +2216,7 @@ if not exist "%destination%\." mkdir "%destination%"
 if not exist "%destinationPD%\files\pl*.*" (
 call :r3a.x12.003.downLoadF-readMe
 )
+
 goto SetTitle
 
 ::::::::::::::::::::::::::::
@@ -10201,6 +10208,7 @@ rem https://www.youtube.com/watch?v=6oqhJ-gTadY
 exit
 
 ::PED-ToolBox-1.286.9.240924
+::last Update up2409
 ::update downloadFunction
 ::update all links
 ::PED-ToolBox-1.286.7.240923
