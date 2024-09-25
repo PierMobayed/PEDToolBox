@@ -35,7 +35,7 @@
 @echo off
 %extd% /setconsoletransparency 92
 cls
-
+set debug=0
 ::================================
 REM		NOTES
 REM		Short link in PS: 
@@ -85,7 +85,7 @@ echo.
 ::================================
 
 :: Set version
-set "versionTool=PED-ToolBox-1.286.9.240924"
+set "versionTool=PED-ToolBox-1.287.1.240925"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -428,7 +428,7 @@ pause
 if %startOneClick% == 0 (cls)
 set "discriptionD1=%fileLocation%"
 set "fileLocation=%destination%\%fileLocation%"
-
+:r3a.x01.0.1.downloadFunction
 if not exist "%fileLocation%" (
 
 	if %startOneClick% == 0 (
@@ -464,6 +464,18 @@ if not exist "%fileLocation%" (
             "tar -xf '%fileLocation%' -C '%destination%'"
         )
     )
+)
+if exist reply.txt (
+	del reply.txt
+) else if not exist "%fileLocation%" ( 
+	echo reply>reply.txt
+	echo Reply download...
+	timeout /t 2 /nobreak
+	goto r3a.x01.0.1.downloadFunction 
+)
+if not exist "%fileLocation%" ( 
+echo Reply download Failed
+timeout /t 2 /nobreak
 )
 
 exit /b
@@ -1967,11 +1979,14 @@ goto %menu%
 ::================================
 if %startOneClick% == 0 (cls)
 set "downloadFiles=:r3a.x11.2.5.downLoadF-2.5.WRCFree"
-set "directoryFiles=Data\2.1.CleanUp-Portable\2.5.WRCFree\WRCFree"
-set "nameFiles=WiseRegCleaner.exe"
+set "directoryFiles=Data\2.1.CleanUp-Portable\2.5.WRCFree"
 
 ::Function
-set "startFiles=%destinationPD%\%directoryFiles%\%nameFiles%"
+for /d %%F in ("%destinationPD%\%directoryFiles%\WRCFree*") do (
+    set "startFiles=%%F\WiseRegCleaner.exe"  
+)
+
+
 if not exist "%startFiles%" (
 	call %downloadFiles%
 )
@@ -6841,7 +6856,10 @@ if not exist cc1.bat (
 copy c1.txt cc1.bat
 )
 call cc1.bat
-
+if %debug% == 1 (
+echo to 2
+pause
+)
 if not exist c2.txt (
 REM ================================
 	if %wuMM% == 1 (
@@ -6895,6 +6913,10 @@ REM ================================
 	call :m2a.x5.5.Oneclick55
 	set startOneClick=0
 	)
+)
+if %debug% == 1 (
+echo to 7 
+pause 
 )
 if not exist c7.txt (
 REM ================================
@@ -7053,10 +7075,19 @@ timeout 2 /nobreak>c6.txt
 exit /b
 
 :m2a.x5.6.Oneclick56
+if %debug% == 1 (
+echo m2a.x5.6.Oneclick56
+pause
+)
+
 if %configMM% == 1 (
 set thisPc=1
 call :m1a.x4.3.3.1.winExplorerThisPC
-
+timeout 1 /nobreak>nul
+if %debug% == 1 (
+echo call :m1a.x4.3.3.1.winExplorerThisPC
+pause
+)
 REM settings updates
 set startOneClick=1
 SET AutoUpdateN=2
@@ -7067,7 +7098,10 @@ call :m1a.x7.1.4.1.WinUpdadePause
 REM Ram reduce
 call :m1a.x7.5.1.ramReducerApply
 ::start explorer.exe
-
+if %debug% == 1 (
+echo call :m1a.x7.5.1.ramReducerApply
+pause
+)
 REM create file c7.txt
 timeout 2 /nobreak>c7.txt
 )
@@ -10207,6 +10241,7 @@ rem https://www.youtube.com/watch?v=6oqhJ-gTadY
 :notesVersion
 exit
 
+::PED-ToolBox-1.287.1.240925
 ::PED-ToolBox-1.286.9.240924
 ::last Update up2409
 ::update downloadFunction
