@@ -1989,6 +1989,9 @@ for /d %%F in ("%destinationPD%\%directoryFiles%\WRCFree*") do (
 
 if not exist "%startFiles%" (
 	call %downloadFiles%
+	for /d %%F in ("%destinationPD%\%directoryFiles%\WRCFree*") do (
+    set "startFiles=%%F\WiseRegCleaner.exe"  
+)
 )
 
 if %startOneClick% == 1 (
