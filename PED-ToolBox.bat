@@ -85,7 +85,7 @@ echo.
 ::================================
 
 :: Set version
-set "versionTool=PED-ToolBox-1.287.1.240925"
+set "versionTool=PED-ToolBox-1.287.2.240926"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -1044,7 +1044,7 @@ set isItZip=y
 set "fileLinkID=http://www.2409WRCFree02.ped.run"
 set "fileLinkID2=http://www.2409WRCFree02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
-::set "fileLinkID=https://downloads.wisecleaner.com/soft/WRCFree_11.1.6.721.zip"
+::set "fileLinkID=https://downloads.wisecleaner.com/soft/WRCFree_11.1.7.722.zip"
 
 ::https://www.wisecleaner.com/download.html
 call :r3a.x01.0.downloadFunction
