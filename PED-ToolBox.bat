@@ -85,7 +85,7 @@ echo.
 ::================================
 
 :: Set version
-set "versionTool=PED-ToolBox-1.287.2.240926"
+set "versionTool=PED-ToolBox-1.289.1.241106"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -325,6 +325,7 @@ set "psB=cscript //nologo "%vbsGetPrivileges%""
 set "timeoutA=timeout 2 /nobreak>nul"
 set title=title Power Every Day - ToolBox
 set color1=COLOR 0A
+set restartMM=0
 
 :m0a.x14.mainVariables3
 ::================================
@@ -1935,7 +1936,7 @@ if %ERRORLEVEL% == 5 (
 	REM Execute Disk Cleanup Tool (cleanmgr.exe)
 	%SystemRoot%\System32\cleanmgr.exe /sagerun:99
 )
-goto %menu%
+goto r4a.x2.2.DiskCleanup
 ::More
 REM Remove the previously created registry values
 ::for /f "tokens=*" %%a in ('reg query "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches" /s /k /f ""') do (
@@ -4136,10 +4137,13 @@ set mm= %mm% "===================================================="
 set mm= %mm% ""
 set mm= %mm% "[ p ] 1.Run a SFC /Scan now"
 set mm= %mm% "[ p ] 2.Run a DISM /Restorehealth"
-set mm= %mm% "[ p ] 3.DISM /StartComponentCleanup"
+set mm= %mm% "[ p ] 3.Checks the disk for errors and repairs them"
+set mm= %mm% "[ p ] 4.DISM /StartComponentCleanup"
 set mm= %mm% ""
-set mm= %mm% "[ ] Auto Scan - SFC/Scan now - DISM/Restorehealth - DISM/StartComponentCleanup"
-
+set mm= %mm% "[ ] Auto Scan - 1,2,3,4"
+set mm= %mm% ""
+set mm= %mm% "More -clears the DNS resolver cache"
+set mm= %mm% "More -Resets the Windows network stack"
 
 cmdMenuSel e370 %mm%
 
@@ -4151,9 +4155,13 @@ if %ERRORLEVEL% == 5 goto %menu%
 
 if %ERRORLEVEL% == 6 start cmd /c "sfc /scannow && pause"
 if %ERRORLEVEL% == 7 start cmd /c "dism.exe /Online /Cleanup-image /Restorehealth && pause"
-if %ERRORLEVEL% == 8 start cmd /c "dism /online /Cleanup-Image /StartComponentCleanup && pause"
-if %ERRORLEVEL% == 9 goto %menu%
-if %ERRORLEVEL% == 10 start cmd /c "sfc /scannow && dism.exe /Online /Cleanup-image /Restorehealth && dism /online /Cleanup-Image /StartComponentCleanup && pause"
+if %ERRORLEVEL% == 8 start cmd /c "chkdsk /f /r && pause"
+if %ERRORLEVEL% == 9 start cmd /c "dism /online /Cleanup-Image /StartComponentCleanup && pause"
+if %ERRORLEVEL% == 10 goto %menu%
+if %ERRORLEVEL% == 11 start cmd /c "sfc /scannow && dism.exe /Online /Cleanup-image /Restorehealth && chkdsk /f /r && dism /online /Cleanup-Image /StartComponentCleanup && pause"
+if %ERRORLEVEL% == 12 goto %menu%
+if %ERRORLEVEL% == 13 start cmd /c "ipconfig /flushdns && pause"
+if %ERRORLEVEL% == 14 start cmd /c "netsh winsock reset && pause"
 
 goto %menu%
 
@@ -6577,6 +6585,7 @@ set startUpMM=0
 set updateMM=0
 set configMM=0
 
+set restartMM=0
 
 set optimizeP=2
 
@@ -6756,7 +6765,10 @@ set startUpMM=0
 set updateMM=0
 set configMM=0
 
+set restartMM=0
+
 goto %menu%
+
 
 :m2a.x2.2.OneclickFULL
 set esoMM=1
@@ -6776,6 +6788,8 @@ set uuMM=1
 set startUpMM=1
 set updateMM=1
 set configMM=1
+
+set restartMM=1
 
 goto %menu%
 
@@ -6797,6 +6811,8 @@ set uuMM=1
 set startUpMM=1
 set updateMM=1
 set configMM=1
+
+set restartMM=1
 
 goto %menu%
 
@@ -6827,6 +6843,7 @@ echo set uuMM=%uuMM% >> c1.txt
 echo set startUpMM=%startUpMM% >> c1.txt
 echo set updateMM=%updateMM% >> c1.txt
 echo set configMM=%configMM% >> c1.txt
+echo set restartMM=%restartMM% >> c1.txt
 
 call :m1a.x01.0.timestamp
 echo.
@@ -6948,10 +6965,16 @@ start explorer.exe
 REM create file c9.txt
 timeout 2 /nobreak>c9.txt
 
-echo RESTARTING after:
-timeout 10
-Shutdown -r -f -t 00
-exit
+
+	if %restartMM% == 1 (
+		echo RESTARTING after:
+		timeout 10
+		Shutdown -r -f -t 00
+		exit
+	) else (
+		start "" "%~f0"
+		exit
+	)
 )
 
 ::END
@@ -7022,10 +7045,15 @@ REM c3.txt
 powershell.exe -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'PED-Restore Point1' -RestorePointType 'MODIFY_SETTINGS'"
 
 call :m1a.x02.6.1.speedTestCheckInternetConnection
-start /w cmd /c "chkdsk"
+echo sfc /scannow ....
 start /w cmd /c "sfc /scannow"
+echo dism.exe /Restorehealth....
 start /w cmd /c "dism.exe /Online /Cleanup-image /Restorehealth"
+echo chkdsk....
+start /w cmd /c "chkdsk /f /r"
+echo dism /StartComponentCleanup....
 start /w cmd /c "dism /online /Cleanup-Image /StartComponentCleanup"
+
 REM create file c3.txt
 timeout 5 /nobreak>c3.txt
 
@@ -10243,6 +10271,13 @@ rem https://www.youtube.com/watch?v=6oqhJ-gTadY
 
 :notesVersion
 exit
+
+::PED-ToolBox-1.289.1.241106
+::add %restartMM%
+
+::PED-ToolBox-1.288.1.241008
+::update :m2a.x5.2.Oneclick52
+::update :m1a.x1.6.checkCorruptFiles
 
 ::PED-ToolBox-1.287.1.240925
 ::PED-ToolBox-1.286.9.240924
