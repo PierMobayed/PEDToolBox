@@ -1,36 +1,3 @@
-::[Bat To Exe Converter]
-::
-::YAwzoRdxOk+EWAjk
-::fBw5plQjdCyDJGyX8VAjFAtdSRaPAES0A5EO4f7+08+JtkgPQOM2dY7VzoieJeQH5Urod5k16ikUusoPBy5IQkP7ICw7p2hLsViMNMiSoDPyQk2F6hhiJDYn0C3ZjyRb
-::YAwzuBVtJxjWCl3EqQJgSA==
-::ZR4luwNxJguZRRnk
-::Yhs/ulQjdF+5
-::cxAkpRVqdFKZSDk=
-::cBs/ulQjdF65
-::ZR41oxFsdFKZSDk=
-::eBoioBt6dFKZSDk=
-::cRo6pxp7LAbNWATEpSI=
-::egkzugNsPRvcWATEpSI=
-::dAsiuh18IRvcCxnZtBJQ
-::cRYluBh/LU+EWAnk
-::YxY4rhs+aU+IeA==
-::cxY6rQJ7JhzQF1fEqQJhZkkaFFXMbgs=
-::ZQ05rAF9IBncCkqN+0xwdVsFAlbMZDr0VNU=
-::ZQ05rAF9IAHYFVzEqQIADT8ZeAuNMEm1HtU=
-::eg0/rx1wNQPfEVWB+kM9LVsJDDSnGCaOCboQyufjjw==
-::fBEirQZwNQPfEVWB+kM9LVsJDDSnGCaOCboQyufjjw==
-::cRolqwZ3JBvQF1fEqQIADT8ZeAuNMEm1HtU=
-::dhA7uBVwLU+EWGmh0A8EJxRYbguaXA==
-::YQ03rBFzNR3SWATExGcUZS9bQwigM3Pa
-::dhAmsQZ3MwfNWATE100pOhJTRBDi
-::ZQ0/vhVqMQ3MEVWAtB9wSA==
-::Zg8zqx1/OA3MEVWAtB9wSA==
-::dhA7pRFwIByZRRm00WZ9HBRbQCaNJAs=
-::Zh4grVQjdCyDJGyX8VAjFAtdSRaPAES0A5EO4f7+08+JtkgPQOM2dY7VzoieJeQH5Urod5k16n9Cnfc8KT8VSh2kYg07sSBHrmHl
-::YB416Ek+ZG8=
-::
-::
-::978f952a14a936cc963da21a135fa983
 
 @echo off
 %extd% /setconsoletransparency 92
@@ -85,7 +52,7 @@ echo.
 ::================================
 
 :: Set version
-set "versionTool=PED-ToolBox-1.289.1.241106"
+set "versionTool=PED-ToolBox-1.289.2.241121"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -1936,7 +1903,8 @@ if %ERRORLEVEL% == 5 (
 	REM Execute Disk Cleanup Tool (cleanmgr.exe)
 	%SystemRoot%\System32\cleanmgr.exe /sagerun:99
 )
-goto r4a.x2.2.DiskCleanup
+if %ERRORLEVEL% == 6 goto %menu%
+
 ::More
 REM Remove the previously created registry values
 ::for /f "tokens=*" %%a in ('reg query "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches" /s /k /f ""') do (
@@ -10271,6 +10239,9 @@ rem https://www.youtube.com/watch?v=6oqhJ-gTadY
 
 :notesVersion
 exit
+
+::PED-ToolBox-1.289.2.241121
+::udpate :r4a.x2.2.DiskCleanup
 
 ::PED-ToolBox-1.289.1.241106
 ::add %restartMM%
