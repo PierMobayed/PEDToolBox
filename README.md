@@ -35,7 +35,7 @@
     powershell irm ped.run | iex
     
 #### 🔗 Link 3:
-    cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
+    cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm ped.run)"
 
 ### 🖥️ PowerShell links:
 #### 🔗 Link 4:
@@ -94,8 +94,6 @@
 	[ p ] Drivers backup 
 	
 	[ p ] Open PED-Recovery Folder
-	
-	[ ] Import Start Menu layout
 	
 
 ### 🧪 Step 0 : Test and Diagnostic:
