@@ -1,8 +1,9 @@
 
 @echo off
-%extd% /setconsoletransparency 92
 cls
+
 set debug=0
+if "%debug%"=="1" (ECHO 0.1- errorlevel - %errorlevel% && PAUSE)
 ::================================
 REM		NOTES
 REM		Short link in PS: 
@@ -16,14 +17,41 @@ REM		Short link in CMD or RUN:
 REM		NOTES
 REM		Author: PierMobayed @PierMTech
 REM		GitHub: https://github.com/piermobayed
-REM		Web project page: https://github.com/PierMobayed/PEDToolBox
+REM		GitHub -Web project page: https://github.com/PierMobayed/PEDToolBox
 REM		Web project readme: https://piermobayed.github.io/PEDToolBox
+REM		Web site: http://pedtoolbox.com
 
 REM		Web project file: https://piermobayed.github.io/PEDToolBox/PED.ps1
 REM		Web project file: https://piermobayed.github.io/PEDToolBox/PED-ToolBox.bat
 
 ::================================
+
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:m0a.x
+::================================
+cls
+echo ================================
+echo 	Welcome to PED Tool Box
+echo ================================
+echo.
+
+
+:m0a.x0.Version
+::================================
+
+:: Set version
+set "versionTool=PED-ToolBox-1.290.2.250218"
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::Debug
+if "%debug%"=="1" (
+ECHO errorlevel - %errorlevel%
+ECHO 1 - %1
+ECHO systemdrive - %systemdrive%
+pause
+)
 
 :m0a.reset
 ::================================
@@ -35,30 +63,16 @@ if "%systemdrive%"=="X:" goto m1a.x02.4.1.AccountPasswordReset
 :m0a.admin
 ::================================
 	REM Check admin
-	set "vbsGetPrivileges=%temp%\OEgetPriv.vbs"
-	NET FILE 1>NUL 2>NUL
-	if not %errorlevel% == 0 (goto m0a.x02.getPrivileges)
-	takeown /f "C:\ProgramData"
-
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:m0a.x
-cls
-::================================
-echo Welcome to PED Tool Box
-::================================
-echo.
-::========
-:m0a.x0.Version
-::================================
-
-:: Set version
-set "versionTool=PED-ToolBox-1.289.2.241121"
+	::set "vbsGetPrivileges=%temp%\OEgetPriv.vbs"
+	::NET FILE 1>NUL 2>NUL
+	::if not %errorlevel% == 0 (goto m0a.x02.getPrivileges)
+	::takeown /f "C:\ProgramData"
+	SET ADMIN=
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :m0a.x01.DirectoryPED
 ::================================
-
 
 ::Check if the source file is the same as the destination file
 set "shortcutExtantion=%~x0"
@@ -126,16 +140,14 @@ if /I "%sourceFile%" NEQ "%destinationFile%" (
 			exit
 		)
 	)
-	
 
-
-    
     REM Start the new version and close this one
     start "" "%destinationFile%"
 	cls
     exit
 )
 endlocal
+
     ::REM Create a shortcut on the desktop
 	::REM echo.
 	::REM echo Creating desktop shortcut...
@@ -143,7 +155,9 @@ endlocal
 	::REM set "shortcutToLocation=desktop"
 	::REM call :m0a.x12.mainCommands
 	::REM call :m1a.x02.1.3.createShotcut
+
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 :m0a.x02.getAdmin
 ::================================
 :::::::::::::::::::::::::::::::::::::::::::
@@ -158,8 +172,39 @@ ECHO =============================
 :m0a.x02.init
 ::================================
 set "vbsGetPrivileges=%temp%\OEgetPriv.vbs"
-NET FILE 1>NUL 2>NUL
-if %errorlevel% == 0 goto m0a.x02.gotPrivileges
+
+if "%debug%"=="1" (
+	ECHO 1.91- errorlevel - %errorlevel%
+	PAUSE
+)
+REM 0
+if not "%1"=="max" (
+	start /MAX cmd /c %0 max & exit
+) else if "%1"=="max" (
+
+	if "%debug%"=="1" (
+		ECHO 1.912- errorlevel - %errorlevel%
+		PAUSE
+	)
+REM 0
+
+	NET FILE 1>NUL 2>NUL
+	
+	if "%debug%"=="1" (
+		ECHO 1.913- errorlevel - %errorlevel%
+		PAUSE
+	)
+REM 0
+REM if NOT %errorlevel% == 0 goto m0a.x02.gotPrivileges
+	if %errorlevel% == 0 goto m0a.x02.gotPrivileges
+)
+
+if "%debug%"=="1" (
+	ECHO 1.92- errorlevel - %errorlevel%
+	PAUSE
+)
+
+
 REM UNDER REPAIR
 REM if %shortcutExtantion% == .exe (
 REM %b2eincfilepath%\PED-Anime.exe
@@ -169,23 +214,44 @@ echo ...[70%]...
 
 :m0a.x02.getPrivileges
 ::================================
+
+NET FILE 1>NUL 2>NUL
+
+if "%debug%"=="1" (
+ECHO 2.0- errorlevel - %errorlevel%
+PAUSE
+)
+if NOT %errorlevel% == 0 (
+
 echo Set UAC = CreateObject^("Shell.Application"^) > "%vbsGetPrivileges%"
 echo UAC.ShellExecute "%~f0", "max", "", "runas", 3 >> "%vbsGetPrivileges%"
 start /w "%SystemRoot%\System32\WScript.exe" "%vbsGetPrivileges%"
 echo CreateObject^("Wscript.Shell"^).Run WScript.Arguments^(0^), 0, True > "%vbsGetPrivileges%"
-exit
+EXIT
+
+) ELSE (EXIT /B)
+
 
 :m0a.x02.gotPrivileges
 ::================================
+
+if "%debug%"=="1" (
+ECHO 3.0- errorlevel - %errorlevel%
+PAUSE
+)
 
 setlocal & pushd .
 cd /d %~dp0
 echo.
 echo ...[80%]...
+
 ::Max screen
+::================================
+
 if not "%1"=="max" start /MAX cmd /c %0 max & exit
 
-:m01.x03.more
+:m01.x03.moreFolderPermissions
+::================================
 ::cmd.exe /c takeown /f \"c:\ProgramData" /r /d y && icacls \"c:\ProgramData" /grant administrators:F /t
 ::cmd.exe /c takeown /f \"%1\" /r /d y && icacls \"%1\" /grant administrators:F /t
 ::takeown /f "C:\ProgramData"
@@ -203,6 +269,8 @@ REM Replace YourUsername with your actual Windows username.
 ::or
 ::icacls C:\ProgramData /grant administrators:F /T
 
+:m01.x04.LineWrap
+::================================
 REM Check if LineWrap exists
 set "fullRegPath=HKCU\Console\%%SystemRoot%%_System32_cmd.exe"
 
@@ -308,6 +376,7 @@ echo.
 echo.
 echo ...[99%]...
 if exist "c1.txt" (
+call :m0a.x02.getPrivileges
 	cls
 	goto m2a.x5.Oneclick.Configuration
 ) else (del README.md)
@@ -325,7 +394,7 @@ echo last update > %destinationPD%\files\up2409.txt
 echo First Menu - Permission:
 ::================================
 echo.
-::========
+
 :m0a.x21.firstMenu
 ::================================
 cls
@@ -337,6 +406,12 @@ if exist "%loc%" (
 	del "%loc%"
 	goto startPED
 )
+REM Logon Administrator:
+NET FILE 1>NUL 2>NUL
+
+if "%debug%"=="1" (ECHO 3.9- errorlevel - %errorlevel% && PAUSE)
+	
+if %errorlevel% == 0 (goto startPED)
 
 REM Check if menu exist:
 if not exist "%destinationPD%\files\cmdMenuSel.exe" (
@@ -352,26 +427,43 @@ echo.
 echo.
 echo ========== Account permission ========== 
 echo.
+echo Account: %username%
+echo.
+
 
 set mm=
-set mm= %mm% "[ ] Administrator: %username%"
-set mm= %mm% "[ ] Trusted Installer"
+set mm= %mm% "[ ] User:"
+set mm= %mm% "[ ] Administrator:"
+set mm= %mm% "[ ] Trusted Installer:"
 set mm= %mm% ""
 set mm= %mm% "[ ] Download all PED data files"
 set mm= %mm% ""
 set mm= %mm% "[p] Get latest update script"
+
 cmdMenuSel e370 %mm%
-if %ERRORLEVEL% == 1 goto startPED
-if %ERRORLEVEL% == 2 goto m0a.x22.TrustedInstaller
-if %ERRORLEVEL% == 3 goto %menu%
-if %ERRORLEVEL% == 4 goto r3a.x10.0.downloadList
-if %ERRORLEVEL% == 5 goto %menu%
-if %ERRORLEVEL% == 6 powershell iex(irm ped.run)
+
+if %ERRORLEVEL% == 1 (
+	goto startPED
+)
+if %ERRORLEVEL% == 2 (
+	NET FILE 1>NUL 2>NUL
+	
+	if "%debug%"=="1" (ECHO 4.0- errorlevel - %errorlevel% && PAUSE)
+	
+	if NOT %errorlevel% == 0 (CALL :m0a.x02.getPrivileges)
+	goto startPED
+	
+)
+if %ERRORLEVEL% == 3 goto m0a.x22.TrustedInstaller
+if %ERRORLEVEL% == 4 goto %menu%
+if %ERRORLEVEL% == 5 goto r3a.x10.0.downloadList
+if %ERRORLEVEL% == 6 goto %menu%
+if %ERRORLEVEL% == 7 powershell iex(irm ped.run)
 
 exit
 
 ::=======================================
-::=================
+
 :m0a.x22.TrustedInstaller
 ::================================
 call :r3a.x11.0.2.downLoadF-0.2.advancedrun-x64
@@ -389,14 +481,17 @@ exit
 echo Download_Resources
 ::================================
 pause
-::========
+
 :r3a.x01.0.downloadFunction
 ::================================
 
 if %startOneClick% == 0 (cls)
 set "discriptionD1=%fileLocation%"
 set "fileLocation=%destination%\%fileLocation%"
+
 :r3a.x01.0.1.downloadFunction
+::================================
+
 if not exist "%fileLocation%" (
 
 	if %startOneClick% == 0 (
@@ -499,7 +594,6 @@ call :r3a.x12.3.downLoadF-taskCommand
 call :r3a.x12.4.downLoadF-cpuRam
 
 goto %menu%
-
 
 ::=======================================
 
@@ -609,6 +703,7 @@ exit /b
 ::https://drive.usercontent.google.com/download?id=0BwJH2CazcjsINFZFc1pVdk9mNHM&export=download&authuser=0&resourcekey=0-LD-TdjUx1rNekTXsKfDCPw
 ::=================
 ::===done
+
 :r3a.x11.0.3.3.downLoadF-0.3.3.WAUManager
 ::================================
 call :r3a.x11.0.3.downLoadF-0.3.update
@@ -700,7 +795,7 @@ set isItZip=n
 
 set "fileLinkID=http://www.2409eso20240519ini02.ped.run"
 set "fileLinkID2=http://www.2409eso20240519ini02.ped.run"
-::set "fileLinkID=https://bit.ly/pedbox20220525"
+::set "fileLinkID=https://biped.run20220525"
 ::https://drive.usercontent.google.com/download?id=1tpSFhlPHCeCZZx5O57gvQbQtxZ_86jIL&export=download
 call :r3a.x01.1.downloadFunctionLink
 
@@ -1209,7 +1304,7 @@ set isItZip=n
 set "fileLinkID=http://www.2409icon33702.ped.run"
 set "fileLinkID2=http://www.2409icon33702.ped.run"
 call :r3a.x01.1.downloadFunctionLink
-::set "fileLinkID=https://bit.ly/pedboxicon"
+::set "fileLinkID=https://biped.runicon"
 
 ::Download file
 call :r3a.x01.0.downloadFunction
@@ -2813,7 +2908,7 @@ set "iconN=shell32_337.ico"
 ::Function
 set wd=%destination%
 rem if %shortcutToLocation% == desktop (
-rem set "TARGET=C:\Windows\System32\cmd.exe /c powershell -command ""Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm http://bit.ly/pedbox)"""
+rem set "TARGET=C:\Windows\System32\cmd.exe /c powershell -command ""Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm http://biped.run)"""
 rem ) else (
 set TARGET=%destination%\%startBoot%
 rem )
@@ -10023,7 +10118,7 @@ Start "" "devmgmt.msc" & Exit
 ::================================
 
 :f1a.x0.1.fileToUpload
-::================================
+::==========
 
 set dialog="about:<input type=file id=FILE><script>FILE.click();new ActiveXObject
 set dialog=%dialog%('Scripting.FileSystemObject').GetStandardStream(1).WriteLine(FILE.value);
@@ -10034,18 +10129,20 @@ echo selected  file is : "%file%"
 pause
 
 :f1a.x0.2.BrowseForFolder1
+::==========
 Set "psCommand="(new-object -COM 'Shell.Application').BrowseForFolder(0,'%1',0x200,0).self.path""
 For /f "usebackq delims=" %%# in (`PowerShell %psCommand%`) do set "BrowseForFolder=%%#"
 echo %BrowseForFolder%
 pause
 
 :f1a.x0.3.BrowseForFolder2
+::==========
 for /f %%A in ('powershell -command "(new-object -COM 'Shell.Application').BrowseForFolder(0,'Please choose a folder.',0,0).self.path"') do set "BrowseForFolder=%%A"
 echo %BrowseForFolder%
 pause
 
 :f1a.x0.4.BrowseForFolder3
-
+::==========
 setlocal
 
 set "psCommand="(new-object -COM 'Shell.Application')^
@@ -10069,16 +10166,13 @@ endlocal
 ::
 ::
 
-::more:
-:: history
-::1.042.23.07.10
-:: new m2a.x01.Oneclick	
-
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
 	
-:notes
+
 ::=======================================================================
+:Notes
+::==========
 REM 	m/r		-menu/resources
 REM 	0a-9a	-group
 REM		x		-step
@@ -10087,7 +10181,7 @@ REM m0a.x first permision menu
 REM m1a.x main menu with links
 REM m2a.x oneClick menu
 
-REM r3a.x download Resources
+REM r3a.x Download Resources
 REM r4a.x Execute Resources
 REM r5a.x create files
 
@@ -10098,6 +10192,7 @@ REM m9a.x power menu
 
 ::=======================================================================
 REM History:
+::==========
 
 REM 1.everyDay-PM-opti-Auto.bat
 REM Create 12-04-2022 00:48:06
@@ -10108,13 +10203,17 @@ REM Create 19-04-2022 03:00:06
 REM steps.1.01.txt
 REM Create 15-11-2021 13:52:45
 ::=======================================================================
+:: PED Folder
+::==========
 
 REM PED Folder
 REM https://drive.google.com/drive/folders/1gOiYbhFK026D9MHRrErm_BhWvAHsRM2z
 REM https://bit.ly/pedfolder
 
 ::=======================================================================
-::Check this -create Shortcut
+:: Check this -create Shortcut
+::==========
+
 ::@echo off
 ::setlocal
 ::
@@ -10131,8 +10230,11 @@ REM https://bit.ly/pedfolder
 ::echo IconIndex=%IconIndex% >> "%ShortcutPath%"
 ::
 ::endlocal
+
 ::=======================================================================
-::=======================================================================
+:: default batch variables
+::==========
+
 :: iskarva celiq dir plus imeto na faila 
 :: %~f0
 :: C:\Users\pierm\Desktop\PED-ToolBox.bat
@@ -10149,7 +10251,10 @@ REM https://bit.ly/pedfolder
 :: samo okonchanieto
 :: %~x0
 :: .bat
+
 ::=======================================================================
+:: more notes
+::==========
 
 ::set "destinationDir=C:\ProgramData\PEDToolBox"
 ::set "destinationFile=%destinationDir%\%~nx0"
@@ -10158,33 +10263,38 @@ REM https://bit.ly/pedfolder
 	::mklink "%desktopShortcut%" "%destinationFile%"
 	
 ::=======================================================================
+REM CMD or RUN Link  
+::==========
+
 REM ps1
-REM iex(irm bit.ly/pedboxpc)
-REM irm bit.ly/pedboxpc | iex
-REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm bit.ly/pedboxpc)"
-REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; irm bit.ly/pedboxpc | iex"
-REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; .\p.ps1(irm bit.ly/pedboxpc -o p.ps1)"
+REM iex(irm ped.run)
+REM irm ped.run | iex
+REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm ped.run)"
+REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; irm ped.run | iex"
+REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; .\p.ps1(irm ped.run -o p.ps1)"
 
 REM cmd
-REM powershell iex(irm bit.ly/pedboxpc)
-REM powershell -command iex(irm bit.ly/pedboxpc)
-REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; .\p.cmd(irm t.ly/pedbox -o p.cmd)"
-REM powershell .\p.cmd(irm bit.ly/pedbox -o p.cmd)
-REM not work  - powershell .\p.exe(irm t.ly/pedexe -o p.exe)
+REM powershell iex(irm ped.run)
+REM powershell -command iex(irm ped.run)
+REM C:\Windows\System32\cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; .\p.cmd(irm ped.run -o p.cmd)"
+REM powershell .\p.cmd(irm ped.run -o p.cmd)
 
 REM from git
 
 REM CMD or RUN Link  
-REM powershell iex(irm rebrand.ly/pedbox)
-REM powershell irm rebrand.ly/pedbox | iex
-REM cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm rebrand.ly/pedbox)"
-REM cmd.exe /c powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://rebrand.ly/pedbox'))""
-REM powershell .\p cmd(irm rebrand.ly/pedboxbat -o p.cmd)
+REM powershell iex(irm ped.run)
+REM powershell irm ped.run | iex
+REM cmd.exe /c powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm ped.run)"
+REM cmd.exe /c powershell "& "iex ((New-Object System.Net.WebClient).DownloadString('https://ped.run'))""
+REM powershell .\p cmd(irm ped.run -o p.cmd)
 
 REM PowerShell Link 
-REM iex(irm rebrand.ly/pedbox)
-REM irm rebrand.ly/pedbox | iex
+REM iex(irm ped.run)
+REM irm ped.run | iex
+
 ::=======================================================================
+:: BAT to EXE converter
+::==========
 
 REM %extd% /browseforfile "Browse for a file" "" "EXE (*.exe)|*.exe|BAT (*.bat)|*.bat" 1
 REM %extd% /browseforfolder "Browse for a folder" C:\
@@ -10199,7 +10309,10 @@ REM pause
 REM %extd% /messageboxcheck Titel Message 0 {73E8105A-7AD2-4335-B694-94F837A38E79}
 REM echo %result%
 REM pause
+
 ::=======================================================================
+:: HideFileExt
+::==========
 
 REM ISSUE
 
@@ -10214,7 +10327,10 @@ REM https://manytools.org/hacker-tools/convert-images-to-ascii-art/
 rem https://www.youtube.com/watch?v=roftohFNBNM
 rem https://www.youtube.com/watch?v=55iwMYv8tGI
 rem https://www.youtube.com/watch?v=6oqhJ-gTadY
+
 ::=======================================================================
+:: BrowseForFolder
+::==========
 
 :: :r5a.x3.3.backupDrivers0
 ::Set "backupDrivers="(new-object -COM 'Shell.Application').BrowseForFolder(0,'%1',0,0).self.path""
@@ -10229,16 +10345,23 @@ rem https://www.youtube.com/watch?v=6oqhJ-gTadY
 ::for /f %%A in ('powershell -command "(new-object -COM 'Shell.Application').BrowseForFolder(0,'%1',0x200,0).self.path"') do set "FolderDirBackup=%%A"
 
 ::=======================================================================
+:: sign tool
+::==========
 
-::sign tool
 ::Windows SDK (10.0.26100)
 ::https://download.microsoft.com/download/2/6/f/26f7aa55-ef6f-4882-b19b-a1be0e7328fe/KIT_BUNDLE_WINDOWSSDK_MEDIACREATION/winsdksetup.exe
 ::winsdksetup.exe
 ::-application verifier for windows
 ::-windows app certification kit
 
+::=======================================================================
 :notesVersion
+::==========
+
 exit
+
+::PED-ToolBox-1.290.1.241129
+::update :m0a.x02.getPrivileges
 
 ::PED-ToolBox-1.289.2.241121
 ::udpate :r4a.x2.2.DiskCleanup
@@ -10287,11 +10410,20 @@ exit
 ::PED-ToolBox-1.284.1.240826
 :: new download links and files for windows os 
 
-::set "versionTool=PED-ToolBox-1.283.2.240822"
+::PED-ToolBox-1.283.2.240822
 ::update :m1a.x02.1.1.createInstall-BT
 
-::set "versionTool=PED-ToolBox-1.283.1.240820"
+::PED-ToolBox-1.283.1.240820
 ::change/update cmdmenusel download link
-::
-::set "versionTool=PED-ToolBox-1.282.3.240606"
-::
+
+::PED-ToolBox-1.282.3.240606
+
+::1.042.23.07.10
+:: new m2a.x01.Oneclick	
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::	END CODE ::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
