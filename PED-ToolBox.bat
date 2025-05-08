@@ -1,9 +1,6 @@
-
 @echo off
 cls
 
-set debug=0
-if "%debug%"=="1" (ECHO 0.1- errorlevel - %errorlevel% && PAUSE)
 ::================================
 REM		NOTES
 REM		Short link in PS: 
@@ -28,6 +25,13 @@ REM		Web project file: https://piermobayed.github.io/PEDToolBox/PED-ToolBox.bat
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+:m0a.d
+REM Debug switch
+set debug=0
+::set debug=1
+::set debug=createShotcut
+if "%debug%"=="1" (ECHO 0.1- errorlevel - %errorlevel% && PAUSE)
+
 :m0a.x
 ::================================
 cls
@@ -41,16 +45,16 @@ echo.
 ::================================
 
 :: Set version
-set "versionTool=PED-ToolBox-1.290.2.250218"
+set "versionTool=PED-ToolBox-1.291.2.250508"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::Debug
 if "%debug%"=="1" (
-ECHO errorlevel - %errorlevel%
-ECHO 1 - %1
-ECHO systemdrive - %systemdrive%
-pause
+	ECHO errorlevel - %errorlevel%
+	ECHO 1 - %1
+	ECHO systemdrive - %systemdrive%
+	pause
 )
 
 :m0a.reset
@@ -67,7 +71,7 @@ if "%systemdrive%"=="X:" goto m1a.x02.4.1.AccountPasswordReset
 	::NET FILE 1>NUL 2>NUL
 	::if not %errorlevel% == 0 (goto m0a.x02.getPrivileges)
 	::takeown /f "C:\ProgramData"
-	SET ADMIN=
+SET ADMIN=
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -79,7 +83,6 @@ set "shortcutExtantion=%~x0"
 echo %~n0%shortcutExtantion%
 setlocal
 
-REM Promqna
 REM RENAME:
 set "newName=PED-ToolBox"
 set "fileNameCurrent=%~n0"
@@ -92,9 +95,9 @@ if /I "%fileNameCurrent%" NEQ "%newName%" (
 
 REM Define source and destination paths:
 if exist "%~dp0pedDownload\p.*" (
-set "destinationDir=%~dp0"
+	set "destinationDir=%~dp0"
 ) else (
-set "destinationDir=C:\ProgramData\PEDToolBox\"
+	set "destinationDir=C:\ProgramData\PEDToolBox\"
 
 )
 
@@ -320,15 +323,11 @@ REM Promqna na REM
 ::================================
 
 REM Destination Main Variable:
-if %shortcutToLocation% == desktop (
-	echo.
-	echo ...[20%]...
-	set "destinationMain=C:\ProgramData\PEDToolBox"
-) else (
-	echo.
-	echo ...[90%]...
-	set "destinationMain=%cd%"
-)
+
+echo.
+echo ...[90%]...
+set "destinationMain=%cd%"
+
 
 REM Destination PD Variable:
 set "destinationPD=%destinationMain%\pedDownload"
@@ -340,11 +339,15 @@ cd %destinationPD%
 
 REM Folder .\files :
 call :r3a.x12.downLoadF-files
-if %shortcutToLocation% == desktop (
-	echo.
-	echo ...[30%]...
-) else (
-	cd files
+cd files
+
+REM Desktop location:
+for /f "usebackq tokens=3*" %%D IN (`reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" /v Desktop`) do set DESKTOP=%%D
+
+if %debug% == createShotcut (
+	echo %DESKTOP%
+	echo Check 01
+	pause
 )
 
 :m0a.x13.mainVariables2
@@ -795,7 +798,6 @@ set isItZip=n
 
 set "fileLinkID=http://www.2409eso20240519ini02.ped.run"
 set "fileLinkID2=http://www.2409eso20240519ini02.ped.run"
-::set "fileLinkID=https://biped.run20220525"
 ::https://drive.usercontent.google.com/download?id=1tpSFhlPHCeCZZx5O57gvQbQtxZ_86jIL&export=download
 call :r3a.x01.1.downloadFunctionLink
 
@@ -1107,11 +1109,15 @@ set isItZip=y
 set "fileLinkID=http://www.2409WRCFree02.ped.run"
 set "fileLinkID2=http://www.2409WRCFree02.ped.run"
 call :r3a.x01.1.downloadFunctionLink
-::set "fileLinkID=https://downloads.wisecleaner.com/soft/WRCFree_11.1.7.722.zip"
 
-::https://www.wisecleaner.com/download.html
 call :r3a.x01.0.downloadFunction
 exit /b
+
+::set "fileLinkID=https://downloads.wisecleaner.com/soft/WRCFree_11.1.10.725.zip"
+::https://www.wisecleaner.com/index.php?r=download-product/latest-version&product=wise-registry-cleaner
+
+::https://www.wisecleaner.com/download.html
+
 ::=================
 
 ::=======================================
@@ -1304,7 +1310,6 @@ set isItZip=n
 set "fileLinkID=http://www.2409icon33702.ped.run"
 set "fileLinkID2=http://www.2409icon33702.ped.run"
 call :r3a.x01.1.downloadFunctionLink
-::set "fileLinkID=https://biped.runicon"
 
 ::Download file
 call :r3a.x01.0.downloadFunction
@@ -2374,7 +2379,8 @@ call :mStyle
 REM Promqna
 set menuC=A
 
-if not exist "%UserProfile%\Desktop\PED-ToolBox.lnk" (set "loc=1")
+if not exist "%DESKTOP%\PED-ToolBox.lnk" (set "loc=1")
+
 set mm=
 set mm= %mm% "[+] ------ : Create a restore point:"
 set mm= %mm% "[+] Step 0 : Test and Diagnostic:"
@@ -2415,9 +2421,8 @@ if %ERRORLEVEL% == 14 goto %menu%
 if %ERRORLEVEL% == 15 goto m2a.x01.Oneclick
 if %ERRORLEVEL% == 16 goto %menu%
 if %ERRORLEVEL% == 17 (
-start https://github.com/PierMobayed/PEDToolBox
-start https://www.paypal.com/pools/c/98cNbgYbFL
-start https://paypal.me/PierM?country.x=GB&locale.x=en_GB
+	start https://github.com/PierMobayed/PEDToolBox
+	start https://paypal.me/PierM?country.x=GB&locale.x=en_GB
 )
 if %loc% == 1 (
 	if %ERRORLEVEL% == 18 goto %menu%
@@ -2870,23 +2875,32 @@ goto %menu%
 
 :m1a.x02.1.3.createShotcut
 ::================================
+cls
 setlocal
 
 ::Variables
 
 if %shortcutToLocation% == desktop (
-		echo.
-		echo Please wait to loading....
-		echo.
-		echo ...[40%]...
-		set "LinkName=PED-ToolBox"
-		set "destination=%destinationMain%"
-		set "startBoot=%fileNameCurrent%"
-		if %shortcutExtantion% == .exe (
+	echo.
+	echo Please wait to loading....
+	echo.
+	echo ...[40%]...
+	set "LinkName=PED-ToolBox"
+	
+	if %debug% == createShotcut (
+		echo %cd%
+		echo %destination%
+		echo Check 1
+		pause
+	)
+
+	set "destination=%destinationMain%"
+	set "startBoot=%fileNameCurrent%"
+	if %shortcutExtantion% == .exe (
 		set shortcutStyle=1
-		) else (
+	) else (
 		set shortcutStyle=7
-		)
+	)
 		
 ) else (
 	if %startOneClick% == 1 (
@@ -2901,20 +2915,24 @@ if %shortcutToLocation% == desktop (
 		set shortcutStyle=1
 	)
 )
-echo %startBoot%%shortcutExtantion% %shortcutStyle%
+
+echo fileName          - %startBoot% %shortcutStyle%
+echo shortcutExtantion - %shortcutExtantion%
+echo shortcutStyle     - %shortcutStyle%
 %timeoutA%
+
 set "iconN=shell32_337.ico"
 
 ::Function
 set wd=%destination%
 rem if %shortcutToLocation% == desktop (
-rem set "TARGET=C:\Windows\System32\cmd.exe /c powershell -command ""Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm http://biped.run)"""
+rem set "TARGET=C:\Windows\System32\cmd.exe /c powershell -command ""Set-ExecutionPolicy Bypass -Scope Process -Force; iex(irm ped.run)"""
 rem ) else (
 set TARGET=%destination%\%startBoot%
 rem )
 REM set shortcut Location:
 if %shortcutToLocation% == desktop (
-	set "shortcut=%userprofile%\Desktop\%LinkName%.lnk"
+	set "shortcut=%DESKTOP%\%LinkName%.lnk"
 ) else (
 	set "shortcut=C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\%LinkName%.lnk"
 )
@@ -2940,6 +2958,13 @@ IF EXIST "%shortcut%" (
 	)
 )
 
+if %debug% == createShotcut (
+	echo %cd%
+	echo %destination%
+	echo Check 2
+	pause
+)
+
 :: Check if icon exist
 if not exist "%destinationPD%\files\%iconN%" (
 	echo.
@@ -2947,8 +2972,22 @@ if not exist "%destinationPD%\files\%iconN%" (
 	call :r3a.x12.002.downLoadF-filesIcons
 )
 
+if %debug% == createShotcut (
+	echo %cd%
+	echo %destination%
+	echo Check 3
+	pause
+)
+
 ::Create Shortcut: Function:
 set "shortcutCommand=%psP% "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut('%shortcut%'); $s.TargetPath = '%TARGET%'; $s.WorkingDirectory = '%wd%'; $s.IconLocation = '%destinationPD%\files\%iconN%'; $s.WindowStyle = %shortcutStyle%; $s.Save()""
+
+if %debug% == createShotcut (
+	echo %cd%
+	echo %destination%
+	echo Check 4
+	pause
+)
 
 if %shortcutToLocation% == desktop (
 	if not exist %shortcut% (
@@ -2972,12 +3011,14 @@ if %shortcutToLocation% == desktop (
 
 cls
 echo.
-
+pause
 REM IF EXIST ECHO MESSAGE:
 if exist "%SHORTCUT%" (
-	echo ========== Shortcut Create Successful ===
+	echo ========== Shortcut Create Successful === :P
+	%timeoutA%
 ) else (
-	echo ========== Shortcut Unsuccessful ---
+	echo ========== Shortcut Unsuccessful === :X
+	pause
 )
 
 REM END CREATE ToolBox:
@@ -3028,7 +3069,8 @@ set "menuA= Step 0 : Test and Diagnostic:"
 set "menuB= Execution Policy:"
 call :mStyle
 
-set mm= "-|NEXT|- 2. User account control:" 
+set mm= 
+set mm= %mm% "-|NEXT|- 2. User account control:" 
 set mm= %mm% "-|BACK|- Step 0 : Test and Diagnostic:"
 set mm= %mm% "-|MAIN MENU|- " "=================================================================="
 set mm= %mm% ""
@@ -3608,7 +3650,7 @@ set "sourceRoboCopy="
 set "destinationRoboCopy="
 set "destinationFileRoboCopy="
 set "applyRoboCopy="
-set "logFile=%userprofile%\Desktop\robocopy.log"
+set "logFile=%DESKTOP%\robocopy.log"
 
 REM Copy Directories:
 
@@ -5638,9 +5680,12 @@ set menuBackName=Step 5 : Optimizing Programs
 set menuBackGoto=m1a.x5.optimizingPrograms
 goto r4a.x2.CleanUp-Portable
 
-::========
+::================================
+::Step 7 : Turn on\off apps:
+::================================
+
 :m1a.x7.turnApps
-::========
+::================================
 
 if %menu% == m1a.x6.cleanUpJunkfiles (
 	set menuBackName=Step 6 : Clean Up Junk files
@@ -10159,17 +10204,9 @@ endlocal
 ::END Script
 ::================================
 
-::================================
-::configurations 
-::services
-::schtasks
-::
-::
-
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
 	
-
 ::=======================================================================
 :Notes
 ::==========
@@ -10259,7 +10296,7 @@ REM https://bit.ly/pedfolder
 ::set "destinationDir=C:\ProgramData\PEDToolBox"
 ::set "destinationFile=%destinationDir%\%~nx0"
 
-::set "desktopShortcut=%userprofile%\Desktop\%~n0.lnk"
+::set "desktopShortcut=%DESKTOP%\%~n0.lnk"
 	::mklink "%desktopShortcut%" "%destinationFile%"
 	
 ::=======================================================================
@@ -10359,6 +10396,16 @@ rem https://www.youtube.com/watch?v=6oqhJ-gTadY
 ::==========
 
 exit
+::PED-ToolBox-1.291.2.250508
+::remove start https://www.paypal.com/pools/c/98cNbgYbFL
+::replace %DESKTOP% with %DESKTOP%
+::update :m1a.x02.1.3.createShotcut
+
+::PED-ToolBox-1.291.1.250313
+
+::PED-ToolBox-1.290.2.250218
+::set debug=0
+:::m0a.x21.firstMenu
 
 ::PED-ToolBox-1.290.1.241129
 ::update :m0a.x02.getPrivileges
@@ -10426,4 +10473,18 @@ exit
 ::	END CODE ::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::next
+:: :m1a.x02.testDiagnostic
+:: :m1a.x02.8.cpuRamUsage
+::Wise System Monitor
+::https://www.wisecleaner.com/index.php?r=download-product/latest-version&product=wise-system-monitor
+::
+::WiseTray.exe
+::
+::clearRam
+::start /b WinMemoryCleaner.exe /CombinedPageList /ModifiedPageList /ProcessesWorkingSet /StandbyList /SystemWorkingSet
+::
+::::https://github.com/IgorMundstein/WinMemoryCleaner?tab=readme-ov-file
+::::https://github.com/IgorMundstein/WinMemoryCleaner/releases/latest/download/WinMemoryCleaner.exe
 
