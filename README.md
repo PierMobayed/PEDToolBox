@@ -6,7 +6,7 @@ This folder is a **new product**. It does not wrap `PED-ToolBox.bat`. v1 and v2 
 
 | | |
 |---|---|
-| Version | 3.0.0 |
+| Version | 3.1.0 |
 | UI | WPF (.NET 8), Fluent-style dark theme |
 | Engine | `PedToolbox.Core` — WMI, registry, winget, sc.exe |
 | Install | framework-dependent EXE (light) or MSIX |

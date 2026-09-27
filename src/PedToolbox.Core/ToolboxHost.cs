@@ -19,6 +19,7 @@ public sealed class ToolboxHost
     public AppManagerService Apps { get; }
     public WindowsServiceOptimizer Services { get; }
     public SystemTogglesService Toggles { get; }
+    public PedBackupService Backup { get; }
     public string ProfilesDirectory { get; }
 
     public ToolboxHost(string? profilesDirectory = null)
@@ -32,12 +33,13 @@ public sealed class ToolboxHost
         Winget = new WingetService(Runner, Log);
         Apps = new AppManagerService(Log, Runner);
         Toggles = new SystemTogglesService(Runner, Log);
+        Backup = new PedBackupService(Log, Runner);
 
         ProfilesDirectory = profilesDirectory
             ?? Path.Combine(AppContext.BaseDirectory, "Assets", "Profiles");
         Services = new WindowsServiceOptimizer(Log, Runner, ProfilesDirectory);
 
-        Log.Info("Host", $"{FeatureCatalog.AppName} {FeatureCatalog.Version} started. Admin={AdminService.IsAdministrator()}");
+        Log.Info("Host", $"{FeatureCatalog.AppName} {FeatureCatalog.Version} SKU={BuildSku.Label} started. Admin={AdminService.IsAdministrator()}");
         Log.Info("Host", $"Profiles: {ProfilesDirectory}");
         Log.Info("Host", $"Log file: {Log.LogFilePath}");
     }

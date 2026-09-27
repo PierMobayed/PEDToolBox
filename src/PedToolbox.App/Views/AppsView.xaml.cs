@@ -11,7 +11,7 @@ public partial class AppsView : UserControl
     public AppsView()
     {
         InitializeComponent();
-        Loaded += async (_, _) =>
+        Loaded += (_, _) =>
         {
             RefreshInstalled();
             StatusText.Text = App.Host.Winget.IsAvailable()

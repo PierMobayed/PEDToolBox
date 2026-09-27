@@ -69,6 +69,11 @@ public sealed class WindowsServiceOptimizer
 
     public int Apply(IEnumerable<WindowsServiceItem> items, bool useProfileValue)
     {
+        if (PedToolbox.Core.Catalog.BuildSku.IsStoreSku)
+        {
+            _log.Warn("Services", "Store SKU cannot apply service profiles.");
+            return 0;
+        }
         if (!AdminService.IsAdministrator())
         {
             _log.Warn("Services", "Administrator rights are required to change service startup types.");

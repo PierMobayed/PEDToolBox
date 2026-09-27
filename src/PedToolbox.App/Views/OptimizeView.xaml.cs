@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using PedToolbox.Core.Catalog;
 using PedToolbox.Core.Models;
 
 namespace PedToolbox.App.Views;
@@ -16,6 +17,12 @@ public partial class OptimizeView : UserControl
             ProfileBox.ItemsSource = App.Host.Services.AvailableProfiles();
             if (ProfileBox.Items.Contains("safe")) ProfileBox.SelectedItem = "safe";
             else if (ProfileBox.Items.Count > 0) ProfileBox.SelectedIndex = 0;
+            if (BuildSku.IsStoreSku)
+            {
+                ApplyButton.Visibility = Visibility.Collapsed;
+                DefaultsButton.Visibility = Visibility.Collapsed;
+                StatusText.Text = "Store SKU: profiles are read-only.";
+            }
         };
     }
 
@@ -32,6 +39,7 @@ public partial class OptimizeView : UserControl
 
     private void Apply_OnClick(object sender, RoutedEventArgs e)
     {
+        if (BuildSku.IsStoreSku) return;
         if (_items.Count == 0) return;
         var name = ProfileBox.SelectedItem as string ?? "";
         if (name.Equals("tweaked", StringComparison.OrdinalIgnoreCase))
@@ -52,6 +60,7 @@ public partial class OptimizeView : UserControl
 
     private void Defaults_OnClick(object sender, RoutedEventArgs e)
     {
+        if (BuildSku.IsStoreSku) return;
         if (_items.Count == 0) return;
         if (MessageBox.Show("Reset listed services to DefaultStartupType from the JSON?", "PED Toolbox",
                 MessageBoxButton.YesNo) != MessageBoxResult.Yes) return;

@@ -1,6 +1,7 @@
 #Requires -Version 5.1
 param(
     [switch] $SelfContained,
+    [switch] $StoreSku,
     [string] $Runtime = "win-x64"
 )
 
@@ -19,7 +20,8 @@ $args = @(
     "-o", $out,
     "--nologo",
     "-p:DebugType=None",
-    "-p:DebugSymbols=false"
+    "-p:DebugSymbols=false",
+    "-p:StoreSku=$($StoreSku.IsPresent.ToString().ToLowerInvariant())"
 )
 
 if ($SelfContained) {

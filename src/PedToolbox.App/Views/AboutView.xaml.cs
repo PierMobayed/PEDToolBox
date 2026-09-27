@@ -9,7 +9,7 @@ public partial class AboutView : UserControl
     public AboutView()
     {
         InitializeComponent();
-        TitleText.Text = $"{FeatureCatalog.AppName} {FeatureCatalog.Version}";
+        TitleText.Text = $"{FeatureCatalog.AppName} {FeatureCatalog.Version} ({BuildSku.Label} SKU)";
         MetaText.Text = $"{FeatureCatalog.Publisher}  ·  {FeatureCatalog.SupportEmail}";
     }
 

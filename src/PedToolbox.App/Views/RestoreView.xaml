@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <StackPanel>
     <TextBlock Style="{StaticResource Subtitle}"
-               Text="System Restore via WMI root\default SystemRestore. Admin is required to create a point. v1 also had registry/task/driver backups — those land in a later v3 slice."/>
+               Text="System Restore plus a PED-Recovery snapshot (v1: registry, scheduled tasks, services, Start menu, product key if stored). Default folder is %SystemDrive%\PED-Recovery."/>
     <Border Style="{StaticResource Card}">
       <StackPanel>
-        <TextBlock Text="Description"/>
+        <TextBlock Text="Restore point description"/>
         <TextBox x:Name="DescriptionBox" Text="PED Toolbox checkpoint" Margin="0,8,0,12"/>
         <WrapPanel>
           <Button Style="{StaticResource PrimaryButton}" Content="Create restore point" Click="Create_OnClick"/>
@@ -16,6 +16,20 @@
         <TextBlock x:Name="StatusText" Style="{StaticResource Muted}" Margin="0,8,0,0"/>
       </StackPanel>
     </Border>
-    <DataGrid x:Name="PointsGrid" Height="320"/>
+    <Border Style="{StaticResource Card}">
+      <StackPanel>
+        <TextBlock FontWeight="SemiBold" Text="PED-Recovery snapshot"/>
+        <TextBlock Style="{StaticResource Muted}" Margin="0,6,0,8"
+                   Text="Always writes HKCU, Start menu layout key, WinKey file, services-restore.cmd, tasks-restore.cmd. Full hives and DISM drivers are optional and slow."/>
+        <CheckBox x:Name="FullRegistryBox" Content="Full registry hives (HKLM/HKCR/HKU/HKCC) — admin, large, slow"/>
+        <CheckBox x:Name="DriversBox" Content="Export drivers with DISM — admin, slow"/>
+        <WrapPanel Margin="0,8,0,0">
+          <Button x:Name="SnapshotButton" Style="{StaticResource PrimaryButton}" Content="Create PED-Recovery snapshot" Click="Snapshot_OnClick"/>
+          <Button Style="{StaticResource GhostButton}" Content="Open PED-Recovery folder" Click="OpenFolder_OnClick"/>
+        </WrapPanel>
+        <TextBlock x:Name="BackupStatus" Style="{StaticResource Muted}" Margin="0,8,0,0"/>
+      </StackPanel>
+    </Border>
+    <DataGrid x:Name="PointsGrid" Height="240"/>
   </StackPanel>
 </UserControl>

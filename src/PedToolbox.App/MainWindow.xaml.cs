@@ -11,7 +11,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        NavList.ItemsSource = FeatureCatalog.All;
+        NavList.ItemsSource = FeatureCatalog.ForNavigation();
         RefreshAdmin();
         NavList.SelectedIndex = 0;
     }

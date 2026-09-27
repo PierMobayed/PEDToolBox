@@ -1,25 +1,26 @@
 # Roadmap
 
-## Done in 3.0.0 (this drop)
+## Done in 3.1.0
 
-- v3 folder, solution, docs
+- Icon + Store/MSIX image assets
+- `STORE_SKU` compile flag
+- PED-Recovery backup (registry / tasks / services, optional drivers)
+- Release zip script + CI build on `v3`
+
+## Done in 3.0.0
+
+- v3 folder, solution, docs, starter bat
 - Dark Fluent WPF shell mapped to v1 steps
 - Native restore, diagnostics, SFC/DISM launchers, privacy, winget, uninstall, startup, temp, recycle, service profiles, power/hibernate/indexing
 - Activity log
 - Winget YAML + MSIX manifest templates
-- Publish script for a light EXE
 
-## Next (3.1)
+## After this plan (upgrade later)
 
-- Real app icon + Store assets
-- Restore: registry / tasks / services export (v1 PED backup)
-- Winget JSON output parser when the installed winget supports `--output json`
-- Hide or disable `StoreSafe=false` pages with a compile flag `STORE_SKU`
-- Bulgarian UI strings (resource `.resx`)
-
-## Later
-
-- Task Scheduler grid (from v1 Step 5)
-- Optional download of well-known portable tools to `%LocalAppData%` with hash check (not for Store)
-- CI on GitHub Actions: `dotnet build` + release zip
-- Signed MSIX in Partner Center
+- Host the zip on a GitHub Release, fill SHA256, open winget-pkgs PR
+- Partner Center MSIX signing (needs your publisher CN and account)
+- Bulgarian UI strings
+- Winget `--output json` parser
+- Task Scheduler editor UI (backup scripts already exist)
+- Optional portable third-party tools (not for Store)
+- Switch GitHub default branch from `Tool` to `v3` when you are ready

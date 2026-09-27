@@ -18,8 +18,8 @@ public partial class RestoreView : UserControl
     {
         PointsGrid.ItemsSource = App.Host.Restore.List();
         StatusText.Text = AdminService.IsAdministrator()
-            ? "Administrator: create is enabled."
-            : "Standard user: list may work; create needs elevation.";
+            ? "Administrator: create restore point is enabled."
+            : "Standard user: restore-point create needs elevation. HKCU snapshot still works.";
     }
 
     private void Create_OnClick(object sender, RoutedEventArgs e)
@@ -33,4 +33,28 @@ public partial class RestoreView : UserControl
 
     private void OpenUi_OnClick(object sender, RoutedEventArgs e)
         => App.Host.Runner.StartDetached("SystemPropertiesProtection.exe");
+
+    private async void Snapshot_OnClick(object sender, RoutedEventArgs e)
+    {
+        SnapshotButton.IsEnabled = false;
+        BackupStatus.Text = "Writing snapshot…";
+        try
+        {
+            var report = await App.Host.Backup.CreateSnapshotAsync(
+                FullRegistryBox.IsChecked == true,
+                DriversBox.IsChecked == true);
+            BackupStatus.Text = $"{report.Files.Count} items in {report.Folder}";
+        }
+        catch (Exception ex)
+        {
+            BackupStatus.Text = ex.Message;
+        }
+        finally
+        {
+            SnapshotButton.IsEnabled = true;
+        }
+    }
+
+    private void OpenFolder_OnClick(object sender, RoutedEventArgs e)
+        => App.Host.Backup.OpenRoot();
 }

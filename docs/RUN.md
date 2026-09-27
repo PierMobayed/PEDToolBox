@@ -26,6 +26,6 @@ The app starts as a normal user. Use **Restart as administrator** inside the lef
 
 Logs: `%LocalAppData%\PEDToolbox\logs`
 
-## Not for this step
+## Not for daily start
 
-`.\packaging\publish-exe.ps1` — Release folder for zip/winget. Skip until 3.1 packaging.
+`.\packaging\pack-release.ps1` — zip for GitHub Releases / winget. Use after you are done reviewing.

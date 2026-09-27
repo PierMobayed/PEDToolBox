@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.0 — 2026-09-27
+
+- App icon (`Assets/app.ico`) and Microsoft Store / MSIX logos under `packaging/msix/Assets`.
+- `STORE_SKU` / `-p:StoreSku=true`: hides the Services nav page and blocks profile Apply.
+- PED-Recovery snapshot: HKCU, Start menu key, WinKey file, `services-restore.cmd`, `tasks-restore.cmd`; optional full hives and DISM drivers.
+- `packaging/pack-release.ps1` builds a zip + SHA256. GitHub Actions builds full and Store SKUs on branch `v3`.
+
 ## 3.0.0 — 2026-09-27 (starter)
 
 - Added `Start-PEDToolbox.bat` and `docs/RUN.md` so the app can be launched with a double-click (Debug build, not publish).

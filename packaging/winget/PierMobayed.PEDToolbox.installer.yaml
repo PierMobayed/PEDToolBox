@@ -1,6 +1,6 @@
 # Replace InstallerUrl and InstallerSha256 after you publish a signed build.
 PackageIdentifier: PierMobayed.PEDToolbox
-PackageVersion: 3.0.0
+PackageVersion: 3.1.0
 InstallerLocale: en-US
 MinimumOSVersion: 10.0.19041.0
 InstallerType: zip
@@ -11,7 +11,7 @@ NestedInstallerFiles:
 UpgradeBehavior: install
 Installers:
   - Architecture: x64
-    InstallerUrl: https://github.com/PierMobayed/PEDToolBox/releases/download/v3.0.0/PEDToolbox-3.0.0-win-x64.zip
+    InstallerUrl: https://github.com/PierMobayed/PEDToolBox/releases/download/v3.1.0/PEDToolbox-3.1.0-win-x64.zip
     InstallerSha256: 0000000000000000000000000000000000000000000000000000000000000000
     InstallerSwitches:
       Custom: ""

@@ -1,0 +1,20 @@
+name: build
+
+on:
+  push:
+    branches: [v3]
+  pull_request:
+    branches: [v3]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Build full SKU
+        run: dotnet build PedToolbox.sln -c Release
+      - name: Build Store SKU
+        run: dotnet build PedToolbox.sln -c Release -p:StoreSku=true

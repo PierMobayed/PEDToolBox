@@ -4,5 +4,10 @@
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Deterministic>true</Deterministic>
+    <!-- StoreSku=true defines STORE_SKU: hide service Apply / StoreUnsafe nav. Default is the full desktop SKU. -->
+    <StoreSku>false</StoreSku>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(StoreSku)'=='true'">
+    <DefineConstants>$(DefineConstants);STORE_SKU</DefineConstants>
   </PropertyGroup>
 </Project>

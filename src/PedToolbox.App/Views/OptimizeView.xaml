@@ -10,8 +10,8 @@
           <ComboBox x:Name="ProfileBox" Width="220" DockPanel.Dock="Left" Margin="0,0,12,0" SelectionChanged="ProfileBox_OnSelectionChanged"/>
           <WrapPanel>
             <Button Style="{StaticResource GhostButton}" Content="Load" Click="Load_OnClick"/>
-            <Button Style="{StaticResource PrimaryButton}" Content="Apply profile" Click="Apply_OnClick"/>
-            <Button Style="{StaticResource GhostButton}" Content="Restore Windows defaults from profile" Click="Defaults_OnClick"/>
+            <Button x:Name="ApplyButton" Style="{StaticResource PrimaryButton}" Content="Apply profile" Click="Apply_OnClick"/>
+            <Button x:Name="DefaultsButton" Style="{StaticResource GhostButton}" Content="Restore Windows defaults from profile" Click="Defaults_OnClick"/>
           </WrapPanel>
         </DockPanel>
         <TextBlock x:Name="StatusText" Style="{StaticResource Muted}" Margin="0,10,0,0"/>

@@ -10,14 +10,28 @@
 | Publisher display | PierMobayed |
 | Publisher CN | `CN=PierMobayed` (replace with your Authenticode / Store CN) |
 
-## 1. Light EXE (sideload / GitHub Releases)
+## Store SKU vs full
+
+Default builds are the **full** desktop SKU (service profile Apply is available).
+
+```powershell
+dotnet build PedToolbox.sln -c Release -p:StoreSku=true
+```
+
+That defines `STORE_SKU`, hides the Services page, and no-ops Apply.
+
+## 1. Light EXE / zip
 
 ```powershell
 cd v3
-.\packaging\publish-exe.ps1
+.\packaging\pack-release.ps1
 ```
 
-Output: `v3/artifacts/exe/PEDToolbox.exe` (+ nearby DLLs if not single-file).
+Output: `v3/artifacts/PEDToolbox-3.1.0-win-x64.zip` and `artifacts/SHA256.txt`.
+
+Icons: `.\packaging\make-icons.ps1` (already run for 3.1.0).
+
+Framework-dependent publish only:
 
 The default script uses **framework-dependent** `win-x64` so the download stays small. Users install [.NET 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0).
 

@@ -17,7 +17,7 @@ public sealed class FeatureItem
 public static class FeatureCatalog
 {
     public const string AppName = "PED Toolbox";
-    public const string Version = "3.0.0";
+    public const string Version = "3.1.0";
     public const string Publisher = "PierMobayed";
     public const string SupportEmail = "pedtoolbox@gmail.com";
     public const string Website = "https://pedtoolbox.com";
@@ -37,7 +37,7 @@ public static class FeatureCatalog
         {
             Id = "restore",
             Title = "Restore & backup",
-            Description = "Create a System Restore point before changes. v1 also backed up registry, tasks, services, drivers.",
+            Description = "System Restore plus PED-Recovery export (registry, tasks, services, optional drivers).",
             V1Step = "Create a restore point",
             StoreSafe = true,
             RequiresAdmin = true
@@ -120,4 +120,7 @@ public static class FeatureCatalog
             StoreSafe = true
         }
     ];
+
+    public static IReadOnlyList<FeatureItem> ForNavigation()
+        => BuildSku.IsStoreSku ? All.Where(f => f.StoreSafe).ToList() : All;
 }

@@ -7,15 +7,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon />
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
     <AssemblyName>PEDToolbox</AssemblyName>
     <RootNamespace>PedToolbox.App</RootNamespace>
     <Product>PED Toolbox</Product>
     <Company>PierMobayed</Company>
     <Authors>PierMobayed</Authors>
-    <Version>3.0.0</Version>
-    <FileVersion>3.0.0.0</FileVersion>
-    <InformationalVersion>3.0.0</InformationalVersion>
+    <Version>3.1.0</Version>
+    <FileVersion>3.1.0.0</FileVersion>
+    <InformationalVersion>3.1.0</InformationalVersion>
     <Description>Modern Windows 10/11 toolbox for repair, cleanup, apps, and safe optimization.</Description>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <PublishTrimmed>false</PublishTrimmed>
