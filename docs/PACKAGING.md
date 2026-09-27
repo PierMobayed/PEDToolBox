@@ -4,11 +4,11 @@
 
 | Field | Value used in templates |
 |---|---|
-| Package name | `PierMobayed.PEDToolbox` |
+| Package name | `ped.run` |
 | Display name | PED Toolbox |
-| Version | 3.0.0 |
-| Publisher display | PierMobayed |
-| Publisher CN | `CN=PierMobayed` (replace with your Authenticode / Store CN) |
+| Version | 3.1.0 |
+| Publisher display | PED Toolbox |
+| Publisher CN | `CN=PED Toolbox` (replace with your Authenticode / Store CN) |
 
 ## Store SKU vs full
 
@@ -43,13 +43,13 @@ Templates: `packaging/winget/`
 
 1. Publish and sign the installer (MSIX preferred, EXE zip also works).
 2. Host it on GitHub Releases and compute SHA256.
-3. Put the URL and hash into `PierMobayed.PEDToolbox.installer.yaml`.
-4. Open a PR to [microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs) under `manifests/p/PierMobayed/PEDToolbox/3.0.0/`.
+3. Put the URL and hash into `ped.run.installer.yaml`.
+4. Open a PR to [microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs) under `manifests/p/ped/run/3.1.0/`.
 
 Users then run:
 
 ```text
-winget install PierMobayed.PEDToolbox
+winget install ped.run
 ```
 
 ## 3. Microsoft Store / sideload MSIX

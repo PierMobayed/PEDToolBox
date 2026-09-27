@@ -1,5 +1,5 @@
-# Published: GitHub Release v3.1.0 self-contained zip. SHA256 is of that asset.
-PackageIdentifier: PierMobayed.PEDToolbox
+# GitHub Release v3.1.0 self-contained zip.
+PackageIdentifier: ped.run
 PackageVersion: 3.1.0
 InstallerLocale: en-US
 MinimumOSVersion: 10.0.19041.0
@@ -7,7 +7,7 @@ InstallerType: zip
 NestedInstallerType: portable
 NestedInstallerFiles:
   - RelativeFilePath: PEDToolbox.exe
-    PortableCommandAlias: pedtoolbox
+    PortableCommandAlias: ped
 UpgradeBehavior: install
 ReleaseDate: 2026-09-27
 Installers:
@@ -16,4 +16,3 @@ Installers:
     InstallerSha256: 85997DF14A14A97D975C43D511C4D56CE2009EBDB34E6500C05A9A49BABAC35B
 ManifestType: installer
 ManifestVersion: 1.6.0
-

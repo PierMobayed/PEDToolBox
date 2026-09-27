@@ -17,7 +17,7 @@
 
 ## After this plan (upgrade later)
 
-- PR to microsoft/winget-pkgs: https://github.com/microsoft/winget-pkgs/pull/442267
+- PR to microsoft/winget-pkgs: https://github.com/microsoft/winget-pkgs/pull/442278 (`ped.run`)
 - Partner Center MSIX signing (needs your publisher CN and account)
 - Bulgarian UI strings
 - Winget `--output json` parser

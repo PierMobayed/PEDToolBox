@@ -6,7 +6,7 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="PierMobayed.PEDToolbox"
+    Name="ped.run"
     Publisher="CN=PierMobayed"
     Version="3.1.0.0" />
 
