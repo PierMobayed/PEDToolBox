@@ -20,6 +20,14 @@ dotnet build PedToolbox.sln -c Release -p:StoreSku=true
 
 That defines `STORE_SKU`, hides the Services page, and no-ops Apply.
 
+## Program vs source on GitHub
+
+Release **assets** are only the built zip. Do not upload the repo. Users should get:
+
+`https://github.com/PierMobayed/PEDToolBox/releases/download/v3.1.0/PEDToolbox-3.1.0-win-x64.zip`
+
+GitHub still auto-adds “Source code (zip)” on the tag page; that cannot be disabled. Tell people to ignore it. Full rule: [DOWNLOAD.md](DOWNLOAD.md).
+
 ## 1. Zip for GitHub (what 3.1.0 actually shipped)
 
 ```powershell

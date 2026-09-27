@@ -18,7 +18,9 @@ Double-click **`Start-PEDToolbox.bat`** in this folder.
 
 It builds Debug if needed and opens the window. Details: [docs/RUN.md](docs/RUN.md).
 
-**Download (no build):** [Release v3.1.0](https://github.com/PierMobayed/PEDToolBox/releases/tag/v3.1.0) — unzip `PEDToolbox-3.1.0-win-x64.zip` and run `PEDToolbox.exe`.
+**Download the app (not the source):** [PEDToolbox-3.1.0-win-x64.zip](https://github.com/PierMobayed/PEDToolBox/releases/download/v3.1.0/PEDToolbox-3.1.0-win-x64.zip) — unzip and run `PEDToolbox.exe`.
+
+Source is optional: GitHub branch [`v3`](https://github.com/PierMobayed/PEDToolBox/tree/v3) (Code → Download ZIP). Details: [docs/DOWNLOAD.md](docs/DOWNLOAD.md).
 
 ## v1 vs v3
 
@@ -32,7 +34,7 @@ It builds Debug if needed and opens the window. Details: [docs/RUN.md](docs/RUN.
 
 | File | What it answers |
 |---|---|
-| [docs/ANALYSIS.md](docs/ANALYSIS.md) | What v1 and v2 were, why v3 |
+| [docs/DOWNLOAD.md](docs/DOWNLOAD.md) | App zip vs source (what users should click) |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Folders, how a click becomes an action |
 | [docs/FEATURES.md](docs/FEATURES.md) | Page-by-page behavior |
 | [docs/PACKAGING.md](docs/PACKAGING.md) | Winget + Microsoft Store |

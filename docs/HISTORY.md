@@ -14,6 +14,7 @@ What we actually shipped and fixed. Open work is in [TASKS.md](TASKS.md). Line-l
 | T032-2 | Opened [winget-pkgs#442279](https://github.com/microsoft/winget-pkgs/pull/442279). `ped.run` URL timed out; switched to GitHub. CLA signed. **Installation Validation SUCCESS**; labels `Azure-Pipeline-Passed` + `Validation-Completed`. Waiting on a **moderator**, not a re-scan. |
 | Starter | `Start-PEDToolbox.bat` for Debug (from 3.0.0, still the daily path). |
 | Docs vs live | 2026-09-27 evening: TASKS/HISTORY committed; T032-2 text corrected (moderator, not hanging install scan); zip size 57.8 MB vs unpacked ~140 MB. |
+| Download vs source | Binary zip URL is the user download. GitHub auto “Source code” on Releases cannot be hidden; documented in DOWNLOAD.md. |
 
 ## 3.0.0 (2026-09-27)
 
