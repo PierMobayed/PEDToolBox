@@ -17,11 +17,8 @@
 
 ## After this plan (upgrade later)
 
-- PR to microsoft/winget-pkgs: https://github.com/microsoft/winget-pkgs/pull/442279 (`PED.Toolbox`; ped.run URLs removed after validator timeout)
-- v1 stays on `ped.run` (`irm ped.run | iex`); v3 is winget + GitHub Release
-- Partner Center MSIX signing (needs your publisher CN and account)
-- Bulgarian UI strings
-- Winget `--output json` parser
-- Task Scheduler editor UI (backup scripts already exist)
-- Optional portable third-party tools (not for Store)
-- Switch GitHub default branch from `Tool` to `v3` when you are ready
+Tracked in [TASKS.md](TASKS.md). Next implementation: T033-1 light installer, T033-2 winget GitHub Action, T033-3 in-app GitHub Release update check. T030 (formal UI review) can run anytime. 3.2 leftover: T032-2 **moderator merge**, T032-3 Partner Center. T047 is a v1/`Tool` fix, not this tree.
+
+Later (do not rush): T045 official default branch + `ped.run` kept separate; T046 power-user / Store-hostile features stay on v1.
+
+Finished work by version: [HISTORY.md](HISTORY.md).

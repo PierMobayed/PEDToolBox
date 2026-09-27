@@ -9,7 +9,7 @@ This folder is a **new product**. It does not wrap `PED-ToolBox.bat`. v1 and v2 
 | Version | 3.1.0 |
 | UI | WPF (.NET 8), Fluent-style dark theme |
 | Engine | `PedToolbox.Core` — WMI, registry, winget, sc.exe |
-| Install | framework-dependent EXE (light) or MSIX |
+| Install | GitHub zip (self-contained, 57.8 MB) now; winget after PR merge; lighter zip later (T033-1) |
 | Logs | `%LocalAppData%\PEDToolbox\logs` |
 
 ## Start (easy)
@@ -24,7 +24,7 @@ It builds Debug if needed and opens the window. Details: [docs/RUN.md](docs/RUN.
 
 | | v1 (batch) | v3 (this app) |
 |---|---|---|
-| Install | `irm ped.run \| iex` | `winget install PED.Toolbox` or the GitHub zip |
+| Install | `irm ped.run \| iex` | GitHub zip now; `winget install PED.Toolbox` after [winget-pkgs#442279](https://github.com/microsoft/winget-pkgs/pull/442279) merges |
 | Git branch | `Tool` | `v3` |
 | `ped.run` | Stays on v1 | Not used for v3 |
 
@@ -36,8 +36,10 @@ It builds Debug if needed and opens the window. Details: [docs/RUN.md](docs/RUN.
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Folders, how a click becomes an action |
 | [docs/FEATURES.md](docs/FEATURES.md) | Page-by-page behavior |
 | [docs/PACKAGING.md](docs/PACKAGING.md) | Winget + Microsoft Store |
-| [docs/ROADMAP.md](docs/ROADMAP.md) | What is in 3.0.0 vs later |
-| [docs/CHANGELOG.md](docs/CHANGELOG.md) | Dated changes in v3 |
+| [docs/TASKS.md](docs/TASKS.md) | Open task list (links to `docs/tasks/`) |
+| [docs/HISTORY.md](docs/HISTORY.md) | What we finished per version |
+| [docs/ROADMAP.md](docs/ROADMAP.md) | High-level done vs later |
+| [docs/CHANGELOG.md](docs/CHANGELOG.md) | Dated product notes |
 
 ## Rules used while building
 

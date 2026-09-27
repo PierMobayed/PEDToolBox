@@ -13,6 +13,8 @@ v3/
   src/PedToolbox.App      WPF UI (assembly name PEDToolbox)
   packaging/              publish + winget + msix templates
   docs/                   this documentation
+                  TASKS.md + tasks/*.md (work items)
+                  HISTORY.md (finished work per version)
 ```
 
 ## Runtime composition
@@ -51,5 +53,5 @@ Views are UserControls swapped into `MainWindow.PageHost`. There is no navigatio
 | Artifact | Why |
 |---|---|
 | Framework-dependent win-x64 | Smallest. User needs .NET 8 Desktop Runtime. Best for Store if you rely on framework packages, or for testers who already have the runtime. |
-| Self-contained | Larger, no runtime install. Easier winget EXE. |
+| Self-contained | Larger, no runtime. **3.1.0 GitHub zip** is this (57.8 MB compressed). |
 | MSIX | Store + `winget` installerType msix. Needs a signing certificate. |

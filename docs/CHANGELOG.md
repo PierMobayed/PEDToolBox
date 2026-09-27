@@ -1,9 +1,11 @@
 # Changelog
 
+Product notes. Task-level history: [HISTORY.md](HISTORY.md). Open tasks: [TASKS.md](TASKS.md).
+
 ## 3.1.0 — 2026-09-27 (release)
 
-- Winget-pkgs PR: https://github.com/microsoft/winget-pkgs/pull/442279 (`PED.Toolbox`; publisher prefix for future `PED.*` packages)
-- Self-contained zip SHA256 `85997DF14A14A97D975C43D511C4D56CE2009EBDB34E6500C05A9A49BABAC35B`
+- Winget-pkgs PR: https://github.com/microsoft/winget-pkgs/pull/442279 (`PED.Toolbox`). Pipeline green (including Installation Validation). Waiting on a moderator, not a re-scan.
+- Self-contained zip **57.8 MB** on GitHub. SHA256 `85997DF14A14A97D975C43D511C4D56CE2009EBDB34E6500C05A9A49BABAC35B`
 
 ## 3.1.0 — 2026-09-27
 
