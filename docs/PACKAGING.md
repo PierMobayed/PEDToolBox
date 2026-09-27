@@ -4,7 +4,7 @@
 
 | Field | Value used in templates |
 |---|---|
-| Package name | `ped.run` |
+| Package name | `PED.Toolbox` |
 | Display name | PED Toolbox |
 | Version | 3.1.0 |
 | Publisher display | PED Toolbox |
@@ -43,14 +43,16 @@ Templates: `packaging/winget/`
 
 1. Publish and sign the installer (MSIX preferred, EXE zip also works).
 2. Host it on GitHub Releases and compute SHA256.
-3. Put the URL and hash into `ped.run.installer.yaml`.
-4. Open a PR to [microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs) under `manifests/p/ped/run/3.1.0/`.
+3. Put the URL and hash into `PED.Toolbox.installer.yaml`.
+4. Open a PR to [microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs) under `manifests/p/PED/Toolbox/3.1.0/`.
 
 Users then run:
 
 ```text
-winget install ped.run
+winget install PED.Toolbox
 ```
+
+Later packages can share the same publisher prefix, for example `PED.Example`.
 
 ## 3. Microsoft Store / sideload MSIX
 

@@ -18,4 +18,4 @@ $hash = (Get-FileHash $zip -Algorithm SHA256).Hash
 $hash | Set-Content (Join-Path $root "artifacts\SHA256.txt")
 Write-Host "ZIP  $zip"
 Write-Host "SHA256  $hash"
-Write-Host "Paste the hash into packaging\winget\ped.run.installer.yaml after you host this zip."
+Write-Host "Paste the hash into packaging\winget\PED.Toolbox.installer.yaml after you host this zip."
