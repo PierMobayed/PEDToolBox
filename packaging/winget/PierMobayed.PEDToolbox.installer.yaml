@@ -9,11 +9,11 @@ NestedInstallerFiles:
   - RelativeFilePath: PEDToolbox.exe
     PortableCommandAlias: pedtoolbox
 UpgradeBehavior: install
+ReleaseDate: 2026-09-27
 Installers:
   - Architecture: x64
     InstallerUrl: https://github.com/PierMobayed/PEDToolBox/releases/download/v3.1.0/PEDToolbox-3.1.0-win-x64.zip
     InstallerSha256: 85997DF14A14A97D975C43D511C4D56CE2009EBDB34E6500C05A9A49BABAC35B
-    InstallerSwitches:
-      Custom: ""
 ManifestType: installer
 ManifestVersion: 1.6.0
+

@@ -17,7 +17,7 @@
 
 ## After this plan (upgrade later)
 
-- PR to microsoft/winget-pkgs using `packaging/winget` (URL and SHA256 are filled for v3.1.0)
+- PR to microsoft/winget-pkgs: https://github.com/microsoft/winget-pkgs/pull/442267
 - Partner Center MSIX signing (needs your publisher CN and account)
 - Bulgarian UI strings
 - Winget `--output json` parser
