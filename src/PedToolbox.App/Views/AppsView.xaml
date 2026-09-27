@@ -1,0 +1,33 @@
+<UserControl x:Class="PedToolbox.App.Views.AppsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <StackPanel>
+    <TextBlock Style="{StaticResource Subtitle}"
+               Text="v1 Step 3. Search uses the winget CLI already on Windows 11 / modern 10. Install is interactive-flagged off; agreements are accepted because you clicked Install."/>
+    <Border Style="{StaticResource Card}">
+      <StackPanel>
+        <DockPanel>
+          <Button DockPanel.Dock="Right" Style="{StaticResource PrimaryButton}" Content="Search" Click="Search_OnClick"/>
+          <TextBox x:Name="QueryBox" Margin="0,0,8,8"/>
+        </DockPanel>
+        <DataGrid x:Name="SearchGrid" Height="200" MouseDoubleClick="SearchGrid_OnMouseDoubleClick"/>
+        <WrapPanel Margin="0,8,0,0">
+          <Button Style="{StaticResource PrimaryButton}" Content="Install selected" Click="Install_OnClick"/>
+          <Button Style="{StaticResource GhostButton}" Content="Upgrade all (winget)" Click="Upgrade_OnClick"/>
+        </WrapPanel>
+      </StackPanel>
+    </Border>
+    <Border Style="{StaticResource Card}">
+      <StackPanel>
+        <DockPanel>
+          <Button DockPanel.Dock="Right" Style="{StaticResource GhostButton}" Content="Refresh installed" Click="RefreshInstalled_OnClick"/>
+          <TextBlock FontWeight="SemiBold" VerticalAlignment="Center" Text="Installed programs"/>
+        </DockPanel>
+        <TextBox x:Name="FilterBox" Margin="0,8,0,8" TextChanged="FilterBox_OnTextChanged"/>
+        <DataGrid x:Name="InstalledGrid" Height="240"/>
+        <Button Style="{StaticResource DangerButton}" Content="Uninstall selected" Click="Uninstall_OnClick"/>
+      </StackPanel>
+    </Border>
+    <TextBlock x:Name="StatusText" Style="{StaticResource Muted}"/>
+  </StackPanel>
+</UserControl>

@@ -1,0 +1,34 @@
+<UserControl x:Class="PedToolbox.App.Views.TogglesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <StackPanel>
+    <TextBlock Style="{StaticResource Subtitle}"
+               Text="v1 Step 7. Each action is explicit. Hibernate and indexing need admin for a lasting effect."/>
+    <Border Style="{StaticResource Card}">
+      <StackPanel>
+        <TextBlock FontWeight="SemiBold" Text="Hibernate"/>
+        <WrapPanel Margin="0,8,0,0">
+          <Button Style="{StaticResource PrimaryButton}" Content="Enable hibernate" Click="HibOn_OnClick"/>
+          <Button Style="{StaticResource GhostButton}" Content="Disable hibernate" Click="HibOff_OnClick"/>
+        </WrapPanel>
+      </StackPanel>
+    </Border>
+    <Border Style="{StaticResource Card}">
+      <StackPanel>
+        <TextBlock FontWeight="SemiBold" Text="Ultimate Performance"/>
+        <TextBlock Style="{StaticResource Muted}" Text="Duplicates the hidden Microsoft scheme e9a42b02-d5df-448d-aa00-03f14749eb61 when missing."/>
+        <Button Style="{StaticResource PrimaryButton}" Content="Enable Ultimate Performance" Click="Power_OnClick"/>
+      </StackPanel>
+    </Border>
+    <Border Style="{StaticResource Card}">
+      <StackPanel>
+        <TextBlock FontWeight="SemiBold" Text="Windows Search indexing"/>
+        <WrapPanel Margin="0,8,0,0">
+          <Button Style="{StaticResource GhostButton}" Content="Enable WSearch" Click="IdxOn_OnClick"/>
+          <Button Style="{StaticResource GhostButton}" Content="Disable WSearch" Click="IdxOff_OnClick"/>
+        </WrapPanel>
+      </StackPanel>
+    </Border>
+    <TextBlock x:Name="StatusText" Style="{StaticResource Muted}"/>
+  </StackPanel>
+</UserControl>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap rescap">
+
+  <Identity
+    Name="PierMobayed.PEDToolbox"
+    Publisher="CN=PierMobayed"
+    Version="3.0.0.0" />
+
+  <Properties>
+    <DisplayName>PED Toolbox</DisplayName>
+    <PublisherDisplayName>PierMobayed</PublisherDisplayName>
+    <Description>Repair, cleanup, apps, and safe optimization for Windows 10 and 11.</Description>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us"/>
+    <Resource Language="bg-bg"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="PEDToolbox" Executable="PEDToolbox.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="PED Toolbox"
+        Description="Windows repair and cleanup toolbox"
+        BackgroundColor="#0B1220"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#0B1220"/>
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust"/>
+  </Capabilities>
+</Package>

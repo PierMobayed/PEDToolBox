@@ -1,0 +1,92 @@
+﻿<Window x:Class="PedToolbox.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PED Toolbox"
+        Height="760" Width="1180"
+        MinHeight="640" MinWidth="960"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BgBrush}">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="268"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <Border Grid.Column="0" Background="#101828" BorderBrush="{StaticResource LineBrush}" BorderThickness="0,0,1,0" Padding="16">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="4,4,4,16">
+          <TextBlock FontSize="12" Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" Text="PED TOOLBOX"/>
+          <TextBlock FontSize="22" FontWeight="SemiBold" Margin="0,4,0,0" Text="Control center"/>
+          <TextBlock Style="{StaticResource Muted}" Text="Native v3 · Windows 10/11"/>
+        </StackPanel>
+
+        <ListBox x:Name="NavList" Grid.Row="1"
+                 SelectionChanged="NavList_OnSelectionChanged"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+          <ListBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem">
+              <Setter Property="Padding" Value="12,10"/>
+              <Setter Property="Margin" Value="0,0,0,4"/>
+              <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="ListBoxItem">
+                    <Border x:Name="navBd" CornerRadius="10" Padding="{TemplateBinding Padding}" Background="Transparent">
+                      <ContentPresenter/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                      <Trigger Property="IsSelected" Value="True">
+                        <Setter TargetName="navBd" Property="Background" Value="#1E2740"/>
+                      </Trigger>
+                      <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="navBd" Property="Background" Value="#182033"/>
+                      </Trigger>
+                    </ControlTemplate.Triggers>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </ListBox.ItemContainerStyle>
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <StackPanel>
+                <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding V1Step}" FontSize="11" Foreground="{StaticResource MutedBrush}"/>
+              </StackPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Border Grid.Row="2" Style="{StaticResource Card}" Margin="0">
+          <StackPanel>
+            <TextBlock x:Name="AdminLabel" FontWeight="SemiBold"/>
+            <Button x:Name="ElevateButton" Content="Restart as administrator"
+                    Style="{StaticResource PrimaryButton}" Margin="0,10,0,0"
+                    Click="ElevateButton_OnClick"/>
+          </StackPanel>
+        </Border>
+      </Grid>
+    </Border>
+
+    <Grid Grid.Column="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <Border Padding="24,18" BorderBrush="{StaticResource LineBrush}" BorderThickness="0,0,0,1">
+        <DockPanel>
+          <TextBlock x:Name="HeaderTitle" Style="{StaticResource Title}" DockPanel.Dock="Top"/>
+        </DockPanel>
+      </Border>
+      <ScrollViewer Grid.Row="1" Padding="24" VerticalScrollBarVisibility="Auto">
+        <ContentControl x:Name="PageHost"/>
+      </ScrollViewer>
+    </Grid>
+  </Grid>
+</Window>

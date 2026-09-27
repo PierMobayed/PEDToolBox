@@ -1,0 +1,21 @@
+<UserControl x:Class="PedToolbox.App.Views.RestoreView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <StackPanel>
+    <TextBlock Style="{StaticResource Subtitle}"
+               Text="System Restore via WMI root\default SystemRestore. Admin is required to create a point. v1 also had registry/task/driver backups — those land in a later v3 slice."/>
+    <Border Style="{StaticResource Card}">
+      <StackPanel>
+        <TextBlock Text="Description"/>
+        <TextBox x:Name="DescriptionBox" Text="PED Toolbox checkpoint" Margin="0,8,0,12"/>
+        <WrapPanel>
+          <Button Style="{StaticResource PrimaryButton}" Content="Create restore point" Click="Create_OnClick"/>
+          <Button Style="{StaticResource GhostButton}" Content="Refresh list" Click="Refresh_OnClick"/>
+          <Button Style="{StaticResource GhostButton}" Content="Open System Restore UI" Click="OpenUi_OnClick"/>
+        </WrapPanel>
+        <TextBlock x:Name="StatusText" Style="{StaticResource Muted}" Margin="0,8,0,0"/>
+      </StackPanel>
+    </Border>
+    <DataGrid x:Name="PointsGrid" Height="320"/>
+  </StackPanel>
+</UserControl>

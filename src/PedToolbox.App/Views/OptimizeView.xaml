@@ -1,0 +1,22 @@
+<UserControl x:Class="PedToolbox.App.Views.OptimizeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <StackPanel>
+    <TextBlock Style="{StaticResource Subtitle}"
+               Text="v1 Step 5 / v2 Service Optimizer. JSON profiles were copied into Assets/Profiles. Tweaked never applies without an extra confirmation. Store submissions should keep Apply disabled (StoreSafe=false)."/>
+    <Border Style="{StaticResource Card}">
+      <StackPanel>
+        <DockPanel>
+          <ComboBox x:Name="ProfileBox" Width="220" DockPanel.Dock="Left" Margin="0,0,12,0" SelectionChanged="ProfileBox_OnSelectionChanged"/>
+          <WrapPanel>
+            <Button Style="{StaticResource GhostButton}" Content="Load" Click="Load_OnClick"/>
+            <Button Style="{StaticResource PrimaryButton}" Content="Apply profile" Click="Apply_OnClick"/>
+            <Button Style="{StaticResource GhostButton}" Content="Restore Windows defaults from profile" Click="Defaults_OnClick"/>
+          </WrapPanel>
+        </DockPanel>
+        <TextBlock x:Name="StatusText" Style="{StaticResource Muted}" Margin="0,10,0,0"/>
+      </StackPanel>
+    </Border>
+    <DataGrid x:Name="Grid" Height="380"/>
+  </StackPanel>
+</UserControl>

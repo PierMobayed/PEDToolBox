@@ -1,0 +1,24 @@
+PackageIdentifier: PierMobayed.PEDToolbox
+PackageVersion: 3.0.0
+PackageLocale: en-US
+Publisher: PierMobayed
+PublisherUrl: https://pedtoolbox.com
+PublisherSupportUrl: https://github.com/PierMobayed/PEDToolBox/issues
+Author: PierMobayed
+PackageName: PED Toolbox
+PackageUrl: https://github.com/PierMobayed/PEDToolBox
+License: MIT
+LicenseUrl: https://github.com/PierMobayed/PEDToolBox
+Copyright: Copyright (c) 2026 PierMobayed
+ShortDescription: Modern Windows 10/11 toolbox for repair, cleanup, apps, and safe optimization.
+Description: PED Toolbox helps you create restore points, inspect the PC, run SFC/DISM, manage winget installs, clean temp files, and optionally apply documented Windows service profiles. Use at your own risk; create a restore point first.
+Moniker: pedtoolbox
+Tags:
+- windows
+- cleanup
+- repair
+- winget
+- privacy
+- optimization
+ManifestType: defaultLocale
+ManifestVersion: 1.6.0

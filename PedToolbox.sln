@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A50B378C-24C1-4C94-9EC1-7991614F029A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PedToolbox.Core", "src\PedToolbox.Core\PedToolbox.Core.csproj", "{965ADA8A-307C-4C97-B2E0-8B52A8ECA7EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PedToolbox.App", "src\PedToolbox.App\PedToolbox.App.csproj", "{29531186-FB5B-4CA2-8A16-D478D3EDBAE1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{965ADA8A-307C-4C97-B2E0-8B52A8ECA7EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{965ADA8A-307C-4C97-B2E0-8B52A8ECA7EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{965ADA8A-307C-4C97-B2E0-8B52A8ECA7EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{965ADA8A-307C-4C97-B2E0-8B52A8ECA7EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29531186-FB5B-4CA2-8A16-D478D3EDBAE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29531186-FB5B-4CA2-8A16-D478D3EDBAE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29531186-FB5B-4CA2-8A16-D478D3EDBAE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29531186-FB5B-4CA2-8A16-D478D3EDBAE1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{965ADA8A-307C-4C97-B2E0-8B52A8ECA7EA} = {A50B378C-24C1-4C94-9EC1-7991614F029A}
+		{29531186-FB5B-4CA2-8A16-D478D3EDBAE1} = {A50B378C-24C1-4C94-9EC1-7991614F029A}
+	EndGlobalSection
+EndGlobal

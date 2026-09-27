@@ -1,0 +1,35 @@
+<UserControl x:Class="PedToolbox.App.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <StackPanel>
+    <TextBlock Style="{StaticResource Subtitle}"
+               Text="Native rewrite of PED Toolbox. v1 stays a batch script. v2 was an unfinished WinForms parser. v3 runs Windows APIs and winget directly."/>
+    <UniformGrid Columns="2">
+      <Border Style="{StaticResource Card}" Margin="0,0,12,12">
+        <StackPanel>
+          <TextBlock Style="{StaticResource Muted}" Text="Computer"/>
+          <TextBlock x:Name="MachineText" FontSize="18" FontWeight="SemiBold"/>
+          <TextBlock x:Name="OsText" Style="{StaticResource Muted}" Margin="0,6,0,0"/>
+        </StackPanel>
+      </Border>
+      <Border Style="{StaticResource Card}" Margin="0,0,0,12">
+        <StackPanel>
+          <TextBlock Style="{StaticResource Muted}" Text="Memory / disk"/>
+          <TextBlock x:Name="RamText" FontSize="18" FontWeight="SemiBold"/>
+          <TextBlock x:Name="DiskText" Style="{StaticResource Muted}" Margin="0,6,0,0"/>
+        </StackPanel>
+      </Border>
+    </UniformGrid>
+    <Border Style="{StaticResource Card}">
+      <StackPanel>
+        <TextBlock FontWeight="SemiBold" Text="Recommended first run"/>
+        <TextBlock Style="{StaticResource Muted}" Margin="0,6,0,12"
+                   Text="Create a restore point, glance at diagnostics, then use winget or junk cleanup. Service profiles are opt-in and logged."/>
+        <WrapPanel>
+          <Button Style="{StaticResource PrimaryButton}" Content="Refresh snapshot" Click="Refresh_OnClick"/>
+          <Button Style="{StaticResource GhostButton}" Content="Open activity log folder" Click="OpenLog_OnClick"/>
+        </WrapPanel>
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

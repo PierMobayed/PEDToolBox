@@ -1,0 +1,35 @@
+<UserControl x:Class="PedToolbox.App.Views.RepairView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <StackPanel>
+    <TextBlock Style="{StaticResource Subtitle}"
+               Text="v1 Step 1. These tools can take a long time. SFC and DISM request elevation if you are not admin. Nothing runs until you click."/>
+    <Border Style="{StaticResource Card}">
+      <StackPanel>
+        <TextBlock FontWeight="SemiBold" Text="Windows Update"/>
+        <TextBlock Style="{StaticResource Muted}" Text="Opens the Settings page. No silent update engine." Margin="0,4,0,10"/>
+        <Button Style="{StaticResource PrimaryButton}" Content="Open Windows Update" Click="Update_OnClick"/>
+      </StackPanel>
+    </Border>
+    <Border Style="{StaticResource Card}">
+      <StackPanel>
+        <TextBlock FontWeight="SemiBold" Text="System File Checker"/>
+        <TextBlock Style="{StaticResource Muted}" Text="sfc /scannow" Margin="0,4,0,10"/>
+        <Button Style="{StaticResource GhostButton}" Content="Run SFC" Click="Sfc_OnClick"/>
+      </StackPanel>
+    </Border>
+    <Border Style="{StaticResource Card}">
+      <StackPanel>
+        <TextBlock FontWeight="SemiBold" Text="DISM RestoreHealth"/>
+        <TextBlock Style="{StaticResource Muted}" Text="dism /Online /Cleanup-Image /RestoreHealth" Margin="0,4,0,10"/>
+        <Button Style="{StaticResource GhostButton}" Content="Run DISM" Click="Dism_OnClick"/>
+      </StackPanel>
+    </Border>
+    <Border Style="{StaticResource Card}">
+      <StackPanel>
+        <TextBlock FontWeight="SemiBold" Text="Windows Security"/>
+        <Button Style="{StaticResource GhostButton}" Content="Open Windows Security" Click="Security_OnClick"/>
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

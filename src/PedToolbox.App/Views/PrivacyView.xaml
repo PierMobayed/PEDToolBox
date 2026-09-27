@@ -1,0 +1,26 @@
+<UserControl x:Class="PedToolbox.App.Views.PrivacyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <StackPanel>
+    <TextBlock Style="{StaticResource Subtitle}"
+               Text="Conservative privacy switches. Telemetry and activity history write HKLM policies and need admin. Advertising ID is per-user."/>
+    <ItemsControl x:Name="ToggleList">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <Border Style="{StaticResource Card}">
+            <DockPanel>
+              <CheckBox DockPanel.Dock="Right" VerticalAlignment="Center"
+                        IsChecked="{Binding IsEnabled, Mode=TwoWay}"
+                        Checked="OnToggle" Unchecked="OnToggle" Tag="{Binding}"/>
+              <StackPanel>
+                <TextBlock FontWeight="SemiBold" Text="{Binding Title}"/>
+                <TextBlock Style="{StaticResource Muted}" Text="{Binding Description}"/>
+              </StackPanel>
+            </DockPanel>
+          </Border>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <Button Style="{StaticResource GhostButton}" Content="Reload from registry" Click="Reload_OnClick"/>
+  </StackPanel>
+</UserControl>

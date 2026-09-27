@@ -1,0 +1,17 @@
+<UserControl x:Class="PedToolbox.App.Views.DiagnosticsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <StackPanel>
+    <TextBlock Style="{StaticResource Subtitle}"
+               Text="Read-only diagnostics. v1 Step 0 also launched speedtest and Windows ISO helpers; those remain links, not bundled downloads."/>
+    <Border Style="{StaticResource Card}">
+      <TextBlock x:Name="InfoText" FontFamily="Cascadia Mono, Consolas" FontSize="13"/>
+    </Border>
+    <DataGrid x:Name="DisksGrid" Height="180" Margin="0,0,0,12"/>
+    <WrapPanel>
+      <Button Style="{StaticResource GhostButton}" Content="Refresh" Click="Refresh_OnClick"/>
+      <Button Style="{StaticResource GhostButton}" Content="Open msinfo32" Click="Msinfo_OnClick"/>
+      <Button Style="{StaticResource GhostButton}" Content="Fast.com speed test" Click="Speed_OnClick"/>
+    </WrapPanel>
+  </StackPanel>
+</UserControl>

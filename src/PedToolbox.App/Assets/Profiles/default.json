@@ -1,0 +1,532 @@
+﻿{
+    "Security":  {
+                     "DisplayName":  "Security Services",
+                     "Services":  [
+                                      {
+                                          "ServiceName":  "WinDefend",
+                                          "DefaultStartupType":  "Automatic",
+                                          "Description":  "Provides malware protection for Windows.",
+                                          "DisplayName":  "Microsoft Defender Antivirus Service",
+                                          "ProfileStartupType":  "Automatic"
+                                      },
+                                      {
+                                          "ServiceName":  "SecurityHealthService",
+                                          "DefaultStartupType":  "Automatic",
+                                          "Description":  "Monitors and reports security health.",
+                                          "DisplayName":  "Windows Security Service",
+                                          "ProfileStartupType":  "Automatic"
+                                      },
+                                      {
+                                          "ServiceName":  "wscsvc",
+                                          "DefaultStartupType":  "Automatic",
+                                          "Description":  "Monitors system security settings and alerts.",
+                                          "DisplayName":  "Security Center",
+                                          "ProfileStartupType":  "Automatic"
+                                      },
+                                      {
+                                          "ServiceName":  "Sense",
+                                          "DefaultStartupType":  "Manual",
+                                          "Description":  "Provides advanced threat protection capabilities.",
+                                          "DisplayName":  "Windows Defender Advanced Threat Protection",
+                                          "ProfileStartupType":  "Manual"
+                                      },
+                                      {
+                                          "ServiceName":  "WdNisSvc",
+                                          "DefaultStartupType":  "Manual",
+                                          "Description":  "Network-based protection against exploits.",
+                                          "DisplayName":  "Microsoft Defender Antivirus Network Inspection Service",
+                                          "ProfileStartupType":  "Manual"
+                                      }
+                                  ]
+                 },
+    "Accessibility":  {
+                          "DisplayName":  "Accessibility Services",
+                          "Services":  [
+                                           {
+                                               "ServiceName":  "TabletInputService",
+                                               "DefaultStartupType":  "Manual",
+                                               "Description":  "Enables touch keyboard and handwriting recognition.",
+                                               "DisplayName":  "Touch Keyboard and Handwriting Panel Service",
+                                               "ProfileStartupType":  "Manual"
+                                           },
+                                           {
+                                               "ServiceName":  "stisvc",
+                                               "DefaultStartupType":  "Manual",
+                                               "Description":  "Provides image acquisition services for scanners and cameras.",
+                                               "DisplayName":  "Windows Image Acquisition",
+                                               "ProfileStartupType":  "Manual"
+                                           }
+                                       ]
+                      },
+    "Camera":  {
+                   "DisplayName":  "Camera Services",
+                   "Services":  [
+                                    {
+                                        "ServiceName":  "FrameServer",
+                                        "DefaultStartupType":  "Manual",
+                                        "Description":  "Enables multiple concurrent camera streams.",
+                                        "DisplayName":  "Windows Camera Frame Server",
+                                        "ProfileStartupType":  "Manual"
+                                    },
+                                    {
+                                        "ServiceName":  "camsvc",
+                                        "DefaultStartupType":  "Manual",
+                                        "Description":  "Provides functionality for camera devices.",
+                                        "DisplayName":  "Camera Service",
+                                        "ProfileStartupType":  "Manual"
+                                    }
+                                ]
+               },
+    "WindowsUpdate":  {
+                          "DisplayName":  "Windows Update Services",
+                          "Services":  [
+                                           {
+                                               "ServiceName":  "wuauserv",
+                                               "DefaultStartupType":  "Manual",
+                                               "Description":  "Enables detection, download, and installation of updates.",
+                                               "DisplayName":  "Windows Update",
+                                               "ProfileStartupType":  "Manual"
+                                           },
+                                           {
+                                               "ServiceName":  "UsoSvc",
+                                               "DefaultStartupType":  "Automatic",
+                                               "Description":  "Manages Windows Update operations.",
+                                               "DisplayName":  "Update Orchestrator Service",
+                                               "ProfileStartupType":  "Automatic"
+                                           },
+                                           {
+                                               "ServiceName":  "BITS",
+                                               "DefaultStartupType":  "Manual",
+                                               "Description":  "Transfers files in the background using idle bandwidth.",
+                                               "DisplayName":  "Background Intelligent Transfer Service",
+                                               "ProfileStartupType":  "Manual"
+                                           },
+                                           {
+                                               "ServiceName":  "DoSvc",
+                                               "DefaultStartupType":  "Automatic",
+                                               "Description":  "Optimizes delivery of Windows updates and Store apps.",
+                                               "DisplayName":  "Delivery Optimization",
+                                               "ProfileStartupType":  "Automatic"
+                                           }
+                                       ]
+                      },
+    "TelemetryDiagnostics":  {
+                                 "DisplayName":  "Telemetry and Diagnostics",
+                                 "Services":  [
+                                                  {
+                                                      "ServiceName":  "DiagTrack",
+                                                      "DefaultStartupType":  "Automatic",
+                                                      "Description":  "Collects and sends diagnostic and usage data.",
+                                                      "DisplayName":  "Connected User Experiences and Telemetry",
+                                                      "ProfileStartupType":  "Automatic"
+                                                  },
+                                                  {
+                                                      "ServiceName":  "diagnosticshub.standardcollector.service",
+                                                      "DefaultStartupType":  "Manual",
+                                                      "Description":  "Collects diagnostic data for development tools.",
+                                                      "DisplayName":  "Diagnostics Hub Standard Collector",
+                                                      "ProfileStartupType":  "Manual"
+                                                  },
+                                                  {
+                                                      "ServiceName":  "WdiServiceHost",
+                                                      "DefaultStartupType":  "Manual",
+                                                      "Description":  "Performs troubleshooting and diagnostic actions.",
+                                                      "DisplayName":  "Diagnostic Service Host",
+                                                      "ProfileStartupType":  "Manual"
+                                                  },
+                                                  {
+                                                      "ServiceName":  "WdiSystemHost",
+                                                      "DefaultStartupType":  "Manual",
+                                                      "Description":  "Supports diagnostic system operations.",
+                                                      "DisplayName":  "Diagnostic System Host",
+                                                      "ProfileStartupType":  "Manual"
+                                                  }
+                                              ]
+                             },
+    "Printing":  {
+                     "DisplayName":  "Printing Services",
+                     "Services":  [
+                                      {
+                                          "ServiceName":  "Spooler",
+                                          "DefaultStartupType":  "Automatic",
+                                          "Description":  "Loads files into memory for printing.",
+                                          "DisplayName":  "Print Spooler",
+                                          "ProfileStartupType":  "Automatic"
+                                      }
+                                  ]
+                 },
+    "Location":  {
+                     "DisplayName":  "Location Services",
+                     "Services":  [
+                                      {
+                                          "ServiceName":  "lfsvc",
+                                          "DefaultStartupType":  "Manual",
+                                          "Description":  "Monitors the current location of the system.",
+                                          "DisplayName":  "Geolocation Service",
+                                          "ProfileStartupType":  "Manual"
+                                      }
+                                  ]
+                 },
+    "Networking":  {
+                       "DisplayName":  "Networking Services",
+                       "Services":  [
+                                        {
+                                            "ServiceName":  "Dhcp",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Registers and updates IP addresses.",
+                                            "DisplayName":  "DHCP Client",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "Dnscache",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Resolves and caches DNS names.",
+                                            "DisplayName":  "DNS Client",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "NlaSvc",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Collects and stores network configuration.",
+                                            "DisplayName":  "Network Location Awareness",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "WlanSvc",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Manages Wi-Fi connections.",
+                                            "DisplayName":  "WLAN AutoConfig",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "lmhosts",
+                                            "DefaultStartupType":  "Manual",
+                                            "Description":  "Provides NetBIOS name resolution.",
+                                            "DisplayName":  "TCP/IP NetBIOS Helper",
+                                            "ProfileStartupType":  "Manual"
+                                        },
+                                        {
+                                            "ServiceName":  "LanmanWorkstation",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Creates and maintains client network connections.",
+                                            "DisplayName":  "Workstation",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "LanmanServer",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Supports file, print, and named-pipe sharing.",
+                                            "DisplayName":  "Server",
+                                            "ProfileStartupType":  "Automatic"
+                                        }
+                                    ]
+                   },
+    "CoreSystem":  {
+                       "DisplayName":  "Core Windows System Services",
+                       "Services":  [
+                                        {
+                                            "ServiceName":  "RpcSs",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Core service for Windows operations and communication.",
+                                            "DisplayName":  "Remote Procedure Call (RPC)",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "DcomLaunch",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Launches COM and DCOM servers.",
+                                            "DisplayName":  "DCOM Server Process Launcher",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "PlugPlay",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Manages device detection and configuration.",
+                                            "DisplayName":  "Plug and Play",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "EventLog",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Logs system, security, and application events.",
+                                            "DisplayName":  "Windows Event Log",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "Power",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Manages power policy and power events.",
+                                            "DisplayName":  "Power",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "W32Time",
+                                            "DefaultStartupType":  "Manual",
+                                            "Description":  "Maintains date and time synchronization.",
+                                            "DisplayName":  "Windows Time",
+                                            "ProfileStartupType":  "Manual"
+                                        },
+                                        {
+                                            "ServiceName":  "Schedule",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Schedules and runs tasks automatically.",
+                                            "DisplayName":  "Task Scheduler",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "Winmgmt",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Provides system management information.",
+                                            "DisplayName":  "Windows Management Instrumentation",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "TrustedInstaller",
+                                            "DefaultStartupType":  "Manual",
+                                            "Description":  "Enables installation, modification, and removal of Windows updates.",
+                                            "DisplayName":  "Windows Modules Installer",
+                                            "ProfileStartupType":  "Manual"
+                                        },
+                                        {
+                                            "ServiceName":  "Themes",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Manages visual themes.",
+                                            "DisplayName":  "Themes",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "ShellHWDetection",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Provides notifications for AutoPlay hardware events.",
+                                            "DisplayName":  "Shell Hardware Detection",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "WSearch",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Provides content indexing and search results.",
+                                            "DisplayName":  "Windows Search",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "MpsSvc",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Filters network traffic and enforces firewall policies.",
+                                            "DisplayName":  "Windows Firewall",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "iphlpsvc",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Provides IPv6 connectivity and transition technologies.",
+                                            "DisplayName":  "IP Helper",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "WpnService",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Manages push notifications.",
+                                            "DisplayName":  "Windows Push Notifications System Service",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "WpnUserService",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "User-specific push notification service.",
+                                            "DisplayName":  "Windows Push Notifications User Service",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "WbioSrvc",
+                                            "DefaultStartupType":  "Manual",
+                                            "Description":  "Provides biometric authentication support.",
+                                            "DisplayName":  "Windows Biometric Service",
+                                            "ProfileStartupType":  "Manual"
+                                        },
+                                        {
+                                            "ServiceName":  "WerSvc",
+                                            "DefaultStartupType":  "Manual",
+                                            "Description":  "Reports application and system errors.",
+                                            "DisplayName":  "Windows Error Reporting Service",
+                                            "ProfileStartupType":  "Manual"
+                                        },
+                                        {
+                                            "ServiceName":  "LicenseManager",
+                                            "DefaultStartupType":  "Manual",
+                                            "Description":  "Manages Windows Store licenses.",
+                                            "DisplayName":  "Windows License Manager Service",
+                                            "ProfileStartupType":  "Manual"
+                                        },
+                                        {
+                                            "ServiceName":  "Appinfo",
+                                            "DefaultStartupType":  "Manual",
+                                            "Description":  "Facilitates elevation of privileges for applications.",
+                                            "DisplayName":  "Application Information",
+                                            "ProfileStartupType":  "Manual"
+                                        },
+                                        {
+                                            "ServiceName":  "AppMgmt",
+                                            "DefaultStartupType":  "Manual",
+                                            "Description":  "Provides software installation services.",
+                                            "DisplayName":  "Application Management",
+                                            "ProfileStartupType":  "Manual"
+                                        },
+                                        {
+                                            "ServiceName":  "CryptSvc",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Provides key management and certificate services.",
+                                            "DisplayName":  "Cryptographic Services",
+                                            "ProfileStartupType":  "Automatic"
+                                        }
+                                    ]
+                   },
+    "SmartCard":  {
+                      "DisplayName":  "SmartCard and Enterprise Services",
+                      "Services":  [
+                                       {
+                                           "ServiceName":  "SCardSvr",
+                                           "DefaultStartupType":  "Manual",
+                                           "Description":  "Manages access to smart cards used for authentication.",
+                                           "DisplayName":  "Smart Card",
+                                           "ProfileStartupType":  "Manual"
+                                       },
+                                       {
+                                           "ServiceName":  "SColicySvc",
+                                           "DefaultStartupType":  "Manual",
+                                           "Description":  "Enforces smart card removal behavior for security.",
+                                           "DisplayName":  "Smart Card Removal Policy",
+                                           "ProfileStartupType":  "Manual"
+                                       }
+                                   ]
+                  },
+    "Bluetooth":  {
+                      "DisplayName":  "Bluetooth Services",
+                      "Services":  [
+                                       {
+                                           "ServiceName":  "bthserv",
+                                           "DefaultStartupType":  "Manual",
+                                           "Description":  "Supports Bluetooth devices.",
+                                           "DisplayName":  "Bluetooth Support Service",
+                                           "ProfileStartupType":  "Manual"
+                                       }
+                                   ]
+                  },
+    "Microphone":  {
+                       "DisplayName":  "Microphone Services",
+                       "Services":  [
+                                        {
+                                            "ServiceName":  "AudioSrv",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Manages audio for Windows-based programs.",
+                                            "DisplayName":  "Windows Audio",
+                                            "ProfileStartupType":  "Automatic"
+                                        },
+                                        {
+                                            "ServiceName":  "AudioEndpointBuilder",
+                                            "DefaultStartupType":  "Automatic",
+                                            "Description":  "Manages audio endpoints for Windows.",
+                                            "DisplayName":  "Windows Audio Endpoint Builder",
+                                            "ProfileStartupType":  "Automatic"
+                                        }
+                                    ]
+                   },
+    "Storage":  {
+                    "DisplayName":  "Storage and Disk Services",
+                    "Services":  [
+                                     {
+                                         "ServiceName":  "StorSvc",
+                                         "DefaultStartupType":  "Automatic",
+                                         "Description":  "Manages storage settings and external storage devices.",
+                                         "DisplayName":  "Storage Service",
+                                         "ProfileStartupType":  "Automatic"
+                                     },
+                                     {
+                                         "ServiceName":  "defragsvc",
+                                         "DefaultStartupType":  "Manual",
+                                         "Description":  "Optimizes storage drives for performance.",
+                                         "DisplayName":  "Optimize Drives",
+                                         "ProfileStartupType":  "Manual"
+                                     },
+                                     {
+                                         "ServiceName":  "SysMain",
+                                         "DefaultStartupType":  "Automatic",
+                                         "Description":  "Improves system performance over time.",
+                                         "DisplayName":  "SysMain",
+                                         "ProfileStartupType":  "Automatic"
+                                     },
+                                     {
+                                         "ServiceName":  "smphost",
+                                         "DefaultStartupType":  "Manual",
+                                         "Description":  "Manages Storage Spaces metadata.",
+                                         "DisplayName":  "Microsoft Storage Spaces SMP",
+                                         "ProfileStartupType":  "Manual"
+                                     }
+                                 ]
+                },
+    "RemoteAccess":  {
+                         "DisplayName":  "Remote Access Services",
+                         "Services":  [
+                                          {
+                                              "ServiceName":  "RemoteRegistry",
+                                              "DefaultStartupType":  "Disabled",
+                                              "Description":  "Allows remote users to modify the registry.",
+                                              "DisplayName":  "Remote Registry",
+                                              "ProfileStartupType":  "Disabled"
+                                          },
+                                          {
+                                              "ServiceName":  "TermService",
+                                              "DefaultStartupType":  "Manual",
+                                              "Description":  "Allows users to connect interactively to a remote computer.",
+                                              "DisplayName":  "Remote Desktop Services",
+                                              "ProfileStartupType":  "Manual"
+                                          },
+                                          {
+                                              "ServiceName":  "SessionEnv",
+                                              "DefaultStartupType":  "Manual",
+                                              "Description":  "Manages Remote Desktop settings.",
+                                              "DisplayName":  "Remote Desktop Configuration",
+                                              "ProfileStartupType":  "Manual"
+                                          },
+                                          {
+                                              "ServiceName":  "UmRdpService",
+                                              "DefaultStartupType":  "Manual",
+                                              "Description":  "Redirects devices in Remote Desktop sessions.",
+                                              "DisplayName":  "Remote Desktop Services UserMode Port Redirector",
+                                              "ProfileStartupType":  "Manual"
+                                          }
+                                      ]
+                     },
+    "XboxGaming":  {
+                       "DisplayName":  "Xbox / Gaming Services",
+                       "Services":  [
+                                        {
+                                            "ServiceName":  "XblAuthManager",
+                                            "DefaultStartupType":  "Manual",
+                                            "Description":  "Manages Xbox Live authentication.",
+                                            "DisplayName":  "Xbox Live Auth Manager",
+                                            "ProfileStartupType":  "Manual"
+                                        },
+                                        {
+                                            "ServiceName":  "XblGameSave",
+                                            "DefaultStartupType":  "Manual",
+                                            "Description":  "Synchronizes Xbox Live game saves.",
+                                            "DisplayName":  "Xbox Live Game Save",
+                                            "ProfileStartupType":  "Manual"
+                                        },
+                                        {
+                                            "ServiceName":  "XboxGipSvc",
+                                            "DefaultStartupType":  "Manual",
+                                            "Description":  "Manages Xbox controller accessories.",
+                                            "DisplayName":  "Xbox Accessory Management Service",
+                                            "ProfileStartupType":  "Manual"
+                                        },
+                                        {
+                                            "ServiceName":  "XboxNetApiSvc",
+                                            "DefaultStartupType":  "Manual",
+                                            "Description":  "Supports Xbox Live multiplayer.",
+                                            "DisplayName":  "Xbox Live Networking Service",
+                                            "ProfileStartupType":  "Manual"
+                                        }
+                                    ]
+                   }
+}
