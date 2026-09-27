@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.0 — 2026-09-27 (release)
+
+- GitHub Release: https://github.com/PierMobayed/PEDToolBox/releases/tag/v3.1.0
+- Self-contained zip SHA256 `85997DF14A14A97D975C43D511C4D56CE2009EBDB34E6500C05A9A49BABAC35B`
+
 ## 3.1.0 — 2026-09-27
 
 - App icon (`Assets/app.ico`) and Microsoft Store / MSIX logos under `packaging/msix/Assets`.

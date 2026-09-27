@@ -18,7 +18,7 @@ Double-click **`Start-PEDToolbox.bat`** in this folder.
 
 It builds Debug if needed and opens the window. Details: [docs/RUN.md](docs/RUN.md).
 
-Publish/zip (`packaging\publish-exe.ps1`) is a later step, not required to try the app.
+**Download (no build):** [Release v3.1.0](https://github.com/PierMobayed/PEDToolBox/releases/tag/v3.1.0) — unzip `PEDToolbox-3.1.0-win-x64.zip` and run `PEDToolbox.exe`.
 
 ## Documentation
 

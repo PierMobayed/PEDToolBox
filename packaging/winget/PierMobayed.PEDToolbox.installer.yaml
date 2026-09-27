@@ -1,4 +1,4 @@
-# Replace InstallerUrl and InstallerSha256 after you publish a signed build.
+# Published: GitHub Release v3.1.0 self-contained zip. SHA256 is of that asset.
 PackageIdentifier: PierMobayed.PEDToolbox
 PackageVersion: 3.1.0
 InstallerLocale: en-US
@@ -12,7 +12,7 @@ UpgradeBehavior: install
 Installers:
   - Architecture: x64
     InstallerUrl: https://github.com/PierMobayed/PEDToolBox/releases/download/v3.1.0/PEDToolbox-3.1.0-win-x64.zip
-    InstallerSha256: 0000000000000000000000000000000000000000000000000000000000000000
+    InstallerSha256: 85997DF14A14A97D975C43D511C4D56CE2009EBDB34E6500C05A9A49BABAC35B
     InstallerSwitches:
       Custom: ""
 ManifestType: installer

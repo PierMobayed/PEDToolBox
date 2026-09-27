@@ -17,7 +17,7 @@
 
 ## After this plan (upgrade later)
 
-- Host the zip on a GitHub Release, fill SHA256, open winget-pkgs PR
+- PR to microsoft/winget-pkgs using `packaging/winget` (URL and SHA256 are filled for v3.1.0)
 - Partner Center MSIX signing (needs your publisher CN and account)
 - Bulgarian UI strings
 - Winget `--output json` parser
