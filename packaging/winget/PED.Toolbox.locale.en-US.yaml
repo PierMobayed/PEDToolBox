@@ -2,10 +2,10 @@ PackageIdentifier: PED.Toolbox
 PackageVersion: 3.1.0
 PackageLocale: en-US
 Publisher: PED
-PublisherUrl: https://ped.run
+PublisherUrl: https://github.com/PierMobayed/PEDToolBox
 PublisherSupportUrl: https://github.com/PierMobayed/PEDToolBox/issues
 PackageName: PED Toolbox
-PackageUrl: https://ped.run
+PackageUrl: https://piermobayed.github.io/PEDToolBox/
 License: MIT
 LicenseUrl: https://github.com/PierMobayed/PEDToolBox/blob/v3/LICENSE
 ReleaseNotesUrl: https://github.com/PierMobayed/PEDToolBox/releases/tag/v3.1.0

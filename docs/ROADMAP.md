@@ -17,7 +17,8 @@
 
 ## After this plan (upgrade later)
 
-- PR to microsoft/winget-pkgs: https://github.com/microsoft/winget-pkgs/pull/442279 (`PED.Toolbox`)
+- PR to microsoft/winget-pkgs: https://github.com/microsoft/winget-pkgs/pull/442279 (`PED.Toolbox`; ped.run URLs removed after validator timeout)
+- v1 stays on `ped.run` (`irm ped.run | iex`); v3 is winget + GitHub Release
 - Partner Center MSIX signing (needs your publisher CN and account)
 - Bulgarian UI strings
 - Winget `--output json` parser

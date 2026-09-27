@@ -20,6 +20,14 @@ It builds Debug if needed and opens the window. Details: [docs/RUN.md](docs/RUN.
 
 **Download (no build):** [Release v3.1.0](https://github.com/PierMobayed/PEDToolBox/releases/tag/v3.1.0) — unzip `PEDToolbox-3.1.0-win-x64.zip` and run `PEDToolbox.exe`.
 
+## v1 vs v3
+
+| | v1 (batch) | v3 (this app) |
+|---|---|---|
+| Install | `irm ped.run \| iex` | `winget install PED.Toolbox` or the GitHub zip |
+| Git branch | `Tool` | `v3` |
+| `ped.run` | Stays on v1 | Not used for v3 |
+
 ## Documentation
 
 | File | What it answers |
