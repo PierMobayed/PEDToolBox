@@ -87,3 +87,13 @@ Store checklist:
 ## Signing
 
 Never commit `.pfx` files. Use a purchased Authenticode cert or Store signing after upload.
+
+### Decisions
+
+**Decision: Pier, 2026-10-12** — Ped will be signed through a free Microsoft Store individual developer account using MSIX. Microsoft re-signs the package after certification, so there is no SmartScreen warning. No paid code-signing certificate for now. Next step: Pier creates the Partner Center account at [storedeveloper.microsoft.com](https://storedeveloper.microsoft.com) (free for individuals, needs ID + selfie) and shares the publisher name for the MSIX manifest (T048). That unblocks T032-3 (signed MSIX to Partner Center). After the app is in the Store, winget can also point at the `msstore` source.
+
+**Decision: Pier, 2026-10-11** — Ped releases now run on Pier's PC through machine Shell, done by the Ped Release bot (same as naChas). The bridge and local Cursor are no longer used for releases. Known release blockers to plan later as code tasks: `pack-release.ps1` hardcodes 3.1.0 in the zip name (T049); no signing cert (now resolved by the Store route above).
+
+### winget-pkgs status
+
+PR [#442279](https://github.com/microsoft/winget-pkgs/pull/442279) (`PED.Toolbox`) is still waiting on a Microsoft moderator.

@@ -1,15 +1,23 @@
 # T032-3 — signed MSIX → Partner Center
 
-**Status:** todo  
-**Part of:** 3.2 “да може да се инсталира”
+**Status:** waiting (on T048)  
+**Part of:** 3.2 "да може да се инсталира"
 
 ## Goal
 
 Sideload and/or Microsoft Store listing for PED Toolbox.
 
-## Needs from you
+## Blocked on
 
-- Partner Center account
+**T048** — Create Microsoft Store (Partner Center) individual account and share publisher name. Owner: Pier.
+
+## Signing approach
+
+Decision: Pier, 2026-10-12 — signing goes through a free Microsoft Store individual developer account. Microsoft re-signs the MSIX after certification, so there is no SmartScreen warning. No paid code-signing certificate for now.
+
+## Needs from Pier
+
+- Partner Center account (T048)
 - Store-assigned publisher CN
 - Privacy policy URL
 - Never commit `.pfx`
