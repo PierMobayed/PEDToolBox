@@ -13,16 +13,20 @@ How we ship a new **version** of PED Toolbox to users. No passwords, keys, or si
 | Ped Code | Opens the **release PR** on `v3` (version bump, notes, any packaging fixes) |
 | Ped Review | Reviews the PR (diff, `asInvoker`, Store/MSIX, winget YAML, secrets, no accidental `Tool` / v1 overwrites) |
 | Ped Product | **Go** with PR number and approved **head SHA** |
-| Grok Coord | Merges after Review + Product go |
+| Grok Coord | Merges after the merge gate; Ped Product merges only if Coord is unavailable |
 | Ped Release | Woken with **version**, merge **SHA**, and approved **head SHA**; builds and publishes on Pier’s PC |
 
 Nobody pushes to `v3` directly.
 
+## Merge gate (release PR and all PRs)
+
+Before merge: **Ped Review** approves the **latest head SHA**; **CI** is green on that SHA; **Ped Product** gives a **go** naming PR **#** and **head SHA**. Any push after the go needs a new Review approve and a new Product go. PRs touching secrets/keys/signing/payments/DB deletes (including MSIX/Store signing) also need **Pier’s explicit OK in DM**. **Grok Coord** merges (Ped Product fallback only if Coord is unavailable). See [TEAM.md](TEAM.md).
+
 ## End-to-end flow
 
 1. **Release PR** on `v3` (code + in-PR doc updates for the change).
-2. **Ped Review** → **Ped Product go** (record PR # and head SHA).
-3. **Grok Coord** merges.
+2. Pass the **merge gate** (Review on latest SHA, green CI, Product go with PR # + SHA; Pier DM if signing/secrets scope).
+3. **Grok Coord** merges (or Ped Product if Coord is unavailable).
 4. **Wake Ped Release** with: version string, merge commit SHA, approved PR head SHA.
 5. On **Pier’s PC** (machine Shell):
    - `git` checkout the merge SHA on `v3`.
@@ -48,4 +52,4 @@ Signing material (`.pfx`, Partner Center secrets) stays **off** the repo and off
 | T049 | `pack-release.ps1` still names zips `3.1.0` — fix before the next release |
 | T048 / [T032-3](tasks/T032-3-msix-partner-center.md) | Partner Center account and Store signing path — MSIX/Store releases wait on Pier |
 
-Winget manifest updates after a Release: manual PR to `microsoft/winget-pkgs` until [T033-2](tasks/T033-2-winget-github-action.md); first package [PR #442279](https://github.com/microsoft/winget-pkgs/pull/442279) must merge before `winget install PED.Toolbox` works.
+Winget manifest updates after a Release: manual PR to `microsoft/winget-pkgs` until [T033-2](tasks/T033-2-winget-github-action.md); first package [PR #442279](https://github.com/microsoft/winget-pkgs/pull/442279) must merge before `winget install PED.Toolbox` works. **Opening any winget-pkgs PR always needs Pier’s explicit OK** before Ped Release (or anyone) submits it.

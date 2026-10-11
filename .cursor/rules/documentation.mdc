@@ -13,7 +13,7 @@ Short file map (PED Toolbox, branch `v3`):
 - `README.md` — what it is, how to run it
 - `docs/CHANGELOG.md` — dated product notes, newest first; will align with fleet release evidence (P0 risk effect, artifact SHA256/size when built)
 - `docs/HISTORY.md` — per-version finished work; together with `CHANGELOG.md` this repo’s CHANGELOG/HISTORY pair until folded into one file later
-- `docs/TASKS.md` — **task index today** (links to detail files); will be folded into `docs/BACKLOG.md` in a later PR
+- `docs/TASKS.md` — **task index today** (links to detail files); keeps current status keys (`todo` / `waiting` / `later` / `done`) until the BACKLOG migration PR, then switches to fleet keys; will be folded into `docs/BACKLOG.md` in a later PR
 - `docs/ROADMAP.md` — milestones, done vs later
 - `docs/RISKS.md` — `R-n` risks; status open/accepted/mitigated/closed; Impact; Likelihood; Decision
 - `docs/RELEASING.md` — release runbook, no secrets
