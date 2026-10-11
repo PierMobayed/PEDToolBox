@@ -17,7 +17,7 @@
 
 ## After this plan (upgrade later)
 
-Tracked in [TASKS.md](TASKS.md). Next implementation: T033-1 light installer, T033-2 winget GitHub Action, T033-3 in-app GitHub Release update check. T030 (formal UI review) can run anytime. 3.2 leftover: T032-2 **moderator merge**, T032-3 Partner Center. T047 is a v1/`Tool` fix, not this tree.
+Tracked in [TASKS.md](TASKS.md). **Next:** T048 (Pier creates Microsoft Store account, unblocks T032-3 and winget via msstore). After T032-2 merge, or in parallel: T033-1 light installer, T033-2 winget GitHub Action, T033-3 in-app GitHub Release update check. T030 (formal UI review) can run anytime. 3.2 leftover: T032-2 **moderator merge**, T032-3 Partner Center (waiting on T048). T047 is a v1/`Tool` fix, not this tree. T049 fixes the hardcoded 3.1.0 in `pack-release.ps1` (release blocker).
 
 Later (do not rush): T045 official default branch + `ped.run` kept separate; T046 power-user / Store-hostile features stay on v1.
 
