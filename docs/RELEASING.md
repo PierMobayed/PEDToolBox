@@ -1,0 +1,51 @@
+# Releasing
+
+**Status as of 2026-10-12**
+
+How we ship a new **version** of PED Toolbox to users. No passwords, keys, or signing files belong in this repo or in these steps.
+
+**Decision:** Pier, 2026-10-11 — releases run on Pier’s PC through **machine Shell** (remote shell on that machine), executed by the **Ped Release** bot. The bridge hub and a local Cursor session on Pier’s PC are **no longer** used for releases.
+
+## Who does what
+
+| Role | Responsibility |
+|---|---|
+| Ped Code | Opens the **release PR** on `v3` (version bump, notes, any packaging fixes) |
+| Ped Review | Reviews the PR (diff, `asInvoker`, Store/MSIX, winget YAML, secrets, no accidental `Tool` / v1 overwrites) |
+| Ped Product | **Go** with PR number and approved **head SHA** |
+| Grok Coord | Merges after Review + Product go |
+| Ped Release | Woken with **version**, merge **SHA**, and approved **head SHA**; builds and publishes on Pier’s PC |
+
+Nobody pushes to `v3` directly.
+
+## End-to-end flow
+
+1. **Release PR** on `v3` (code + in-PR doc updates for the change).
+2. **Ped Review** → **Ped Product go** (record PR # and head SHA).
+3. **Grok Coord** merges.
+4. **Wake Ped Release** with: version string, merge commit SHA, approved PR head SHA.
+5. On **Pier’s PC** (machine Shell):
+   - `git` checkout the merge SHA on `v3`.
+   - Build the release zip per [PACKAGING.md](PACKAGING.md) (today: `.\packaging\pack-release.ps1 -SelfContained` from the repo root).
+   - Create a **GitHub Release** on `v3` tagged `vX.Y.Z` with **only** the app zip as an asset (not the source tree). See [DOWNLOAD.md](DOWNLOAD.md).
+6. **Record evidence** in [CHANGELOG.md](CHANGELOG.md) and [HISTORY.md](HISTORY.md) (newest first): version, date, release URL, build SHA, artifact **SHA256** and **size**, what was intentionally not done, and effect on open P0 risks (e.g. `R-2 unchanged`).
+7. **Follow-up docs PR** after the release if anything still needs documenting.
+
+Signing material (`.pfx`, Partner Center secrets) stays **off** the repo and off GitHub; Store upload uses Pier’s account only.
+
+## Build checklist (matches PACKAGING + DOWNLOAD)
+
+1. Run `pack-release.ps1` with the intended flags (`-SelfContained` for a zero-runtime zip, or framework-dependent when [T033-1](tasks/T033-1-light-installer.md) is the default).
+2. Confirm `artifacts\SHA256.txt` matches the zip you will upload.
+3. `gh release create vX.Y.Z` (or equivalent) attaching **only** `artifacts\PEDToolbox-….zip`.
+4. Release notes: first link is the **direct download** URL (`…/releases/download/vX.Y.Z/…`), plus one line that source is branch `v3`, not the Release zip.
+5. Update README download link if the version changed.
+
+## Known blockers (see [RISKS.md](RISKS.md))
+
+| Id | Issue |
+|---|---|
+| T049 | `pack-release.ps1` still names zips `3.1.0` — fix before the next release |
+| T048 / [T032-3](tasks/T032-3-msix-partner-center.md) | Partner Center account and Store signing path — MSIX/Store releases wait on Pier |
+
+Winget manifest updates after a Release: manual PR to `microsoft/winget-pkgs` until [T033-2](tasks/T033-2-winget-github-action.md); first package [PR #442279](https://github.com/microsoft/winget-pkgs/pull/442279) must merge before `winget install PED.Toolbox` works.
