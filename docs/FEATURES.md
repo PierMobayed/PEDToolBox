@@ -1,5 +1,7 @@
 # Features (v3.1.0)
 
+**Status as of 2026-10-12**
+
 Every action is user-initiated. Destructive ones show a confirm dialog. Results go to the Activity log.
 
 | Page | What happens | Admin |

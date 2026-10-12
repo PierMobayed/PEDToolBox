@@ -1,5 +1,7 @@
 # Architecture
 
+**Status as of 2026-10-12**
+
 ## Daily start
 
 Double-click `Start-PEDToolbox.bat` in the v3 root. See `docs/RUN.md`.

@@ -1,11 +1,10 @@
 # T033-1 — smaller installer for faster winget updates
 
+**Status as of 2026-10-12**
+
+
 **Status:** proposed  
 **Next after:** T032-2 is healthy (or in parallel if we only change *future* artifacts)
-
-## Why
-
-The 3.1.0 GitHub zip is self-contained (**57.8 MB** compressed; unpacked ~140 MB). Every winget update re-downloads and scans that installer. A large all-in-one binary still costs scan time even though 3.1.0 already passed Installation Validation.
 
 ## Goal
 
@@ -16,7 +15,9 @@ Ship a **small** default artifact for winget:
 
 Keep a self-contained zip on GitHub Release as an optional “just run it” asset if we still want zero-runtime users.
 
-## Implementation sketch
+The 3.1.0 GitHub zip is self-contained (**57.8 MB** compressed; unpacked ~140 MB). Every winget update re-downloads and scans that installer. A large all-in-one binary still costs scan time even though 3.1.0 already passed Installation Validation.
+
+Implementation sketch:
 
 1. `pack-release.ps1` without `-SelfContained` as the winget asset (already the script default).
 2. Declare `PackageDependencies` on .NET Desktop Runtime in the winget installer YAML if required.
@@ -24,3 +25,17 @@ Keep a self-contained zip on GitHub Release as an optional “just run it” ass
 4. Document both assets on the Release notes.
 
 Detail also in [PACKAGING.md](../PACKAGING.md) § Winget updates should stay small.
+
+## Done
+
+none yet
+
+## Still waiting
+
+nothing
+
+## Do not
+
+- Do not open any winget-pkgs PR without Pier's explicit OK.
+- No secrets in repo; no `.pfx`.
+- No merge without Review + Product go.

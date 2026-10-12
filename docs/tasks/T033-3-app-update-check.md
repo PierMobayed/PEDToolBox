@@ -1,11 +1,10 @@
 # T033-3 — in-app update check vs GitHub Release
 
+**Status as of 2026-10-12**
+
+
 **Status:** proposed  
 **Next together with:** T033-1 / T033-2
-
-## Why
-
-Winget upgrades appear only after Microsoft merges a PR. GitHub Release is immediate. The app should tell the user when a newer **Release** exists.
 
 ## Goal
 
@@ -16,6 +15,20 @@ Winget upgrades appear only after Microsoft merges a PR. GitHub Release is immed
 - Respect rate limits; cache the result; work offline (fail quiet).
 - No telemetry.
 
-## Out of scope
+Winget upgrades appear only after Microsoft merges a PR. GitHub Release is immediate. The app should tell the user when a newer **Release** exists.
 
-Auto-install via winget inside the app until `PED.Toolbox` is actually in the community repo.
+Auto-install via winget inside the app is out of scope until `PED.Toolbox` is actually in the community repo.
+
+## Done
+
+none yet
+
+## Still waiting
+
+nothing
+
+## Do not
+
+- No silent overwrite of installed files without explicit user action.
+- No telemetry or hidden network calls beyond the GitHub release check.
+- No merge without Review + Product go.

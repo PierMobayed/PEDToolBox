@@ -1,5 +1,7 @@
 # Analysis — why v3 exists
 
+**Status as of 2026-10-12**
+
 Date: 2026-09-27  
 Scope: read-only review of the PED workspace, then a new tree under `v3` only.
 
