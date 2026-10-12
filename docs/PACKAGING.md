@@ -8,7 +8,7 @@
 | Display name | PED Toolbox |
 | Version | 3.1.0 |
 | Publisher display | PED Toolbox |
-| Publisher CN | `CN=PED Toolbox` (replace with your Authenticode / Store CN) |
+| Publisher CN | Table says `CN=PED Toolbox`; `packaging/msix/Package.appxmanifest` still has `CN=PierMobayed` until T048 — final CN comes from Pier's Store account |
 
 ## Store SKU vs full
 
@@ -63,9 +63,9 @@ The 3.1.0 Release zip is **self-contained** (57.8 MB on GitHub; unpacked much la
 For later updates, prefer:
 
 - a **framework-dependent** zip plus [.NET 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0), or **MSIX**
-- a **GitHub Action** that opens the `winget-pkgs` PR when you publish a Release (see tasks T033-1 and T033-2)
+- a **GitHub Action** that opens the `winget-pkgs` PR when you publish a Release (see [BACKLOG.md](BACKLOG.md) T033-1 and T033-2)
 
-Keep a self-contained zip on GitHub as an optional extra if you still want a zero-runtime download. In-app “is there a newer GitHub Release?” is T033-3 — that path does not wait for winget merge.
+Keep a self-contained zip on GitHub as an optional extra if you still want a zero-runtime download. In-app “is there a newer GitHub Release?” is [T033-3](tasks/T033-3-app-update-check.md) — that path does not wait for winget merge.
 
 ## 3. Microsoft Store / sideload MSIX
 
@@ -86,7 +86,7 @@ Store checklist:
 
 ## Signing
 
-Never commit `.pfx` files. Use a purchased Authenticode cert or Store signing after upload.
+Never commit `.pfx` files. **Store MSIX:** submit through Partner Center; Microsoft re-signs after certification (no SmartScreen on the Store package). **GitHub zip and winget** stay unsigned for now — Windows SmartScreen may warn on those downloads; the no-SmartScreen note applies only to the Store MSIX, not the zip.
 
 ### Decisions
 

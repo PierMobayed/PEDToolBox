@@ -1,6 +1,8 @@
 # History — finished work by version
 
-What we actually shipped and fixed. Open work is in [TASKS.md](TASKS.md). Line-level product notes: [CHANGELOG.md](CHANGELOG.md).
+**Status as of 2026-10-12**
+
+What we actually shipped and fixed. Open work is in [BACKLOG.md](BACKLOG.md). Line-level product notes: [CHANGELOG.md](CHANGELOG.md).
 
 ## 3.1.0 (2026-09-27)
 

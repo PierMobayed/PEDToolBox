@@ -1,6 +1,8 @@
 # Changelog
 
-Product notes. Task-level history: [HISTORY.md](HISTORY.md). Open tasks: [TASKS.md](TASKS.md).
+**Status as of 2026-10-12**
+
+Product notes. Task-level history: [HISTORY.md](HISTORY.md). Open tasks: [BACKLOG.md](BACKLOG.md).
 
 ## 3.1.0 — 2026-09-28
 
