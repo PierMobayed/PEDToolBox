@@ -8,3 +8,17 @@
 Optional download of known portable utilities (e.g. BleachBit, Revo) into `%LocalAppData%` with hash check. Never ship inside the Store SKU or the default `PED.Toolbox` zip.
 
 Until this exists, those tools remain **v1** (`irm ped.run | iex`).
+
+## Done
+
+none yet
+
+## Still waiting
+
+Product decision to prioritize (deferred with T046).
+
+## Do not
+
+- No bundling BleachBit/Revo or similar inside Store SKU or default `PED.Toolbox` zip.
+- No winget-pkgs PR without Pier OK.
+- No merge without Review + Product go.

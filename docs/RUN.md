@@ -1,5 +1,7 @@
 # How to start v3 (daily use)
 
+**Status as of 2026-10-12**
+
 `packaging\publish-exe.ps1` is for a later installable build. For review and development, use the starter in the v3 root.
 
 ## Easiest

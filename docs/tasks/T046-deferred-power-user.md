@@ -3,7 +3,9 @@
 **Status:** deferred  
 **Policy:** умишлено не бързаме.
 
-These stay **out of the main v3 / Store / `PED.Toolbox` package**. They are heavy for Microsoft Store review and for user trust.
+## Goal
+
+Keep heavy, Store-hostile, or high-trust features **out of the main v3 / Store / `PED.Toolbox` package** until a deliberate power-user channel exists (see T044).
 
 | Feature | Where it can live instead |
 |---|---|
@@ -12,8 +14,18 @@ These stay **out of the main v3 / Store / `PED.Toolbox` package**. They are heav
 | Wi-Fi password dump | v1 only, or a clearly labeled power-user tool — not default UI |
 | WinRE / account password reset | v1 only (WinRE scenario) |
 
-## Power-user channel (if we ever build it)
+Power-user channel (if we ever build it): separate entry (optional zip, `PED.Something`, or a hidden page), hash-checked downloads to `%LocalAppData%`. **Not** the Store SKU (`STORE_SKU`). See T044. Until then: leave these on **v1** (`Tool` / `ped.run`).
 
-Separate entry (optional zip, `PED.Something`, or a hidden page), hash-checked downloads to `%LocalAppData%`. **Not** the Store SKU (`STORE_SKU`). See T044.
+## Done
 
-Until then: leave these on **v1** (`Tool` / `ped.run`).
+none yet (policy only)
+
+## Still waiting
+
+Pier / Product decision on if/when to build a power-user channel.
+
+## Do not
+
+- Do not add driver packs, Wi-Fi password dump, WinRE reset, or bundled cleaners to default v3 UI or Store SKU without Pier + Product.
+- No winget-pkgs changes without Pier OK.
+- No merge without Review + Product go.

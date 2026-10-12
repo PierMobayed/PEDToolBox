@@ -1,5 +1,7 @@
 # Download the program vs the source
 
+**Status as of 2026-10-12**
+
 GitHub always shows **Source code (zip)** / **(tar.gz)** on every Release page. That cannot be turned off on a public repo. Those archives are the git tree, not the app.
 
 We still meet “people should get the program, not the code” by **never putting source in the Release assets** and by linking the binary URL everywhere we say Download.

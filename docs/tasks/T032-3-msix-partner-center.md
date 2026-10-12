@@ -7,30 +7,22 @@
 
 Sideload and/or Microsoft Store listing for PED Toolbox.
 
-## Blocked on
-
-**T048** — Create Microsoft Store (Partner Center) individual account and share publisher name. Owner: Pier.
-
-## Signing approach
-
-Decision: Pier, 2026-10-12 — signing goes through a free Microsoft Store individual developer account. Microsoft re-signs the MSIX after certification, so there is no SmartScreen warning. No paid code-signing certificate for now.
-
-## Needs from Pier
-
-- Partner Center account (T048)
-- Store-assigned publisher CN
-- Privacy policy URL
-- Never commit `.pfx`
-
-## In repo already
+## Done
 
 - `packaging/msix/Package.appxmanifest` (identity `PED.Toolbox`)
 - Store-size logos under `packaging/msix/Assets`
 - `STORE_SKU` so Services Apply is off for a Store build: `dotnet build -p:StoreSku=true`
+- Signing approach agreed: free Microsoft Store individual account; Microsoft re-signs MSIX after certification (Decision: Pier, 2026-10-12 — see [PACKAGING.md](../PACKAGING.md)).
 
-## Steps when the account exists
+## Still waiting
 
-1. Replace Publisher CN in the manifest with the Store value.
-2. Pack with MakeAppx / Visual Studio packaging project.
-3. Upload; Store signs the package.
-4. Keep third-party portable cleaners out of this SKU.
+- **T048** — Pier creates Partner Center account and shares Store-assigned publisher CN.
+- Privacy policy URL from Pier for Store listing.
+- Steps when the account exists: replace Publisher CN in the manifest; pack with MakeAppx / VS packaging; upload for Store signing; keep third-party portable cleaners out of this SKU.
+
+## Do not
+
+- Never commit `.pfx` or other signing secrets.
+- No Partner Center submit or Pier-only account steps without Pier.
+- No bundling third-party portable cleaners in the Store SKU.
+- No merge without Review + Product go.

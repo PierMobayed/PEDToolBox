@@ -1,5 +1,7 @@
 # Packaging — winget and Microsoft Store
 
+**Status as of 2026-10-12**
+
 ## Identifiers (fill real publisher when you have a cert)
 
 | Field | Value used in templates |
@@ -8,7 +10,7 @@
 | Display name | PED Toolbox |
 | Version | 3.1.0 |
 | Publisher display | PED Toolbox |
-| Publisher CN | Templates use `CN=PED Toolbox`; `packaging/msix/Package.appxmanifest` still has `CN=PierMobayed` until T048 — final CN comes from Pier's Store account |
+| Publisher CN | This table shows the intended values; the appxmanifest template (`packaging/msix/Package.appxmanifest`) currently uses `CN=PierMobayed`; the final CN comes from T048 (Pier's Store account) |
 
 ## Store SKU vs full
 
