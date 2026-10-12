@@ -38,7 +38,7 @@ Source is optional: GitHub branch [`v3`](https://github.com/PierMobayed/PEDToolB
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Folders, how a click becomes an action |
 | [docs/FEATURES.md](docs/FEATURES.md) | Page-by-page behavior |
 | [docs/PACKAGING.md](docs/PACKAGING.md) | Winget + Microsoft Store |
-| [docs/TASKS.md](docs/TASKS.md) | Open task list (links to `docs/tasks/`) |
+| [docs/BACKLOG.md](docs/BACKLOG.md) | Task index (links to `docs/tasks/`; [TASKS.md](docs/TASKS.md) is a pointer) |
 | [docs/HISTORY.md](docs/HISTORY.md) | What we finished per version |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | High-level done vs later |
 | [docs/CHANGELOG.md](docs/CHANGELOG.md) | Dated product notes |

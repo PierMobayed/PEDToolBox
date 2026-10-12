@@ -13,7 +13,7 @@ v3/
   src/PedToolbox.App      WPF UI (assembly name PEDToolbox)
   packaging/              publish + winget + msix templates
   docs/                   this documentation
-                  TASKS.md + tasks/*.md (work items)
+                  BACKLOG.md + tasks/*.md (work items)
                   HISTORY.md (finished work per version)
 ```
 

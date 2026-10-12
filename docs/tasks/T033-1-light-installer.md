@@ -1,6 +1,6 @@
 # T033-1 — smaller installer for faster winget updates
 
-**Status:** todo  
+**Status:** proposed  
 **Next after:** T032-2 is healthy (or in parallel if we only change *future* artifacts)
 
 ## Why

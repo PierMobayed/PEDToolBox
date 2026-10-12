@@ -1,6 +1,6 @@
 # T031 — 3.1 look and behave like an app
 
-**Status:** done (3.1.0)  
+**Status:** shipped in 3.1.0  
 See [HISTORY.md](../HISTORY.md).
 
 | Item | Status |

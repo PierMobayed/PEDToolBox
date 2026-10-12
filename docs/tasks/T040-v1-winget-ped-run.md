@@ -1,6 +1,6 @@
 # T040 — v1 as winget package `PED.run`
 
-**Status:** todo  
+**Status:** proposed  
 **Blocked by:** T032-2 **merge** (pipeline is already green; do not submit a second package until `PED.Toolbox` is in the catalog or a moderator asks for a split)
 
 ## Why

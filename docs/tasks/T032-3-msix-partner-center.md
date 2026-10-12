@@ -1,6 +1,6 @@
 # T032-3 — signed MSIX → Partner Center
 
-**Status:** waiting (on T048)  
+**Status:** waiting (external: Pier Store account T048)    
 **Part of:** 3.2 "да може да се инсталира"
 
 ## Goal
