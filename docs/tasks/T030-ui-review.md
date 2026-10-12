@@ -1,5 +1,8 @@
 # T030 — full UI review (all pages)
 
+**Status as of 2026-10-12**
+
+
 **Status:** proposed  
 **From:** original “Сега (преглед, без код)”
 

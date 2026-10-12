@@ -1,5 +1,8 @@
 # T046 — do not rush Store-hostile / high-trust features
 
+**Status as of 2026-10-12**
+
+
 **Status:** deferred  
 **Policy:** умишлено не бързаме.
 

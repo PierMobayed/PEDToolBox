@@ -1,5 +1,8 @@
 # T042 — winget `--output json` parser
 
+**Status as of 2026-10-12**
+
+
 **Status:** proposed
 
 ## Goal

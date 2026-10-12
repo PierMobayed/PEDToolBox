@@ -26,8 +26,20 @@ Current shipped line: **3.1.0** (self-contained GitHub zip). Open work: [BACKLOG
 
 Copy for traceability; do not change without Pier.
 
-**Decision: Pier, 2026-10-12** — Ped will be signed through a free Microsoft Store individual developer account using MSIX. Microsoft re-signs the package after certification, so there is no SmartScreen warning on the Store package. No paid code-signing certificate for now. Next step: Pier creates the Partner Center account and shares the publisher name for the MSIX manifest (T048). That unblocks T032-3. After the app is in the Store, winget can also point at the `msstore` source. (Full text: [PACKAGING.md](PACKAGING.md) § Signing.)
+### Decision: Pier, 2026-10-12
 
-**Decision: Pier, 2026-10-11** — Ped releases now run on Pier's PC through machine Shell, done by the Ped Release bot (same as naChas). The bridge and local Cursor are no longer used for releases. Known release blockers to plan as code tasks include hardcoded 3.1.0 in `pack-release.ps1` (T049); signing for GitHub zip/winget stays unsigned for now, with Store MSIX as the signed path above. (Full text: [PACKAGING.md](PACKAGING.md) § Signing and [RELEASING.md](RELEASING.md).)
+> **Decision: Pier, 2026-10-12** — Ped will be signed through a free Microsoft Store individual developer account using MSIX. Microsoft re-signs the package after certification, so there is no SmartScreen warning. No paid code-signing certificate for now. Next step: Pier creates the Partner Center account at [storedeveloper.microsoft.com](https://storedeveloper.microsoft.com) (free for individuals, needs ID + selfie) and shares the publisher name for the MSIX manifest (T048). That unblocks T032-3 (signed MSIX to Partner Center). After the app is in the Store, winget can also point at the `msstore` source.
 
-**Recorded with 3.1.0 ship (2026-09-27)** — Community winget package id is **`PED.Toolbox`** (publisher prefix for later packages such as `PED.Example`). Earlier ids `PierMobayed.PEDToolbox` and using **`ped.run`** as the package id were closed. See [HISTORY.md](HISTORY.md) § 3.1.0.
+Source: [PACKAGING.md](PACKAGING.md) (§ Signing → Decisions)
+
+### Decision: Pier, 2026-10-11
+
+> **Decision: Pier, 2026-10-11** — Ped releases now run on Pier's PC through machine Shell, done by the Ped Release bot (same as naChas). The bridge and local Cursor are no longer used for releases. Known release blockers to plan later as code tasks: `pack-release.ps1` hardcodes 3.1.0 in the zip name (T049); no signing cert (now resolved by the Store route above).
+
+Source: [PACKAGING.md](PACKAGING.md) (§ Signing → Decisions)
+
+### Recorded in HISTORY 3.1.0
+
+> Settled on `PED.Toolbox` (publisher prefix for later `PED.Example`). Closed earlier ids `PierMobayed.PEDToolbox` and `ped.run` as the package id.
+
+Source: [HISTORY.md](HISTORY.md) (§ 3.1.0, Winget id row)

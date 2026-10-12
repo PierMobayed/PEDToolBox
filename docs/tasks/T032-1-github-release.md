@@ -1,5 +1,8 @@
 # T032-1 — zip → GitHub Release
 
+**Status as of 2026-10-12**
+
+
 **Status:** shipped in 3.1.0  
 **Part of:** 3.2 “да може да се инсталира”
 

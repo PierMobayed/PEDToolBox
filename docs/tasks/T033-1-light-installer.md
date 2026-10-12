@@ -1,5 +1,8 @@
 # T033-1 — smaller installer for faster winget updates
 
+**Status as of 2026-10-12**
+
+
 **Status:** proposed  
 **Next after:** T032-2 is healthy (or in parallel if we only change *future* artifacts)
 
@@ -33,6 +36,6 @@ nothing
 
 ## Do not
 
-- No `microsoft/winget-pkgs` PR without Ped Release / Pier OK and a green path for `PED.Toolbox` (T032-2).
+- Do not open any winget-pkgs PR without Pier's explicit OK.
 - No secrets in repo; no `.pfx`.
 - No merge without Review + Product go.

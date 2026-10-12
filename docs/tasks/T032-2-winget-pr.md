@@ -1,5 +1,8 @@
 # T032-2 — SHA256 + winget-pkgs PR
 
+**Status as of 2026-10-12**
+
+
 **Status:** waiting (external: Microsoft winget moderator)  
 **Part of:** 3.2 “да може да се инсталира”
 

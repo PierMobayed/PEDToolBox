@@ -1,5 +1,8 @@
 # T043 — Task Scheduler editor UI
 
+**Status as of 2026-10-12**
+
+
 **Status:** proposed
 
 ## Goal

@@ -1,5 +1,8 @@
 # T045 — v3 as the official GitHub product
 
+**Status as of 2026-10-12**
+
+
 **Status:** deferred  
 **Do not do this until v3 is deliberately the public face of the repo.**
 

@@ -1,5 +1,8 @@
 # T044 — optional portable third-party tools
 
+**Status as of 2026-10-12**
+
+
 **Status:** deferred  
 **Parent policy:** [T046](T046-deferred-power-user.md) — do not rush.
 

@@ -1,5 +1,8 @@
 # T033-3 — in-app update check vs GitHub Release
 
+**Status as of 2026-10-12**
+
+
 **Status:** proposed  
 **Next together with:** T033-1 / T033-2
 

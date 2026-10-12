@@ -1,5 +1,8 @@
 # T033-2 — GitHub Action automatic winget-pkgs PR
 
+**Status as of 2026-10-12**
+
+
 **Status:** proposed  
 **Depends on:** T033-1 (small installer preferred), T032-2 **merged** so `PED.Toolbox` exists in the catalog
 
@@ -26,5 +29,5 @@ none yet
 
 - Do not store PATs or other secrets in the repo or workflow logs.
 - Action must not upload `.pfx`.
-- No winget-pkgs PR without Pier OK when policy requires it.
+- Do not open any winget-pkgs PR without Pier's explicit OK.
 - No merge without Review + Product go.

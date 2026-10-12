@@ -4,12 +4,12 @@
 
 ## Identifiers (fill real publisher when you have a cert)
 
-| Field | Value used in templates |
+| Field | Intended value |
 |---|---|
 | Package name | `PED.Toolbox` |
 | Display name | PED Toolbox |
 | Version | 3.1.0 |
-| Publisher display | PED Toolbox |
+| Publisher display | PED Toolbox (the appxmanifest template currently has `PublisherDisplayName=PierMobayed`; final value via T048) |
 | Publisher CN | This table shows the intended values; the appxmanifest template (`packaging/msix/Package.appxmanifest`) currently uses `CN=PierMobayed`; the final CN comes from T048 (Pier's Store account) |
 
 ## Store SKU vs full

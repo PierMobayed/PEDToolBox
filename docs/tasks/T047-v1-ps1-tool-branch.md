@@ -1,5 +1,8 @@
 # T047 — v1 `PED.ps1` should pull the bat from branch `Tool`
 
+**Status as of 2026-10-12**
+
+
 **Status:** proposed  
 **Related:** T040, T045, `ped.run`
 

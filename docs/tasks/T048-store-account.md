@@ -1,5 +1,8 @@
 # T048 — Microsoft Store / Partner Center account
 
+**Status as of 2026-10-12**
+
+
 **Status:** next  
 **Owner:** Pier  
 **Part of:** 3.2 "да може да се инсталира"
