@@ -1,6 +1,6 @@
 # T046 — do not rush Store-hostile / high-trust features
 
-**Status:** later  
+**Status:** deferred  
 **Policy:** умишлено не бързаме.
 
 These stay **out of the main v3 / Store / `PED.Toolbox` package**. They are heavy for Microsoft Store review and for user trust.

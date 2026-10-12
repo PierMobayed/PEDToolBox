@@ -1,6 +1,6 @@
 # T041 — Bulgarian UI
 
-**Status:** todo
+**Status:** proposed
 
 ## Goal
 

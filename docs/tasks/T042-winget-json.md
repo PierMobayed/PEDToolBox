@@ -1,6 +1,6 @@
 # T042 — winget `--output json` parser
 
-**Status:** todo
+**Status:** proposed
 
 ## Goal
 

@@ -1,6 +1,6 @@
 # T032-2 — SHA256 + winget-pkgs PR
 
-**Status:** waiting (Microsoft moderator)  
+**Status:** waiting (external: Microsoft winget moderator)  
 **Part of:** 3.2 “да може да се инсталира”
 
 ## Goal

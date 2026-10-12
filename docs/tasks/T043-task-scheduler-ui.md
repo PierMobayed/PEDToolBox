@@ -1,6 +1,6 @@
 # T043 — Task Scheduler editor UI
 
-**Status:** todo
+**Status:** proposed
 
 ## Goal
 

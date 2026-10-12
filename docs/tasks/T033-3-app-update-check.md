@@ -1,6 +1,6 @@
 # T033-3 — in-app update check vs GitHub Release
 
-**Status:** todo  
+**Status:** proposed  
 **Next together with:** T033-1 / T033-2
 
 ## Why

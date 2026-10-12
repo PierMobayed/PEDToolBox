@@ -1,6 +1,6 @@
 # T032-1 — zip → GitHub Release
 
-**Status:** done (3.1.0)  
+**Status:** shipped in 3.1.0  
 **Part of:** 3.2 “да може да се инсталира”
 
 ## Goal

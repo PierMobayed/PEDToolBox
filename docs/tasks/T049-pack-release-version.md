@@ -1,6 +1,6 @@
 # T049 — Fix hardcoded 3.1.0 in pack-release.ps1
 
-**Status:** proposed  
+**Status:** next  
 **Owner:** Ped Code  
 **Part of:** release tooling
 

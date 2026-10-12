@@ -1,6 +1,6 @@
 # T033-2 — GitHub Action automatic winget-pkgs PR
 
-**Status:** todo  
+**Status:** proposed  
 **Depends on:** T033-1 (small installer preferred), T032-2 **merged** so `PED.Toolbox` exists in the catalog
 
 ## Why

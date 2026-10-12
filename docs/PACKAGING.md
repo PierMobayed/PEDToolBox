@@ -8,7 +8,7 @@
 | Display name | PED Toolbox |
 | Version | 3.1.0 |
 | Publisher display | PED Toolbox |
-| Publisher CN | Table says `CN=PED Toolbox`; `packaging/msix/Package.appxmanifest` still has `CN=PierMobayed` until T048 — final CN comes from Pier's Store account |
+| Publisher CN | Templates use `CN=PED Toolbox`; `packaging/msix/Package.appxmanifest` still has `CN=PierMobayed` until T048 — final CN comes from Pier's Store account |
 
 ## Store SKU vs full
 

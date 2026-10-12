@@ -22,7 +22,7 @@ Everything else below is Ped Code, Ped Release, Ped Review, or waiting on Micros
 | T033-1 | Smaller installer (framework-dependent or MSIX) so later winget scans stay fast | Medium | proposed | Ped Code | [T033-1-light-installer.md](tasks/T033-1-light-installer.md) |
 | T033-2 | GitHub Action: automatic winget-pkgs PR on Release | Medium | proposed | Ped Code | [T033-2-winget-github-action.md](tasks/T033-2-winget-github-action.md) |
 | T033-3 | In-app check for updates against GitHub Release | Medium | proposed | Ped Code | [T033-3-app-update-check.md](tasks/T033-3-app-update-check.md) |
-| T040 | v1 as separate winget package `PED.run` (after Toolbox PR is merged) | Medium | proposed | Ped Release (+ Pier for Store submit / secrets) | [T040-v1-winget-ped-run.md](tasks/T040-v1-winget-ped-run.md) |
+| T040 | v1 as separate winget package `PED.run` (after Toolbox PR is merged) | Medium | proposed | Ped Release (+ Pier OK for winget-pkgs PR) | [T040-v1-winget-ped-run.md](tasks/T040-v1-winget-ped-run.md) |
 | T041 | Bulgarian UI strings | Medium | proposed | Ped Code | [T041-bulgarian-ui.md](tasks/T041-bulgarian-ui.md) |
 | T042 | Winget CLI `--output json` parser | Medium | proposed | Ped Code | [T042-winget-json.md](tasks/T042-winget-json.md) |
 | T043 | Task Scheduler editor UI | Medium | proposed | Ped Code | [T043-task-scheduler-ui.md](tasks/T043-task-scheduler-ui.md) |
@@ -30,6 +30,6 @@ Everything else below is Ped Code, Ped Release, Ped Review, or waiting on Micros
 | T045 | Official product: default branch `v3`; keep `Tool`; `ped.run` separate | Low | deferred | Pier (decision) | [T045-default-branch.md](tasks/T045-default-branch.md) |
 | T046 | Do not rush: driver packs, Wi-Fi passwords, WinRE reset, bundled cleaners | Low | deferred | Pier (decision) | [T046-deferred-power-user.md](tasks/T046-deferred-power-user.md) |
 | T047 | v1 `PED.ps1` should download the bat from branch `Tool` (fix on `Tool`, not here) | Medium | proposed | Ped Code (on `Tool` branch) | [T047-v1-ps1-tool-branch.md](tasks/T047-v1-ps1-tool-branch.md) |
-| T049 | Fix hardcoded 3.1.0 in `pack-release.ps1` zip name | High | proposed | Ped Code | [T049-pack-release-version.md](tasks/T049-pack-release-version.md) |
+| T049 | Fix hardcoded 3.1.0 in `pack-release.ps1` zip name | High | next | Ped Code | [T049-pack-release-version.md](tasks/T049-pack-release-version.md) |
 
 Finished work by version: [HISTORY.md](HISTORY.md). Roadmap phases: [ROADMAP.md](ROADMAP.md).

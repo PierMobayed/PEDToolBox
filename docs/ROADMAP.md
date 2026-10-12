@@ -32,7 +32,7 @@ Task index: [BACKLOG.md](BACKLOG.md).
 
 **Owner gate:** Phase 3.3 starts only after **Ped Product** reviews outcomes, and **Pier** where his decision or Store account is required (T048, listing secrets).
 
-Open items: T032-2, T032-3, T040 (after winget merge), plus T033-1/T033-2 in parallel when green.
+Open items: T048 (Pier), T049 (release blocker), T032-2, T032-3, T040 (after winget merge), plus T033-1/T033-2 in parallel when green.
 
 ## 3.3 — lighter installer + update check
 
