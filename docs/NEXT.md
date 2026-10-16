@@ -1,0 +1,10 @@
+# Next — Code priorities
+
+**Status as of 2026-10-16**
+
+Pick the next slice from [BACKLOG.md](BACKLOG.md) (Who acts = Ped Code). Suggested order:
+
+1. **T049** — Fix hardcoded 3.1.0 in `pack-release.ps1` zip name ([tasks/T049-pack-release-version.md](tasks/T049-pack-release-version.md)).
+2. **T033-*** / **T041–T043** — proposed backlog when T049 is done.
+
+Do not start T032-3 MSIX submit without Pier / Release gate. winget-pkgs PRs need Pier's explicit OK (not just Release gate). T047 stays on branch `Tool`.

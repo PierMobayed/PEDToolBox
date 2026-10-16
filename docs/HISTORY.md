@@ -1,8 +1,14 @@
 # History — finished work by version
 
-**Status as of 2026-10-12**
+**Status as of 2026-10-16**
 
 What we actually shipped and fixed. Open work is in [BACKLOG.md](BACKLOG.md). Line-level product notes: [CHANGELOG.md](CHANGELOG.md).
+
+## T050 — local `release/` folder (2026-10-16)
+
+| Task | What happened |
+|---|---|
+| T050 | Local git-ignored `release/` folder documented in RELEASING, PACKAGING, DOWNLOAD; merged [PR #8](https://github.com/PierMobayed/PEDToolBox/pull/8) at `e061d78073cf523003fd6ba2effe0c67fa0c6774`. |
 
 ## 3.1.0 (2026-09-27)
 
