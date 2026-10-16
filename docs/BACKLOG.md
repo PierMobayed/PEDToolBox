@@ -2,7 +2,7 @@
 
 **Status as of 2026-10-16**
 
-**Id scheme:** `T0xx` and `T0xx-n` (same ids forever; never renumber or delete rows). Detail files live at `docs/tasks/<ID>.md` (filename may add a short slug).
+**Id scheme:** `T0xx` and `T0xx-n` (same ids forever; never renumber; done/merged/shipped rows move to docs/HISTORY.md (date + PR); BACKLOG keeps open, deferred and superseded rows only). Detail files live at `docs/tasks/<ID>.md` (filename may add a short slug).
 
 ## Pier's queue
 
@@ -15,8 +15,6 @@ Everything else below is Ped Code, Ped Release, Ped Review, or waiting on Micros
 |---|---|---|---|---|---|
 | T048 | Create Microsoft Store (Partner Center) individual account and share publisher name | High | next | Pier | [T048-store-account.md](tasks/T048-store-account.md) |
 | T030 | Formal UI review of all pages | Medium | proposed | Ped Review / Ped Code | [T030-ui-review.md](tasks/T030-ui-review.md) |
-| T031 | 3.1 icon, STORE_SKU, PED-Recovery | — | shipped in 3.1.0 | — | [T031-app-polish.md](tasks/T031-app-polish.md); [v3.1.0](https://github.com/PierMobayed/PEDToolBox/releases/tag/v3.1.0) |
-| T032-1 | 3.2 zip → GitHub Release | — | shipped in 3.1.0 | — | [T032-1-github-release.md](tasks/T032-1-github-release.md); zip SHA256 in [HISTORY.md](HISTORY.md) |
 | T032-2 | winget-pkgs PR `PED.Toolbox` — pipeline green, needs moderator | High | waiting (external: Microsoft winget moderator) | External (Microsoft) / Ped Release | [T032-2-winget-pr.md](tasks/T032-2-winget-pr.md); [winget-pkgs#442279](https://github.com/microsoft/winget-pkgs/pull/442279) |
 | T032-3 | Signed MSIX → Partner Center — waiting on T048 | High | waiting (external: Pier Store account T048) | Ped Release (+ Pier for Store submit / secrets) | [T032-3-msix-partner-center.md](tasks/T032-3-msix-partner-center.md) |
 | T033-1 | Smaller installer (framework-dependent or MSIX) so later winget scans stay fast | Medium | proposed | Ped Code | [T033-1-light-installer.md](tasks/T033-1-light-installer.md) |
