@@ -1,0 +1,14 @@
+---
+description: Map to project docs and local .repo-rules/ snapshot (public repo).
+alwaysApply: true
+---
+
+# Fleet map
+
+If the message starts with "Ти си <Роля>" (any case, including Product, Code, Review, Release, Coord, installbot), read `.repo-rules/cursor/roles/<role lowercase>.md`, then `.repo-rules/common/`, then `docs/STATUS.md`, before doing anything.
+
+- `docs/STATUS.md` — current snapshot (read first; wrap up the task here)
+- `docs/NEXT.md` — next Code task / priorities
+- `docs/HISTORY.md` — done log; open a matching row only
+- Rules live in `.repo-rules/` (plain files from https://github.com/PierMobayed/repo-rules). Read `.repo-rules/cursor/roles/<role>.md` + `.repo-rules/common/`
+- Synced SHA: `.repo-rules/SYNCED_FROM`. Do not git pull in `.repo-rules/`. Do not gitignore `.repo-rules/` on private repos (commit snapshot). **This repo is public:** `.repo-rules/` is gitignored — local copy only; cloud agents use the brief + User Rule, not committed rules.
