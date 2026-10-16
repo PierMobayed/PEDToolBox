@@ -31,6 +31,5 @@ Everything else below is Ped Code, Ped Release, Ped Review, or waiting on Micros
 | T046 | Do not rush: driver packs, Wi-Fi passwords, WinRE reset, bundled cleaners | Low | deferred | Pier (decision) | [T046-deferred-power-user.md](tasks/T046-deferred-power-user.md) |
 | T047 | v1 `PED.ps1` should download the bat from branch `Tool` (fix on `Tool`, not here) | Medium | proposed | Ped Code (on `Tool` branch) | [T047-v1-ps1-tool-branch.md](tasks/T047-v1-ps1-tool-branch.md) |
 | T049 | Fix hardcoded 3.1.0 in `pack-release.ps1` zip name | High | next | Ped Code | [T049-pack-release-version.md](tasks/T049-pack-release-version.md) |
-| T050 | Local `release/` folder in clone (git-ignored); docs for publish rule | Medium | doing | Ped Code | [T050.md](tasks/T050.md) |
 
 Finished work by version: [HISTORY.md](HISTORY.md). Roadmap phases: [ROADMAP.md](ROADMAP.md).
