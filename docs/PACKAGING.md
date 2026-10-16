@@ -1,6 +1,6 @@
 # Packaging — winget and Microsoft Store
 
-**Status as of 2026-10-12**
+**Status as of 2026-10-16**
 
 ## Identifiers (fill real publisher when you have a cert)
 
@@ -37,7 +37,9 @@ cd v3
 .\packaging\pack-release.ps1 -SelfContained
 ```
 
-Output: `artifacts\PEDToolbox-3.1.0-win-x64.zip` and `artifacts\SHA256.txt`.
+Output: `artifacts\PEDToolbox-3.1.0-win-x64.zip` and `artifacts\SHA256.txt`. Both `artifacts/` and `release/` are in `.gitignore`.
+
+After build, Ped Release keeps the zip to upload in `<clone>/release/` (on Pier’s PC: `C:\Pier\PEDToolBox\release\`). That folder is **not** in git. Publish zips **only** as GitHub Release assets; never commit them to `v3`.
 
 The **3.1.0 Release** used `-SelfContained`. GitHub shows the zip as **57.8 MB**. Unpacked it is a full .NET bundle (~140 MB class). No runtime install for the user.
 

@@ -5,6 +5,7 @@ obj/
 *.suo
 publish/
 artifacts/
+release/
 *.msix
 *.msixbundle
 *.pfx

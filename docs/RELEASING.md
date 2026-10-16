@@ -1,6 +1,6 @@
 # Releasing
 
-**Status as of 2026-10-12**
+**Status as of 2026-10-16**
 
 How we ship a new **version** of PED Toolbox to users. No passwords, keys, or signing files belong in this repo or in these steps.
 
@@ -37,13 +37,23 @@ Before merge: **Ped Review** approves the **latest head SHA**; **CI** is green o
 
 Signing material (`.pfx`, Partner Center secrets) stays **off** the repo and off GitHub; Store upload uses Pier’s account only.
 
+## Local folders on Pier’s PC (not in git)
+
+| Path | Purpose |
+|---|---|
+| `<clone>/artifacts/` | Build output from `pack-release.ps1` (zip + `SHA256.txt`). Listed in `.gitignore`. |
+| `<clone>/release/` | **Local release copy** kept on disk after a build (e.g. `PEDToolbox-X.Y.Z-win-x64.zip`). On Pier’s machine: `C:\Pier\PEDToolBox\release\`. Listed in `.gitignore`. |
+
+Do **not** commit zips from `artifacts/` or `release/`. Publish them **only** as GitHub Release assets (`gh release create …` attaching the zip). Do not store release binaries under `C:\Users\PierM\.ped` or other paths outside the clone for the canonical copy — use `<clone>/release/`.
+
 ## Build checklist (matches PACKAGING + DOWNLOAD)
 
 1. Run `pack-release.ps1` with the intended flags (`-SelfContained` for a zero-runtime zip, or framework-dependent when [T033-1](tasks/T033-1-light-installer.md) is the default).
 2. Confirm `artifacts\SHA256.txt` matches the zip you will upload.
-3. `gh release create vX.Y.Z` (or equivalent) attaching **only** `artifacts\PEDToolbox-….zip`.
-4. Release notes: first link is the **direct download** URL (`…/releases/download/vX.Y.Z/…`), plus one line that source is branch `v3`, not the Release zip.
-5. Update README download link if the version changed.
+3. Copy the zip you will ship into `<clone>\release\` (local archive on Pier’s PC; git-ignored).
+4. `gh release create vX.Y.Z` (or equivalent) attaching **only** that zip from `release\` or `artifacts\` — **never** commit it to `v3`.
+5. Release notes: first link is the **direct download** URL (`…/releases/download/vX.Y.Z/…`), plus one line that source is branch `v3`, not the Release zip.
+6. Update README download link if the version changed.
 
 ## Known blockers (see [RISKS.md](RISKS.md))
 
