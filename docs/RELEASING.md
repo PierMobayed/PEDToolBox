@@ -1,6 +1,6 @@
 # Releasing
 
-**Status as of 2026-10-16**
+**Status as of 2026-10-18**
 
 How we ship a new **version** of PED Toolbox to users. No passwords, keys, or signing files belong in this repo or in these steps.
 
@@ -44,7 +44,7 @@ Signing material (`.pfx`, Partner Center secrets) stays **off** the repo and off
 | `<clone>/artifacts/` | Build output from `pack-release.ps1` (zip + `SHA256.txt`). Listed in `.gitignore`. |
 | `<clone>/release/` | **Local release copy** kept on disk after a build (e.g. `PEDToolbox-X.Y.Z-win-x64.zip`). On Pier’s machine: `C:\Pier\PEDToolBox\release\`. Listed in `.gitignore`. |
 
-Do **not** commit zips from `artifacts/` or `release/`. Publish them **only** as GitHub Release assets (`gh release create …` attaching the zip). Do not store release binaries under `C:\Users\PierM\.ped` or other paths outside the clone for the canonical copy — use `<clone>/release/`.
+Do **not** commit zips from `artifacts/` or `release/`. Publish them **only** as GitHub Release assets (`gh release create …` attaching the zip). Use `<clone>/release/` for the canonical local copy.
 
 ## Build checklist (matches PACKAGING + DOWNLOAD)
 

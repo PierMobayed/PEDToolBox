@@ -24,6 +24,7 @@ Short file map (PED Toolbox, branch `v3`):
 - `docs/FEATURES.md` — page-by-page behavior
 - `docs/PACKAGING.md` — winget and Microsoft Store packaging
 - `docs/DOWNLOAD.md` — program zip vs source
+- `docs/TESTS.md` — manual tests waiting for Pier (build link, version, date added)
 - `docs/RUN.md` — build and run locally
 - `docs/ANALYSIS.md` — v1/v2/v3 rationale
 - `docs/tasks/<ID>.md` — task detail (this project uses **`docs/tasks/`**, not `docs/specs/`); Goal / Done / Still waiting / **Do not**
@@ -32,7 +33,7 @@ Short file map (PED Toolbox, branch `v3`):
 Task ids use the `T-n` scheme (e.g. `T032-2`).
 
 1. Product owns the docs. Every change: PR → Review → Product go → merge. Never push to `v3` directly.
-2. One id scheme per project (`T-n`). Two-layer ids allowed if declared at the top of `BACKLOG.md` when it exists. Never reuse or renumber ids, and done/merged/shipped rows move to docs/HISTORY.md (date + PR); BACKLOG keeps open, deferred and superseded rows only.
+2. One id scheme per project (`T-n`). Two-layer ids allowed if declared at the top of `BACKLOG.md` when it exists. Never reuse or renumber ids, and done/merged/shipped rows move to docs/HISTORY.md (date + PR; archiving, not deleting); BACKLOG keeps open, deferred and superseded rows only.
 3. Same status keys in every file: proposed, next, doing, merged (unreleased), shipped in X, deferred, superseded -> ID, done, waiting (external: X). RISKS: open, accepted, mitigated, closed.
 4. Shipped: app projects need the GitHub release (version/code, date, release URL, build SHA). Built artifacts: SHA256 and size next to the build SHA.
 5. Update docs in the same PR as the change, plus a docs PR after every release. Each file keeps a dated Status as of line.
