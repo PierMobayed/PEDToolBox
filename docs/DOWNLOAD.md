@@ -1,6 +1,6 @@
 # Download the program vs the source
 
-**Status as of 2026-10-16**
+**Status as of 2026-10-18**
 
 GitHub always shows **Source code (zip)** / **(tar.gz)** on every Release page. That cannot be turned off on a public repo. Those archives are the git tree, not the app.
 
@@ -28,12 +28,12 @@ Later versions: same pattern — `.../releases/download/vX.Y.Z/PEDToolbox-X.Y.Z-
 
 ## Local copy on Pier’s PC (operators only)
 
-Build output lands in `<clone>/artifacts/` (git-ignored). The **local release copy** to keep before upload is `<clone>/release/` — on Pier’s machine `C:\Pier\PEDToolBox\release\`. That path is git-ignored. Do not use `C:\Users\PierM\.ped` for the canonical zip; use `release/` inside the clone. Zips from `release/` are published **only** as GitHub Release assets, never committed.
+Build output lands in `<clone>/artifacts/` (git-ignored). After build, Ped Release keeps the zip to upload in `<clone>/release/` (on Pier’s machine: `C:\Pier\PEDToolBox\release\`). That folder is git-ignored. Zips from `release/` are published **only** as GitHub Release assets, never committed.
 
 ## Checklist when publishing a new Release
 
 1. `.\packaging\pack-release.ps1 -SelfContained` (or the smaller zip when T033-1 lands).
-2. Copy the shipping zip into `<clone>\release\` if you want a kept local copy (optional but recommended).
+2. Copy the zip you will ship into `<clone>\release\` (local archive on Pier’s PC; git-ignored).
 3. `gh release create vX.Y.Z release\PEDToolbox-...zip` (or `artifacts\...`) — **only** that zip (and later a setup if we add one). Never commit the zip to `v3`.
 4. Release notes: first link is the **download** URL above, plus one sentence: source is the `v3` branch, not this zip.
 5. Point README “Download” at `/releases/download/...`, not only at `/releases/tag/...`.

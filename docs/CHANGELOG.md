@@ -1,8 +1,12 @@
 # Changelog
 
-**Status as of 2026-10-12**
+**Status as of 2026-10-18**
 
 Product notes. Task-level history: [HISTORY.md](HISTORY.md). Open tasks: [BACKLOG.md](BACKLOG.md).
+
+## Unreleased
+
+- Added [TESTS.md](TESTS.md) (Pier manual test queue; empty as of 2026-10-18). BACKLOG queue prefixes, `/release/` gitignore, DOWNLOAD/RELEASING alignment, HISTORY T031 row tags.
 
 ## 3.1.0 — 2026-09-28
 
