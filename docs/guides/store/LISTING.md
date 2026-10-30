@@ -2,7 +2,7 @@
 
 **Status as of 2026-10-30**
 
-Partner Center fields for the **Store SKU** (`-p:StoreSku=true`: Services page hidden; no service-profile Apply). Features must match the Store build — see [FEATURES.md](../FEATURES.md) (Store SKU column). **Not in the Store version:** JSON service profile Apply (full desktop SKU only).
+Partner Center fields for the **Store SKU** (`-p:StoreSku=true`: Services page hidden; no service-profile Apply). Features must match [FEATURES.md](../FEATURES.md) for that build. **Not in the Store package:** JSON service profile Apply (full desktop SKU only).
 
 ## English
 

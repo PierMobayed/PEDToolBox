@@ -15,14 +15,14 @@ Do not start T032-3 MSIX submit without Pier / Release gate. winget-pkgs PRs nee
 
 ## Pier's queue
 
-- **T048** (`waiting`) — Microsoft Store individual account + publisher CN for MSIX (unblocks T032-3); Store pack docs in PR #12.
+- **T048** (`next`) — Microsoft Store individual account + publisher CN for MSIX (unblocks T032-3); Store pack docs in PR #12.
 - **T045** / **T046** (`deferred`) — Product/branch and power-user scope; Pier decides when/if.
 
 Everything else below is Ped Code, Ped Release, Ped Review, or waiting on Microsoft.
 
 | ID | Item | Priority | Status | Who acts | Detail / PR / SHA |
 |---|---|---|---|---|---|
-| T048 | [Pier] Create Microsoft Store (Partner Center) individual account and share publisher name | High | waiting | [Pier] | [T048-store-account.md](guides/tasks/T048-store-account.md) |
+| T048 | [Pier] Create Microsoft Store (Partner Center) individual account and share publisher name | High | next | Pier | [T048-store-account.md](guides/tasks/T048-store-account.md) |
 | T030 | [bot] Formal UI review of all pages | Medium | proposed | Ped Review / Ped Code | [T030-ui-review.md](guides/tasks/T030-ui-review.md) |
 | T032-2 | [bot] winget-pkgs PR `PED.Toolbox` — pipeline green, needs moderator | High | waiting (external: Microsoft winget moderator) | External (Microsoft) / Ped Release | [T032-2-winget-pr.md](guides/tasks/T032-2-winget-pr.md); [winget-pkgs#442279](https://github.com/microsoft/winget-pkgs/pull/442279) |
 | T032-3 | [bot] Signed MSIX → Partner Center — waiting on T048 | High | waiting (external: Pier Store account T048) | Ped Release (+ Pier for Store submit / secrets) | [T032-3-msix-partner-center.md](guides/tasks/T032-3-msix-partner-center.md) |
@@ -38,8 +38,9 @@ Everything else below is Ped Code, Ped Release, Ped Review, or waiting on Micros
 | T046 | [Pier] Do not rush: driver packs, Wi-Fi passwords, WinRE reset, bundled cleaners | Low | deferred | Pier (decision) | [T046-deferred-power-user.md](guides/tasks/T046-deferred-power-user.md) |
 | T047 | [bot] v1 `PED.ps1` should download the bat from branch `Tool` (fix on `Tool`, not here) | Medium | proposed | Ped Code (on `Tool` branch) | [T047-v1-ps1-tool-branch.md](guides/tasks/T047-v1-ps1-tool-branch.md) |
 | T049 | [bot] Fix hardcoded 3.1.0 in `pack-release.ps1` zip name | High | next | Ped Code | [T049-pack-release-version.md](guides/tasks/T049-pack-release-version.md) |
-| T050 | [bot] Local git-ignored `<clone>/release/` folder (PR #8) — superseded by fleet release path | Low | superseded → repo-rules release.md | Ped Code | [T050.md](guides/tasks/T050.md); release builds now go to `C:\Pier\releases\ped\<version>\` (fleet reorg 30 Oct 2026) |
+| T050 | [bot] Local git-ignored `<clone>/release/` folder (PR #8) | Low | superseded → T053 | Ped Code | [T050.md](guides/tasks/T050.md) |
+| T053 | [bot] release builds go to `C:\Pier\releases\ped\<version>\` per repo-rules release.md | Medium | next | Ped Release | (docs/release path; fleet reorg 30 Oct 2026) |
 | T051 | [bot] move v3 from .NET 8 to .NET 10 LTS (.NET 8 EOL 10 Nov 2026); in the same Code PR bump System.Management and System.ServiceProcess.ServiceController with the TFM, and add top-level `permissions: contents: read` to .github/workflows/build.yml | Medium | next | Ped Code | (backlog row only in this PR) |
-| T052 | [bot] modern WinUI/Fluent look like Auto Dark Mode (winget ArminOsaj.AutoDarkMode), light/dark follows Windows | Low | proposed | Ped Code | (idea; backlog only) |
+| T052 | [bot] modern WinUI/Fluent look like Auto Dark Mode (winget `Armin2208.WindowsAutoNightMode`), light/dark follows Windows | Low | proposed | Ped Code | (idea; backlog only) |
 
 Finished work by version: [HISTORY.md](HISTORY.md). Roadmap phases: [ROADMAP.md](ROADMAP.md).

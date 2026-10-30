@@ -1,6 +1,6 @@
 # Features (v3.1.0)
 
-**Status as of 2026-10-12**
+**Status as of 2026-10-30**
 
 Every action is user-initiated. Destructive ones show a confirm dialog. Results go to the Activity log.
 
@@ -13,7 +13,7 @@ Every action is user-initiated. Destructive ones show a confirm dialog. Results 
 | Privacy | Advertising ID (HKCU). Telemetry policy + activity history (HKLM) | HKLM: yes |
 | Apps | `winget search/install/upgrade`. Uninstall via registry UninstallString | install may UAC |
 | Startup & junk | Enumerate/delete Run keys. Delete user TEMP (top-level). Empty Recycle Bin. Launch cleanmgr | HKLM Run: yes |
-| Services | JSON profiles. **Full SKU:** Apply. **Store SKU (`-p:StoreSku=true`):** page hidden, Apply no-ops | apply: yes |
+| Services | JSON profiles with Apply (full desktop build). Store build (`-p:StoreSku=true`) hides the Services page and blocks Apply | apply: yes |
 | System toggles | `powercfg` hibernate / Ultimate Performance, `sc` WSearch | yes |
 | Activity log | In-memory copy of the file log | no |
 | About | Version, links, distribution notes | no |
