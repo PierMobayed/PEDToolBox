@@ -49,7 +49,7 @@ Do **not** commit zips from `artifacts/` or release folders. Publish them **only
 
 ## Build checklist (matches PACKAGING + DOWNLOAD)
 
-1. Run `pack-release.ps1` with the intended flags (`-SelfContained` for a zero-runtime zip, or framework-dependent when [T033-1](../guides/tasks/T033-1-light-installer.md) is the default).
+1. Run `pack-release.ps1` with the intended flags (`-SelfContained` for a zero-runtime zip, or framework-dependent when [T033-1](../architecture/plans/T033-1-light-installer.md) is the default).
 2. Confirm `artifacts\SHA256.txt` matches the zip you will upload.
 3. Copy the zip you will ship into `C:\Pier\releases\ped\<version>\`.
 4. `gh release create vX.Y.Z` (or equivalent) attaching **only** that zip — **never** commit it to `v3`.
@@ -61,6 +61,6 @@ Do **not** commit zips from `artifacts/` or release folders. Publish them **only
 | Id | Issue |
 |---|---|
 | T049 | `pack-release.ps1` still names zips `3.1.0` — fix before the next release |
-| T048 / [T032-3](../guides/tasks/T032-3-msix-partner-center.md) | Partner Center account and Store signing path — MSIX/Store releases wait on Pier |
+| T048 / [T032-3](../architecture/plans/T032-3-msix-partner-center.md) | Partner Center account and Store signing path — MSIX/Store releases wait on Pier |
 
-Winget manifest updates after a Release: manual PR to `microsoft/winget-pkgs` until [T033-2](../guides/tasks/T033-2-winget-github-action.md); first package [PR #442279](https://github.com/microsoft/winget-pkgs/pull/442279) must merge before `winget install PED.Toolbox` works. **Opening any winget-pkgs PR always needs Pier’s explicit OK** before Ped Release (or anyone) submits it.
+Winget manifest updates after a Release: manual PR to `microsoft/winget-pkgs` until [T033-2](../architecture/plans/T033-2-winget-github-action.md); first package [PR #442279](https://github.com/microsoft/winget-pkgs/pull/442279) must merge before `winget install PED.Toolbox` works. **Opening any winget-pkgs PR always needs Pier’s explicit OK** before Ped Release (or anyone) submits it.

@@ -8,6 +8,8 @@ This text describes **PED Toolbox v3** (including the **Store SKU** built with `
 
 https://github.com/PierMobayed/PEDToolBox/blob/v3/docs/guides/store/PRIVACY.md
 
+Support and listing contact fields use **public GitHub URLs only**, plus https://pedtoolbox.com and pedtoolbox@gmail.com (see [LISTING.md](LISTING.md)).
+
 You may later mirror the same file via GitHub Pages if Partner Center requires HTTPS on a custom domain.
 
 ## Summary
