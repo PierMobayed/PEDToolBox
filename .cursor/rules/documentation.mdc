@@ -4,43 +4,24 @@ alwaysApply: true
 
 # Documentation
 
-Follow grokbotsrules `docs-rules.md`.
+Follow `.repo-rules/common/docs-rules.md` when that folder exists locally (public repo: gitignored snapshot on Pier's PC only).
 
-## This repo
+## This repo (`v3`)
 
-Short file map (PED Toolbox, branch `v3`):
+| Role | Path |
+|---|---|
+| Status snapshot | [docs/STATUS.md](../../docs/STATUS.md) |
+| Task index + Code priorities | [docs/TASKS.md](../../docs/TASKS.md) |
+| Active Code briefs | [docs/BRIEFS.md](../../docs/BRIEFS.md) |
+| Done / archived log | [docs/HISTORY.md](../../docs/HISTORY.md) |
+| Phases | [docs/ROADMAP.md](../../docs/ROADMAP.md) |
+| Manual tests (Pier) | [docs/TESTS.md](../../docs/TESTS.md) |
+| Product memory | [docs/memory/](../../docs/memory/) |
+| Architecture | [docs/architecture/](../../docs/architecture/) |
+| Guides (run, download, packaging, team, …) | [docs/guides/](../../docs/guides/) |
+| Store listing pack (T048) | [docs/guides/store/](../../docs/guides/store/) |
+| Release runbook + CHANGELOG | [docs/releases/](../../docs/releases/) |
+| Task detail | `docs/guides/tasks/<ID>.md` — Goal / Done / Still waiting / **Do not** |
+| Legacy | [docs/archive/](../../docs/archive/) |
 
-- `README.md` — what it is, how to run it
-- `docs/CHANGELOG.md` — dated product notes, newest first; will align with fleet release evidence (P0 risk effect, artifact SHA256/size when built)
-- `docs/HISTORY.md` — per-version finished work; together with `CHANGELOG.md` this repo’s CHANGELOG/HISTORY pair until folded into one file later
-- `docs/TASKS.md` — stub pointing to `docs/BACKLOG.md` (legacy table in `docs/archive/TASKS.md`)
-- `docs/BACKLOG.md` — **open** task index; Who acts; fleet status keys
-- `docs/PROJECT.md` — product, audience, locked decisions
-- `docs/ROADMAP.md` — milestones, done vs later
-- `docs/RISKS.md` — `R-n` risks; status open/accepted/mitigated/closed; Impact; Likelihood; Decision
-- `docs/RELEASING.md` — release runbook, no secrets
-- `docs/TEAM.md` — people and bots, merge flow
-- `docs/ARCHITECTURE.md` — folders, how actions run
-- `docs/FEATURES.md` — page-by-page behavior
-- `docs/PACKAGING.md` — winget and Microsoft Store packaging
-- `docs/DOWNLOAD.md` — program zip vs source
-- `docs/TESTS.md` — manual tests waiting for Pier (build link, version, date added)
-- `docs/RUN.md` — build and run locally
-- `docs/ANALYSIS.md` — v1/v2/v3 rationale
-- `docs/tasks/<ID>.md` — task detail (this project uses **`docs/tasks/`**, not `docs/specs/`); Goal / Done / Still waiting / **Do not**
-- `docs/archive/` — legacy files + `README.md`; archive, don’t delete
-
-Task ids use the `T-n` scheme (e.g. `T032-2`).
-
-1. Product owns the docs. Every change: PR → Review → Product go → merge. Never push to `v3` directly.
-2. One id scheme per project (`T-n`). Two-layer ids allowed if declared at the top of `BACKLOG.md` when it exists. Never reuse or renumber ids, and done/merged/shipped rows move to docs/HISTORY.md (date + PR; archiving, not deleting); BACKLOG keeps open, deferred and superseded rows only.
-3. Same status keys in every file: proposed, next, doing, merged (unreleased), shipped in X, deferred, superseded -> ID, done, waiting (external: X). RISKS: open, accepted, mitigated, closed.
-4. Shipped: app projects need the GitHub release (version/code, date, release URL, build SHA). Built artifacts: SHA256 and size next to the build SHA.
-5. Update docs in the same PR as the change, plus a docs PR after every release. Each file keeps a dated Status as of line.
-6. CHANGELOG/HISTORY is newest-first, dated and append-only. Each entry includes what was intentionally not done and the effect on open P0 risks (e.g. R-1 unchanged). Bilingual CHANGELOG allowed.
-7. Record Pier's decisions with a date in PROJECT or RISKS. Never change them without him.
-8. No new loose PLAN-*, STATUS-* or dated CHANGELOG-* files; detail goes in `docs/tasks/<ID>.md`. Move legacy files to `docs/archive/` when that folder exists. No secrets or binaries in docs.
-9. Task detail files: Goal / Done / Still waiting / **Do not** (Do not = scope limits for bots; required).
-10. Plain language: explain each term on first use, in the project's working language (English here).
-11. ROADMAP: success criteria + owner gate. Next phase starts only after Product (and Pier when needed) reviews.
-12. BACKLOG: Who acts column, or Pier vs bot queues (when `BACKLOG.md` exists).
+Task ids: `T0xx` / `T0xx-n`. **This repo is public:** `.repo-rules/` is gitignored — never commit fleet rules here.

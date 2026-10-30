@@ -3,7 +3,7 @@
 **Status as of 2026-10-12**
 
 
-**Status:** next  
+**Status:** doing / waiting [Pier]  
 **Owner:** Pier  
 **Part of:** 3.2 "да може да се инсталира"
 

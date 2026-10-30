@@ -1,10 +1,10 @@
 # Roadmap
 
-**Status as of 2026-10-12**
+**Status as of 2026-10-30**
 
-**Now:** T048 by Pier (Store account); waiting on winget moderator (T032-2); **T049** (pack-release version) before the next release.
+**Now:** T048 by Pier (Store account + listing docs); waiting on winget moderator (T032-2); **T049** (pack-release version) before the next release.
 
-Task index: [BACKLOG.md](BACKLOG.md).
+Task index: [TASKS.md](TASKS.md).
 
 ## Done in 3.1.0
 

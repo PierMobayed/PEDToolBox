@@ -27,4 +27,4 @@ Every action is user-initiated. Destructive ones show a confirm dialog. Results 
 - Wi-Fi password dump
 - Account password reset from WinRE
 
-See [ROADMAP.md](ROADMAP.md) and [BACKLOG.md](BACKLOG.md).
+See [ROADMAP.md](../ROADMAP.md) and [TASKS.md](../TASKS.md).
