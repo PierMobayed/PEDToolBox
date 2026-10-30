@@ -6,6 +6,8 @@ Product notes. Task-level history: [HISTORY.md](../HISTORY.md). Open tasks: [TAS
 
 ## Unreleased
 
+- Task detail files moved to `docs/architecture/plans/` (repo-rules docs-rules rule 8–9); public `fleet.mdc` regenerated from repo-rules `514a6fc`. T053 release path plan; T050 historical note. Store listing docs: public GitHub URLs only, plus https://pedtoolbox.com and pedtoolbox@gmail.com where support/contact fields are documented. R-2 unchanged.
+
 - Fleet docs layout (repo-rules #57): `AGENTS.md`, `docs/TASKS.md` + `BRIEFS.md`, subfolders `memory/`, `architecture/`, `guides/` (incl. `guides/store/` for T048), `releases/`; archived `BACKLOG.md` and `NEXT.md`. Release local copies: `C:\Pier\releases\ped\<version>\`. GitHub secret scanning, push protection, Dependabot enabled 2026-10-30. R-2 unchanged.
 
 ## 3.1.0 — 2026-09-28

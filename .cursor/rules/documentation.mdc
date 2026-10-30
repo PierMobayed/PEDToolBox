@@ -21,7 +21,7 @@ Follow `.repo-rules/common/docs-rules.md` when that folder exists locally (publi
 | Guides (run, download, packaging, team, …) | [docs/guides/](../../docs/guides/) |
 | Store listing pack (T048) | [docs/guides/store/](../../docs/guides/store/) |
 | Release runbook + CHANGELOG | [docs/releases/](../../docs/releases/) |
-| Task detail | `docs/guides/tasks/<ID>.md` — Goal / Done / Still waiting / **Do not** |
+| Task detail | `docs/architecture/plans/<ID>.md` — Goal / Done / Still waiting / **Do not** |
 | Legacy | [docs/archive/](../../docs/archive/) |
 
 Task ids: `T0xx` / `T0xx-n`. **This repo is public:** `.repo-rules/` is gitignored — never commit fleet rules here.
