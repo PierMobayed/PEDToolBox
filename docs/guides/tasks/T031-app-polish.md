@@ -4,7 +4,7 @@
 
 
 **Status:** shipped in 3.1.0  
-See [HISTORY.md](../HISTORY.md).
+See [HISTORY.md](../../HISTORY.md).
 
 ## Goal
 

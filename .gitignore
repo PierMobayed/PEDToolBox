@@ -12,3 +12,4 @@ artifacts/
 AppPackages/
 *.log
 .repo-rules/
+docs/threat/

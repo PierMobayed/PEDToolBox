@@ -1,6 +1,6 @@
 # T048 — Microsoft Store / Partner Center account
 
-**Status as of 2026-10-12**
+**Status as of 2026-10-30**
 
 
 **Status:** next  

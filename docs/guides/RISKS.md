@@ -41,7 +41,7 @@ Risks use ids `R-n`. **Impact** and **Likelihood** are rough (high / medium / lo
 - **Likelihood:** high for every new winget version while the default artifact stays self-contained
 - **Options (not ranked):** framework-dependent zip plus .NET 8 Desktop Runtime; MSIX; keep self-contained only as an optional GitHub asset
 - **Blocks:** fast iteration on [T033-1](tasks/T033-1-light-installer.md) (smaller default installer)
-- **Evidence:** 3.1.0 zip **57.8 MB** on GitHub; unpacked ~140 MB ([HISTORY.md](HISTORY.md), [PACKAGING.md](PACKAGING.md))
+- **Evidence:** 3.1.0 zip **57.8 MB** on GitHub; unpacked ~140 MB ([HISTORY.md](../HISTORY.md), [PACKAGING.md](PACKAGING.md))
 - **Decision:** Pier (pending)
 
 ## R-5 — Unsigned GitHub / winget zip
@@ -61,7 +61,7 @@ Risks use ids `R-n`. **Impact** and **Likelihood** are rough (high / medium / lo
 - **Likelihood:** medium (toolbox apps use **`runFullTrust`** — full Win32 trust in an MSIX package — and system-changing actions; **`asInvoker`** manifest means admin is opt-in, but reviewers still judge capability)
 - **Options (not ranked):** Store SKU without service Apply (`StoreSku`); clear privacy policy and justification text; sideload-only MSIX without Store listing
 - **Blocks:** [T032-3](tasks/T032-3-msix-partner-center.md)
-- **Evidence:** [PACKAGING.md](PACKAGING.md), [ARCHITECTURE.md](ARCHITECTURE.md)
+- **Evidence:** [PACKAGING.md](PACKAGING.md), [ARCHITECTURE.md](../architecture/ARCHITECTURE.md)
 - **Decision:** Pier (pending)
 
 ## R-7 — Publisher CN mismatch in templates

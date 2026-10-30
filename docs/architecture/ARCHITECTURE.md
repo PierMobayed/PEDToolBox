@@ -4,7 +4,7 @@
 
 ## Daily start
 
-Double-click `Start-PEDToolbox.bat` in the v3 root. See `docs/RUN.md`.
+Double-click `Start-PEDToolbox.bat` in the v3 root. See [RUN.md](../guides/RUN.md).
 
 ## Projects
 
@@ -15,7 +15,7 @@ v3/
   src/PedToolbox.App      WPF UI (assembly name PEDToolbox)
   packaging/              publish + winget + msix templates
   docs/                   this documentation
-                  BACKLOG.md + tasks/*.md (work items)
+                  TASKS.md + guides/tasks/*.md (work items)
                   HISTORY.md (finished work per version)
 ```
 

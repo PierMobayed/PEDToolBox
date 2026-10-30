@@ -5,11 +5,13 @@ alwaysApply: true
 
 # Fleet map
 
-If the message starts with "Ти си <Роля>" (any case, including Product, Code, Review, Release, Coord, installbot), read `.repo-rules/cursor/roles/<role lowercase>.md`, then `.repo-rules/common/`, then `docs/STATUS.md`, before doing anything.
+If any of the first 5 non-empty lines of the user message (leading blank lines OK) is or begins with (case-insensitive) `Ти си <role>`, where `<role>` is Product, Code, Review, Release, Coord, or installbot (lowercase file name), read `.repo-rules/cursor/roles/<role lowercase>.md`, then `.repo-rules/common/`, then `docs/STATUS.md`, before doing anything.
 
 - `docs/STATUS.md` — current snapshot (read first; wrap up the task here)
-- `docs/TESTS.md` — manual tests waiting for Pier
-- `docs/NEXT.md` — next Code task / priorities
-- `docs/HISTORY.md` — done log; open a matching row only
-- Rules live in repo-rules (private, synced locally). Read `.repo-rules/cursor/roles/<role>.md` + `.repo-rules/common/`
-- Synced SHA: `.repo-rules/SYNCED_FROM`. Do not git pull in `.repo-rules/`. Do not gitignore `.repo-rules/` on private repos (commit snapshot). **This repo is public:** `.repo-rules/` is gitignored — local copy only; cloud agents use the brief + User Rule, not committed rules.
+- `docs/memory/` — durable project memory (then ROADMAP, TASKS, BRIEFS below)
+- `docs/ROADMAP.md` — milestones and `Now`
+- `docs/TASKS.md` — open tasks; **Code priorities** section at the top = next Code work
+- `docs/BRIEFS.md` — active Code briefs (started, not merged); Code reads its brief here
+- `docs/HISTORY.md` — done log; open a row only if the task matches
+- `docs/TESTS.md` — tests waiting for Pier (what to test, release link, version, date added)
+- Rules: local `.repo-rules/` snapshot (gitignored on this public repo). Read `.repo-rules/cursor/roles/<role>.md` + `.repo-rules/common/`. SHA in `.repo-rules/SYNCED_FROM`. Do not git pull in `.repo-rules/`. Private repos: commit `.repo-rules/` (do not gitignore). **This repo is public:** `.repo-rules/` is gitignored — local copy only; this map must not contain private rule text.

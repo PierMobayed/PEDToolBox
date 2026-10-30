@@ -1,16 +1,16 @@
 # Changelog
 
-**Status as of 2026-10-18**
+**Status as of 2026-10-30**
 
-Product notes. Task-level history: [HISTORY.md](HISTORY.md). Open tasks: [BACKLOG.md](BACKLOG.md).
+Product notes. Task-level history: [HISTORY.md](../HISTORY.md). Open tasks: [TASKS.md](../TASKS.md).
 
 ## Unreleased
 
-- Added [TESTS.md](TESTS.md) (Pier manual test queue; empty as of 2026-10-18). BACKLOG queue prefixes, `/release/` gitignore, DOWNLOAD/RELEASING alignment, HISTORY T031 row tags.
+- Fleet docs layout (repo-rules #57): `AGENTS.md`, `docs/TASKS.md` + `BRIEFS.md`, subfolders `memory/`, `architecture/`, `guides/` (incl. `guides/store/` for T048), `releases/`; archived `BACKLOG.md` and `NEXT.md`. Release local copies: `C:\Pier\releases\ped\<version>\`. GitHub secret scanning, push protection, Dependabot enabled 2026-10-30. R-2 unchanged.
 
 ## 3.1.0 — 2026-09-28
 
-- Download links point at the **binary zip URL**, not the tag page. GitHub’s automatic “Source code” archives are documented as source-only ([DOWNLOAD.md](DOWNLOAD.md)).
+- Download links point at the **binary zip URL**, not the tag page. GitHub’s automatic “Source code” archives are documented as source-only ([DOWNLOAD.md](../guides/DOWNLOAD.md)).
 
 - Winget-pkgs PR: https://github.com/microsoft/winget-pkgs/pull/442279 (`PED.Toolbox`). Pipeline green (including Installation Validation). Waiting on a moderator, not a re-scan.
 - Self-contained zip **57.8 MB** on GitHub. SHA256 `85997DF14A14A97D975C43D511C4D56CE2009EBDB34E6500C05A9A49BABAC35B`

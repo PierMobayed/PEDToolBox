@@ -16,11 +16,11 @@ This folder is a **new product**. It does not wrap `PED-ToolBox.bat`. v1 and v2 
 
 Double-click **`Start-PEDToolbox.bat`** in this folder.
 
-It builds Debug if needed and opens the window. Details: [docs/RUN.md](docs/RUN.md).
+It builds Debug if needed and opens the window. Details: [docs/guides/RUN.md](docs/guides/RUN.md).
 
 **Download the app (not the source):** [PEDToolbox-3.1.0-win-x64.zip](https://github.com/PierMobayed/PEDToolBox/releases/download/v3.1.0/PEDToolbox-3.1.0-win-x64.zip) — unzip and run `PEDToolbox.exe`.
 
-Source is optional: GitHub branch [`v3`](https://github.com/PierMobayed/PEDToolBox/tree/v3) (Code → Download ZIP). Details: [docs/DOWNLOAD.md](docs/DOWNLOAD.md).
+Source is optional: GitHub branch [`v3`](https://github.com/PierMobayed/PEDToolBox/tree/v3) (Code → Download ZIP). Details: [docs/guides/DOWNLOAD.md](docs/guides/DOWNLOAD.md).
 
 ## v1 vs v3
 
@@ -34,14 +34,17 @@ Source is optional: GitHub branch [`v3`](https://github.com/PierMobayed/PEDToolB
 
 | File | What it answers |
 |---|---|
-| [docs/DOWNLOAD.md](docs/DOWNLOAD.md) | App zip vs source (what users should click) |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Folders, how a click becomes an action |
-| [docs/FEATURES.md](docs/FEATURES.md) | Page-by-page behavior |
-| [docs/PACKAGING.md](docs/PACKAGING.md) | Winget + Microsoft Store |
-| [docs/BACKLOG.md](docs/BACKLOG.md) | Task index (links to `docs/tasks/`; [TASKS.md](docs/TASKS.md) is a pointer) |
+| [docs/STATUS.md](docs/STATUS.md) | Current snapshot |
+| [docs/TASKS.md](docs/TASKS.md) | Open tasks + Code priorities |
+| [docs/guides/DOWNLOAD.md](docs/guides/DOWNLOAD.md) | App zip vs source |
+| [docs/architecture/ARCHITECTURE.md](docs/architecture/ARCHITECTURE.md) | Folders, how a click becomes an action |
+| [docs/guides/FEATURES.md](docs/guides/FEATURES.md) | Page-by-page behavior |
+| [docs/guides/PACKAGING.md](docs/guides/PACKAGING.md) | Winget + Microsoft Store |
+| [docs/guides/store/](docs/guides/store/) | Store listing pack (T048) |
 | [docs/HISTORY.md](docs/HISTORY.md) | What we finished per version |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | High-level done vs later |
-| [docs/CHANGELOG.md](docs/CHANGELOG.md) | Dated product notes |
+| [docs/releases/CHANGELOG.md](docs/releases/CHANGELOG.md) | Dated product notes |
+| [AGENTS.md](AGENTS.md) | Agent read order |
 
 ## Rules used while building
 
