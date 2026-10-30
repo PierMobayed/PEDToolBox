@@ -1,6 +1,6 @@
 # Archive
 
-Older or superseded doc files live here so links and history stay intact. **Ids and rows are never deleted** — only moved or stubbed.
+Older or superseded doc files live here so links and history stay intact. **Ids and rows are never deleted** — only moved or stubbed. Links inside archived files may still point at old `docs/` paths; use the live tree under `docs/guides/`, `docs/releases/`, and `docs/architecture/` instead.
 
 | File | Why it is here |
 |---|---|

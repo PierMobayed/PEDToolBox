@@ -42,4 +42,4 @@ Source: [PACKAGING.md](PACKAGING.md) (§ Signing → Decisions)
 
 > Settled on `PED.Toolbox` (publisher prefix for later `PED.Example`). Closed earlier ids `PierMobayed.PEDToolbox` and `ped.run` as the package id.
 
-Source: [HISTORY.md](HISTORY.md) (§ 3.1.0, Winget id row)
+Source: [HISTORY.md](../HISTORY.md) (§ 3.1.0, Winget id row)

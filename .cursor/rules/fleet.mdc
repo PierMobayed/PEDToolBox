@@ -14,4 +14,4 @@ If any of the first 5 non-empty lines of the user message (leading blank lines O
 - `docs/BRIEFS.md` — active Code briefs (started, not merged); Code reads its brief here
 - `docs/HISTORY.md` — done log; open a row only if the task matches
 - `docs/TESTS.md` — tests waiting for Pier (what to test, release link, version, date added)
-- Rules live in `.repo-rules/` (plain files from https://github.com/PierMobayed/repo-rules). Read `.repo-rules/cursor/roles/<role>.md` + `.repo-rules/common/`. SHA in `.repo-rules/SYNCED_FROM`. Do not git pull in `.repo-rules/`. Private repos: commit `.repo-rules/` (do not gitignore). **This repo is public:** `.repo-rules/` is gitignored — local copy only; this map must not contain private rule text.
+- Rules: local `.repo-rules/` snapshot (gitignored on this public repo). Read `.repo-rules/cursor/roles/<role>.md` + `.repo-rules/common/`. SHA in `.repo-rules/SYNCED_FROM`. Do not git pull in `.repo-rules/`. Private repos: commit `.repo-rules/` (do not gitignore). **This repo is public:** `.repo-rules/` is gitignored — local copy only; this map must not contain private rule text.
