@@ -4,6 +4,8 @@
 
 Partner Center fields for the **Store SKU** (`-p:StoreSku=true`: Services page hidden; no service-profile Apply). Features must match [FEATURES.md](../FEATURES.md) for that build. **Not in the Store package:** JSON service profile Apply (full desktop SKU only).
 
+**Public URLs only** in listing/support fields: GitHub (Issues, policy blob), plus https://pedtoolbox.com and pedtoolbox@gmail.com — no private repo links.
+
 ## English
 
 | Field | Text |

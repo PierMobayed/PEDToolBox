@@ -24,7 +24,7 @@ Implementation sketch:
 3. Point `PED.Toolbox.installer.yaml` at the small zip; new SHA256.
 4. Document both assets on the Release notes.
 
-Detail also in [PACKAGING.md](../PACKAGING.md) § Winget updates should stay small.
+Detail also in [PACKAGING.md](../../guides/PACKAGING.md) § Winget updates should stay small.
 
 ## Done
 

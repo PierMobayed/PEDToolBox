@@ -15,7 +15,7 @@ Sideload and/or Microsoft Store listing for PED Toolbox.
 - `packaging/msix/Package.appxmanifest` (identity `PED.Toolbox`)
 - Store-size logos under `packaging/msix/Assets`
 - `STORE_SKU` so Services Apply is off for a Store build: `dotnet build -p:StoreSku=true`
-- Signing approach agreed: free Microsoft Store individual account; Microsoft re-signs MSIX after certification (Decision: Pier, 2026-10-12 — see [PACKAGING.md](../PACKAGING.md)).
+- Signing approach agreed: free Microsoft Store individual account; Microsoft re-signs MSIX after certification (Decision: Pier, 2026-10-12 — see [PACKAGING.md](../../guides/PACKAGING.md)).
 
 ## Still waiting
 

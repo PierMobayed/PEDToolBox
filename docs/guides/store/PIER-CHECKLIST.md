@@ -2,7 +2,7 @@
 
 **Status as of 2026-10-30**
 
-Кратък списък от акаунт до submit. Bots **не** регистрират акаунт и **не** качват подписани пакети без Pier.
+Кратък списък от акаунт до submit. Bots **не** регистрират акаунт и **не** качват подписани пакети без Pier. Listing/support: **public GitHub URLs only**, plus https://pedtoolbox.com and pedtoolbox@gmail.com.
 
 - [ ] Отвори https://storedeveloper.microsoft.com и влез с Microsoft акаунт на Pier
 - [ ] Регистрация **Individual developer** (безплатно; ID + selfie)
