@@ -69,7 +69,7 @@ For later updates, prefer:
 - a **framework-dependent** zip plus [.NET 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0), or **MSIX**
 - a **GitHub Action** that opens the `winget-pkgs` PR when you publish a Release (see [TASKS.md](../TASKS.md) T033-1 and T033-2)
 
-Keep a self-contained zip on GitHub as an optional extra if you still want a zero-runtime download. In-app “is there a newer GitHub Release?” is [T033-3](tasks/T033-3-app-update-check.md) — that path does not wait for winget merge.
+Keep a self-contained zip on GitHub as an optional extra if you still want a zero-runtime download. In-app “is there a newer GitHub Release?” is [T033-3](../architecture/plans/T033-3-app-update-check.md) — that path does not wait for winget merge.
 
 ## 3. Microsoft Store / sideload MSIX
 
