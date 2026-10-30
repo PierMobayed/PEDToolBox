@@ -6,7 +6,7 @@
 
 **PED Toolbox v3** is a native **.NET 8 WPF** Windows maintenance app: repair, cleanup, apps (winget), privacy, services, and related tools in one desktop UI. It is the successor to the **v1 batch toolbox** (`PED-ToolBox.bat` on GitHub branch **`Tool`**), built as a new tree under folder `v3` without wrapping the bat file.
 
-Current shipped line: **3.1.0** (self-contained GitHub zip). Open work: [BACKLOG.md](BACKLOG.md). Roadmap: [ROADMAP.md](ROADMAP.md).
+Current shipped line: **3.1.0** (self-contained GitHub zip). Open work: [TASKS.md](../TASKS.md). Roadmap: [ROADMAP.md](../ROADMAP.md).
 
 ## Audience
 
@@ -42,4 +42,4 @@ Source: [PACKAGING.md](PACKAGING.md) (§ Signing → Decisions)
 
 > Settled on `PED.Toolbox` (publisher prefix for later `PED.Example`). Closed earlier ids `PierMobayed.PEDToolbox` and `ped.run` as the package id.
 
-Source: [HISTORY.md](HISTORY.md) (§ 3.1.0, Winget id row)
+Source: [HISTORY.md](../HISTORY.md) (§ 3.1.0, Winget id row)

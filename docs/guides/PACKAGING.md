@@ -1,6 +1,6 @@
 # Packaging — winget and Microsoft Store
 
-**Status as of 2026-10-16**
+**Status as of 2026-10-30**
 
 ## Identifiers (fill real publisher when you have a cert)
 
@@ -37,9 +37,9 @@ cd v3
 .\packaging\pack-release.ps1 -SelfContained
 ```
 
-Output: `artifacts\PEDToolbox-3.1.0-win-x64.zip` and `artifacts\SHA256.txt`. Both `artifacts/` and `release/` are in `.gitignore`.
+Output: `artifacts\PEDToolbox-3.1.0-win-x64.zip` and `artifacts\SHA256.txt`. Both `artifacts/` and `/release/` stay in `.gitignore`.
 
-After build, Ped Release keeps the zip to upload in `<clone>/release/` (on Pier’s PC: `C:\Pier\PEDToolBox\release\`). That folder is **not** in git. Publish zips **only** as GitHub Release assets; never commit them to `v3`.
+After build, Ped Release copies the zip to **`C:\Pier\releases\ped\<version>\`** on Pier’s PC (fleet release rule). That path is **not** in git. Publish zips **only** as GitHub Release assets; never commit them to `v3`.
 
 The **3.1.0 Release** used `-SelfContained`. GitHub shows the zip as **57.8 MB**. Unpacked it is a full .NET bundle (~140 MB class). No runtime install for the user.
 
@@ -67,7 +67,7 @@ The 3.1.0 Release zip is **self-contained** (57.8 MB on GitHub; unpacked much la
 For later updates, prefer:
 
 - a **framework-dependent** zip plus [.NET 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0), or **MSIX**
-- a **GitHub Action** that opens the `winget-pkgs` PR when you publish a Release (see [BACKLOG.md](BACKLOG.md) T033-1 and T033-2)
+- a **GitHub Action** that opens the `winget-pkgs` PR when you publish a Release (see [TASKS.md](../TASKS.md) T033-1 and T033-2)
 
 Keep a self-contained zip on GitHub as an optional extra if you still want a zero-runtime download. In-app “is there a newer GitHub Release?” is [T033-3](tasks/T033-3-app-update-check.md) — that path does not wait for winget merge.
 

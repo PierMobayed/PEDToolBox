@@ -2,7 +2,7 @@
 
 **Status as of 2026-10-16**
 
-What we actually shipped and fixed. Open work is in [BACKLOG.md](BACKLOG.md). Line-level product notes: [CHANGELOG.md](CHANGELOG.md).
+What we actually shipped and fixed. Open work is in [TASKS.md](TASKS.md). Line-level product notes: [CHANGELOG.md](releases/CHANGELOG.md).
 
 ## T050 — local `release/` folder (2026-10-16)
 

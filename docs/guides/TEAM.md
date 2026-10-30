@@ -42,6 +42,6 @@ Opening a PR to **microsoft/winget-pkgs** always needs **Pier’s explicit OK** 
 PR opened → merge gate → Grok Coord merges → v3 → wake Ped Release (version + merge SHA + approved head SHA)
 ```
 
-Details: [RELEASING.md](RELEASING.md).
+Details: [RELEASING.md](../releases/RELEASING.md).
 
 **Rule:** nobody pushes to `v3` directly. Default git branch may still be `Tool` for v1; the WPF app product line is `v3` ([T045](tasks/T045-default-branch.md)).
