@@ -9,7 +9,7 @@ alwaysApply: true
 If any of the first 5 non-empty lines of the user message (leading blank lines OK) is or begins with (case-insensitive) `Ти си <role>`, where `<role>` is Product, Code, Review, Release, Coord, installbot, or newproject (lowercase file name), read `.repo-rules/cursor/roles/<role lowercase>.md`, then `.repo-rules/common/`, then `docs/STATUS.md`, before doing anything.
 
 - `docs/STATUS.md` — current snapshot (read first; wrap up the task here)
-- `docs/memory/` — decisions, brand, handoff, open questions (`memory/bots/templates/` = shared bot templates; other `memory/bots/*.md` = per-bot notes)
+- `docs/memory/` — decisions, brand, handoff, open questions (`memory/bots/<bot>.md` = per-bot memory notes; templates in `memory/bots/templates/`)
 - `docs/architecture/` — system design, specs, catalogs, technical plans
 - `docs/guides/` — PROJECT, TEAM, RISKS, how-tos, setup
 - `docs/ROADMAP.md` — milestones and `Now`
