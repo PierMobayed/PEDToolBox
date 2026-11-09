@@ -4,6 +4,6 @@ Standing context for Product and bots after `docs/STATUS.md`, before `docs/ROADM
 
 | File | Contents |
 |---|---|
-| [bots/](bots/) | Short role openers; full rules in `.repo-rules/` locally (gitignored) |
+| [bots/](bots/) | Per-role memory: `bots/<role>/` (product, code, review, release) = role note + role knowledge files; each role bot writes its own folder. Templates in `bots/templates/`. Full rules in `.repo-rules/` locally (gitignored) |
 
 Clone on Pier's PC: `C:\Pier\projects\PEDToolBox` (`C:\Pier\PEDToolBox` junction).
