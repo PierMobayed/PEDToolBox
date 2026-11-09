@@ -1,8 +1,12 @@
 # History — finished work by version
 
-**Status as of 2026-10-16**
+**Status as of 2026-11-09**
 
 What we actually shipped and fixed. Open work is in [TASKS.md](TASKS.md). Line-level product notes: [CHANGELOG.md](releases/CHANGELOG.md).
+
+## Done log (newest first)
+
+- 2026-10-30 — T054 repo-rules sync 514a6fc + docs follow-ups (task plans moved to `docs/architecture/plans/`, T053 plan, public `fleet.mdc`, link fixes) — [PR #15](https://github.com/PierMobayed/PEDToolBox/pull/15)
 
 ## T050 — local `release/` folder (2026-10-16)
 

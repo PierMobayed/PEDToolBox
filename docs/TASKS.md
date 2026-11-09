@@ -1,6 +1,6 @@
 # Tasks — open index
 
-**Status as of 2026-10-30**
+**Status as of 2026-11-09**
 
 **Id scheme:** `T0xx` and `T0xx-n` (same ids forever; never renumber; done/merged/shipped rows move to `docs/HISTORY.md` (date + PR; archiving, not deleting); TASKS keeps open, deferred and superseded rows only). Detail files live at `docs/architecture/plans/<ID>.md` (filename may add a short slug).
 
@@ -15,7 +15,7 @@ Do not start T032-3 MSIX submit without Pier / Release gate. winget-pkgs PRs nee
 
 ## Pier's queue
 
-- **T048** (`next`) — Microsoft Store individual account + publisher CN for MSIX (unblocks T032-3); Store pack docs in PR #12.
+- **T048** (`next`) — Microsoft Store individual account + publisher CN for MSIX (unblocks T032-3); Store pack docs merged in PR #13 (`docs/guides/store/`).
 - **T045** / **T046** (`deferred`) — Product/branch and power-user scope; Pier decides when/if.
 
 Everything else below is Ped Code, Ped Release, Ped Review, or waiting on Microsoft.
@@ -40,8 +40,7 @@ Everything else below is Ped Code, Ped Release, Ped Review, or waiting on Micros
 | T049 | [bot] Fix hardcoded 3.1.0 in `pack-release.ps1` zip name | High | next | Ped Code | [T049-pack-release-version.md](architecture/plans/T049-pack-release-version.md) |
 | T050 | [bot] Local git-ignored `<clone>/release/` folder (PR #8) | Low | superseded → T053 | Ped Code | [T050.md](architecture/plans/T050.md) |
 | T053 | [bot] release builds go to `C:\Pier\releases\ped\<version>\` per repo-rules release rules | Medium | next | Ped Release | [T053.md](architecture/plans/T053.md) |
-| T054 | repo-rules sync 514a6fc + docs follow-ups | Medium | merged (unreleased) | Ped Code | [PR #15](https://github.com/PierMobayed/PEDToolBox/pull/15) |
-| T051 | [bot] move v3 from .NET 8 to .NET 10 LTS (.NET 8 EOL 10 Nov 2026); in the same Code PR bump System.Management and System.ServiceProcess.ServiceController with the TFM, and add top-level `permissions: contents: read` to .github/workflows/build.yml | Medium | next | Ped Code | (backlog row only in this PR) |
+| T051 | [bot] move v3 from .NET 8 to .NET 10 LTS (.NET 8 EOL 10 Nov 2026); in the same Code PR bump System.Management and System.ServiceProcess.ServiceController with the TFM, and add top-level `permissions: contents: read` to .github/workflows/build.yml | Medium | next | Ped Code | Deadline: .NET 8 EOL 2026-11-10; no brief or PR yet |
 | T052 | [bot] modern WinUI/Fluent look like Auto Dark Mode (winget `Armin2208.WindowsAutoNightMode`), light/dark follows Windows | Low | proposed | Ped Code | (idea; backlog only) |
 
 Finished work by version: [HISTORY.md](HISTORY.md). Roadmap phases: [ROADMAP.md](ROADMAP.md).
