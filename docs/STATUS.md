@@ -1,6 +1,6 @@
 # Status — PED Toolbox
 
-**Status as of 2026-11-09**
+**Status as of 2026-11-24**
 
 Short snapshot after the per-role bot memory refresh (repo-rules docs-rules 2026-11-09). Open work: [TASKS.md](TASKS.md). Decisions: [DECISIONS.md](DECISIONS.md). Newcomer card: [HANDOFF.md](HANDOFF.md). Finished work: [HISTORY.md](HISTORY.md). Pier manual test queue: [TESTS.md](TESTS.md) (empty).
 
