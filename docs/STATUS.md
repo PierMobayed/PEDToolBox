@@ -8,7 +8,7 @@ Short snapshot after the per-role bot memory refresh (repo-rules docs-rules 2026
 - **Branch:** `v3` = product branch; GitHub default is still `Tool` (old v1; R-8 / T045).
 - **Open PRs:** #16 (docs: move flat bot templates to `docs/memory/bots/templates/` + fleet map line), waiting since 2026-11-03.
 - **Active briefs:** none ([BRIEFS.md](BRIEFS.md)).
-- **Bot memory:** per role under `docs/memory/bots/<role>/` (product, code, review, release); each role bot writes its own folder.
+- **Bot memory:** moved on 2026-11-24 to the private repo testPedToolBox, branch `bot-memory` (role folders `docs/memory/bots/<role>/` there); no longer in this public repo.
 - **Next (Code):** T051 move v3 from .NET 8 to .NET 10 LTS — .NET 8 end of support is 2026-11-10; no brief or PR yet. Then T049 (pack-release version) before the next release.
 - **Waiting on Pier:** T048 Partner Center (Microsoft Store) individual account + publisher name, using `docs/guides/store/PIER-CHECKLIST.md`. Unblocks T032-3.
 - **Waiting (external):** T032-2 winget-pkgs PR needs a Microsoft moderator.
