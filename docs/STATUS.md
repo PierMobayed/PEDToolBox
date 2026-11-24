@@ -6,7 +6,7 @@ Short snapshot after the per-role bot memory refresh (repo-rules docs-rules 2026
 
 - **Version:** last release 3.1.0; docs-only changes since then sit under **Unreleased** in [CHANGELOG](releases/CHANGELOG.md). No release needed for docs merges.
 - **Branch:** `v3` = product branch; GitHub default is still `Tool` (old v1; R-8 / T045).
-- **Open PRs:** #16 (docs: move flat bot templates to `docs/memory/bots/templates/` + fleet map line), waiting since 2026-11-03.
+- **Open PRs:** none (#16 closed; bot memory moved out in #19).
 - **Active briefs:** none ([BRIEFS.md](BRIEFS.md)).
 - **Bot memory:** moved on 2026-11-24 to the private repo testPedToolBox, branch `bot-memory` (role folders `docs/memory/bots/<role>/` there); no longer in this public repo.
 - **Next (Code):** T051 move v3 from .NET 8 to .NET 10 LTS — .NET 8 end of support is 2026-11-10; no brief or PR yet. Then T049 (pack-release version) before the next release.
