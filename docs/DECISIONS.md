@@ -2,6 +2,7 @@
 
 **Status as of 2026-11-09.** Newest first. Each entry: date — decision — who — reason. Older locked decisions also live in [guides/PROJECT.md](guides/PROJECT.md) (Locked decisions) and [guides/PACKAGING.md](guides/PACKAGING.md).
 
+- **2026-11-24 — The whole project moves to the private repo testPedToolBox, on a new permanent branch `main`; public PEDToolBox keeps only what must be public** (T055, scope TBD). Who: Pier. Reason: keep internal work private.
 - **2026-11-24 — Bot memory moved out of the public repo** to the private repo testPedToolBox, branch `bot-memory`; `docs/memory/` removed from public `v3` (old content stays in git history; no history rewrite). Who: Pier. Reason: bot memory is internal and should not be public.
 - **2026-11-09 — Docs/memory refresh as direct commits to `v3`, only under `docs/`, no PR or Review round.** Who: Pier (relayed by Grok Coord). Reason: docs-only work; saves tokens. If `v3` is protected, one docs-only PR instead (Coord merges).
 - **2026-11-09 — Bot memory per role in `docs/memory/bots/<role>/`** (product, code, review, release); each role bot writes its own files; shared STATUS / DECISIONS / HANDOFF kept by Product. Who: Pier (repo-rules docs-rules 2026-11-09). Reason: any bot or model can continue where the last one stopped.
