@@ -6,7 +6,7 @@ Product notes. Task-level history: [HISTORY.md](../HISTORY.md). Open tasks: [TAS
 
 ## Unreleased
 
-- Bot memory (docs/memory/) moved to the private repo testPedToolBox (#19). Planned (T055): whole project moves to testPedToolBox branch `main`; this public repo keeps only what must be public.
+- Bot memory (`docs/memory/`) moved to the private repo testPedToolBox (#19). Planned (T055): whole project moves to testPedToolBox branch `main`; this public repo keeps only what must be public.
 
 - Task detail files moved to `docs/architecture/plans/` (repo-rules docs-rules rule 8–9); public `fleet.mdc` regenerated from repo-rules `514a6fc`. T053 release path plan; T050 historical note. Store listing docs: public GitHub URLs only, plus https://pedtoolbox.com and pedtoolbox@gmail.com where support/contact fields are documented. R-2 unchanged.
 
