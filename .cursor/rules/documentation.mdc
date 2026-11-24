@@ -16,7 +16,7 @@ Follow `.repo-rules/common/docs-rules.md` when that folder exists locally (publi
 | Done / archived log | [docs/HISTORY.md](../../docs/HISTORY.md) |
 | Phases | [docs/ROADMAP.md](../../docs/ROADMAP.md) |
 | Manual tests (Pier) | [docs/TESTS.md](../../docs/TESTS.md) |
-| Product memory | [docs/memory/](../../docs/memory/) |
+| Product memory | private repo testPedToolBox, branch `bot-memory` (not in this public repo) |
 | Architecture | [docs/architecture/](../../docs/architecture/) |
 | Guides (run, download, packaging, team, …) | [docs/guides/](../../docs/guides/) |
 | Store listing pack (T048) | [docs/guides/store/](../../docs/guides/store/) |
