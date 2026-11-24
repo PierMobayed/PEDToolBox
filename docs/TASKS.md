@@ -1,17 +1,20 @@
 # Tasks — open index
 
-**Status as of 2026-11-09**
+**Status as of 2026-11-24**
 
 **Id scheme:** `T0xx` and `T0xx-n` (same ids forever; never renumber; done/merged/shipped rows move to `docs/HISTORY.md` (date + PR; archiving, not deleting); TASKS keeps open, deferred and superseded rows only). Detail files live at `docs/architecture/plans/<ID>.md` (filename may add a short slug).
 
+Project work is paused (docs only) until Pier resumes.
+
 ## Code priorities
 
-Pick the next slice from the table below (Who acts = Ped Code). Suggested order:
+When project work resumes, pick the next slice from the table below (Who acts = Ped Code). Suggested order:
 
-1. **T049** — Fix hardcoded 3.1.0 in `pack-release.ps1` zip name ([T049-pack-release-version.md](architecture/plans/T049-pack-release-version.md)).
-2. **T033-*** / **T041–T043** — proposed backlog when T049 is done.
+1. **T051** — move v3 from .NET 8 to .NET 10 LTS (paused until Pier resumes).
+2. **T049** — Fix hardcoded 3.1.0 in `pack-release.ps1` zip name ([T049-pack-release-version.md](architecture/plans/T049-pack-release-version.md)).
+3. **T033-*** / **T041–T043** — proposed backlog when T049 is done.
 
-Do not start T032-3 MSIX submit without Pier / Release gate. winget-pkgs PRs need Pier's explicit OK (not just Release gate). T047 stays on branch `Tool`.
+Do not start T032-3 MSIX submit without Pier / Release gate. winget-pkgs PRs need Pier's explicit OK (not just Release gate). T047 stays on branch `Tool`. T032-2 waits until winget-pkgs #442271 `PED.CpuThermometar` passes, then needs Pier's explicit OK for a new `PED.Toolbox` PR.
 
 ## Pier's queue
 
@@ -24,7 +27,7 @@ Everything else below is Ped Code, Ped Release, Ped Review, or waiting on Micros
 |---|---|---|---|---|---|
 | T048 | [Pier] Create Microsoft Store (Partner Center) individual account and share publisher name | High | next | Pier | [T048-store-account.md](architecture/plans/T048-store-account.md) |
 | T030 | [bot] Formal UI review of all pages | Medium | proposed | Ped Review / Ped Code | [T030-ui-review.md](architecture/plans/T030-ui-review.md) |
-| T032-2 | [bot] winget-pkgs PR `PED.Toolbox` — #442279 closed stale 2026-11-16 (ManifestVersion deprecated); bump manifests to 1.28.0 and open a new PR | High | todo (needs Pier explicit OK for new winget-pkgs PR) | Ped Release | [T032-2-winget-pr.md](architecture/plans/T032-2-winget-pr.md); [winget-pkgs#442279](https://github.com/microsoft/winget-pkgs/pull/442279) |
+| T032-2 | [bot] winget-pkgs PR `PED.Toolbox` — #442279 closed stale 2026-11-16 (ManifestVersion deprecated); bump manifests to 1.28.0 and open a new PR | High | todo (after winget-pkgs #442271 CPU passes; needs Pier explicit OK for new PR) | Ped Release | [T032-2-winget-pr.md](architecture/plans/T032-2-winget-pr.md); [winget-pkgs#442279](https://github.com/microsoft/winget-pkgs/pull/442279) |
 | T032-3 | [bot] Signed MSIX → Partner Center — waiting on T048 | High | waiting (external: Pier Store account T048) | Ped Release (+ Pier for Store submit / secrets) | [T032-3-msix-partner-center.md](architecture/plans/T032-3-msix-partner-center.md) |
 | T033-1 | [bot] Smaller installer (framework-dependent or MSIX) so later winget scans stay fast | Medium | proposed | Ped Code | [T033-1-light-installer.md](architecture/plans/T033-1-light-installer.md) |
 | T033-2 | [bot] GitHub Action: automatic winget-pkgs PR on Release | Medium | proposed | Ped Code | [T033-2-winget-github-action.md](architecture/plans/T033-2-winget-github-action.md) |
@@ -41,7 +44,7 @@ Everything else below is Ped Code, Ped Release, Ped Review, or waiting on Micros
 | T050 | [bot] Local git-ignored `<clone>/release/` folder (PR #8) | Low | superseded → T053 | Ped Code | [T050.md](architecture/plans/T050.md) |
 | T053 | [bot] release builds go to `C:\Pier\releases\ped\<version>\` per repo-rules release rules | Medium | next | Ped Release | [T053.md](architecture/plans/T053.md) |
 | T055 | [bot] Move the whole project to the private repo testPedToolBox, on a new permanent branch `main` (not `test` or `bot-memory`); public PEDToolBox keeps only what must be public (release downloads, public README/docs, license). Scope and file list to be decided by Pier | High | todo (Pier decision 2026-11-24; scope TBD) | Ped Product (plan) / Ped Code (moves) / Pier (OK) | (plan to write) |
-| T051 | [bot] move v3 from .NET 8 to .NET 10 LTS (.NET 8 EOL 10 Nov 2026); in the same Code PR bump System.Management and System.ServiceProcess.ServiceController with the TFM, and add top-level `permissions: contents: read` to .github/workflows/build.yml | Medium | next | Ped Code | Deadline: .NET 8 EOL 2026-11-10; no brief or PR yet |
+| T051 | [bot] move v3 from .NET 8 to .NET 10 LTS (.NET 8 EOL 10 Nov 2026); in the same Code PR bump System.Management and System.ServiceProcess.ServiceController with the TFM, and add top-level `permissions: contents: read` to .github/workflows/build.yml | Medium | todo (paused until Pier resumes project work) | Ped Code | Deadline: .NET 8 EOL 2026-11-10; no brief or PR yet |
 | T052 | [bot] modern WinUI/Fluent look like Auto Dark Mode (winget `Armin2208.WindowsAutoNightMode`), light/dark follows Windows | Low | proposed | Ped Code | (idea; backlog only) |
 
 Finished work by version: [HISTORY.md](HISTORY.md). Roadmap phases: [ROADMAP.md](ROADMAP.md).
